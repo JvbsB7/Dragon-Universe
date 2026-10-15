@@ -55,20 +55,7 @@ const wish_data = [
       }
     ]
   },
-  {
-    type: "change_race",
-    name: "glind",
-    availableIn: [
-      "dbe:porunga"
-    ],
-    requirements: [
-      {
-        test: "is_race",
-        value: "glind",
-        operator: "!="
-      }
-    ]
-  },
+  // change_race "glind" removido até a raça existir em races_data.js (KNOWN_ISSUES C18).
   {
     type: "change_race",
     name: "saiyan",

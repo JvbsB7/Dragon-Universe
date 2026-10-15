@@ -38,8 +38,8 @@
                         }
                     ],
                     "on_entry": [
-                        "/stopsound @a common.charge_loop",
-                        "/stopsound @a common.charge_god_loop"
+                        "/stopsound @s common.charge_loop",
+                        "/stopsound @s common.charge_god_loop"
                     ]
                 }
             }

@@ -3,13 +3,34 @@
 // chaves de idioma nas três línguas (en_US, es_ES, pt_BR).
 // Uso: node tools/check-data.mjs
 import path from "node:path";
-import { RP, Report, isMain, loadDataModules, readLang } from "./lib/common.mjs";
+import { BP, RP, Report, cachedJson, isMain, loadDataModules, loadJsonDir, readLang } from "./lib/common.mjs";
+import { CORE_SKILL_TRAINERS } from "./lib/allowlist.mjs";
 
 const LANGS = ["en_US", "es_ES", "pt_BR"];
 // Segundos segmentos de "quest.<x>.*" que são textos genéricos da interface, não missões.
 const GENERIC_QUEST_KEYS = new Set(["challenge", "main", "mentor", "side", "objective", "objective_completed", "reward"]);
-// Chaves aceitas em entityDefinitions de tarefas defeat_enemy (as que o núcleo lê).
-const ENTITY_DEFINITION_KEYS = new Set(["powerDefinition", "availableTransformations", "friendlyDamage", "alwaysDodge", "kiColor", "skills"]);
+// Chaves de entityDefinitions que o núcleo lê (confirmado nas strings do núcleo). "attributes" é ignorado.
+const ENTITY_DEFINITION_KEYS = new Set(["powerDefinition", "availableTransformations", "friendlyDamage", "alwaysDodge", "kiColor", "skills", "spawnEvent"]);
+
+/**
+ * Cores aceitas em auraProperties.kiBarColor: o núcleo envia o nome direto para a HUD,
+ * que só tem os painéis "<cor>_ki_bar" declarados em ui/hud_screen/stats_bar.json.
+ */
+function kiBarPanels() {
+  const data = cachedJson(path.join(RP, "ui", "hud_screen", "stats_bar.json")).data;
+  const colors = new Set();
+  const visit = (v) => {
+    if (Array.isArray(v)) v.forEach(visit);
+    else if (v && typeof v === "object") {
+      for (const [k, x] of Object.entries(v)) {
+        if (k === "$ki_bar_color" && x) colors.add(x);
+        visit(x);
+      }
+    }
+  };
+  visit(data?.ki_bar_root);
+  return colors;
+}
 
 /** Visita todos os objetos de um valor, chamando fn(obj, caminho). */
 function eachObject(value, fn, trail = "") {
@@ -107,6 +128,10 @@ export async function run() {
   const kiColorRef = (c, where) => {
     if (c !== undefined && !(c in kiColors)) report.error("Cor de ki inexistente em ki_colors_data", `${c} — ${where}`);
   };
+  const barPanels = kiBarPanels();
+  const kiBarRef = (c, where) => {
+    if (c !== undefined && !barPanels.has(c)) report.error("kiBarColor sem painel na HUD (ui/hud_screen/stats_bar.json)", `${c} — ${where}`);
+  };
   const formRef = (id, raceId, where) => {
     if (id === undefined) return;
     const ok = raceId ? formsByRace.get(raceId)?.has(id) || globalFormIds.has(id) : allForms.has(id);
@@ -157,7 +182,7 @@ export async function run() {
       if (o.nextDialogue !== undefined && !dialogueIds.has(o.nextDialogue)) report.error("Diálogo inexistente", `${o.nextDialogue} — ${where}`);
       if (o.backButtonDialogue !== undefined && !dialogueIds.has(o.backButtonDialogue)) report.error("Diálogo inexistente", `${o.backButtonDialogue} — ${where}`);
       if (o.kiColor !== undefined) kiColorRef(o.kiColor, where);
-      if (o.kiBarColor !== undefined) kiColorRef(o.kiBarColor, where);
+      if (o.kiBarColor !== undefined) kiBarRef(o.kiBarColor, where);
     });
   }
 
@@ -184,7 +209,7 @@ export async function run() {
   }
 
   // ---------------------------------------------------------------- skills: treinadores e acesso
-  const npcsWithSkillsMenu = new Set();
+  const npcsWithSkillsMenu = new Set(CORE_SKILL_TRAINERS);
   for (const dlg of dialogues) {
     let has = false;
     eachObject(dlg, (o) => {
@@ -216,6 +241,25 @@ export async function run() {
     if (raceReqs.length >= 2 && raceReqs.every((r) => r.operator === "!=")) {
       report.warn("Skill restringe raças por lista de exclusão (raças novas ganham acesso)", `${s.id} — exclui ${raceReqs.map((r) => r.value ?? "(sem valor)").join(", ")}`);
     }
+  }
+
+  // ---------------------------------------------------------------- missões: bioma × dimensão
+  // As dimensões próprias são vazias e têm um único bioma (default_biome); esse bioma não existe em outra dimensão.
+  const dimensionOfBiome = new Map();
+  for (const { data } of loadJsonDir(path.join(BP, "dimensions"))) {
+    const dim = data["minecraft:dimension"];
+    const biome = dim?.components?.["minecraft:default_biome"]?.biome;
+    if (biome) dimensionOfBiome.set(biome, dim.description.identifier);
+  }
+  for (const { q, src } of quests) {
+    (q.objectives ?? []).forEach((ob, oi) =>
+      (ob.tasks ?? []).forEach((t, ti) => {
+        const expectedDim = t.type === "enter_biome" ? dimensionOfBiome.get(t.biomeId) : undefined;
+        if (expectedDim && t.dimensionId !== expectedDim) {
+          report.error("Bioma procurado na dimensão errada (missão não conclui)", `${t.biomeId} só existe em ${expectedDim}, mas a tarefa usa ${t.dimensionId} — ${src} → ${q.id}.objectives[${oi}].tasks[${ti}]`);
+        }
+      }),
+    );
   }
 
   // ---------------------------------------------------------------- missões: entityDefinitions
@@ -276,6 +320,8 @@ export async function run() {
   for (const [key, where] of expected) {
     const missing = LANGS.filter((l) => !langs[l].has(key));
     if (missing.length) report.error("Chave de idioma ausente", `${key} — falta em ${missing.join(", ")} (${where})`);
+    const blank = LANGS.filter((l) => langs[l].has(key) && /^\s*(""|'')?\s*$/.test(langs[l].get(key).value));
+    if (blank.length) report.warn("Texto vazio ou provisório", `${key} — em ${blank.join(", ")} (${where})`);
   }
 
   // Chaves quest.* que não correspondem a nenhuma missão dos dados (erros de digitação ou missões removidas).

@@ -9,6 +9,10 @@
 
 Legenda de severidade: 🔴 crítico · 🟠 alto · 🟡 médio · ⚪ baixo
 
+Legenda de situação: 🔧 corrigido no código, **aguardando teste no jogo** · ✅ corrigido e verificado no jogo · ❎ falso positivo (confirmado no código).
+
+Verificação automática: `node tools/validate.mjs` (ver [README](../README.md#-validação-automática-tools)).
+
 ## 1. Confirmados
 
 ### C1 🔴 Perda silenciosa de progresso
@@ -82,38 +86,50 @@ Legenda de severidade: 🔴 crítico · 🟠 alto · 🟡 médio · ⚪ baixo
 - **Comportamento:** a cada 200 ticks remove todo `dbe:demonic_iron_golem` em 6 dimensões, inclusive os invocados manualmente.
 - **Correção:** restringir aos golems marcados pelas vilas.
 
-### C14 🔴 Provável bloqueio da campanha em `saga_frieza_1`
+### C14 🔴 Provável bloqueio da campanha em `saga_frieza_1` — 🔧
 - **Onde:** `main_quests_data.js:421-422`.
 - **Causa:** a tarefa exige o bioma `dbe:namek` na dimensão `minecraft:overworld`; esse bioma só existe na dimensão `dbe:namek`.
-- **Correção:** apontar para `dbe:namek` (ou usar `enter_region`).
-- **Validação:** jogar até a saga Freeza no jogo — **precisa ser confirmado**.
+- **Correção aplicada:** `dimensionId: "dbe:namek"`. O `check-data` passou a apontar bioma de dimensão própria procurado em outra dimensão.
+- **Validação:** jogar até a saga Freeza e entrar em Namek — **precisa ser confirmado no jogo**.
 
-### C15 🟡 Som de carga cortado para todos
+### C15 🟡 Som de carga cortado para todos — 🔧
 - **Onde:** `Dragon Block_bp/animation_controllers/player_dbe.animation_controllers.json` (`stop_aura_sound`).
 - **Causa:** `/stopsound @a`.
-- **Correção:** `@s`.
+- **Correção aplicada:** `@s`.
+- **Validação:** dois jogadores carregando ki; um para — o som do outro deve continuar.
 
-### C16 🟡 Barra de ki vermelha invisível
+### C16 🟡 Barra de ki vermelha invisível — 🔧
 - **Onde:** `Dragon Block_rp/ui/hud_screen/stats_bar.json` (`ki_bar_root`).
-- **Causa:** só há painéis blue/green/pink/purple/yellow/white, embora `red` exista em `ki_colors_data.js` e a textura exista.
+- **Causa:** só havia painéis blue/green/pink/purple/yellow/white, embora `red` exista em `ki_colors_data.js` e a textura exista.
+- **Observação:** o núcleo envia `auraProperties.kiBarColor` direto para a HUD (padrão `blue`); hoje nenhuma forma usa `red`, então o defeito não aparecia.
+- **Correção aplicada:** painel `red_ki_bar` adicionado. O `check-data` valida `kiBarColor` contra os painéis da HUD.
 
 ### C17 🟡 Arquivos e textos
-- `Dragon Block_bp/blocks/decor/red_tile_slab.txt`: definição de bloco salva como `.txt` — não carrega.
-- `Dragon Block_bp/contents.json`: lista `worldgen/structure_sets/city.txt` (inexistente) e omite `city.json`.
-- `dbe:medical_moss` definido como item e como bloco sem `replace_block_item`.
-- Texturas ausentes: `textures/ui/buttons/help_button(_hover)` (`ui/menus/menu_form.json`), `textures/ui/images/patreon_items` e `patreon_chat` (`ui/menus/news_form.json`).
-- `Dragon Block_rp/texts/en_US.lang:588`: chave com `saga.` duplicado.
-- 24 chaves só em pt_BR (saga Future Trunks e convite de mentor).
-- Geometrias `kale_hair` e `trunks_hair` definidas duas vezes (`hairs/` e `legacy_hairs/`).
-- `items/music_disc_hero.json` com `format_version: "beta"`.
+- 🔧 `Dragon Block_bp/blocks/decor/red_tile_slab.txt`: laje inacabada (sem loot, receita nem item) que nunca carregou. Movida para [`docs/wip/`](wip/README.md) e retirada do `contents.json`.
+- 🔧 `Dragon Block_bp/contents.json`: listava `worldgen/structure_sets/city.txt` (inexistente) no lugar de `city.json`.
+- 🔧 `dbe:medical_moss` era item e bloco ao mesmo tempo. O bloco da plantação passou a ser `dbe:medical_moss_crop` (id que já existia no `.lang`: `tile.dbe:medical_moss_crop.name`); sementes, feature de Namek e `blocks.json` atualizados; o item colhido mantém o id. **Mundos de teste:** plantações antigas de `dbe:medical_moss` viram bloco desconhecido.
+- Texturas ausentes: `textures/ui/buttons/help_button(_hover)` (`ui/menus/menu_form.json`) — **precisa de arte**; `textures/ui/images/patreon_items` e `patreon_chat` (`ui/menus/news_form.json`) — ficam para a substituição do sistema Patreon (Fase 3).
+- 🔧 `Dragon Block_rp/texts/en_US.lang:588`: chave com `saga.` duplicado.
+- 🔧 Chaves só em pt_BR (saga Future Trunks e convite de mentor): traduzidas para en_US e es_ES — **revisão de texto recomendada**. Os três diálogos da Bulma em `saga_future_trunks_3` (objetivo 1) estão como `""` nas três línguas: **texto a escrever**.
+- 🔧 Geometrias `kale_hair` e `trunks_hair` definidas duas vezes: removidas as cópias de `legacy_hairs/` (nenhuma entidade usa essas duas geometrias).
+- 🔧 `items/music_disc_hero.json` com `format_version: "beta"` → `1.26.4`.
 
 ### C18 🟡 Dados inconsistentes / conteúdo inacessível
-- Raças `glind` e `android` referenciadas (`skills_data.js:231`, `wish_data.js:60,67`, `entities_data.js:190,340,943`, `side_quests_data.js:47`) mas ausentes em `races_data.js`.
-- `ki_protect` (só Kami-sama, `skills_data.js:572`) e `metamoran_dance` (só Goku, `:825`) dependem de NPCs sem submenu de skills em `dialogues_data.js`.
-- `makankosappo` com preço, mas sem treinador (`skills_data.js:799-817`).
-- `kiBarColor: "white"` não existe em `ki_colors_data.js` (`skills_data.js:865`).
-- Sagas Future Trunks usam `entityDefinitions.attributes` em vez de `powerDefinition` (`main_quests_data.js:2479…2657`).
+- Raças `glind` e `android` referenciadas mas ausentes em `races_data.js`. 🔧 Desativado o que quebrava: desejo `change_race` "glind" da Porunga e a recompensa de raça da `android_conversion` (a missão segue dando zeni). **Pendente (Fase 5):** Zamasu, Zamasu Fusionado e Zamasu Fusionado Corrompido continuam com `race: "glind"` e `gigantification` exclui `glind`.
+- ❎ `ki_protect` (Kami-sama) e `metamoran_dance` (Goku): **são acessíveis**. O núcleo registra diálogos próprios desses NPCs com submenu de skills (`kami_sama_skills`; `goku_skills`, que exige ser discípulo do Goku). Registrado em `tools/lib/allowlist.mjs`.
+- `makankosappo` com preço, mas sem treinador: é recompensa do desafio `piccolo_trial`; o preço não é usado. Decidir se deve ser exclusiva do desafio.
+- ❎ `kiBarColor: "white"`: não é cor de `ki_colors_data.js`; o valor vai direto para a HUD, que tem o painel `white`.
+- 🔧 Sagas Future Trunks usavam `entityDefinitions.attributes` (o núcleo só lê `powerDefinition`; os chefes nasciam sem atributos e sem nível recomendado). Convertido para `powerDefinition.level` preservando o total de pontos pretendido — o núcleo distribui `(ATTRIBUTE_POINTS_PER_LEVEL + SKILL_POINTS_PER_LEVEL) × nível × 1,1` pontos: Goku Black 102 e 125, Zamasu 136, Zamasu Fusionado 159, Corrompido 170. **Validar o balanceamento no jogo.**
 - `absorption` e `gigantification` restringem raças por lista de exclusão — raças novas ganham acesso automaticamente.
+
+### C24 🟡 Achados da validação automática (2026-10-15)
+- 🔧 `final_flash` usava os sons `skill.final_flash_launch` e `skill.final_flash_gun`, que não existiam: a skill não tinha som. Eventos criados em `sound_definitions.json` reaproveitando os arquivos do Galick Gun (trocar quando houver áudio próprio).
+- 🔧 `saga_universe_6_1`: os dados têm 5 objetivos, mas os `.lang` usavam a numeração anterior (sem o objetivo `enter_biome`); os diálogos do Goku e o de conclusão apareciam como chave crua. Chaves renumeradas nas três línguas.
+- Chaves `quest.battle_jacket_return.*` nas três línguas sem missão correspondente nos dados (missão removida ou não implementada).
+- `entities_data.js` `dbe:frieza`: forma `mecha_frieza` sem multiplicadores e fora das formas de `frost_demon`.
+- `Dragon Block_rp/.png`: PNG 16×16 com nome vazio na raiz do RP (listado no `contents.json`).
+- Entidades do BP sem `client_entity` (invisíveis): `dbe:test_enemy`, `dbe:player_fly`, `dbe:location` — provavelmente intencional.
+- Sons sem evento em `sound_definitions.json`: `sounds/ui/exit`, `sounds/ui/kaioken`, `sounds/ui/sair`.
 
 ### C19 🟠 Vazamento de intervalos na `capsule_991`
 - **Onde:** núcleo — veículo `dbe:capsule_991`.

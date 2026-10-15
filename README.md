@@ -11,7 +11,7 @@
 
 ## 🚧 Status
 
-Em desenvolvimento — **Fase 1 (auditoria e documentação) concluída**. Veja o [roadmap](docs/ROADMAP.md).
+Em desenvolvimento — **Fase 1 (auditoria e documentação) e Fase 2a (validação automática) concluídas**; Fase 2b (correções) em andamento: as correções em arquivos legíveis aguardam teste no jogo. Veja o [roadmap](docs/ROADMAP.md).
 
 | Área | Estado |
 |---|---|
@@ -70,7 +70,7 @@ Cada verificação também pode ser executada separadamente (aceitam as mesmas o
 | `tools/check-data.mjs` | Importa `scripts/data/*.js` e confere: raças, skills, transformações, missões, regiões, diálogos e modificadores referenciados existem; cores de ki existem em `ki_colors_data`; skills com treinador acessível (NPC com submenu de skills) ou obtidas por recompensa; `entityDefinitions` das missões; chaves de idioma de missões, conquistas e diálogos presentes em `en_US`, `es_ES` e `pt_BR`; chaves órfãs, repetidas ou presentes só em parte das línguas |
 | `tools/check-syntax.mjs` | `node --check` em todos os `.js` de `scripts/` (inclusive o núcleo, sem modificá-lo). Aceita caminhos como argumento para checar arquivos específicos |
 
-**Erros** são problemas que quebram algo no jogo ou deixam conteúdo inacessível; **avisos** são suspeitas que precisam de análise. Enquanto os itens de [KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md) (C17, C18) não forem corrigidos, a validação termina com código `1` — é esperado. Ao corrigir um problema, a contagem de erros deve cair; um erro novo indica regressão.
+**Erros** são problemas que quebram algo no jogo ou deixam conteúdo inacessível; **avisos** são suspeitas que precisam de análise. Enquanto houver itens pendentes em [KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md) (texturas da UI em C17, raça glind em C18), a validação termina com código `1` — é esperado. Ao corrigir um problema, a contagem de erros deve cair; um erro novo indica regressão.
 
 Observações:
 

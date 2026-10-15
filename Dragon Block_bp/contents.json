@@ -97,9 +97,6 @@
          "path" : "blocks/decor/red_tile.json"
       },
       {
-         "path" : "blocks/decor/red_tile_slab.txt"
-      },
-      {
          "path" : "blocks/decor/red_tile_stairs.json"
       },
       {
@@ -2122,7 +2119,7 @@
          "path" : "worldgen/structure_sets/cell_arena.json"
       },
       {
-         "path" : "worldgen/structure_sets/city.txt"
+         "path" : "worldgen/structure_sets/city.json"
       },
       {
          "path" : "worldgen/structure_sets/goku_house.json"

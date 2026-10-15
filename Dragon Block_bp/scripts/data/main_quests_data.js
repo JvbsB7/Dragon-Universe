@@ -418,7 +418,7 @@ const main_quests_data = [
         tasks: [
           {
             type: "enter_biome",
-            dimensionId: "minecraft:overworld",
+            dimensionId: "dbe:namek",
             biomeId: "dbe:namek",
           },
         ],
@@ -2476,8 +2476,8 @@ const main_quests_data = [
             entity: "dbe:goku_black",
             spawnOnStart: true,
             entityDefinitions: {
-              attributes: {
-                total: 900,
+              powerDefinition: {
+                level: 102,
                 focus: {
                   constitution: 1.1,
                   dexterity: 1.1,
@@ -2530,8 +2530,8 @@ const main_quests_data = [
             entity: "dbe:goku_black",
             spawnOnStart: true,
             entityDefinitions: {
-              attributes: {
-                total: 1100,
+              powerDefinition: {
+                level: 125,
                 focus: {
                   constitution: 1.1,
                   dexterity: 1.1,
@@ -2572,8 +2572,8 @@ const main_quests_data = [
             entity: "dbe:zamasu",
             spawnOnStart: true,
             entityDefinitions: {
-              attributes: {
-                total: 1200,
+              powerDefinition: {
+                level: 136,
                 focus: {
                   constitution: 1.1,
                   dexterity: 1.1,
@@ -2613,8 +2613,8 @@ const main_quests_data = [
             entity: "dbe:fused_zamasu",
             spawnOnStart: true,
             entityDefinitions: {
-              attributes: {
-                total: 1400,
+              powerDefinition: {
+                level: 159,
                 focus: {
                   constitution: 1.1,
                   dexterity: 1.1,
@@ -2654,8 +2654,8 @@ const main_quests_data = [
             entity: "dbe:corrupted_fused_zamasu",
             spawnOnStart: true,
             entityDefinitions: {
-              attributes: {
-                total: 1500,
+              powerDefinition: {
+                level: 170,
                 focus: {
                   constitution: 1.1,
                   dexterity: 1.1,

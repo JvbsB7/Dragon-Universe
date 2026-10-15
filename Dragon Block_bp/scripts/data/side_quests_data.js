@@ -41,11 +41,8 @@ const side_quests_data = [
         ]
       }
     ],
+    // Recompensa { type: "race", race: "android" } removida até a raça existir em races_data.js (KNOWN_ISSUES C18).
     rewards: [
-      {
-        type: "race",
-        race: "android"
-      },
       {
         type: "zeni",
         amount: 10

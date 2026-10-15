@@ -19,15 +19,25 @@
 - [ ] Equipe preencher nome, membros e contato (`README.md`, avisos nos packs)
 
 ### Fase 2a — Ferramentas de validação (sem dependências externas)
-Scripts Node em `tools/`:
-- validação de todos os JSON (aceitando comentários);
-- referências cruzadas (entidades BP↔RP, texturas, geometrias, sons, ids usados nos dados);
-- `node --check` nos scripts;
-- integridade dos dados (`races_data`, `skills_data`, missões, chaves de idioma nas três línguas).
+Scripts Node em `tools/` (uso no [README](../README.md#-validação-automática-tools)), executados com `node tools/validate.mjs`:
+- [x] validação de todos os JSON (aceitando comentários) — `validate-json.mjs`;
+- [x] referências cruzadas (entidades BP↔RP, texturas, geometrias, sons, ids usados nos dados) — `check-refs.mjs`;
+- [x] `node --check` nos scripts — `check-syntax.mjs`;
+- [x] integridade dos dados (`races_data`, `skills_data`, missões, chaves de idioma nas três línguas) — `check-data.mjs`.
 
 ### Fase 2b — Correções críticas
 Prioridade: C1 (perda de save), C5 (`/dbe:pay`), C6 (backdoor), C3/C4 (Esferas e desejos), C14 (bloqueio da saga Freeza), C2 (cooldowns), C19 (capsule_991), C15 (som), C17/C18 (arquivos e dados).
 Correções no núcleo dependem da decisão sobre a Fase 3; as que estão em arquivos legíveis (dados, dimensões, JSON, UI) podem ser feitas antes.
+
+Arquivos legíveis (corrigidos no código em 2026-10-15, **aguardando teste no jogo** — detalhes em [KNOWN_ISSUES](KNOWN_ISSUES.md)):
+- [ ] C14 — `saga_frieza_1` procura o bioma de Namek na dimensão certa
+- [ ] C15 — `/stopsound @s`
+- [ ] C16 — painel vermelho da barra de ki
+- [ ] C17 — laje vermelha fora do pack, `contents.json`, `dbe:medical_moss_crop`, chave do en_US, traduções da saga Future Trunks, cabelos duplicados, disco `music_disc_hero`
+- [ ] C18 — desejo "glind" e recompensa de raça android desativados; Future Trunks com `powerDefinition`
+- [ ] C24 — sons da Final Flash; chaves da `saga_universe_6_1`
+
+Pendentes de decisão/arte: botão de ajuda (textura `help_button`), imagens do Patreon (Fase 3), raça glind dos Zamasu (Fase 5), diálogos da Bulma em `saga_future_trunks_3`, chaves `battle_jacket_return`.
 
 ### Fase 3 — Núcleo legível e organização
 Estratégia recomendada (aguardando aprovação):

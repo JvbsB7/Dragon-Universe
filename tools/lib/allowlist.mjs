@@ -50,6 +50,13 @@ export function isVanillaId(id) {
 /** Arquivos vanilla do BP citados por caminho. */
 export const VANILLA_BP_FILES = new Set(["loot_tables/empty.json"]);
 
+/**
+ * NPCs cujo diálogo (com submenu de skills) é registrado direto pelo núcleo, sem entrada em dialogues_data.js.
+ * Confirmado nas strings do núcleo: "kami_sama_main_menu"/"kami_sama_skills" e "goku_main_menu"/"goku_skills"
+ * (o de Goku exige ser discípulo dele).
+ */
+export const CORE_SKILL_TRAINERS = new Set(["dbe:kami_sama", "dbe:goku"]);
+
 /** Dimensões registradas pelo núcleo sem JSON próprio (docs/ARCHITECTURE.md, seção de dimensões). */
 export const SCRIPT_DIMENSIONS = new Set([
   "dbe:other_world",

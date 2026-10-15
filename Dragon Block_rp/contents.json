@@ -1690,9 +1690,6 @@
          "path" : "models/entity/races/legacy_hairs/kale_beast_hair.geo.json"
       },
       {
-         "path" : "models/entity/races/legacy_hairs/kale_hair.geo.json"
-      },
-      {
          "path" : "models/entity/races/legacy_hairs/kale_ssj2_hair.geo.json"
       },
       {
@@ -1706,9 +1703,6 @@
       },
       {
          "path" : "models/entity/races/legacy_hairs/raditz_hair.geo.json"
-      },
-      {
-         "path" : "models/entity/races/legacy_hairs/trunks_hair.geo.json"
       },
       {
          "path" : "models/entity/races/legacy_hairs/trunks_long_hair.geo.json"

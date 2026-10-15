@@ -585,7 +585,7 @@ quest.reward.z_points=%s Z points
 quest.saga_saiyan_1.title=The Warrior Called Raditz
 quest.saga_saiyan_1.text=Raditz, a strange warrior from space, has arrived claiming to be Goku's brother. He did not come in peace. Face him to defend Earth!
 quest.saga_saiyan_1.objective_1.task_1.dialog_1=Argh. So you felt that devastating power approaching too.
-quest.saga.saga_saiyan_1.objective_1.task_1.dialog_2=I've already fought him. He's much stronger than he looks. We can team up and investigate the area. But don't think I'm on your side. I just don't want this to interfere with my plans.
+quest.saga_saiyan_1.objective_1.task_1.dialog_2=I've already fought him. He's much stronger than he looks. We can team up and investigate the area. But don't think I'm on your side. I just don't want this to interfere with my plans.
 quest.saga_saiyan_1.objective_1.task_1.dialog_3=He's near the Dirtstone biome. If you want to try your luck, you can find him there.
 quest.saga_saiyan_2.title=A New Threat Approaches
 quest.saga_saiyan_2.text=After Raditz's defeat, Goku discovers that two even more powerful warriors are heading to Earth. They will arrive in one year. Use this time to prepare!
@@ -689,10 +689,10 @@ quest.saga_universe_6_1.text=The God of Destruction Champa has issued a challeng
 quest.saga_universe_6_1.objective_1.task_1.dialog_1=This tournament won't be like any fight you've faced before.
 quest.saga_universe_6_1.objective_1.task_1.dialog_2=You need to learn to stay calm and analyze every enemy move.
 quest.saga_universe_6_1.objective_1.task_1.dialog_3=Let's train your technique and awareness. Attack me when you're ready!
-quest.saga_universe_6_1.objective_3.task_1.dialog_1=Hehe, so you're joining the tournament too? That's awesome!
-quest.saga_universe_6_1.objective_3.task_1.dialog_2=But hey, the Universe 6 guys aren't pushovers. You'll have to give it your all!
-quest.saga_universe_6_1.objective_3.task_1.dialog_3=Let's train a bit. I want to see if you can handle a real fight with me!
-quest.saga_universe_6_1.objective_4.on_finish.dialog_1=Nice job! Now get ready... the tournament is about to begin!
+quest.saga_universe_6_1.objective_4.task_1.dialog_1=Hehe, so you're joining the tournament too? That's awesome!
+quest.saga_universe_6_1.objective_4.task_1.dialog_2=But hey, the Universe 6 guys aren't pushovers. You'll have to give it your all!
+quest.saga_universe_6_1.objective_4.task_1.dialog_3=Let's train a bit. I want to see if you can handle a real fight with me!
+quest.saga_universe_6_1.objective_5.on_finish.dialog_1=Nice job! Now get ready... the tournament is about to begin!
 quest.saga_universe_6_2.title=Botamo, the Rubber Bear
 quest.saga_universe_6_2.text=Your first opponent is Botamo. He can absorb physical attacks like he doesn't feel pain. Use strategy to defeat him!
 quest.saga_universe_6_3.title=Frost, the "Hero" of Universe 6
@@ -1408,6 +1408,35 @@ ui.dbe.training.button.stop_concentration=Stop concentration
 ui.dbe.transformations.title=Transformations
 ui.dbe.weight.text=Use weights during training to speed up your progress. Your defense and speed will be reduced while using this item.
 ui.dbe.wishes.title=Wishes
+
+## still in testing
+ui.dbe.mentor.main.button.invite=Learn
+ui.dbe.mentor.invite.text=I have a lot to teach you... Do you want to train with me and become my apprentice?
+ui.dbe.mentor.invite.button.confirm=Yes
+
+quest.saga_future_trunks_1.title=The Warning
+quest.saga_future_trunks_1.text=Future Trunks returns badly wounded and brings terrifying news: a warrior called Goku Black is destroying his timeline and wiping out all of humanity. There is no time to lose. Go to Bulma and help repair the Time Machine to save the future.
+quest.saga_future_trunks_2.title=Goku Black Appears
+quest.saga_future_trunks_2.text=The impossible has happened... Goku Black has appeared in this timeline! His power is terrifying and his presence threatens the entire planet. Face him before he escapes to the future again.
+quest.saga_future_trunks_3.title=Into the Future
+quest.saga_future_trunks_3.text=The Time Machine has finally been repaired. Get in and travel to Trunks' devastated future. Help the survivors and fight alongside Trunks to end the chaos caused by Goku Black.
+
+quest.saga_future_trunks_3.objective_1.task_1.dialog_1=""
+quest.saga_future_trunks_3.objective_1.task_1.dialog_2=""
+quest.saga_future_trunks_3.objective_1.task_1.dialog_3=""
+
+quest.saga_future_trunks_3.objective_2.on_start.dialog_1=Goku Black: Humans are nothing but filth and must be eliminated.
+quest.saga_future_trunks_3.objective_2.on_start.dialog_2=Goku Black: I can see far beyond you, warrior... above this world, above this universe...
+quest.saga_future_trunks_3.objective_2.on_start.dialog_3=Goku Black: I watch from the place where all the truth about creation comes from... that is how I concluded that humans must become extinct.
+quest.saga_future_trunks_3.objective_2.on_start.dialog_4=Goku Black: The one mistake among all of the gods' creations... is humanity. To turn the world, the universe and even this planet into a far more beautiful paradise...
+quest.saga_future_trunks_3.objective_2.on_start.dialog_5=Goku Black: I will eliminate the humans!
+
+quest.saga_future_trunks_4.title=Another Zamasu
+quest.saga_future_trunks_4.text=The situation has gotten worse. A second Zamasu from another timeline has joined Goku Black. Together they are carrying out the "Zero Mortals Plan", a cruel scheme to exterminate all of humanity and create a universe without mortals.
+quest.saga_future_trunks_5.title=The Fusion
+quest.saga_future_trunks_5.text=Using the Potara Earrings, Goku Black and Zamasu have fused, giving rise to the terrifying Fused Zamasu. His power surpasses everything faced so far. Defeat this fusion before the entire universe is destroyed.
+quest.saga_future_trunks_6.title=Corrupted
+quest.saga_future_trunks_6.text=Even after taking severe damage, Fused Zamasu keeps evolving thanks to his immortal body. His form begins to warp and decay, spreading destructive energy everywhere. Now transformed into Corrupted Fused Zamasu, he has completely lost control and threatens to consume all of reality.
 item.dbe:namek_space_pod=Namek Space Pod
 item.dbe:tournament_invitation=Tournament Invitation
 tile.dbe:vegeta_soil.name=Vegeta Soil

@@ -689,10 +689,10 @@ quest.saga_universe_6_1.text=El Dios de la Destrucción Champa ha lanzado un des
 quest.saga_universe_6_1.objective_1.task_1.dialog_1=Este torneo no será como ninguna pelea que hayas enfrentado antes.
 quest.saga_universe_6_1.objective_1.task_1.dialog_2=Debes aprender a mantener la calma y analizar cada movimiento del enemigo.
 quest.saga_universe_6_1.objective_1.task_1.dialog_3=Entrenemos tu técnica y tu percepción. ¡Atácame cuando estés listo!
-quest.saga_universe_6_1.objective_3.task_1.dialog_1=Jeje, ¿así que tú también participarás en el torneo? ¡Eso es increíble!
-quest.saga_universe_6_1.objective_3.task_1.dialog_2=Pero oye, los del Universo 6 no son cualquier cosa. ¡Tendrás que darlo todo!
-quest.saga_universe_6_1.objective_3.task_1.dialog_3=Entrenemos un poco. ¡Quiero ver si puedes soportar una pelea real conmigo!
-quest.saga_universe_6_1.objective_4.on_finish.dialog_1=¡Buen trabajo! Ahora prepárate... ¡el torneo está a punto de comenzar!
+quest.saga_universe_6_1.objective_4.task_1.dialog_1=Jeje, ¿así que tú también participarás en el torneo? ¡Eso es increíble!
+quest.saga_universe_6_1.objective_4.task_1.dialog_2=Pero oye, los del Universo 6 no son cualquier cosa. ¡Tendrás que darlo todo!
+quest.saga_universe_6_1.objective_4.task_1.dialog_3=Entrenemos un poco. ¡Quiero ver si puedes soportar una pelea real conmigo!
+quest.saga_universe_6_1.objective_5.on_finish.dialog_1=¡Buen trabajo! Ahora prepárate... ¡el torneo está a punto de comenzar!
 quest.saga_universe_6_2.title=Botamo, el Oso de Goma
 quest.saga_universe_6_2.text=Tu primer oponente es Botamo. Puede absorber ataques físicos como si no sintiera dolor. ¡Usa estrategia para derrotarlo!
 quest.saga_universe_6_3.title=Frost, el "Héroe" del Universo 6
@@ -1408,6 +1408,35 @@ ui.dbe.training.button.stop_concentration=Finalizar Entrenamiento de concentraci
 ui.dbe.transformations.title=Transformaciones
 ui.dbe.weight.text=Utiliza pesas en tu entrenamiento para acelerar el progreso, tu defensa y velocidad se verán afectadas al usar este objeto.
 ui.dbe.wishes.title=Deseos
+
+## todavía en pruebas
+ui.dbe.mentor.main.button.invite=Aprender
+ui.dbe.mentor.invite.text=Tengo mucho que enseñarte... ¿Quieres entrenar conmigo y convertirte en mi aprendiz?
+ui.dbe.mentor.invite.button.confirm=Sí
+
+quest.saga_future_trunks_1.title=La Advertencia
+quest.saga_future_trunks_1.text=Trunks del Futuro regresa gravemente herido y trae una noticia aterradora: un guerrero llamado Goku Black está destruyendo su línea temporal y exterminando a toda la humanidad. No hay tiempo que perder. Ve con Bulma y ayuda a reparar la Máquina del Tiempo para salvar el futuro.
+quest.saga_future_trunks_2.title=Aparece Goku Black
+quest.saga_future_trunks_2.text=Lo imposible ha ocurrido... ¡Goku Black apareció en esta línea temporal! Su poder es aterrador y su presencia amenaza a todo el planeta. Enfréntalo antes de que logre escapar de nuevo al futuro.
+quest.saga_future_trunks_3.title=Rumbo al Futuro
+quest.saga_future_trunks_3.text=La Máquina del Tiempo por fin ha sido reparada. Súbete y viaja al futuro devastado de Trunks. Ayuda a los sobrevivientes y lucha junto a Trunks para acabar con el caos causado por Goku Black.
+
+quest.saga_future_trunks_3.objective_1.task_1.dialog_1=""
+quest.saga_future_trunks_3.objective_1.task_1.dialog_2=""
+quest.saga_future_trunks_3.objective_1.task_1.dialog_3=""
+
+quest.saga_future_trunks_3.objective_2.on_start.dialog_1=Goku Black: Los humanos no son más que escoria y deben ser eliminados.
+quest.saga_future_trunks_3.objective_2.on_start.dialog_2=Goku Black: Puedo ver mucho más allá que tú, guerrero... por encima de este mundo, por encima de este universo...
+quest.saga_future_trunks_3.objective_2.on_start.dialog_3=Goku Black: Observo desde el lugar de donde proviene toda la verdad sobre la creación... así llegué a la conclusión de que los humanos deben extinguirse.
+quest.saga_future_trunks_3.objective_2.on_start.dialog_4=Goku Black: El único error entre todas las creaciones de los dioses... es la humanidad. Para convertir el mundo, el universo e incluso este planeta en un paraíso mucho más hermoso...
+quest.saga_future_trunks_3.objective_2.on_start.dialog_5=Goku Black: ¡Eliminaré a los humanos!
+
+quest.saga_future_trunks_4.title=Otro Zamasu
+quest.saga_future_trunks_4.text=La situación empeoró. Un segundo Zamasu, venido de otra línea temporal, se unió a Goku Black. Juntos ejecutan el "Plan Cero Mortales", un plan cruel para exterminar a toda la humanidad y crear un universo sin mortales.
+quest.saga_future_trunks_5.title=La Fusión
+quest.saga_future_trunks_5.text=Usando los Pendientes Potara, Goku Black y Zamasu se fusionaron, dando origen al terrible Zamasu Fusionado. Su poder supera todo lo enfrentado hasta ahora. Derrota a esta fusión antes de que todo el universo sea destruido.
+quest.saga_future_trunks_6.title=Corrompido
+quest.saga_future_trunks_6.text=Incluso tras sufrir graves daños, Zamasu Fusionado sigue evolucionando gracias a su cuerpo inmortal. Su forma empieza a deformarse y corromperse, esparciendo energía destructiva por todas partes. Ahora convertido en Zamasu Fusionado Corrupto, perdió por completo el control y amenaza con consumir toda la realidad.
 item.dbe:namek_space_pod=Cápsula Espacial a Namek
 item.dbe:tournament_invitation=Invitación al Torneo
 tile.dbe:vegeta_soil.name=Suelo de Vegeta

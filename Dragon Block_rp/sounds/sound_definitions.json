@@ -601,6 +601,22 @@
                 }
             ]
         },
+        "skill.final_flash_gun": {
+            "sounds": [
+                {
+                    "name": "sounds/skill/galick_gun",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "skill.final_flash_launch": {
+            "sounds": [
+                {
+                    "name": "sounds/skill/galick_gun_launch",
+                    "volume": 0.2
+                }
+            ]
+        },
         "skill.kamehameha": {
             "sounds": [
                 {

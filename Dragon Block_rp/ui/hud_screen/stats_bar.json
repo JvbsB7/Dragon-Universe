@@ -105,6 +105,11 @@
                 }
             },
             {
+                "red_ki_bar@stats_bar.ki_bar_panel": {
+                    "$ki_bar_color": "red"
+                }
+            },
+            {
                 "bar_label@stats_bar.bar_label": {
                     "$update_string": "ki_bar_value:"
                 }

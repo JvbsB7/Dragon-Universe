@@ -1,5 +1,5 @@
 {
-    "format_version": "beta",
+    "format_version": "1.26.4",
     "minecraft:item": {
         "description": {
             "identifier": "dbe:music_disc_hero",
