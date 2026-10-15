@@ -31,7 +31,7 @@ Problemas conhecidos: [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md).
 - Experimento **Beta APIs** ativado no mundo — o script usa `@minecraft/server` e `@minecraft/server-ui` na versão `beta`. APIs beta podem mudar a cada atualização do jogo; teste sempre na versão-alvo.
 - Os dois packs ativados juntos (o Behavior Pack depende do Resource Pack e vice-versa).
 
-> Não há dependências de Node/npm no projeto. Nenhum processo de build é necessário: os arquivos são usados como estão.
+> Não há dependências de Node/npm no projeto. Nenhum processo de build é necessário: os arquivos são usados como estão. O Node.js só é usado pelas [ferramentas de validação](#-validação-automática-tools).
 
 ## ▶️ Como instalar e testar
 
@@ -44,6 +44,40 @@ Problemas conhecidos: [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md).
 
 Para validar mudanças, siga o checklist de regressão em [docs/ROADMAP.md](docs/ROADMAP.md#checklist-de-regressão-manual-no-jogo).
 
+## 🧪 Validação automática (`tools/`)
+
+Scripts Node que verificam os packs **sem alterar nenhum arquivo**. Requisito: **Node.js 22** ou mais recente. Não usam pacotes npm — não há nada para instalar.
+
+Na raiz do repositório:
+
+```bash
+node tools/validate.mjs
+```
+
+Executa todas as verificações, imprime os problemas agrupados por categoria e um resumo. O código de saída é `0` sem erros e `1` se houver algum erro — use antes de cada commit/PR.
+
+| Opção | Efeito |
+|---|---|
+| `--strict` | Avisos também fazem a validação falhar |
+| `--errors-only` | Lista só os erros (os avisos continuam contados no resumo) |
+
+Cada verificação também pode ser executada separadamente (aceitam as mesmas opções):
+
+| Script | O que verifica |
+|---|---|
+| `tools/validate-json.mjs` | Parse de todos os `.json`/`.material` dos dois packs (aceita comentários `//` e `/* */`); definições salvas com extensão errada (ex.: `.txt`); arquivos inesperados; `format_version` fora do padrão; divergências entre os `contents.json` e os arquivos; dependências entre os manifests |
+| `tools/check-refs.mjs` | Entidades BP↔RP; geometrias, texturas, animações, render controllers e sons usados por entidades e attachables; caminhos `textures/...` da UI, partículas e dados; ícones em `item_texture.json`; texturas de blocos em `terrain_texture.json`/`blocks.json`; arquivos e eventos de `sound_definitions.json`; loot tables, recipes, spawn rules e feature rules; ids `dbe:` usados em `scripts/data/*.js` sem definição JSON; ids duplicados; item e bloco com o mesmo id sem `block_placer.replace_block_item` |
+| `tools/check-data.mjs` | Importa `scripts/data/*.js` e confere: raças, skills, transformações, missões, regiões, diálogos e modificadores referenciados existem; cores de ki existem em `ki_colors_data`; skills com treinador acessível (NPC com submenu de skills) ou obtidas por recompensa; `entityDefinitions` das missões; chaves de idioma de missões, conquistas e diálogos presentes em `en_US`, `es_ES` e `pt_BR`; chaves órfãs, repetidas ou presentes só em parte das línguas |
+| `tools/check-syntax.mjs` | `node --check` em todos os `.js` de `scripts/` (inclusive o núcleo, sem modificá-lo). Aceita caminhos como argumento para checar arquivos específicos |
+
+**Erros** são problemas que quebram algo no jogo ou deixam conteúdo inacessível; **avisos** são suspeitas que precisam de análise. Enquanto os itens de [KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md) (C17, C18) não forem corrigidos, a validação termina com código `1` — é esperado. Ao corrigir um problema, a contagem de erros deve cair; um erro novo indica regressão.
+
+Observações:
+
+- Recursos do jogo base (texturas, animações, sons vanilla) e as dimensões registradas pelo núcleo sem JSON próprio ficam em `tools/lib/allowlist.mjs`. Acrescente lá somente itens confirmados, nunca para silenciar um erro real.
+- `scripts/data/*.js` são copiados para uma pasta temporária e importados de lá (os imports sem extensão, como `"./variables"`, não funcionam direto no Node); os originais não são tocados.
+- Não use `node --check arquivo.js` direto nos scripts: sem `"type": "module"`, o Node 22 deixa passar erros de sintaxe em arquivos com `import`/`export`. O `check-syntax.mjs` já contorna isso.
+
 ## 🗂️ Estrutura do repositório
 
 ```
@@ -55,6 +89,7 @@ Dragon Universe/
 │  ├─ KNOWN_ISSUES.md         ← bugs confirmados e riscos
 │  ├─ ROADMAP.md              ← fases, prioridades e checklist de testes
 │  └─ CREDITS.md              ← autor original e equipe
+├─ tools/                     ← validação automática (Node, sem dependências)
 ├─ Dragon Block_bp/           ← Behavior Pack (lógica)
 └─ Dragon Block_rp/           ← Resource Pack (visual, som, UI, textos)
 ```
