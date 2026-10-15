@@ -115,6 +115,7 @@ tile.dbe:purple_tile_stairs.name=Escaleras de Azulejo Morado
 tile.dbe:purple_tile.name=Azulejo Morado
 tile.dbe:red_tile_stairs.name=Escaleras de Azulejo Rojo
 tile.dbe:red_tile.name=Azulejo Rojo
+tile.dbe:red_tile_slab.name=Losa de Azulejo Rojo
 tile.dbe:senzu_beans.name=Semilla del Ermitaño
 tile.dbe:white_tile_stairs.name=Escaleras de Azulejo Blanco
 tile.dbe:white_tile.name=Azulejo Blanco

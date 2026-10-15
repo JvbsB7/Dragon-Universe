@@ -417,8 +417,17 @@ function escapeToOtherWorld(player) {
   }
 }
 
+/** Removes a temporary ticking area; never throws (the area may already be gone). */
+function removeArea(id) {
+  try {
+    world.tickingAreaManager.removeTickingArea(id);
+  } catch (e) {
+    /* already gone */
+  }
+}
+
 async function prepareArea(dim, cx, cz) {
-  const id = "dbe:hell_travel_" + system.currentTick;
+  const id = "dbe:hell_travel_" + system.currentTick + "_" + Math.floor(Math.random() * 1e6);
   let area = false;
   try {
     await world.tickingAreaManager.createTickingArea(id, {
@@ -430,11 +439,16 @@ async function prepareArea(dim, cx, cz) {
   } catch (e) {
     console.warn("[Hell] could not create ticking area: " + e);
   }
-  for (const [dx, dz] of OFFSETS_TERRAIN) {
-    if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainJob(dim, cx + dx, cz + dz), "t" + dx + "," + dz);
-  }
-  for (const [dx, dz] of OFFSETS_DECOR) {
-    if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(dim, cx + dx, cz + dz), "d" + dx + "," + dz);
+  try {
+    for (const [dx, dz] of OFFSETS_TERRAIN) {
+      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainJob(dim, cx + dx, cz + dz), "t" + dx + "," + dz);
+    }
+    for (const [dx, dz] of OFFSETS_DECOR) {
+      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(dim, cx + dx, cz + dz), "d" + dx + "," + dz);
+    }
+  } catch (e) {
+    if (area) removeArea(id);
+    throw e;
   }
   return area ? id : null;
 }
@@ -457,6 +471,7 @@ function rememberOrigin(player) {
 async function sendToHell(player, fall = false) {
   if (travelling.has(player.id) || player.dimension.id === DIM_ID) return;
   travelling.add(player.id);
+  let areaId = null;
   try {
     const dim = world.getDimension(DIM_ID);
     if (fall) {
@@ -473,12 +488,9 @@ async function sendToHell(player, fall = false) {
       rememberOrigin(player);
       player.sendMessage("§4Descending into Hell...");
     }
-    const areaId = await prepareArea(dim, chunkOf(SPAWN.x), chunkOf(SPAWN.z));
+    areaId = await prepareArea(dim, chunkOf(SPAWN.x), chunkOf(SPAWN.z));
     player.teleport(fall ? { x: SPAWN.x, y: FALL_START_Y, z: SPAWN.z } : SPAWN, { dimension: dim, rotation: { x: fall ? 90 : 0, y: 180 } });
-    if (areaId) {
-      await waitTicks(100);
-      world.tickingAreaManager.removeTickingArea(areaId);
-    }
+    if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
     console.warn("[Hell] travel failed: " + e);
     try {
@@ -487,6 +499,7 @@ async function sendToHell(player, fall = false) {
       /* ignore */
     }
   } finally {
+    if (areaId) removeArea(areaId);
     travelling.delete(player.id);
   }
 }

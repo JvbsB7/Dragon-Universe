@@ -2,7 +2,7 @@
     "format_version": "1.26.4",
     "minecraft:block": {
         "description": {
-            "identifier": "dbe:medical_moss_crop",
+            "identifier": "dbe:medical_moss",
             "states": {
                 "solariscore:growth": {
                     "values": {

@@ -67,24 +67,32 @@ Verificação automática: `node tools/validate.mjs` (ver [README](../README.md#
 - **Impacto:** lag em áreas com muitas entidades (vilas, eventos).
 - **Correção:** wrapper só para quem precisa; reduzir frequência; particionar colisões.
 
-### C10 🟠 Integração Kai ↔ Espaço quebrada
+### C10 🟠 Integração Kai ↔ Espaço quebrada — 🔧
 - **Onde:** `space_planets.js:577` (`DESTS` sem `KAI_KEY`), `:869-876`, `:1195-1197`; código morto em `:916`, `:1625`; `other_world_kai.js:21` vs `space_planets.js:1317`.
 - **Comportamento:** `/scriptevent dbe:space kai` só mostra a ajuda; não existe esfera do Kai no espaço; o retorno em y≥300 sempre dispara antes do lançamento ao espaço em y≥500.
-- **Correção:** adicionar o destino Kai e unificar os limites de altura.
+- **Correção aplicada:** Kai entrou em `DESTS`, em `SPHERE_DEFS` (último da lista, ângulo 340°, para não mudar a semente das esferas existentes) e em `RETROFITS` (mundos com o espaço já gerado ganham a esfera). Regra de altitude (decisão 4): em `other_world_kai.js`, y≥300 só devolve ao Other World quem veio de lá (`dbe:kai_origin` com `d = dbe:other_world`); quem veio do espaço ou da Terra sobe até y≥500 e vai para a Estação Orbital.
+- **Atenção:** em mundos onde o espaço já foi gerado, a esfera nova pode atravessar um asteroide antigo naquela região.
+- **Validação:** `/scriptevent dbe:space kai`; Star Navigator mostra "Planeta Kai"; voar até a esfera no espaço; no Kai vindo do Other World, subir a 300 → Other World; vindo do espaço, subir a 500 → Estação.
 
-### C11 🟠 Origem de retorno corrompida
+### C11 🟠 Origem de retorno corrompida — 🔧
 - **Onde:** `space_planets.js:1451-1458`, `namek_dimension.js:607`, `kai_dimension.js:697`, `universe_6_dimension.js:368`.
 - **Comportamento:** `dbe:namek_origin` pode gravar uma posição no Kai ou no U6 como "casa"; depois, o destino "Terra" leva ao ponto de spawn.
-- **Correção:** função única que só grava origem no overworld; centralizar a constante.
+- **Correção aplicada (pontual, sem refatorar):** `namek_dimension.js` não grava origem quando o jogador sai do Kai ou da arena do U6 (o `space_planets.js` já copiou a casa verdadeira); `kai_dimension.js` trata a arena do U6 como "veio de outro planeta" e `universe_6_dimension.js` faz o mesmo com o Kai. A centralização da constante e das funções de origem fica para a Fase 3.
+- **Validação:** Terra → Kai (por comando) → Star Navigator → Namek → "Terra": deve voltar ao ponto de partida na Terra.
 
-### C12 🟡 Ticking areas não removidas em caso de erro
+### C12 🟡 Ticking areas não removidas em caso de erro — 🔧
 - **Onde:** `kai_dimension.js:725-731`, `hell_dimension.js:476-481`, `namek_dimension.js:584-590`, `space_planets.js:1571-1599`.
-- **Correção:** `try/finally` em torno do teleporte.
+- **Correção aplicada:** em kai, hell, namek e space, a área é removida no `finally` da viagem (mesmo se o teleporte falhar) e também dentro de `prepareArea` se a geração dos chunks lançar erro. Os ids passaram a ter sufixo aleatório, evitando colisão quando dois jogadores viajam no mesmo tick. O tempo de 100 ticks com a área ativa após a chegada foi mantido.
 
-### C13 🟡 Limpeza global de golems
+### C13 ⚪ Limpeza global de golems — intencional
 - **Onde:** `planet_villages.js:1044-1052`.
 - **Comportamento:** a cada 200 ticks remove todo `dbe:demonic_iron_golem` em 6 dimensões, inclusive os invocados manualmente.
-- **Correção:** restringir aos golems marcados pelas vilas.
+- **Situação:** o comentário do código mostra que é uma migração intencional (golems demoníacos pertencem só ao Hell). Efeito colateral: golems invocados por ovo/comando fora do Hell também somem. Sem correção por enquanto.
+
+### C25 🟡 Robustez dos scripts de dimensão — 🔧
+- `universe_6_dimension.js` (`stairPerm`): se `BlockPermutation.resolve` falhar (estado renomeado numa versão do jogo), a escada é colocada na direção padrão em vez de abortar a construção inteira da arena.
+- `planet_villages.js` (`siteFor`): não usa `env` antes de `initVillages()`; hoje funcionava só pela ordem dos imports no `index.js`.
+- Mapas por jogador (`inKai`, `oxygen`, `lastUse`…) **não** foram limpos na saída: os ids são estáveis entre sessões, então o crescimento é limitado ao número de jogadores únicos, e limpar alguns (ex.: oxigênio) mudaria o comportamento ao relogar.
 
 ### C14 🔴 Provável bloqueio da campanha em `saga_frieza_1` — 🔧
 - **Onde:** `main_quests_data.js:421-422`.
@@ -105,9 +113,9 @@ Verificação automática: `node tools/validate.mjs` (ver [README](../README.md#
 - **Correção aplicada:** painel `red_ki_bar` adicionado. O `check-data` valida `kiBarColor` contra os painéis da HUD.
 
 ### C17 🟡 Arquivos e textos
-- 🔧 `Dragon Block_bp/blocks/decor/red_tile_slab.txt`: laje inacabada (sem loot, receita nem item) que nunca carregou. Movida para [`docs/wip/`](wip/README.md) e retirada do `contents.json`.
+- 🔧 `Dragon Block_bp/blocks/decor/red_tile_slab.txt`: definição salva como `.txt`, nunca carregou. Renomeada para `red_tile_slab.json` e incluída no `contents.json`, em `blocks.json` (som) e nos três `.lang` (decisão da equipe: ativar). O componente `dbe:slab` é registrado pelo núcleo. **Pendente:** não há receita (a laje só aparece no inventário criativo); `map_color` é azul (`#4e50cf`); testar laje dupla (`dbe:double_bit`) e o drop ao quebrar.
 - 🔧 `Dragon Block_bp/contents.json`: listava `worldgen/structure_sets/city.txt` (inexistente) no lugar de `city.json`.
-- 🔧 `dbe:medical_moss` era item e bloco ao mesmo tempo. O bloco da plantação passou a ser `dbe:medical_moss_crop` (id que já existia no `.lang`: `tile.dbe:medical_moss_crop.name`); sementes, feature de Namek e `blocks.json` atualizados; o item colhido mantém o id. **Mundos de teste:** plantações antigas de `dbe:medical_moss` viram bloco desconhecido.
+- 🔧 `dbe:medical_moss` era item e bloco ao mesmo tempo, sem `replace_block_item`. O item colhido ganhou `minecraft:block_placer` com `replace_block_item: true` (padrão dos outros pares item/bloco); o id `dbe:medical_moss` foi mantido, então plantações já existentes nos mundos continuam válidas. Efeito colateral: o musgo colhido também pode ser plantado, como a batata vanilla.
 - Texturas ausentes: `textures/ui/buttons/help_button(_hover)` (`ui/menus/menu_form.json`) — **precisa de arte**; `textures/ui/images/patreon_items` e `patreon_chat` (`ui/menus/news_form.json`) — ficam para a substituição do sistema Patreon (Fase 3).
 - 🔧 `Dragon Block_rp/texts/en_US.lang:588`: chave com `saga.` duplicado.
 - 🔧 Chaves só em pt_BR (saga Future Trunks e convite de mentor): traduzidas para en_US e es_ES — **revisão de texto recomendada**. Os três diálogos da Bulma em `saga_future_trunks_3` (objetivo 1) estão como `""` nas três línguas: **texto a escrever**.
@@ -115,12 +123,14 @@ Verificação automática: `node tools/validate.mjs` (ver [README](../README.md#
 - 🔧 `items/music_disc_hero.json` com `format_version: "beta"` → `1.26.4`.
 
 ### C18 🟡 Dados inconsistentes / conteúdo inacessível
-- Raças `glind` e `android` referenciadas mas ausentes em `races_data.js`. 🔧 Desativado o que quebrava: desejo `change_race` "glind" da Porunga e a recompensa de raça da `android_conversion` (a missão segue dando zeni). **Pendente (Fase 5):** Zamasu, Zamasu Fusionado e Zamasu Fusionado Corrompido continuam com `race: "glind"` e `gigantification` exclui `glind`.
+- Raças `glind` e `android` referenciadas mas ausentes em `races_data.js`. 🔧 Desativado o que quebrava: desejo `change_race` "glind" da Porunga e a recompensa de raça da `android_conversion` (a missão segue dando zeni). Remoção temporária aprovada pela equipe até a Fase 5. Confirmado no núcleo: `setRace` com raça desconhecida lança `InvalidRaceError` dentro da entrega de recompensas, então a recompensa antiga nunca funcionou. O evento `dbe:become_android` de `player.json` não é disparado pelo núcleo; um jogador que receber `dbe:race = android` por `/event` fica sem raça válida e o wrapper lança erro. **Pendente (Fase 5):** Zamasu, Zamasu Fusionado e Zamasu Fusionado Corrompido continuam com `race: "glind"` e `gigantification` exclui `glind`.
 - ❎ `ki_protect` (Kami-sama) e `metamoran_dance` (Goku): **são acessíveis**. O núcleo registra diálogos próprios desses NPCs com submenu de skills (`kami_sama_skills`; `goku_skills`, que exige ser discípulo do Goku). Registrado em `tools/lib/allowlist.mjs`.
-- `makankosappo` com preço, mas sem treinador: é recompensa do desafio `piccolo_trial`; o preço não é usado. Decidir se deve ser exclusiva do desafio.
+- 🔧 `makankosappo` tinha preço, mas nenhum treinador (só vinha do desafio `piccolo_trial`). Piccolo (`dbe:piccolo`, que já tem submenu de skills) passou a ensiná-la por 6 pontos; o desafio continua dando a técnica de graça. Sem `chargeSpeed`, o núcleo usa o padrão 1 (carga mais lenta que os outros beams, 1.5) — não é defeito.
 - ❎ `kiBarColor: "white"`: não é cor de `ki_colors_data.js`; o valor vai direto para a HUD, que tem o painel `white`.
 - 🔧 Sagas Future Trunks usavam `entityDefinitions.attributes` (o núcleo só lê `powerDefinition`; os chefes nasciam sem atributos e sem nível recomendado). Convertido para `powerDefinition.level` preservando o total de pontos pretendido — o núcleo distribui `(ATTRIBUTE_POINTS_PER_LEVEL + SKILL_POINTS_PER_LEVEL) × nível × 1,1` pontos: Goku Black 102 e 125, Zamasu 136, Zamasu Fusionado 159, Corrompido 170. **Validar o balanceamento no jogo.**
 - `absorption` e `gigantification` restringem raças por lista de exclusão — raças novas ganham acesso automaticamente.
+
+- 🔧 `config.js` (`INDESTRUCTIBLE_BLOCKS`): `minecraft:light_block` não existe mais (desde a 1.21 os blocos de luz são `minecraft:light_block_0` … `_15`), então os blocos de luz não estavam protegidos. Trocado pelas 16 variantes; o núcleo compara por `typeId` exato (`includes`).
 
 ### C24 🟡 Achados da validação automática (2026-10-15)
 - 🔧 `final_flash` usava os sons `skill.final_flash_launch` e `skill.final_flash_gun`, que não existiam: a skill não tinha som. Eventos criados em `sound_definitions.json` reaproveitando os arquivos do Galick Gun (trocar quando houver áudio próprio).
@@ -164,7 +174,7 @@ Verificação automática: `node tools/validate.mjs` (ver [README](../README.md#
 | P1 | Execução restrita: wrapper criado dentro de `beforeEvents.entityHurt`; comandos que alteram o mundo sem `system.run`; handler async em `beforeEvents.playerInteractWithEntity` | núcleo |
 | P2 | Sem handler de saída de jogador: alterações dos últimos 20 ticks podem se perder; reconexão rápida pode reutilizar instância inválida | núcleo |
 | P3 | `getBlock` em chunk descarregado pode lançar `LocationInUnloadedChunkError`, gerando spam nos scanners | scripts de dimensão |
-| P4 | Crescimento ilimitado: uma dynamic property por chunk gerado e por vila; caches e mapas por jogador nunca limpos | núcleo, `planet_villages.js`, scripts de dimensão |
+| P4 | Crescimento ilimitado: uma dynamic property por chunk gerado e por vila; caches nunca limpos (mapas por jogador: ver C25) | núcleo, `planet_villages.js`, scripts de dimensão |
 | P5 | Vilas com 35–45 aldeões a cada ~160 blocos (hostis em Vegeta/Freeza) — maior risco de lag | `planet_villages.js` |
 | P6 | Torneio: estado só em memória, partidas sem timeout; reinício deixa jogadores presos | núcleo |
 | P7 | `defeat_enemy` conta abates de qualquer jogador do mesmo tipo de inimigo | núcleo |

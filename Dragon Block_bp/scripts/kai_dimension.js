@@ -664,8 +664,17 @@ function ensureSky(force = false) {
 
 // ---------------------------------------------------------------- travel
 
+/** Removes a temporary ticking area; never throws (the area may already be gone). */
+function removeArea(id) {
+  try {
+    world.tickingAreaManager.removeTickingArea(id);
+  } catch (e) {
+    /* already gone */
+  }
+}
+
 async function prepareArea(dim, cx, cz) {
-  const id = "dbe:kai_travel_" + system.currentTick;
+  const id = "dbe:kai_travel_" + system.currentTick + "_" + Math.floor(Math.random() * 1e6);
   let area = false;
   try {
     await world.tickingAreaManager.createTickingArea(id, {
@@ -677,11 +686,16 @@ async function prepareArea(dim, cx, cz) {
   } catch (e) {
     console.warn("[Kai] could not create ticking area: " + e);
   }
-  for (const [dx, dz] of OFFSETS_TERRAIN) {
-    if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainJob(dim, cx + dx, cz + dz), "t" + dx + "," + dz);
-  }
-  for (const [dx, dz] of OFFSETS_DECOR) {
-    if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(dim, cx + dx, cz + dz), "d" + dx + "," + dz);
+  try {
+    for (const [dx, dz] of OFFSETS_TERRAIN) {
+      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainJob(dim, cx + dx, cz + dz), "t" + dx + "," + dz);
+    }
+    for (const [dx, dz] of OFFSETS_DECOR) {
+      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(dim, cx + dx, cz + dz), "d" + dx + "," + dz);
+    }
+  } catch (e) {
+    if (area) removeArea(id);
+    throw e;
   }
   return area ? id : null;
 }
@@ -694,8 +708,8 @@ const SPACE_ORIGIN_PROP = "dbe:namek_origin"; // "where you left Earth from", ke
 
 function rememberOrigin(player) {
   if (player.dimension.id === DIM_ID) return;
-  if (isSpaceDimension(player.dimension.id) || player.dimension.id === "dbe:namek") {
-    // arriving from space: the way home is the space system's saved Earth spot, not a point in space
+  if (isSpaceDimension(player.dimension.id) || player.dimension.id === "dbe:namek" || player.dimension.id === "dbe:universe_6_arena") {
+    // arriving from space or another planet: the way home is the space system's saved Earth spot, not a point there
     try {
       player.setDynamicProperty(ORIGIN_PROP, undefined);
     } catch (e) {
@@ -717,18 +731,16 @@ async function sendToKai(player) {
   if (system.currentTick - (lastUse.get(player.id) ?? -1000) < 100) return;
   lastUse.set(player.id, system.currentTick);
   travelling.add(player.id);
+  let areaId = null;
   try {
     const dim = world.getDimension(DIM_ID);
     const s = findSpawn();
     rememberOrigin(player);
     player.sendMessage("§dTravelling to Kai's planet...");
-    const areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z));
+    areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z));
     player.teleport({ x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { dimension: dim, rotation: { x: 5, y: 180 } });
     ensureSky();
-    if (areaId) {
-      await waitTicks(100);
-      world.tickingAreaManager.removeTickingArea(areaId);
-    }
+    if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
     console.warn("[Kai] travel failed: " + e);
     try {
@@ -737,6 +749,7 @@ async function sendToKai(player) {
       /* ignore */
     }
   } finally {
+    if (areaId) removeArea(areaId);
     travelling.delete(player.id);
   }
 }

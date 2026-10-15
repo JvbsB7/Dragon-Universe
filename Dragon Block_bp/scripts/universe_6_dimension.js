@@ -81,7 +81,16 @@ const permCache = new Map();
 function stairPerm(type, dir) {
   // weirdo_direction: 0 east, 1 west, 2 south, 3 north = direction the stairs rise towards
   const key = type + dir;
-  if (!permCache.has(key)) permCache.set(key, BlockPermutation.resolve(mcId(type), { weirdo_direction: dir, upside_down_bit: false }));
+  if (!permCache.has(key)) {
+    let perm;
+    try {
+      perm = BlockPermutation.resolve(mcId(type), { weirdo_direction: dir, upside_down_bit: false });
+    } catch (e) {
+      // state renamed in this game version: place the stairs facing the default way instead of aborting the arena build
+      perm = type;
+    }
+    permCache.set(key, perm);
+  }
   return permCache.get(key);
 }
 
@@ -365,8 +374,8 @@ const NAMEK_ORIGIN_PROP = "dbe:namek_origin"; // "where you left Earth from", ke
 
 function rememberOrigin(player) {
   if (player.dimension.id === DIM_ID) return;
-  if (isSpaceDimension(player.dimension.id) || player.dimension.id === "dbe:namek") {
-    // arriving from space: the way home is the space system's saved Earth spot, not a point in space
+  if (isSpaceDimension(player.dimension.id) || player.dimension.id === "dbe:namek" || player.dimension.id === "dbe:kai") {
+    // arriving from space or another planet: the way home is the space system's saved Earth spot, not a point there
     try {
       player.setDynamicProperty(ORIGIN_PROP, undefined);
     } catch (e) {

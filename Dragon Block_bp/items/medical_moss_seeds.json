@@ -11,7 +11,7 @@
         "components": {
             "minecraft:icon": "medical_moss_seeds",
             "minecraft:block_placer": {
-                "block": "dbe:medical_moss_crop"
+                "block": "dbe:medical_moss"
             },
             "minecraft:compostable": {
                 "composting_chance": 30

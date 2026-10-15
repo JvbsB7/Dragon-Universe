@@ -33,9 +33,10 @@ Arquivos legíveis (corrigidos no código em 2026-10-15, **aguardando teste no j
 - [ ] C14 — `saga_frieza_1` procura o bioma de Namek na dimensão certa
 - [ ] C15 — `/stopsound @s`
 - [ ] C16 — painel vermelho da barra de ki
-- [ ] C17 — laje vermelha fora do pack, `contents.json`, `dbe:medical_moss_crop`, chave do en_US, traduções da saga Future Trunks, cabelos duplicados, disco `music_disc_hero`
-- [ ] C18 — desejo "glind" e recompensa de raça android desativados; Future Trunks com `powerDefinition`
+- [ ] C17 — laje vermelha ativada, `contents.json`, musgo medicinal com `block_placer`, chave do en_US, traduções da saga Future Trunks, cabelos duplicados, disco `music_disc_hero`
+- [ ] C18 — desejo "glind" e recompensa de raça android desativados (aprovado até a Fase 5); Future Trunks com `powerDefinition`; Piccolo ensina `makankosappo`; blocos de luz no `INDESTRUCTIBLE_BLOCKS`
 - [ ] C24 — sons da Final Flash; chaves da `saga_universe_6_1`
+- [ ] C10/C11/C12/C25 — Kai no espaço e regra de altitude; origem de retorno; ticking areas; escadas do U6; `env` das vilas
 
 Pendentes de decisão/arte: botão de ajuda (textura `help_button`), imagens do Patreon (Fase 3), raça glind dos Zamasu (Fase 5), diálogos da Bulma em `saga_future_trunks_3`, chaves `battle_jacket_return`.
 

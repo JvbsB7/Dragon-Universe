@@ -574,7 +574,7 @@ export function isSpaceDimension(dimId) {
 }
 
 // destinations offered by the menu / script event
-const DESTS = ["earth", "space", "namek", "vegeta", "frieza", "yardrat", U6_KEY];
+const DESTS = ["earth", "space", "namek", "vegeta", "frieza", "yardrat", U6_KEY, KAI_KEY];
 
 // ---------------------------------------------------------------- planet terrain helpers
 
@@ -873,6 +873,8 @@ const SPHERE_DEFS = [
   { key: "frieza", r: 12, ang: 190, dy: -14 },
   { key: "yardrat", r: 9, ang: 250, dy: 26 },
   { key: U6_KEY, r: 10, ang: 310, dy: 4 },
+  // added last: the seed of each sphere comes from its index, so the existing planets keep their look
+  { key: KAI_KEY, r: 10, ang: 340, dy: -8 },
 ];
 const SPHERES = SPHERE_DEFS.map((d, i) => {
   const a = (d.ang * Math.PI) / 180;
@@ -1194,6 +1196,7 @@ const U6_SPHERE_PROP = "dbe:space_u6_sphere";
 const KAI_SPHERE_PROP = "dbe:space_kai_sphere";
 const RETROFITS = [
   { key: U6_KEY, prop: U6_SPHERE_PROP, name: "Universe 6" },
+  { key: KAI_KEY, prop: KAI_SPHERE_PROP, name: "Kai" },
 ];
 let retrofitting = false;
 
@@ -1410,6 +1413,15 @@ const destName = (key) => ({ translate: "dbe.space.dest." + key });
 
 // ---------------------------------------------------------------- travel
 
+/** Removes a temporary ticking area; never throws (the area may already be gone). */
+function removeArea(id) {
+  try {
+    world.tickingAreaManager.removeTickingArea(id);
+  } catch (e) {
+    /* already gone */
+  }
+}
+
 async function prepareArea(W, dim, cx, cz) {
   const rad = W.kind === "space" ? W.prep : W.radius;
   const id = "dbe:space_travel_" + system.currentTick + "_" + Math.floor(Math.random() * 1000);
@@ -1424,13 +1436,18 @@ async function prepareArea(W, dim, cx, cz) {
   } catch (e) {
     console.warn("[Space] could not create ticking area: " + e);
   }
-  for (const [dx, dz] of offsets(rad)) {
-    if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainFor(W, dim, cx + dx, cz + dz), W.key + ":t" + dx + "," + dz, W);
-  }
-  if (W.kind === "planet") {
-    for (const [dx, dz] of offsets(W.decorRadius)) {
-      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(W, dim, cx + dx, cz + dz), "d" + W.key + ":t" + dx + "," + dz, W);
+  try {
+    for (const [dx, dz] of offsets(rad)) {
+      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainFor(W, dim, cx + dx, cz + dz), W.key + ":t" + dx + "," + dz, W);
     }
+    if (W.kind === "planet") {
+      for (const [dx, dz] of offsets(W.decorRadius)) {
+        if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(W, dim, cx + dx, cz + dz), "d" + W.key + ":t" + dx + "," + dz, W);
+      }
+    }
+  } catch (e) {
+    if (area) removeArea(id);
+    throw e;
   }
   return area ? id : null;
 }
@@ -1558,6 +1575,7 @@ async function travelTo(player, key, opts = {}) {
   const W = WORLDS[key];
   if (!W) return;
   travelling.add(player.id);
+  let areaId = null;
   try {
     const dim = world.getDimension(W.id);
     saveOrigin(player, !!opts.atmosphere);
@@ -1568,7 +1586,7 @@ async function travelTo(player, key, opts = {}) {
       const s = findSpawn(W);
       target = { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 };
     }
-    const areaId = await prepareArea(W, dim, chunkOf(target.x), chunkOf(target.z));
+    areaId = await prepareArea(W, dim, chunkOf(target.x), chunkOf(target.z));
     if (pod) {
       try {
         pod.remove();
@@ -1593,10 +1611,7 @@ async function travelTo(player, key, opts = {}) {
         }
       }
     }
-    if (areaId) {
-      await waitTicks(100);
-      world.tickingAreaManager.removeTickingArea(areaId);
-    }
+    if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
     console.warn("[Space] travel to " + key + " failed: " + e);
     try {
@@ -1605,6 +1620,7 @@ async function travelTo(player, key, opts = {}) {
       /* ignore */
     }
   } finally {
+    if (areaId) removeArea(areaId);
     travelling.delete(player.id);
   }
 }

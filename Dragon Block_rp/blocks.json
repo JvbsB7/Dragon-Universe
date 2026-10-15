@@ -83,7 +83,7 @@
     "dbe:mafuba_pot": {
         "sound": "decorated_pot"
     },
-    "dbe:medical_moss_crop": {
+    "dbe:medical_moss": {
         "sound": "grass"
     },
     "dbe:namek_dragon_ball": {
@@ -132,6 +132,9 @@
     },
     "dbe:red_tile": {
         "textures": "red_tile",
+        "sound": "stone"
+    },
+    "dbe:red_tile_slab": {
         "sound": "stone"
     },
     "dbe:senzu_beans": {

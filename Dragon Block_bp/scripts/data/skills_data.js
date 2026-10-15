@@ -802,6 +802,7 @@ const skills_data = [
     chargeKiDrain: 25,
     offset: [2.5, 1, -0.375],
     price: 6,
+    availableTrainers: ["dbe:piccolo"],
     propertyIndex: 5,
     shootSound: "skill.makankosappo.launch",
     startChargeSound: "skill.makankosappo",

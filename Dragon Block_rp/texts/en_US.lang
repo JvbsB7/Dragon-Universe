@@ -115,6 +115,7 @@ tile.dbe:purple_tile_stairs.name=Purple Tile Stairs
 tile.dbe:purple_tile.name=Purple Tile
 tile.dbe:red_tile_stairs.name=Red Tile Stairs
 tile.dbe:red_tile.name=Red Tile
+tile.dbe:red_tile_slab.name=Red Tile Slab
 tile.dbe:senzu_beans.name=Senzu Beans
 tile.dbe:white_tile_stairs.name=White Tile Stairs
 tile.dbe:white_tile.name=White Tile

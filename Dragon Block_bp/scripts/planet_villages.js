@@ -144,7 +144,8 @@ const siteCache = new Map();
 
 /** Deterministic village site of a 160x160 cell, or null (also null for planets without a village style). */
 function siteFor(P, ci, cj) {
-  if (!STYLES[P.key]) return null;
+  // env comes from initVillages() (space_planets.js); until then no site is known, and nothing is cached
+  if (!STYLES[P.key] || !env) return null;
   const key = P.key + ":" + ci + ":" + cj;
   if (siteCache.has(key)) return siteCache.get(key);
   let site = null;

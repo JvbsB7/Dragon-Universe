@@ -115,6 +115,7 @@ tile.dbe:purple_tile_stairs.name=Escadas de Azulejo Roxo
 tile.dbe:purple_tile.name=Azulejo Roxo
 tile.dbe:red_tile_stairs.name=Escadas de Azulejo Vermelho
 tile.dbe:red_tile.name=Azulejo Vermelho
+tile.dbe:red_tile_slab.name=Laje de Azulejo Vermelho
 tile.dbe:senzu_beans.name=Semente dos Deuses
 tile.dbe:white_tile_stairs.name=Escadas de Azulejo Branco
 tile.dbe:white_tile.name=Azulejo Branco

@@ -548,8 +548,17 @@ function scan() {
 
 // ---------------------------------------------------------------- travel
 
+/** Removes a temporary ticking area; never throws (the area may already be gone). */
+function removeArea(id) {
+  try {
+    world.tickingAreaManager.removeTickingArea(id);
+  } catch (e) {
+    /* already gone */
+  }
+}
+
 async function prepareArea(dim, cx, cz) {
-  const id = "dbe:namek_travel_" + system.currentTick;
+  const id = "dbe:namek_travel_" + system.currentTick + "_" + Math.floor(Math.random() * 1e6);
   let area = false;
   try {
     await world.tickingAreaManager.createTickingArea(id, {
@@ -561,11 +570,16 @@ async function prepareArea(dim, cx, cz) {
   } catch (e) {
     console.warn("[Namek] could not create ticking area: " + e);
   }
-  for (const [dx, dz] of OFFSETS_TERRAIN) {
-    if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainJob(dim, cx + dx, cz + dz), "t" + dx + "," + dz);
-  }
-  for (const [dx, dz] of OFFSETS_DECOR) {
-    if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(dim, cx + dx, cz + dz), "d" + dx + "," + dz);
+  try {
+    for (const [dx, dz] of OFFSETS_TERRAIN) {
+      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainJob(dim, cx + dx, cz + dz), "t" + dx + "," + dz);
+    }
+    for (const [dx, dz] of OFFSETS_DECOR) {
+      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(dim, cx + dx, cz + dz), "d" + dx + "," + dz);
+    }
+  } catch (e) {
+    if (area) removeArea(id);
+    throw e;
   }
   return area ? id : null;
 }
@@ -576,18 +590,16 @@ const lastPodUse = new Map(); // player id -> tick of last accepted pod use (ign
 async function sendToNamek(player) {
   if (travelling.has(player.id)) return;
   travelling.add(player.id);
+  let areaId = null;
   try {
     const dim = world.getDimension(DIM_ID);
     const s = findSpawn();
     rememberOrigin(player); // so the pod can bring the player back to this exact spot
     player.sendMessage("§aTravelling to Namek...");
-    const areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z));
+    areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z));
     player.teleport({ x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { dimension: dim });
     lastPodUse.set(player.id, system.currentTick);
-    if (areaId) {
-      await waitTicks(100);
-      world.tickingAreaManager.removeTickingArea(areaId);
-    }
+    if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
     console.warn("[Namek] travel failed: " + e);
     try {
@@ -596,15 +608,19 @@ async function sendToNamek(player) {
       /* ignore */
     }
   } finally {
+    if (areaId) removeArea(areaId);
     travelling.delete(player.id);
   }
 }
 
 const ORIGIN_PROP = "dbe:namek_origin";
+const OFF_WORLD_IDS = ["dbe:kai", "dbe:universe_6_arena"]; // planets reached through space, never a "home"
 
 /** Remembers where (dimension, exact position, facing) the player left for Namek. Saved with the player. */
 function rememberOrigin(player) {
-  if (player.dimension.id === DIM_ID || isSpaceDimension(player.dimension.id)) return; // never overwrite the origin with a spot on another planet
+  // never overwrite the origin with a spot on another planet: when leaving Kai or the arena through space,
+  // space_planets.js has already copied the real home spot into this property
+  if (player.dimension.id === DIM_ID || isSpaceDimension(player.dimension.id) || OFF_WORLD_IDS.includes(player.dimension.id)) return;
   try {
     const { x, y, z } = player.location;
     const r = player.getRotation();

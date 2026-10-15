@@ -2,8 +2,9 @@
  * Planet of the Kais in the Other World.
  *
  * A green-and-pink planet sphere floats in the Other World (dbe:other_world), like the planets that float in
- * space. Fly into it to land on the Kai planet (dbe:kai, built by kai_dimension.js). Fly up on Kai (y >= 300)
- * and you are brought back to the Other World, next to the planet. The Kid Buu quest happens on Kai.
+ * space. Fly into it to land on the Kai planet (dbe:kai, built by kai_dimension.js). If you came from the Other
+ * World, flying up on Kai (y >= 300) brings you back there, next to the planet; if you came from space or Earth,
+ * keep climbing to y >= 500 to reach the Orbital Station. The Kid Buu quest happens on Kai.
  *
  * The sphere is built once, the first time a player is in the Other World. Move or rebuild it:
  *   /scriptevent dbe:kai_planet_here    -> removes the old planet and builds a new one at your position
@@ -18,7 +19,8 @@ const KAI = "dbe:kai";
 const PROP = "dbe:ow_kai_planet"; // JSON {x,y,z,r}, saved with the world
 const DEFAULT_PLANET = { x: 0, y: 120, z: 120, r: 12 };
 const REACH = 2.5; // how close to the surface counts as "flying into it"
-const KAI_EXIT_Y = 300; // fly this high on Kai to go back to the Other World
+const KAI_EXIT_Y = 300; // fly this high on Kai to go back to the Other World (only if you came from it)
+const KAI_ORIGIN_PROP = "dbe:kai_origin"; // where the player left for Kai, saved by kai_dimension.js
 const SCAN_TICKS = 5;
 
 const waitTicks = (n) => new Promise((resolve) => system.runTimeout(resolve, n));
@@ -157,6 +159,19 @@ async function buildPlanet(P, clearOld) {
 const lastUse = new Map();
 const cooldownOk = (p) => system.currentTick - (lastUse.get(p.id) ?? -1000) > 120;
 
+/**
+ * Only players who flew in from the Other World go back there at KAI_EXIT_Y. Everyone else keeps climbing to
+ * y >= 500, where space_planets.js sends them to the Orbital Station.
+ */
+function cameFromOtherWorld(player) {
+  try {
+    const raw = player.getDynamicProperty(KAI_ORIGIN_PROP);
+    return typeof raw === "string" && JSON.parse(raw).d === OTHER_WORLD;
+  } catch (e) {
+    return false;
+  }
+}
+
 function enterKai(player, P) {
   lastUse.set(player.id, system.currentTick);
   const { x, y, z } = player.location;
@@ -199,7 +214,7 @@ function scan() {
       const { x, y, z } = p.location;
       if (Math.hypot(x - P.x, y - P.y, z - P.z) < P.r + REACH && cooldownOk(p)) enterKai(p, P);
     } else if (dimId === KAI) {
-      if (p.location.y >= KAI_EXIT_Y && cooldownOk(p)) {
+      if (p.location.y >= KAI_EXIT_Y && cooldownOk(p) && cameFromOtherWorld(p)) {
         lastUse.set(p.id, system.currentTick);
         try {
           p.runCommand("scriptevent dbe:kai_return");

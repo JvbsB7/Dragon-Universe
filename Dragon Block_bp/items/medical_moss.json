@@ -10,6 +10,10 @@
 
         "components": {
             "minecraft:icon": "medical_moss",
+            "minecraft:block_placer": {
+                "block": "dbe:medical_moss",
+                "replace_block_item": true
+            },
             "minecraft:compostable": {
                 "composting_chance": 30
             }
