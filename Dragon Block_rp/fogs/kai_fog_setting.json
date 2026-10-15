@@ -1,0 +1,22 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:fog_settings": {
+        "description": {
+            "identifier": "dbe:fog_kai"
+        },
+        "distance": {
+            "air": {
+                "fog_start": 0.65,
+                "fog_end": 1.0,
+                "fog_color": "#eab4f7",
+                "render_distance_type": "render"
+            },
+            "water": {
+                "fog_start": 0,
+                "fog_end": 48,
+                "fog_color": "#2f9bff",
+                "render_distance_type": "fixed"
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "dbe:ramen"
+    },
+
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "CDE",
+      "ABA",
+      " A "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:paper"
+      },
+      "B": {
+        "item": "minecraft:potion"
+      },
+      "C": {
+        "item": "minecraft:wheat"
+      },
+      "D": {
+        "item": "dbe:raw_dinosaur_meat"
+      },
+      "E": {
+        "tag": "minecraft:egg"
+      }
+    },
+    "unlock": [
+      {
+        "item": "dbe:raw_dinosaur_meat"
+      }
+    ],
+    "result": {
+      "item": "dbe:ramen"
+    }
+  }
+}

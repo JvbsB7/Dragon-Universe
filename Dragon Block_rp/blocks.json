@@ -1,0 +1,175 @@
+{
+    "format_version": "1.21.40",
+    "dbe:ajisa_door": {
+        "sound": "wood"
+    },
+    "dbe:ajisa_leaves": {
+        "sound": "grass"
+    },
+    "dbe:ajisa_log": {
+        "sound": "wood"
+    },
+    "dbe:ajisa_planks": {
+        "textures": "ajisa_planks",
+        "sound": "wood"
+    },
+    "dbe:ajisa_sapling": {
+        "sound": "grass"
+    },
+    "dbe:ajisa_stairs": {
+        "sound": "wood"
+    },
+    "dbe:black_tile": {
+        "textures": "black_tile",
+        "sound": "stone"
+    },
+    "dbe:blue_tile": {
+        "textures": "blue_tile",
+        "sound": "stone"
+    },
+    "dbe:deepslate_evolitium_ore": {
+        "textures": "deepslate_evolitium_ore",
+        "sound": "deepslate"
+    },
+    "dbe:dirtstone_evolitium_ore": {
+        "textures": "dirtstone_evolitium_ore",
+        "sound": "stone"
+    },
+    "dbe:dirtstone_rubble": {
+        "sound": "stone"
+    },
+    "dbe:dirtstone_tall_grass": {
+        "sound": "grass"
+    },
+    "dbe:dirtstone_grass": {
+        "isotropic": {
+            "up": true
+        },
+        "textures": {
+            "up": "dirtstone_grass_top",
+            "down": "dirtstone",
+            "side": "dirtstone_grass_side"
+        },
+        "sound": "grass"
+    },
+    "dbe:dirtstone": {
+        "sound": "stone"
+    },
+    "dbe:dragon_ball": {
+        "sound": "glass"
+    },
+    "dbe:dry_soil": {
+        "textures": "dry_soil",
+        "sound": "stone"
+    },
+    "dbe:evolitium_ore": {
+        "textures": "evolitium_ore",
+        "sound": "stone"
+    },
+    "dbe:evolitium_cluster": {
+        "sound": "amethyst_cluster"
+    },
+    "dbe:gravity_machine": {
+        "sound": "metal"
+    },
+    "dbe:katchin_block": {
+        "textures": "katchin_block",
+        "sound": "metal"
+    },
+    "dbe:lime_tile": {
+        "textures": "lime_tile",
+        "sound": "stone"
+    },
+    "dbe:mafuba_pot": {
+        "sound": "decorated_pot"
+    },
+    "dbe:medical_moss": {
+        "sound": "grass"
+    },
+    "dbe:namek_dragon_ball": {
+        "sound": "glass"
+    },
+    "dbe:namek_grass": {
+        "isotropic": {
+            "up": true
+        },
+        "textures": {
+            "up": "namek_grass_top",
+            "down": "namek_stone",
+            "side": "namek_grass_side"
+        },
+        "sound": "grass"
+    },
+    "dbe:namek_mushroom": {
+        "sound": "grass"
+    },
+    "dbe:namek_stone_evolitium_ore": {
+        "textures": "namek_stone_evolitium_ore",
+        "sound": "stone"
+    },
+    "dbe:namek_stone": {
+        "textures": "namek_stone",
+        "sound": "stone"
+    },
+    "dbe:namek_tall_grass": {
+        "sound": "grass"
+    },
+    "dbe:orange_tile": {
+        "textures": "orange_tile",
+        "sound": "stone"
+    },
+    "dbe:packed_sand": {
+        "textures": "packed_sand",
+        "sound": "stone"
+    },
+    "dbe:pink_tile": {
+        "textures": "pink_tile",
+        "sound": "stone"
+    },
+    "dbe:purple_tile": {
+        "textures": "purple_tile",
+        "sound": "stone"
+    },
+    "dbe:red_tile": {
+        "textures": "red_tile",
+        "sound": "stone"
+    },
+    "dbe:senzu_beans": {
+        "sound": "grass"
+    },
+    "dbe:white_tile": {
+        "textures": "white_tile",
+        "sound": "stone"
+    },
+    "dbe:yellow_cloud_block": {
+        "sound": "cloth"
+    },
+    "dbe:yellow_tile": {
+        "textures": "yellow_tile",
+        "sound": "stone"
+    },
+    "dbe:vegeta_soil": {
+        "textures": "vegeta_soil",
+        "sound": "gravel"
+    },
+    "dbe:vegeta_rock": {
+        "textures": "vegeta_rock",
+        "sound": "stone"
+    },
+    "dbe:frieza_soil": {
+        "textures": "frieza_soil",
+        "sound": "gravel"
+    },
+    "dbe:frieza_rock": {
+        "textures": "frieza_rock",
+        "sound": "stone"
+    },
+    "dbe:yardrat_soil": {
+        "textures": "yardrat_soil",
+        "sound": "gravel"
+    },
+    "dbe:yardrat_rock": {
+        "textures": "yardrat_rock",
+        "sound": "stone"
+    }
+}

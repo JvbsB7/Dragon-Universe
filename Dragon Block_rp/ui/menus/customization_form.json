@@ -1,0 +1,196 @@
+{
+    "namespace": "customization_form",
+
+    "customization_form@server_form.long_form": {
+        "size": [ 295, 195 ],
+        "$child_control": "customization_form.customization_panel",
+        "$custom_background": "custom_server_form.background",
+        "$default_button_texture": "textures/ui/buttons/menu_button",
+        "$hover_button_texture": "textures/ui/buttons/menu_button_hover"
+    },
+
+    "customization_panel": {
+        "type": "panel",
+        "layer": 1,
+        "controls": [
+            {
+                "back_button@custom_server_form.back_button": { }
+            },
+            {
+                "description": {
+                    "type": "label",
+                    "size": [ "45%", "100%" ],
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "text": "#form_text",
+                    "line_padding": 4,
+                    "text_alignment": "center",
+                    "color": "$7_color_format",
+                    "controls": [
+                        {
+                            "previous_buttons_panel": {
+                                "type": "stack_panel",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "collection_name": "form_buttons",
+                                "controls": [
+                                    {
+                                        "button_1@customization_form.previous_button": {
+                                            "collection_index": 2
+                                        }
+                                    },
+                                    {
+                                        "button_2@customization_form.previous_button": {
+                                            "collection_index": 4
+                                        }
+                                    },
+                                    {
+                                        "button_3@customization_form.previous_button": {
+                                            "collection_index": 6
+                                        }
+                                    },
+                                    {
+                                        "button_4@customization_form.previous_button": {
+                                            "collection_index": 8
+                                        }
+                                    },
+                                    {
+                                        "button_5@customization_form.previous_button": {
+                                            "collection_index": 10
+                                        }
+                                    },
+                                    {
+                                        "button_6@customization_form.previous_button": {
+                                            "collection_index": 12
+                                        }
+                                    },
+                                    {
+                                        "button_7@customization_form.previous_button": {
+                                            "collection_index": 14
+                                        }
+                                    },
+                                    {
+                                        "button_8@customization_form.previous_button": {
+                                            "collection_index": 16
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "next_buttons_panel": {
+                                "type": "stack_panel",
+                                "size": [ 15, "100%" ],
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "collection_name": "form_buttons",
+                                "controls": [
+                                    {
+                                        "button_1@customization_form.next_button": {
+                                            "collection_index": 3
+                                        }
+                                    },
+                                    {
+                                        "button_2@customization_form.next_button": {
+                                            "collection_index": 5
+                                        }
+                                    },
+                                    {
+                                        "button_3@customization_form.next_button": {
+                                            "collection_index": 7
+                                        }
+                                    },
+                                    {
+                                        "button_4@customization_form.next_button": {
+                                            "collection_index": 9
+                                        }
+                                    },
+                                    {
+                                        "button_5@customization_form.next_button": {
+                                            "collection_index": 11
+                                        }
+                                    },
+                                    {
+                                        "button_6@customization_form.next_button": {
+                                            "collection_index": 13
+                                        }
+                                    },
+                                    {
+                                        "button_7@customization_form.next_button": {
+                                            "collection_index": 15
+                                        }
+                                    },
+                                    {
+                                        "button_8@customization_form.next_button": {
+                                            "collection_index": 17
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "player_renderer": {
+                    "type": "custom",
+                    "renderer": "live_player_renderer",
+                    "size": [ 50, 50 ],
+                    "offset": [ 16, -20 ],
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "layer": 2,
+                    "property_bag": {
+                        "#look_at_cursor": true
+                    }
+                }
+            },
+            {
+                "confirm_button": {
+                    "type": "stack_panel",
+                    "size": [ "25%", "100%c" ],
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "collection_name": "form_buttons",
+                    "controls": [
+                        {
+                            "button@custom_server_form.text_button": {
+                                "collection_index": 1
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "previous_button@customization_form.select_button": {
+        "$default_button_texture": "textures/ui/buttons/previous_button",
+        "$hover_button_texture": "textures/ui/buttons/previous_button_hover"
+    },
+
+    "next_button@customization_form.select_button": {
+        "$default_button_texture": "textures/ui/buttons/next_button",
+        "$hover_button_texture": "textures/ui/buttons/next_button_hover"
+    },
+
+    "select_button@custom_server_form.button": {
+        "size": [ 14, 14 ],
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "form_buttons"
+            },
+            {
+                "binding_name": "#form_button_text",
+                "binding_type": "collection",
+                "binding_collection_name": "form_buttons"
+            },
+            {
+                "binding_type": "view",
+                "source_property_name": "(not (#form_button_text = ''))",
+                "target_property_name": "#visible"
+            }
+        ]
+    }
+}

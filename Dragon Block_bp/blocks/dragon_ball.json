@@ -1,0 +1,110 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dbe:dragon_ball",
+            "states": {
+                "dbe:is_petrified": [ false, true ],
+                "dbe:is_powered": [ false, true ],
+                "dbe:level": {
+                    "values": {
+                        "min": 0,
+                        "max": 6
+                    }
+                }
+            }
+        },
+
+        "components": {
+            "minecraft:geometry": "geometry.dragon_ball",
+            "minecraft:map_color": "#f4ac3b",
+            "minecraft:light_emission": 3,
+            "minecraft:light_dampening": 0,
+            "minecraft:loot": "loot_tables/blocks/dragon_ball.json",
+            "minecraft:collision_box": {
+                "origin": [ -3, 0.5, -3 ],
+                "size": [ 6, 6, 6 ]
+            },
+            "minecraft:connection_rule": {
+                "accepts_connections_from": "none"
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 0.5
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0.5
+            },
+            "minecraft:destruction_particles": {
+                "texture": "dragon_ball"
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "can_contain_liquid": true
+                    }
+                ]
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "dragon_ball",
+                    "render_method": "blend",
+                    "ambient_occlusion": false,
+                    "face_dimming": false
+                },
+                "outline": {
+                    "texture": "dragon_ball",
+                    "render_method": "blend",
+                    "ambient_occlusion": false,
+                    "face_dimming": false
+                }
+            },
+            "minecraft:selection_box": {
+                "origin": [ -3, 0.5, -3 ],
+                "size": [ 6, 6, 6 ]
+            },
+            "minecraft:tick": {
+                "interval_range": [ 1, 1 ]
+            },
+            "dbe:dragon_ball": { },
+            "tag:dragon_ball": { }
+        },
+
+        "permutations": [
+            {
+                "condition": "q.block_state('dbe:is_petrified')",
+                "components": {
+                    "minecraft:light_emission": 0,
+                    "minecraft:destruction_particles": {
+                        "texture": "petrified_dragon_ball"
+                    },
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "petrified_dragon_ball",
+                            "render_method": "opaque"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('dbe:is_powered') && !q.block_state('dbe:is_petrified')",
+                "components": {
+                    "minecraft:light_emission": 15,
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "dragon_ball_activated",
+                            "render_method": "blend",
+                            "ambient_occlusion": false,
+                            "face_dimming": false
+                        },
+                        "outline": {
+                            "texture": "dragon_ball_activated",
+                            "render_method": "blend",
+                            "ambient_occlusion": false,
+                            "face_dimming": false
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

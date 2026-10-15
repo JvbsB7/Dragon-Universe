@@ -1,0 +1,10 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.majin_mark": {
+            "geometry": "Geometry.majin_mark",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.majin_mark" ]
+        }
+    }
+}

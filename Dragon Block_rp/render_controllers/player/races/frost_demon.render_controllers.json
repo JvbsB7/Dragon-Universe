@@ -1,0 +1,283 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.player.frost_demon.eyes": {
+            "arrays": {
+                "textures": {
+                    "Array.textures": [
+                        "Texture.frost_demon_eyes",
+                        "Texture.frost_demon_eyes",
+                        "Texture.frost_demon_eyes",
+                        "Texture.frost_demon_eyes_fourth_form",
+                        "Texture.frost_demon_eyes_fourth_form",
+                        "Texture.frost_demon_eyes_fifth_form",
+                        "Texture.frost_demon_eyes_ultimate_form",
+                        "Texture.frost_demon_eyes_golden_form",
+                        "Texture.frost_demon_eyes_black_form",
+                        "Texture.frost_demon_eyes_beast_form",
+                        "Texture.frost_demon_eyes_golden_form"
+                    ]
+                }
+            },
+            "geometry": "Geometry.eyes",
+            "materials": [
+                { "*": "Material.masked" },
+                { "leftEye": "material.emissive" },
+                { "rightEye": "material.emissive" }
+            ],
+            "textures": [
+                "Array.textures[v.transformation]",
+                "v.ultra_instinct ? Texture.frost_demon_eyes_ultra_instinct : Texture.empty",
+                "Texture.empty"
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+        "controller.render.player.frost_demon.first_person": {
+            "arrays": {
+                "textures": {
+                    "Array.skin_1": [
+                        "Texture.frost_demon_skin_1",
+                        "Texture.frost_demon_skin_1",
+                        "Texture.frost_demon_skin_third_form_1",
+                        "Texture.frost_demon_skin_fourth_form_1",
+                        "Texture.frost_demon_skin_fourth_form_1",
+                        "Texture.frost_demon_skin_fifth_form_1",
+                        "Texture.frost_demon_skin_fourth_form_1",
+                        "Texture.frost_demon_skin_golden_form_1",
+                        "Texture.frost_demon_skin_black_form_1",
+                        "Texture.frost_demon_skin_fourth_form_1",
+                        "Texture.frost_demon_skin_golden_form_1"
+                    ],
+                    "Array.skin_2": [
+                        "Texture.frost_demon_skin_2",
+                        "Texture.frost_demon_skin_2",
+                        "Texture.frost_demon_skin_third_form_2",
+                        "Texture.frost_demon_skin_fourth_form_2",
+                        "Texture.frost_demon_skin_fourth_form_2",
+                        "Texture.frost_demon_skin_fifth_form_2",
+                        "Texture.frost_demon_skin_fourth_form_2",
+                        "Texture.frost_demon_skin_golden_form_2",
+                        "Texture.frost_demon_skin_black_form_2",
+                        "Texture.frost_demon_skin_fourth_form_2",
+                        "Texture.frost_demon_skin_golden_form_2"
+                    ],
+                    "Array.skin_3": [
+                        "Texture.frost_demon_skin_3",
+                        "Texture.frost_demon_skin_3",
+                        "Texture.frost_demon_skin_third_form_3",
+                        "Texture.frost_demon_skin_fourth_form_3",
+                        "Texture.frost_demon_skin_fourth_form_3",
+                        "Texture.frost_demon_skin_fifth_form_3",
+                        "Texture.frost_demon_skin_fourth_form_3",
+                        "Texture.frost_demon_skin_golden_form_3",
+                        "Texture.frost_demon_skin_black_form_3",
+                        "Texture.frost_demon_skin_fourth_form_3",
+                        "Texture.frost_demon_skin_golden_form_3"
+                    ],
+                    "Array.skin_4": [
+                        "Texture.frost_demon_skin_4",
+                        "Texture.frost_demon_skin_4",
+                        "Texture.frost_demon_skin_third_form_4",
+                        "Texture.frost_demon_skin_fourth_form_4",
+                        "Texture.frost_demon_skin_fourth_form_4",
+                        "Texture.frost_demon_skin_fifth_form_4",
+                        "Texture.frost_demon_skin_fourth_form_4",
+                        "Texture.frost_demon_skin_golden_form_4",
+                        "Texture.frost_demon_skin_black_form_4",
+                        "Texture.frost_demon_skin_fourth_form_4",
+                        "Texture.frost_demon_skin_golden_form_4"
+                    ],
+                    "Array.skin_5": [
+                        "Texture.frost_demon_skin_5",
+                        "Texture.frost_demon_skin_5",
+                        "Texture.frost_demon_skin_third_form_5",
+                        "Texture.frost_demon_skin_fourth_form_5",
+                        "Texture.frost_demon_skin_fourth_form_5",
+                        "Texture.frost_demon_skin_fifth_form_5",
+                        "Texture.frost_demon_skin_fourth_form_5",
+                        "Texture.frost_demon_skin_golden_form_5",
+                        "Texture.frost_demon_skin_black_form_5",
+                        "Texture.frost_demon_skin_fourth_form_5",
+                        "Texture.frost_demon_skin_golden_form_5"
+                    ]
+                }
+            },
+            "geometry": "Geometry.frost_demon",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.customization0 == 0 ? Array.skin_1[v.transformation] : v.customization0 == 1 ? Array.skin_2[v.transformation] : v.customization0 == 2 ? Array.skin_3[v.transformation] : v.customization0 == 3 ? Array.skin_4[v.transformation] : Array.skin_5[v.transformation]" ],
+            "part_visibility": [
+                { "*": false },
+                { "rightArm": "v.rightarm_visible || q.get_equipped_item_name(0, 1) == '' || q.get_equipped_item_name(0, 1) == 'filled_map'" },
+                { "leftArm": "v.leftarm_visible || (q.get_equipped_item_name(0, 1) == 'filled_map' && q.get_equipped_item_name('off_hand') != 'shield') || (q.get_equipped_item_name('off_hand') == 'filled_map' && !q.item_is_charged) || (!q.item_is_charged && (v.item_use_normalized > 0 && v.item_use_normalized < 1.0))" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+        "controller.render.player.frost_demon.third_person": {
+            "arrays": {
+                "textures": {
+                    "Array.skin_1": [
+                        "Texture.frost_demon_skin_1",
+                        "Texture.frost_demon_skin_1",
+                        "Texture.frost_demon_skin_third_form_1",
+                        "Texture.frost_demon_skin_fourth_form_1",
+                        "Texture.frost_demon_skin_fourth_form_1",
+                        "Texture.frost_demon_skin_fifth_form_1",
+                        "Texture.frost_demon_skin_fourth_form_1",
+                        "Texture.frost_demon_skin_golden_form_1",
+                        "Texture.frost_demon_skin_black_form_1",
+                        "Texture.frost_demon_skin_fourth_form_1",
+                        "Texture.frost_demon_skin_golden_form_1"
+                    ],
+                    "Array.skin_2": [
+                        "Texture.frost_demon_skin_2",
+                        "Texture.frost_demon_skin_2",
+                        "Texture.frost_demon_skin_third_form_2",
+                        "Texture.frost_demon_skin_fourth_form_2",
+                        "Texture.frost_demon_skin_fourth_form_2",
+                        "Texture.frost_demon_skin_fifth_form_2",
+                        "Texture.frost_demon_skin_fourth_form_2",
+                        "Texture.frost_demon_skin_golden_form_2",
+                        "Texture.frost_demon_skin_black_form_2",
+                        "Texture.frost_demon_skin_fourth_form_2",
+                        "Texture.frost_demon_skin_golden_form_2"
+                    ],
+                    "Array.skin_3": [
+                        "Texture.frost_demon_skin_3",
+                        "Texture.frost_demon_skin_3",
+                        "Texture.frost_demon_skin_third_form_3",
+                        "Texture.frost_demon_skin_fourth_form_3",
+                        "Texture.frost_demon_skin_fourth_form_3",
+                        "Texture.frost_demon_skin_fifth_form_3",
+                        "Texture.frost_demon_skin_fourth_form_3",
+                        "Texture.frost_demon_skin_golden_form_3",
+                        "Texture.frost_demon_skin_black_form_3",
+                        "Texture.frost_demon_skin_fourth_form_3",
+                        "Texture.frost_demon_skin_golden_form_3"
+                    ],
+                    "Array.skin_4": [
+                        "Texture.frost_demon_skin_4",
+                        "Texture.frost_demon_skin_4",
+                        "Texture.frost_demon_skin_third_form_4",
+                        "Texture.frost_demon_skin_fourth_form_4",
+                        "Texture.frost_demon_skin_fourth_form_4",
+                        "Texture.frost_demon_skin_fifth_form_4",
+                        "Texture.frost_demon_skin_fourth_form_4",
+                        "Texture.frost_demon_skin_golden_form_4",
+                        "Texture.frost_demon_skin_black_form_4",
+                        "Texture.frost_demon_skin_fourth_form_4",
+                        "Texture.frost_demon_skin_golden_form_4"
+                    ],
+                    "Array.skin_5": [
+                        "Texture.frost_demon_skin_5",
+                        "Texture.frost_demon_skin_5",
+                        "Texture.frost_demon_skin_third_form_5",
+                        "Texture.frost_demon_skin_fourth_form_5",
+                        "Texture.frost_demon_skin_fourth_form_5",
+                        "Texture.frost_demon_skin_fifth_form_5",
+                        "Texture.frost_demon_skin_fourth_form_5",
+                        "Texture.frost_demon_skin_golden_form_5",
+                        "Texture.frost_demon_skin_black_form_5",
+                        "Texture.frost_demon_skin_fourth_form_5",
+                        "Texture.frost_demon_skin_golden_form_5"
+                    ]
+                }
+            },
+            "geometry": "Geometry.frost_demon",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.customization0 == 0 ? Array.skin_1[v.transformation] : v.customization0 == 1 ? Array.skin_2[v.transformation] : v.customization0 == 2 ? Array.skin_3[v.transformation] : v.customization0 == 3 ? Array.skin_4[v.transformation] : Array.skin_5[v.transformation]" ],
+            "part_visibility": [
+                { "*": true },
+                { "headExtension": "v.transformation == 2" },
+                { "leftEar": "!v.hide_left_ear" },
+                { "rightEar": "!v.hide_right_ear" },
+                { "leftShoulderPad": "v.customization1 && q.any(v.transformation, 0, 2)" },
+                { "rightShoulderPad": "v.customization1 && q.any(v.transformation, 0, 2)" },
+                { "leftShoulderPad2": "v.customization1 && v.transformation == 5" },
+                { "rightShoulderPad2": "v.customization1 && v.transformation == 5" },
+                { "leftUnderpants": "!v.hide_underpants" },
+                { "rightUnderpants": "!v.hide_underpants" },
+                { "underpants": "!v.hide_underpants" },
+                { "*tail*": "!v.tail_curled" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+
+        "controller.render.player.frost_demon.horns": {
+            "arrays": {
+                "textures": {
+                    "Array.horns": [
+                        "Texture.frost_demon_horns_first_form",
+                        "Texture.frost_demon_horns_first_form",
+                        "Texture.frost_demon_horns_third_form",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty"
+                    ],
+                    "Array.chilled_horns": [
+                        "Texture.frost_demon_horns_chilled_first_form",
+                        "Texture.frost_demon_horns_chilled_second_form",
+                        "Texture.frost_demon_horns_chilled_third_form",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty",
+                        "Texture.empty"
+                    ],
+                    "Array.fifth_form_horns": [
+                        "Texture.frost_demon_horns_fifth_form_1",
+                        "Texture.frost_demon_horns_fifth_form_2",
+                        "Texture.frost_demon_horns_fifth_form_3",
+                        "Texture.frost_demon_horns_fifth_form_4",
+                        "Texture.frost_demon_horns_fifth_form_1"
+                    ],
+                    "Array.frost_third_form_horns": [
+                        "Texture.frost_demon_horns_third_form_4",
+                        "Texture.frost_demon_horns_chilled_third_form_4"
+                    ]
+                }
+            },
+            "geometry": "(v.customization2 && v.transformation != 5) ? Geometry.frost_demon_chilled_horns : Geometry.frost_demon_horns",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.transformation == 5 ? Array.fifth_form_horns[v.customization0] : (v.transformation == 2 && v.customization0 == 3) ? Array.frost_third_form_horns[v.customization2] : v.customization2 ? Array.chilled_horns[v.transformation] : Array.horns[v.transformation]" ],
+            "part_visibility": [
+                { "*": true },
+                { "*horn*": "v.transformation == 5" },
+                { "leftFrontHorn": "v.transformation < 3" },
+                { "rightFrontHorn": "v.transformation < 3" },
+                { "leftFrontHorn2": "q.any(v.transformation, 1, 2) || v.customization2 == 1" },
+                { "rightFrontHorn2": "q.any(v.transformation, 1, 2) || v.customization2 == 1" },
+                { "*leftBackHorn*": "v.transformation == 2" },
+                { "*rightBackHorn*": "v.transformation == 2" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        }
+    }
+}

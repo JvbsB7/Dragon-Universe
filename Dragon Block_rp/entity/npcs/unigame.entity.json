@@ -1,0 +1,33 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:unigame",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/npcs/unigame"
+            },
+            "geometry": {
+                "default": "geometry.unigame"
+            },
+            "scripts": {
+                "animate": [
+                    "root",
+                    "base_pose"
+                ]
+            },
+            "animations": {
+                "root": "controller.animation.npc.root",
+                "blink": "animation.humanoid.blink",
+                "bob": "animation.player.bob",
+                "look_at_target": "animation.humanoid.look_at_target.default",
+                "base_pose": "animation.unigame.base_pose"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

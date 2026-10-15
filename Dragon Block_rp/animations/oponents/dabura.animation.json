@@ -1,0 +1,36 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.dabura.idle": {
+			"loop": true,
+			"bones": {
+				"rightLeg": {
+					"rotation": [0, 10, 5],
+					"position": [-0.5, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [0, -10, -5],
+					"position": [0.5, 0, 0]
+				},
+				"waist": {
+					"rotation": [-10, 0, 0]
+				},
+				"head": {
+					"rotation": [10, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [10, 0, 5]
+				},
+				"leftArm": {
+					"rotation": [10, 0, -5]
+				},
+				"left_eyebow": {
+					"rotation": [0, 0, -5]
+				},
+				"cape": {
+					"rotation": [10, 0, 0]
+				}
+			}
+		}
+	}
+}

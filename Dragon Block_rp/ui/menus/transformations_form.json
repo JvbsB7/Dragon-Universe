@@ -1,0 +1,106 @@
+{
+    "namespace": "transformations_form",
+
+    "transformations_form@server_form.long_form": {
+        "size": [ 295, 195 ],
+        "$child_control": "transformations_form.transformations_scrolling_panel",
+        "$custom_background": "custom_server_form.background",
+        "$default_button_texture": "textures/ui/buttons/menu_button",
+        "$hover_button_texture": "textures/ui/buttons/menu_button_hover"
+    },
+
+    "transformations_scrolling_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "fixed_menu_buttons@menu_form.fixed_menu_buttons": { }
+            },
+            {
+                "scrolling_panel@common.scrolling_panel": {
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "size": [ "100%", "100%" ],
+                    "$show_background": false,
+                    "$scrolling_content": "transformations_form.transformations_scrolling_content",
+                    "$scroll_size": [ 5, "100% - 4px" ],
+                    "$scrolling_pane_size": [ "100% - 4px", "100% - 2px" ],
+                    "$scrolling_pane_offset": [ 2, 0 ],
+                    "$scroll_bar_right_padding_size": [ 0, 0 ]
+                }
+            }
+        ]
+    },
+
+    "dynamic_button": {
+        "type": "panel",
+        "size": [ "100%", 80 ],
+        "controls": [
+            {
+                "button@custom_server_form.text_button": {
+                    "size": [ "100%", "100%" ]
+                }
+            },
+            {
+                "image": {
+                    "type": "image",
+                    "size": [ 16, 16 ],
+                    "offset": [ -5, -5 ],
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right",
+                    "layer": 50,
+                    "bindings": [
+                        {
+                            "binding_name": "#form_button_texture",
+                            "binding_name_override": "#texture",
+                            "binding_type": "collection",
+                            "binding_collection_name": "form_buttons"
+                        }
+                    ]
+                }
+            }
+        ],
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "form_buttons"
+            },
+            {
+                "binding_name": "#form_button_text",
+                "binding_type": "collection",
+                "binding_collection_name": "form_buttons"
+            },
+            {
+                "binding_type": "view",
+                "source_property_name": "(not ((#form_button_text = '') or (#form_button_text = 'ui.dbe.backButton')))",
+                "target_property_name": "#visible"
+            }
+        ]
+    },
+
+    "transformations_scrolling_content": {
+        "type": "panel",
+        "size": [ "100% - 4px", "100%c" ],
+        "layer": 1,
+        "controls": [
+            {
+                "buttons_panel": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "factory": {
+                        "name": "buttons",
+                        "control_name": "transformations_form.dynamic_button"
+                    },
+                    "collection_name": "form_buttons",
+                    "$button_label_text_alignment": "left_middle",
+                    "bindings": [
+                        {
+                            "binding_name": "#form_button_length",
+                            "binding_name_override": "#collection_length"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

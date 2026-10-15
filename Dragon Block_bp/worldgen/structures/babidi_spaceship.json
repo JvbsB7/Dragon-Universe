@@ -1,0 +1,26 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:jigsaw": {
+        "description": {
+            "identifier": "dbe:babidi_spaceship"
+        },
+        "biome_filters": [
+            {
+                "test": "has_biome_tag",
+                "value": "desert"
+            }
+        ],
+        "start_height": {
+            "type": "constant",
+            "value": {
+                "absolute": -120
+            }
+        },
+        "heightmap_projection": "world_surface",
+        "liquid_settings": "ignore_waterlogging",
+        "max_depth": 1,
+        "start_pool": "dbe:babidi_spaceship/babidi_spaceship_1",
+        "step": "surface_structures",
+        "terrain_adaptation": "bury"
+    }
+}

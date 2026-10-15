@@ -1,0 +1,127 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.majin_big_antenna",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 5,
+				"visible_bounds_height": 4,
+				"visible_bounds_offset": [0, 1, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "waist",
+					"parent": "root",
+					"pivot": [0, 12, 0]
+				},
+				{
+					"name": "body",
+					"parent": "waist",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "bigAntenna",
+					"parent": "head",
+					"pivot": [0, 32, -4],
+					"rotation": [-45, 0, 0],
+					"cubes": [
+						{
+							"origin": [-2.5, 32.2, -3.8],
+							"size": [5, 5, 3],
+							"inflate": 0.2,
+							"uv": {
+								"north": {"uv": [3, 59], "uv_size": [4, 5]},
+								"east": {"uv": [0, 59], "uv_size": [3, 5]},
+								"south": {"uv": [10, 59], "uv_size": [4, 5]},
+								"west": {"uv": [7, 59], "uv_size": [3, 5]},
+								"up": {"uv": [3, 56], "uv_size": [4, 3]},
+								"down": {"uv": [7, 59], "uv_size": [4, -3]}
+							}
+						}
+					]
+				},
+				{
+					"name": "bigAntenna2",
+					"parent": "bigAntenna",
+					"pivot": [0, 37.4, -4],
+					"rotation": [-45, 0, 0],
+					"cubes": [
+						{
+							"origin": [-2.5, 37.4, -4],
+							"size": [5, 7, 3],
+							"uv": {
+								"north": {"uv": [3, 59], "uv_size": [4, 5]},
+								"east": {"uv": [0, 59], "uv_size": [3, 5]},
+								"south": {"uv": [10, 59], "uv_size": [4, 5]},
+								"west": {"uv": [7, 59], "uv_size": [3, 5]},
+								"up": {"uv": [3, 56], "uv_size": [4, 3]},
+								"down": {"uv": [7, 59], "uv_size": [4, -3]}
+							}
+						}
+					]
+				},
+				{
+					"name": "bigAntenna3",
+					"parent": "bigAntenna2",
+					"pivot": [0, 44.4, -4],
+					"rotation": [-55, 0, 0],
+					"cubes": [
+						{
+							"origin": [-1.5, 44.6, -3.8],
+							"size": [3, 9, 2],
+							"inflate": 0.2,
+							"uv": {
+								"north": {"uv": [2, 50], "uv_size": [2, 6]},
+								"east": {"uv": [0, 50], "uv_size": [2, 6]},
+								"south": {"uv": [6, 50], "uv_size": [2, 6]},
+								"west": {"uv": [4, 50], "uv_size": [2, 6]},
+								"up": {"uv": [2, 48], "uv_size": [2, 2]},
+								"down": {"uv": [4, 50], "uv_size": [2, -2]}
+							}
+						}
+					]
+				},
+				{
+					"name": "bigAntenna4",
+					"parent": "bigAntenna3",
+					"pivot": [0, 53.8, -4],
+					"rotation": [-40, 0, 0],
+					"cubes": [
+						{
+							"origin": [-1, 53.8, -4],
+							"size": [2, 11, 2],
+							"uv": {
+								"north": {"uv": [2, 50], "uv_size": [2, 6]},
+								"east": {"uv": [0, 50], "uv_size": [2, 6]},
+								"south": {"uv": [6, 50], "uv_size": [2, 6]},
+								"west": {"uv": [4, 50], "uv_size": [2, 6]},
+								"up": {"uv": [2, 48], "uv_size": [2, 2]},
+								"down": {"uv": [4, 50], "uv_size": [2, -2]}
+							}
+						}
+					]
+				},
+				{
+					"name": "bigAntenna5",
+					"parent": "bigAntenna4",
+					"pivot": [0, 64.8, -4],
+					"rotation": [-15, 0, 0],
+					"cubes": [
+						{"origin": [0, 64.8, -4], "size": [0, 6, 2], "uv": [8, 48]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,129 @@
+{
+    "namespace": "skills_form",
+
+    "skills_form@server_form.long_form": {
+        "size": [ 295, 195 ],
+        "$child_control": "skills_form.skills_scrolling_panel",
+        "$custom_background": "custom_server_form.background",
+        "$default_button_texture": "textures/ui/buttons/menu_button",
+        "$hover_button_texture": "textures/ui/buttons/menu_button_hover"
+    },
+
+    "skills_scrolling_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "fixed_menu_buttons@menu_form.fixed_menu_buttons": { }
+            },
+            {
+                "scrolling_panel@common.scrolling_panel": {
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "size": [ "100%", "100%" ],
+                    "$show_background": false,
+                    "$scrolling_content": "skills_form.skills_scrolling_content",
+                    "$scroll_size": [ 5, "100% - 4px" ],
+                    "$scrolling_pane_size": [ "100% - 4px", "100% - 2px" ],
+                    "$scrolling_pane_offset": [ 2, 0 ],
+                    "$scroll_bar_right_padding_size": [ 0, 0 ]
+                }
+            },
+            {
+                "buttons_panel": {
+                    "type": "stack_panel",
+                    "size": [ "35%", "100%c" ],
+                    "offset": [ -7, 0 ],
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right",
+                    "collection_name": "form_buttons",
+                    "controls": [
+                        {
+                            "button@custom_server_form.text_button": {
+                                "collection_index": 10
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "skills_scrolling_content": {
+        "type": "stack_panel",
+        "size": [ "100% - 4px", "100%c" ],
+        "layer": 1,
+        "controls": [
+            {
+                "description_panel": {
+                    "type": "panel",
+                    "size": [ "100%", "100%c" ],
+                    "controls": [
+                        {
+                            "description_label": {
+                                "type": "label",
+                                "size": [ "100%", "default" ],
+                                "text": "#form_text",
+                                "color": "$7_color_format"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "buttons_panel": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "collection_name": "form_buttons",
+                    "controls": [
+                        {
+                            "button_2@statistics_form.up_button": {
+                                "collection_index": 11
+                            }
+                        },
+                        {
+                            "button_3@statistics_form.up_button": {
+                                "collection_index": 12
+                            }
+                        },
+                        {
+                            "button_4@statistics_form.up_button": {
+                                "collection_index": 13
+                            }
+                        },
+                        {
+                            "button_5@statistics_form.up_button": {
+                                "collection_index": 14
+                            }
+                        },
+                        {
+                            "button_6@statistics_form.up_button": {
+                                "collection_index": 15
+                            }
+                        },
+                        {
+                            "button_7@statistics_form.up_button": {
+                                "collection_index": 16
+                            }
+                        },
+                        {
+                            "button_8@statistics_form.up_button": {
+                                "collection_index": 17
+                            }
+                        },
+                        {
+                            "button_9@statistics_form.up_button": {
+                                "collection_index": 18
+                            }
+                        },
+                        {
+                            "button_1@statistics_form.up_button": {
+                                "collection_index": 19
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

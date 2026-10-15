@@ -1,0 +1,17 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.shenron": {
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.default" ],
+            "light_color_multiplier": "v.fade_alpha + 1",
+            "overlay_color": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": "v.fade_alpha"
+            }
+        }
+    }
+}

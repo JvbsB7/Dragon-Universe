@@ -1,0 +1,44 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "conditions": [
+                {
+                    "condition": "match_tool",
+                    "item": "minecraft:shears"
+                }
+            ],
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "dbe:ajisa_leaves"
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "conditions": [
+                {
+                    "condition": "match_tool",
+                    "minecraft:match_tool_filter_none": [ "minecraft:shears" ]
+                }
+            ],
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "dbe:ajisa_orange",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "dbe:ajisa_sapling",
+                    "weight": 5
+                },
+                {
+                    "type": "empty",
+                    "weight": 93
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:fog_settings": {
+        "description": {
+            "identifier": "dbe:fog_hyperbolic_time_chamber"
+        },
+
+        "distance": {
+            "air": {
+                "fog_start": 10,
+                "fog_end": 96,
+                "fog_color": "#ffffff",
+                "render_distance_type": "fixed"
+            }
+        }
+    }
+}

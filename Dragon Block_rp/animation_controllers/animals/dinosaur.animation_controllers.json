@@ -1,0 +1,71 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.dinosaur.general": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{ "idling": "!q.is_sitting" },
+						{ "sitting": "q.is_sitting" }
+					]
+				},
+				"idling": {
+					"blend_transition": 0.5,
+					"animations": [ "idle" ],
+					"transitions": [
+						{ "moving": "v.moving" },
+						{ "sit_down": "q.is_sitting" }
+					]
+				},
+				"sitting": {
+					"blend_transition": 0.5,
+					"animations": [ "sitting" ],
+					"transitions": [
+						{ "idling": "!q.is_sitting && !v.moving" },
+						{ "moving": "!q.is_sitting" }
+					]
+				},
+				"moving": {
+					"blend_transition": 0.5,
+					"animations": [ "moving" ],
+					"transitions": [
+						{ "idling": "!v.moving" },
+						{ "sit_down": "q.is_sitting" }
+					]
+				},
+				"sit_down": {
+					"blend_transition": 0.1,
+					"animations": [ "sit_down" ],
+					"transitions": [
+						{ "idling": "!q.is_sitting" },
+						{ "sitting": "q.any_animation_finished" }
+					]
+				}
+			}
+		},
+		"controller.animation.dinosaur.attack": {
+			"states": {
+				"default": {
+					"blend_transition": 0.2,
+					"transitions": [
+						{ "attack": "q.is_delayed_attacking" }
+					]
+				},
+				"attack": {
+					"blend_transition": 0.2,
+					"on_entry": [
+						"v.attack_index = math.random_integer(0, 1);"
+					],
+					"animations": [
+						{ "attack1": "v.attack_index == 0" },
+						{ "attack2": "v.attack_index == 1" }
+					],
+					"transitions": [
+						{ "default": "q.any_animation_finished" }
+					]
+				}
+			}
+		}
+	}
+}

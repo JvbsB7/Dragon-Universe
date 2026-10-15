@@ -1,0 +1,85 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.giant_fish",
+				"texture_width": 256,
+				"texture_height": 256,
+				"visible_bounds_width": 26,
+				"visible_bounds_height": 11,
+				"visible_bounds_offset": [0, 4.5, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-7, 0, -15], "size": [14, 22, 27], "uv": [0, 0]},
+						{"origin": [7, -8, 0], "size": [0, 8, 9], "pivot": [7, 0, 0], "rotation": [20, 0, -32.5], "uv": [40, 96]},
+						{"origin": [-7, -8, 0], "size": [0, 8, 9], "pivot": [-7, 0, 0], "rotation": [20, 0, 32.5], "uv": [0, 107]}
+					]
+				},
+				{
+					"name": "dorsal",
+					"parent": "body",
+					"pivot": [0, 22, -14],
+					"cubes": [
+						{"origin": [0, 22, -14], "size": [0, 18, 29], "pivot": [0, 22, -14], "rotation": [-12.5, 0, 0], "uv": [0, 49]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 9, -15],
+					"cubes": [
+						{"origin": [-5, 5, -26], "size": [10, 13, 15], "inflate": -0.01, "uv": [82, 0]},
+						{"origin": [-5, 4, -26], "size": [10, 1, 10], "inflate": -0.01, "uv": [0, 96]}
+					]
+				},
+				{
+					"name": "jaw",
+					"parent": "head",
+					"pivot": [0, 5, -15],
+					"rotation": [-7.5, 0, 0],
+					"cubes": [
+						{"origin": [-5, 0.9981, -26.58724], "size": [10, 4, 12], "uv": [82, 28]},
+						{"origin": [-5, 4.9981, -26.58724], "size": [10, 1, 9], "uv": [92, 98]}
+					]
+				},
+				{
+					"name": "leftFin",
+					"parent": "body",
+					"pivot": [7.5, 4.5, -10],
+					"cubes": [
+						{"origin": [7, 2, -11], "size": [1, 5, 3], "uv": [18, 107]},
+						{"origin": [8, -2, -8], "size": [0, 12, 15], "uv": [92, 44]}
+					]
+				},
+				{
+					"name": "rightFin",
+					"parent": "body",
+					"pivot": [-7.5, 4.5, -10],
+					"cubes": [
+						{"origin": [-8, 2, -11], "size": [1, 5, 3], "uv": [26, 107]},
+						{"origin": [-8, -2, -8], "size": [0, 12, 15], "uv": [92, 71]}
+					]
+				},
+				{
+					"name": "tailfin",
+					"parent": "body",
+					"pivot": [0, 12, 11],
+					"cubes": [
+						{"origin": [-4, 6, 11], "size": [8, 12, 9], "uv": [58, 95]},
+						{"origin": [0, -3, 20], "size": [0, 29, 17], "uv": [58, 49]}
+					]
+				}
+			]
+		}
+	]
+}

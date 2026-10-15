@@ -1,0 +1,30 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.namekian_frog": {
+            "arrays": {
+                "textures": {
+                    "Array.colors": [
+                        "Texture.blue",
+                        "Texture.brown",
+                        "Texture.gambunta",
+                        "Texture.ginyu_wife",
+                        "Texture.green",
+                        "Texture.gronkel",
+                        "Texture.light_furry",
+                        "Texture.pink",
+                        "Texture.porunga",
+                        "Texture.purple",
+                        "Texture.red",
+                        "Texture.toothless",
+                        "Texture.white",
+                        "Texture.yellow"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.colors[q.variant]" ]
+        }
+    }
+}

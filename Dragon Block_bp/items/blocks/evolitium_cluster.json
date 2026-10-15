@@ -1,0 +1,19 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:evolitium_cluster"
+        },
+
+        "components": {
+            "minecraft:icon": "evolitium_cluster",
+            "minecraft:display_name": {
+                "value": "tile.dbe:evolitium_cluster.name"
+            },
+            "minecraft:block_placer": {
+                "block": "dbe:evolitium_cluster",
+                "replace_block_item": true
+            }
+        }
+    }
+}

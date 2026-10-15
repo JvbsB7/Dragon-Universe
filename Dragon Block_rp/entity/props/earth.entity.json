@@ -1,0 +1,23 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:earth",
+            "materials": {
+                "default": "entity_alphablend"
+            },
+            "textures": {
+                "default": "textures/entity/props/earth"
+            },
+            "geometry": {
+                "default": "geometry.earth"
+            },
+            "render_controllers": [
+                "controller.render.earth.ocean",
+                "controller.render.earth.continents",
+                "controller.render.earth.clouds",
+                "controller.render.earth.atmosphere"
+            ]
+        }
+    }
+}

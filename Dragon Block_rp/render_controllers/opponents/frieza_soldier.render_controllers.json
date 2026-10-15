@@ -1,0 +1,45 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.frieza_soldier": {
+            "arrays": {
+                "geometries": {
+                    "Array.geometry": [
+                        "Geometry.default",
+                        "Geometry.frieza_soldier_2"
+                    ]
+                },
+                "textures": {
+                    "Array.texture": [
+                        "Texture.skin_frieza_soldier_1",
+                        "Texture.skin_frieza_soldier_2"
+                    ],
+                    "Array.frieza_soldier_3": [
+                        "Texture.skin_frieza_soldier_3_1",
+                        "Texture.skin_frieza_soldier_3_2",
+                        "Texture.skin_frieza_soldier_3_3",
+                        "Texture.skin_frieza_soldier_3_4",
+                        "Texture.skin_frieza_soldier_3_5",
+                        "Texture.skin_frieza_soldier_3_6"
+                    ]
+                }
+            },
+            "geometry": "v.skin < 2 ? Array.geometry[v.skin] : Geometry.frieza_soldier_3",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.skin < 2 ? Array.texture[v.skin] : Array.frieza_soldier_3[v.skin]" ]
+        },
+        "controller.render.frieza_soldier.eyes": {
+            "arrays": {
+                "textures": {
+                    "Array.texture": [
+                        "Texture.eyes_frieza_soldier_1",
+                        "Texture.eyes_frieza_soldier_2"
+                    ]
+                }
+            },
+            "geometry": "Geometry.eyes",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.skin < 2 ? Array.texture[v.skin] : Texture.eyes_frieza_soldier_3" ]
+        }
+    }
+}

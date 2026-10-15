@@ -1,0 +1,157 @@
+{
+    "namespace": "stats_bar",
+
+    "stats_bar_root": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [ 6, 6 ],
+        "size": [ 192, 45 ],
+        "controls": [
+            {
+                "stats_bar_image": {
+                    "type": "image",
+                    "texture": "textures/ui/stats_bar"
+                }
+            },
+            {
+                "health_bar@stats_bar.health_bar_panel": { }
+            },
+            {
+                "stamina_bar@stats_bar.stamina_bar_panel": { }
+            },
+            {
+                "ki_bar@stats_bar.ki_bar_root": { }
+            }
+        ]
+    },
+
+    "health_bar_panel": {
+        "type": "panel",
+        "anchor_from": "top_right",
+        "anchor_to": "top_right",
+        "offset": [ -1, 13 ],
+        "size": [ 150, 7 ],
+        "layer": 1,
+        "controls": [
+            {
+                "bar_panel@common_bar.bar_panel": {
+                    "$bar_prefix": "health_bar_frame:",
+                    "$bar_texture": "textures/ui/health_bar"
+                }
+            },
+            {
+                "bar_label@stats_bar.bar_label": {
+                    "$update_string": "health_bar_value:"
+                }
+            }
+        ]
+    },
+
+    "stamina_bar_panel": {
+        "type": "panel",
+        "anchor_from": "top_right",
+        "anchor_to": "top_right",
+        "offset": [ -8, 21 ],
+        "size": [ 143, 1 ],
+        "layer": 1,
+        "controls": [
+            {
+                "bar_panel@common_bar.bar_panel": {
+                    "$bar_prefix": "stamina_bar_frame:",
+                    "$bar_texture": "textures/ui/stamina_bar"
+                }
+            }
+        ]
+    },
+
+    "ki_bar_root": {
+        "type": "panel",
+        "anchor_from": "bottom_right",
+        "anchor_to": "bottom_right",
+        "offset": [ -51, -13 ],
+        "size": [ 100, 7 ],
+        "layer": 1,
+        "$ki_bar_color": "",
+        "controls": [
+            {
+                "blue_ki_bar@stats_bar.ki_bar_panel": {
+                    "$ki_bar_color": "blue"
+                }
+            },
+            {
+                "green_ki_bar@stats_bar.ki_bar_panel": {
+                    "$ki_bar_color": "green"
+                }
+            },
+            {
+                "pink_ki_bar@stats_bar.ki_bar_panel": {
+                    "$ki_bar_color": "pink"
+                }
+            },
+            {
+                "purple_ki_bar@stats_bar.ki_bar_panel": {
+                    "$ki_bar_color": "purple"
+                }
+            },
+            {
+                "yellow_ki_bar@stats_bar.ki_bar_panel": {
+                    "$ki_bar_color": "yellow"
+                }
+            },
+            {
+                "white_ki_bar@stats_bar.ki_bar_panel": {
+                    "$ki_bar_color": "white"
+                }
+            },
+            {
+                "bar_label@stats_bar.bar_label": {
+                    "$update_string": "ki_bar_value:"
+                }
+            }
+        ]
+    },
+
+    "ki_bar_panel@common_bar.bar_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "bar_panel@common_bar.bar_panel": {
+                    "$bar_prefix": "ki_bar_frame:",
+                    "$bar_texture": "('textures/ui/ki_bars/' + $ki_bar_color + '_ki_bar')",
+                    "$bar_uv_size": [ 100, 7 ],
+                    "$bar_uv": "@stats_bar.ki_bar_flip_book_animation",
+                    "$condition": "('ki_bar_color:' + $ki_bar_color)",
+                    "bindings": [
+                        {
+                            "binding_name": "#hud_title_text_string"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(not((#hud_title_text_string - $condition) = #hud_title_text_string))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "ki_bar_flip_book_animation": {
+        "anim_type": "flip_book",
+        "initial_uv": [ 0, 0 ],
+        "frame_count": 9,
+        "fps": 24
+    },
+
+    "bar_label@templates.preserved_title_display": {
+        "anchor_from": "left_middle",
+        "anchor_to": "left_middle",
+        "offset": [ 5, -1 ],
+        "font_type": "MinecraftTen",
+        "font_scale_factor": 0.8,
+        "shadow": true,
+        "alpha": 0.8,
+        "layer": 1
+    }
+}

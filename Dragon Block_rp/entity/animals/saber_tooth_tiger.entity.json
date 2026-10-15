@@ -1,0 +1,46 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:saber_tooth_tiger",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "saber_tooth_tiger_black": "textures/entity/animals/saber_tooth_tiger/saber_tooth_tiger_black",
+                "saber_tooth_tiger_orange": "textures/entity/animals/saber_tooth_tiger/saber_tooth_tiger_orange",
+                "saber_tooth_tiger_white": "textures/entity/animals/saber_tooth_tiger/saber_tooth_tiger_white"
+            },
+            "geometry": {
+                "default": "geometry.saber_tooth_tiger"
+            },
+            "spawn_egg": {
+                "texture": "spawn_egg_saber_tooth_tiger"
+            },
+            "scripts": {
+                "animate": [
+                    "general",
+                    "attack_controller",
+                    "look_at_target",
+                    "tail_controller"
+                ]
+            },
+            "animations": {
+                "general": "controller.animation.saber_tooth_tiger.general",
+                "attack_1": "animation.saber_tooth_tiger.attack_1",
+                "attack_2": "animation.saber_tooth_tiger.attack_2",
+                "attack_controller": "controller.animation.saber_tooth_tiger.attack",
+                "idle": "animation.saber_tooth_tiger.idle",
+                "look_at_target": "animation.common.look_at_target",
+                "moving": "animation.saber_tooth_tiger.walk",
+                "sleeping": "animation.saber_tooth_tiger.sleep",
+                "sitting": "animation.saber_tooth_tiger.sit",
+                "tail": "animation.saber_tooth_tiger.tail",
+                "tail_controller": "controller.animation.saber_tooth_tiger.tail"
+            },
+            "render_controllers": [
+                "controller.render.saber_tooth_tiger"
+            ]
+        }
+    }
+}

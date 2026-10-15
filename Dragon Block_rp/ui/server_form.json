@@ -1,0 +1,336 @@
+{
+    "namespace": "server_form",
+
+    "third_party_server_screen@common.base_screen": {
+        "$screen_animations": [ "@server_form.screen_exit_animation_pop_wait" ],
+        "$background_animations": [ "@server_form.screen_exit_animation_pop_wait" ],
+        "$screen_content": "server_form.main_screen_content",
+        "force_render_below": true,
+        "low_frequency_rendering": true,
+        "render_only_when_topmost": false,
+        "render_game_behind": true,
+        "button_mappings": [
+            {
+                "from_button_id": "button.menu_cancel",
+                "to_button_id": "button.menu_exit",
+                "mapping_type": "global"
+            }
+        ]
+    },
+
+    "screen_exit_animation_pop_wait": {
+        "anim_type": "offset",
+        "easing": "linear",
+        "duration": 0.1,
+        "from": [ 0, 0 ],
+        "to": [ 0, 0 ],
+        "play_event": "screen.exit_pop",
+        "end_event": "screen.exit_end"
+    },
+
+    "main_screen_content": {
+        "type": "panel",
+        "size": [ "100%", "100%" ],
+        "controls": [
+            {
+                "server_form_factory": {
+                    "type": "factory",
+                    "control_ids": {
+                        "long_form": "@server_form.select_long_form",
+                        "custom_form": "@server_form.custom_form"
+                    }
+                }
+            }
+        ]
+    },
+
+    "select_long_form": {
+        "type": "panel",
+        "controls": [
+            {
+                "default@server_form.long_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "((#title_text - 'ui.dbe') = #title_text)",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "achievement_list@achievement_list_form.achievement_list_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.achievement_list.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "alignment_question@alignment_question_form.alignment_question_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.alignment_question.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "christmas_form@christmas_form.christmas_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.christmas.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "customization@customization_form.customization_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.customization.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "functions@functions_form.functions_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.functions.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "gravity_machine@gravity_machine_form.gravity_machine_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.gravity_machine.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "news@news_form.news_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.news.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "npc_dialog@npc_dialog_form.npc_dialog_form": {
+                    "anchor_to": "bottom_middle",
+                    "anchor_from": "bottom_middle",
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(not ((#title_text - 'ui.dbe.npc') = #title_text))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "npc_skills@npc_skills_form.npc_skills_form": {
+                    "anchor_to": "bottom_middle",
+                    "anchor_from": "bottom_middle",
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(not ((#title_text - 'ui.dbe.learn_skills') = #title_text))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "quest@quest_form.quest_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "((#title_text = 'ui.dbe.achievement.title') or (#title_text = 'ui.dbe.quest.title'))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "quest_list@quest_list_form.quest_list_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.quest_list.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "select_hair@select_hair_form.select_hair_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.select_hair.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "select_race@select_race_form.select_race_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.select_race.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "shenron@shenron_wishes_form.shenron_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.wishes.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "shop@shop_form.shop_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(not ((#title_text - 'ui.dbe.shop.title') = #title_text))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "skills@skills_form.skills_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.skills.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "statistics@statistics_form.statistics_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.statistics.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "training@training_form.training_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.training.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "transformations@transformations_form.transformations_form": {
+                    "bindings": [
+                        {
+                            "binding_name": "#title_text"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(#title_text = 'ui.dbe.transformations.title')",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

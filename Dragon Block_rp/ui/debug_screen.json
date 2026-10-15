@@ -1,0 +1,40 @@
+{
+    "content_panel": {
+        "modifications": [
+            {
+                "array_name": "controls",
+                "operation": "insert_front",
+                "value": [
+                    {
+                        "credits@debug_screen.credits": { }
+                    }
+                ]
+            }
+        ]
+    },
+
+    "credits": {
+        "type": "image",
+        "size": [ 8, 8 ],
+        "anchor_from": "bottom_left",
+        "anchor_to": "bottom_left",
+        "texture": "textures/items/flying_nimbus",
+        "alpha": "$alpha",
+        "$alpha": 0.2,
+        "controls": [
+            {
+                "credits_label": {
+                    "type": "label",
+                    "offset": [ 9, 0 ],
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "text": "pack.credits",
+                    "font_type": "MinecraftTen",
+                    "font_size": "small",
+                    "shadow": true,
+                    "alpha": "$alpha"
+                }
+            }
+        ]
+    }
+}

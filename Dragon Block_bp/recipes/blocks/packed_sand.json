@@ -1,0 +1,26 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "dbe:packed_sand"
+        },
+
+        "tags": [ "crafting_table" ],
+        "pattern": [
+            "AA"
+        ],
+        "key": {
+            "A": {
+                "item": "minecraft:sand"
+            }
+        },
+        "unlock": [
+            {
+                "item": "minecraft:sand"
+            }
+        ],
+        "result": {
+            "item": "dbe:packed_sand"
+        }
+    }
+}

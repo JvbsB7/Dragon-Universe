@@ -1,0 +1,17 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:fog_settings": {
+        "description": {
+            "identifier": "dbe:fog_dirtstone"
+        },
+
+        "distance": {
+            "air": {
+                "fog_start": 0.1,
+                "fog_end": 1,
+                "fog_color": "#80cafc",
+                "render_distance_type": "render"
+            }
+        }
+    }
+}

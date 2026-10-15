@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:structure_set": {
+        "description": {
+            "identifier": "dbe:namek_village"
+        },
+        "placement": {
+            "type": "minecraft:random_spread",
+            "salt": 95832565,
+            "separation": 14,
+            "spacing": 30,
+            "spread_type": "linear"
+        },
+        "structures": [
+            {
+                "structure": "dbe:namek_village",
+                "weight": 1
+            }
+        ]
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dbe:city/buildings"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/city/buildings/small_building_1"
+                },
+                "weight": 5
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/city/buildings/small_building_2"
+                },
+                "weight": 5
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/city/buildings/small_building_3"
+                },
+                "weight": 5
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/city/buildings/small_building_4"
+                },
+                "weight": 5
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/city/buildings/tower_1"
+                },
+                "weight": 4
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/city/buildings/park_1"
+                },
+                "weight": 1
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:empty_pool_element"
+                },
+                "weight": 2
+            }
+        ]
+    }
+}

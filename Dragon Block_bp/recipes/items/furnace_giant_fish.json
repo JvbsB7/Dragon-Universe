@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "dbe:furnace_giant_fish"
+    },
+    
+    "tags": [ "furnace", "smoker", "campfire" ],
+    "unlock": [
+      {
+        "item": "dbe:giant_fish"
+      }
+    ],
+    "input": "dbe:giant_fish",
+    "output": "dbe:cooked_giant_fish"
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dbe:city/city_centers"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/city/streets/roundabout_1"
+                }
+            }
+        ]
+    }
+}

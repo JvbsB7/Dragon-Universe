@@ -1,0 +1,69 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.player.ki_blast": {
+			"states": {
+				"default": {
+					"blend_transition": 0.1,
+					"on_entry": [
+						"v.ki_blast_hand = !v.ki_blast_hand;"
+					],
+					"transitions": [
+						{
+							"ki_blast_left": "!v.ki_blast_hand && v.charging_attack"
+						},
+						{
+							"ki_blast_right": "v.ki_blast_hand && v.charging_attack"
+						}
+					]
+				},
+				"ki_blast_left": {
+					"blend_transition": 0.1,
+					"animations": [
+						"ki_attack_setup",
+						{
+							"first_person_ki_blast": "v.is_first_person"
+						},
+						{
+							"ki_blast_left": "!v.is_first_person"
+						}
+					],
+					"particle_effects": [
+						{
+							"effect": "beam",
+							"locator": "leftkiball"
+						}
+					],
+					"transitions": [
+						{
+							"default": "v.charging_attack <= 0"
+						}
+					]
+				},
+				"ki_blast_right": {
+					"blend_transition": 0.1,
+					"animations": [
+						"ki_attack_setup",
+						{
+							"first_person_ki_blast": "v.is_first_person"
+						},
+						{
+							"ki_blast_right": "!v.is_first_person"
+						}
+					],
+					"particle_effects": [
+						{
+							"effect": "beam",
+							"locator": "rightkiball"
+						}
+					],
+					"transitions": [
+						{
+							"default": "v.charging_attack <= 0"
+						}
+					]
+				}
+			}
+		}
+	}
+}

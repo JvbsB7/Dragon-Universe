@@ -1,0 +1,27 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:pride_troopers_boots",
+            "materials": {
+                "default": "armor"
+            },
+            "textures": {
+                "default": "textures/models/armors/clothes/pride_troopers_clothes"
+            },
+            "geometry": {
+                "default": "geometry.clothes.boots"
+            },
+            "scripts": {
+                "parent_setup": "v.boot_layer_visible = 0.0;",
+                "animate": [
+                    "offset"
+                ]
+            },
+            "animations": {
+                "offset": "animation.armor.boots.offset"
+            },
+            "render_controllers": [ "controller.render.clothes" ]
+        }
+    }
+}

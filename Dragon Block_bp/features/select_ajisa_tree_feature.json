@@ -1,0 +1,15 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "dbe:select_ajisa_tree_feature"
+        },
+        
+        "features": [
+            [ "dbe:ajisa_tree_1_feature", 1 ],
+            [ "dbe:ajisa_tree_2_feature", 1 ],
+            [ "dbe:ajisa_tree_3_feature", 1 ],
+            [ "dbe:ajisa_tree_4_feature", 1 ]
+        ]
+    }
+}

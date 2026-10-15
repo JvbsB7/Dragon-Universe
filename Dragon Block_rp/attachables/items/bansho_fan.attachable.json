@@ -1,0 +1,28 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:bansho_fan",
+            "materials": {
+                "default": "entity_alphatest",
+                "enchanted": "entity_alphatest_glint"
+            },
+            "textures": {
+                "default": "textures/entity/bansho_fan",
+                "enchanted": "textures/misc/enchanted_item_glint"
+            },
+            "geometry": {
+                "default": "geometry.bansho_fan"
+            },
+            "scripts": {
+                "animate": [
+                    "holding"
+                ]
+            },
+            "animations": {
+                "holding": "animation.bansho_fan.holding"
+            },
+            "render_controllers": [ "controller.render.item_default" ]
+        }
+    }
+}

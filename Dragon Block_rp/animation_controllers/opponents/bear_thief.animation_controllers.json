@@ -1,0 +1,73 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.bear_thief.attack_controller": {
+			"states": {
+				"default": {
+					"transitions": [
+						{ "sword_attack": "q.is_delayed_attacking && v.selected_attack == 'melee'" },
+						{ "sword_smash": "q.is_roaring" }
+					]
+				},
+				"sword_attack": {
+					"blend_transition": 0.1,
+					"animations": [
+						{ "sword_attack_1": "v.sword_attack_index" },
+						{ "sword_attack_2": "!v.sword_attack_index" }
+					],
+					"transitions": [
+						{ "default": "q.any_animation_finished && !q.is_roaring" },
+						{ "sword_smash": "q.is_roaring" }
+					],
+					"on_entry": [
+						"v.sword_attack_index = !v.sword_attack_index;"
+					]
+				},
+				"sword_smash": {
+					"animations": [ "sword_smash" ],
+					"transitions": [
+						{ "default": "!q.is_roaring && !q.is_delayed_attacking" },
+						{ "sword_attack": "q.is_delayed_attacking && v.selected_attack == 'melee'" }
+					]
+				}
+			}
+		},
+		"controller.animation.bear_thief.general": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"blend_transition": 0.2,
+					"transitions": [
+						{ "idling": "!v.moving" },
+						{ "moving": "v.moving" },
+						{ "roaring": "q.is_roaring" }
+					]
+				},
+				"idling": {
+					"blend_transition": 0.2,
+					"animations": [ "idling" ],
+					"transitions": [
+						{ "moving": "v.moving" },
+						{ "roaring": "q.is_roaring" }
+					]
+				},
+				"moving": {
+					"blend_transition": 0.2,
+					"animations": [ "moving" ],
+					"transitions": [
+						{ "idling": "!v.moving" },
+						{ "roaring": "q.is_roaring" }
+					]
+				},
+				"roaring": {
+					"blend_transition": 0.2,
+					// "animations": [ "roaring" ],
+					"transitions": [
+						{ "idling": "!q.is_roaring && !v.moving" },
+						{ "moving": "!q.is_roaring && v.moving" }
+					]
+				}
+			}
+		}
+	}
+}

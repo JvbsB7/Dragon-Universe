@@ -1,0 +1,26 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dbe:ajisa_planks"
+        },
+
+        "components": {
+            "minecraft:loot": "loot_tables/blocks/ajisa_planks.json",
+            "minecraft:flammable": true,
+            "minecraft:map_color": "#a59953",
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 1.5
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1.5
+            },
+            "minecraft:redstone_conductivity": {
+                "allows_wire_to_step_down": true,
+                "redstone_conductor": true
+            },
+            "tag:minecraft:is_axe_item_destructible": { },
+            "tag:wood": { }
+        }
+    }
+}

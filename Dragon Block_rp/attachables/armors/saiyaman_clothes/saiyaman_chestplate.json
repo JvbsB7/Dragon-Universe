@@ -1,0 +1,40 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:saiyaman_chestplate",
+            "materials": {
+                "default": "armor"
+            },
+            "textures": {
+                "default": "textures/models/armors/great_saiyaman/great_saiyaman",
+                "female_clothes": "textures/models/armors/great_saiyaman/female_great_saiyaman"
+            },
+            "geometry": {
+                "default": "geometry.great_saiyaman.chestplate"
+            },
+            "scripts": {
+                "parent_setup": "v.chest_layer_visible = 0.0;",
+                "pre_animation": [
+                    "v.is_female = q.has_property('dbe:gender') ? q.property('dbe:gender') : false;"
+                ],
+                "animate": [
+                    "custom_cape",
+                    "offset"
+                ]
+            },
+            "animations": {
+                "custom_cape": "animation.player.custom_cape",
+                "offset": "animation.armor.chestplate.offset"
+            },
+            "render_controllers": [
+                {
+                    "controller.render.clothes": "!v.is_female"
+                },
+                {
+                    "controller.render.female_clothes": "v.is_female"
+                }
+            ]
+        }
+    }
+}

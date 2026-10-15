@@ -1,0 +1,71 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.ki_attack": {
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.default" ],
+            "ignore_lighting": true,
+            "part_visibility": [
+                { "*": true },
+                { "ballShape": "v.attack_type == 'beam' || v.attack_type == 'blast'" },
+                { "discShape": "v.attack_type == 'disc'" }
+            ],
+            "overlay_color": {
+                "r": "v.color_0_r",
+                "g": "v.color_0_g",
+                "b": "v.color_0_b",
+                "a": 1
+            }
+        },
+        "controller.render.ki_attack.armor": {
+            "geometry": "Geometry.outline",
+            "materials": [ { "*": "Material.outline" } ],
+            "textures": [ "Texture.default" ],
+            "ignore_lighting": true,
+            "part_visibility": [
+                { "*": true },
+                { "ballShape": "v.attack_type == 'beam' || v.attack_type == 'blast'" },
+                { "discShape": "v.attack_type == 'disc'" }
+            ],
+            "overlay_color": {
+                "r": "v.color_1_r",
+                "g": "v.color_1_g",
+                "b": "v.color_1_b",
+                "a": 1
+            }
+        },
+        "controller.render.ki_beam": {
+            "geometry": "Geometry.beam",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.beam" ],
+            "ignore_lighting": true,
+            "part_visibility": [
+                { "*": "v.has_spiral" },
+                { "core": true }
+            ],
+            "overlay_color": {
+                "r": "v.color_0_r",
+                "g": "v.color_0_g",
+                "b": "v.color_0_b",
+                "a": 1
+            }
+        },
+        "controller.render.ki_beam.armor": {
+            "geometry": "Geometry.beam_outline",
+            "materials": [ { "*": "Material.outline" } ],
+            "textures": [ "Texture.beam" ],
+            "ignore_lighting": true,
+            "part_visibility": [
+                { "*": "v.has_spiral" },
+                { "core": true }
+            ],
+            "overlay_color": {
+                "r": "v.color_1_r",
+                "g": "v.color_1_g",
+                "b": "v.color_1_b",
+                "a": 1
+            }
+        }
+    }
+}

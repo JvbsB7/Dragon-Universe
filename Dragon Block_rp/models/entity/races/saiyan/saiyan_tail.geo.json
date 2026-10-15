@@ -1,0 +1,79 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.saiyan_tail",
+				"texture_width": 32,
+				"texture_height": 32,
+				"visible_bounds_width": 5,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "waist",
+					"parent": "root",
+					"pivot": [0, 12, 0]
+				},
+				{
+					"name": "body",
+					"parent": "waist",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "tail",
+					"parent": "body",
+					"pivot": [0, 13, 2],
+					"cubes": [
+						{"origin": [-1, 12, 2], "size": [2, 2, 4], "uv": [8, 14]}
+					]
+				},
+				{
+					"name": "tail2",
+					"parent": "tail",
+					"pivot": [0, 13, 6],
+					"cubes": [
+						{"origin": [-1, 12, 6], "size": [2, 2, 4], "uv": [0, 12]}
+					]
+				},
+				{
+					"name": "tail3",
+					"parent": "tail2",
+					"pivot": [0, 13, 10],
+					"cubes": [
+						{"origin": [-1, 12, 10], "size": [2, 2, 4], "uv": [8, 8]}
+					]
+				},
+				{
+					"name": "tail4",
+					"parent": "tail3",
+					"pivot": [0, 13, 14],
+					"cubes": [
+						{"origin": [-1, 12, 14], "size": [2, 2, 4], "uv": [8, 2]}
+					]
+				},
+				{
+					"name": "tail5",
+					"parent": "tail4",
+					"pivot": [0, 13, 18],
+					"cubes": [
+						{"origin": [-1, 12, 18], "size": [2, 2, 4], "uv": [0, 6]}
+					]
+				},
+				{
+					"name": "tail6",
+					"parent": "tail5",
+					"pivot": [0, 13, 22],
+					"cubes": [
+						{"origin": [-1, 12, 22], "size": [2, 2, 4], "uv": [0, 0]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,15 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:saber_tooth_tiger_hide",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+
+        "components": {
+            "minecraft:icon": "saber_tooth_tiger_hide"
+        }
+    }
+}

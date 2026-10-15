@@ -1,0 +1,104 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "dbe:vegeta_npc",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "properties": {
+                "dbe:color_0": { "type": "int", "range": [ 100100096, 355355360 ], "default": 100100100, "client_sync": true },
+                "dbe:color_1": { "type": "int", "range": [ 100100096, 355355360 ], "default": 100100100, "client_sync": true },
+                "dbe:color_2": { "type": "int", "range": [ 100100096, 355355360 ], "default": 100100100, "client_sync": true },
+                "dbe:color_3": { "type": "int", "range": [ 100100096, 355355360 ], "default": 100100100, "client_sync": true },
+                "dbe:ki_attack_color_0": { "type": "int", "range": [ 100100096, 355355360 ], "default": 100100100, "client_sync": true },
+                "dbe:ki_attack_color_1": { "type": "int", "range": [ 100100096, 355355360 ], "default": 100100100, "client_sync": true },
+                "dbe:aura_boost": {
+                    "type": "bool",
+                    "default": false,
+                    "client_sync": true
+                },
+                "dbe:charging_attack": {
+                    "type": "int",
+                    "range": [ -1, 15 ],
+                    "default": 0,
+                    "client_sync": true
+                },
+                "dbe:is_flying": {
+                    "type": "bool",
+                    "default": false,
+                    "client_sync": true
+                },
+                "dbe:is_defending": {
+                    "type": "bool",
+                    "default": false,
+                    "client_sync": true
+                },
+                "dbe:is_knocked_out": {
+                    "type": "bool",
+                    "default": false,
+                    "client_sync": true
+                },
+                "dbe:transformation": {
+                    "type": "int",
+                    "range": [ 0, 15 ],
+                    "default": 0,
+                    "client_sync": true
+                }
+            }
+        },
+
+        "component_groups": {
+            "dbe:despawn": {
+                "minecraft:instant_despawn": { }
+            }
+        },
+
+        "components": {
+            "minecraft:loot": {
+                "table": "loot_tables/entities/saiyan_pod_drop.json"
+            },
+            "minecraft:type_family": {
+                "family": [ "npc" ]
+            },
+            "minecraft:health": {
+                "value": 1,
+                "max": 1,
+                "min": 1
+            },
+            "minecraft:scale": {
+                "value": 0.9
+            },
+            "minecraft:collision_box": {
+                "width": 0.6,
+                "height": 1.8
+            },
+            "minecraft:knockback_resistance": {
+                "value": 1
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "deals_damage": "no"
+                }
+            },
+            "minecraft:behavior.look_at_player": {
+                "priority": 0,
+                "look_distance": 10
+            },
+            "minecraft:nameable": {
+                "always_show": true
+            },
+            "minecraft:conditional_bandwidth_optimization": { },
+            "minecraft:fire_immune": { },
+            "minecraft:persistent": { },
+            "minecraft:physics": { }
+        },
+
+        "events": {
+            "dbe:despawn": {
+                "add": {
+                    "component_groups": [ "dbe:despawn" ]
+                }
+            }
+        }
+    }
+}

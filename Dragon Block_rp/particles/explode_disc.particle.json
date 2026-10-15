@@ -1,0 +1,52 @@
+{
+	"format_version": "1.10.0",
+	"particle_effect": {
+		"description": {
+			"identifier": "dbe:explode_disc",
+			"basic_render_parameters": {
+				"material": "particles_add",
+				"texture": "textures/particle/explode_disc"
+			}
+		},
+		"components": {
+			"minecraft:emitter_local_space": {
+				"position": true,
+				"rotation": true,
+				"velocity": true
+			},
+			"minecraft:emitter_rate_instant": {
+				"num_particles": 1
+			},
+			"minecraft:emitter_lifetime_once": {
+				"active_time": 1
+			},
+			"minecraft:emitter_shape_point": {
+				"offset": [0, 0.01, 0]
+			},
+			"minecraft:particle_lifetime_expression": {
+				"max_lifetime": "v.explosion_duration"
+			},
+			"minecraft:particle_initial_speed": 0,
+			"minecraft:particle_motion_dynamic": {},
+			"minecraft:particle_appearance_billboard": {
+				"size": ["2 * v.size", "2 * v.size"],
+				"facing_camera_mode": "emitter_transform_xz",
+				"uv": {
+					"texture_width": 256,
+					"texture_height": 32,
+					"flipbook": {
+						"base_UV": [0, 0],
+						"size_UV": [32, 32],
+						"step_UV": [32, 0],
+						"frames_per_second": 8,
+						"max_frame": 8,
+						"stretch_to_lifetime": true
+					}
+				}
+			},
+			"minecraft:particle_appearance_tinting": {
+				"color": ["v.color.r", "v.color.g", "v.color.b", "1 - (v.particle_age / v.particle_lifetime)"]
+			}
+		}
+	}
+}

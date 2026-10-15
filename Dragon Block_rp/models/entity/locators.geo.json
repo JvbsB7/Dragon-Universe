@@ -1,0 +1,31 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.locators",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "sword_fx1",
+					"pivot": [0, 0, 0],
+					"locators": {
+						"sword_fx1": [0, 0, 0]
+					}
+				},
+				{
+					"name": "sword_fx2",
+					"pivot": [0, 0, 0],
+					"locators": {
+						"sword_fx2": [0, 0, 0]
+					}
+				}
+			]
+		}
+	]
+}

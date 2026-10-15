@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:structure_set": {
+        "description": {
+            "identifier": "dbe:master_roshi_house"
+        },
+        "placement": {
+            "type": "minecraft:random_spread",
+            "salt": 99443318,
+            "separation": 14,
+            "spacing": 30,
+            "spread_type": "linear"
+        },
+        "structures": [
+            {
+                "structure": "dbe:master_roshi_house",
+                "weight": 1
+            }
+        ]
+    }
+}

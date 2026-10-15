@@ -1,0 +1,2210 @@
+{
+   "content" : [
+      {
+         "path" : "README.md"
+      },
+      {
+         "path" : "animation_controllers/player_dbe.animation_controllers.json"
+      },
+      {
+         "path" : "biomes/diablo_desert.biome.json"
+      },
+      {
+         "path" : "biomes/dirtstone.biome.json"
+      },
+      {
+         "path" : "biomes/dirtstone_plains.biome.json"
+      },
+      {
+         "path" : "biomes/dirtstone_river.biome.json"
+      },
+      {
+         "path" : "biomes/frieza.biome.json"
+      },
+      {
+         "path" : "biomes/hell.biome.json"
+      },
+      {
+         "path" : "biomes/kai.biome.json"
+      },
+      {
+         "path" : "biomes/namek.biome.json"
+      },
+      {
+         "path" : "biomes/space.biome.json"
+      },
+      {
+         "path" : "biomes/universe_6_arena.biome.json"
+      },
+      {
+         "path" : "biomes/vegeta.biome.json"
+      },
+      {
+         "path" : "biomes/west_forest.biome.json"
+      },
+      {
+         "path" : "biomes/yardrat.biome.json"
+      },
+      {
+         "path" : "blocks/decor/black_tile.json"
+      },
+      {
+         "path" : "blocks/decor/black_tile_stairs.json"
+      },
+      {
+         "path" : "blocks/decor/blue_tile.json"
+      },
+      {
+         "path" : "blocks/decor/blue_tile_stairs.json"
+      },
+      {
+         "path" : "blocks/decor/hyperbolic_time_chamber_door.json"
+      },
+      {
+         "path" : "blocks/decor/kame_house_sign.json"
+      },
+      {
+         "path" : "blocks/decor/lime_tile.json"
+      },
+      {
+         "path" : "blocks/decor/lime_tile_stairs.json"
+      },
+      {
+         "path" : "blocks/decor/mafuba_pot.json"
+      },
+      {
+         "path" : "blocks/decor/orange_tile.json"
+      },
+      {
+         "path" : "blocks/decor/orange_tile_stairs.json"
+      },
+      {
+         "path" : "blocks/decor/pink_tile.json"
+      },
+      {
+         "path" : "blocks/decor/pink_tile_stairs.json"
+      },
+      {
+         "path" : "blocks/decor/pirate_robot_head.json"
+      },
+      {
+         "path" : "blocks/decor/purple_tile.json"
+      },
+      {
+         "path" : "blocks/decor/purple_tile_stairs.json"
+      },
+      {
+         "path" : "blocks/decor/red_tile.json"
+      },
+      {
+         "path" : "blocks/decor/red_tile_slab.txt"
+      },
+      {
+         "path" : "blocks/decor/red_tile_stairs.json"
+      },
+      {
+         "path" : "blocks/decor/white_tile.json"
+      },
+      {
+         "path" : "blocks/decor/white_tile_stairs.json"
+      },
+      {
+         "path" : "blocks/decor/yellow_cloud_block.json"
+      },
+      {
+         "path" : "blocks/decor/yellow_tile.json"
+      },
+      {
+         "path" : "blocks/decor/yellow_tile_stairs.json"
+      },
+      {
+         "path" : "blocks/dirtstone/dirtstone.json"
+      },
+      {
+         "path" : "blocks/dirtstone/dirtstone_grass.json"
+      },
+      {
+         "path" : "blocks/dirtstone/dirtstone_rubble.json"
+      },
+      {
+         "path" : "blocks/dirtstone/dirtstone_tall_grass.json"
+      },
+      {
+         "path" : "blocks/dragon_ball.json"
+      },
+      {
+         "path" : "blocks/dry_soil.json"
+      },
+      {
+         "path" : "blocks/gravity_machine.json"
+      },
+      {
+         "path" : "blocks/katchin_block.json"
+      },
+      {
+         "path" : "blocks/namek/ajisa/ajisa_door.json"
+      },
+      {
+         "path" : "blocks/namek/ajisa/ajisa_leaves.json"
+      },
+      {
+         "path" : "blocks/namek/ajisa/ajisa_log.json"
+      },
+      {
+         "path" : "blocks/namek/ajisa/ajisa_planks.json"
+      },
+      {
+         "path" : "blocks/namek/ajisa/ajisa_sapling.json"
+      },
+      {
+         "path" : "blocks/namek/ajisa/ajisa_stairs.json"
+      },
+      {
+         "path" : "blocks/namek/medical_moss.json"
+      },
+      {
+         "path" : "blocks/namek/namek_dragon_ball.json"
+      },
+      {
+         "path" : "blocks/namek/namek_grass.json"
+      },
+      {
+         "path" : "blocks/namek/namek_mushroom.json"
+      },
+      {
+         "path" : "blocks/namek/namek_stone.json"
+      },
+      {
+         "path" : "blocks/namek/namek_tall_grass.json"
+      },
+      {
+         "path" : "blocks/ores/deepslate_evolitium_ore.json"
+      },
+      {
+         "path" : "blocks/ores/dirtstone_evolitium_ore.json"
+      },
+      {
+         "path" : "blocks/ores/evolitium_cluster.json"
+      },
+      {
+         "path" : "blocks/ores/evolitium_ore.json"
+      },
+      {
+         "path" : "blocks/ores/namek_stone_evolitium_ore.json"
+      },
+      {
+         "path" : "blocks/packed_sand.json"
+      },
+      {
+         "path" : "blocks/planets/frieza_rock.json"
+      },
+      {
+         "path" : "blocks/planets/frieza_soil.json"
+      },
+      {
+         "path" : "blocks/planets/vegeta_rock.json"
+      },
+      {
+         "path" : "blocks/planets/vegeta_soil.json"
+      },
+      {
+         "path" : "blocks/planets/yardrat_rock.json"
+      },
+      {
+         "path" : "blocks/planets/yardrat_soil.json"
+      },
+      {
+         "path" : "blocks/senzu_beans.json"
+      },
+      {
+         "path" : "contents.json"
+      },
+      {
+         "path" : "dimensions/frieza_planet.json"
+      },
+      {
+         "path" : "dimensions/hell.json"
+      },
+      {
+         "path" : "dimensions/kai.json"
+      },
+      {
+         "path" : "dimensions/namek.json"
+      },
+      {
+         "path" : "dimensions/space.json"
+      },
+      {
+         "path" : "dimensions/universe_6_arena.json"
+      },
+      {
+         "path" : "dimensions/vegeta.json"
+      },
+      {
+         "path" : "dimensions/yardrat.json"
+      },
+      {
+         "path" : "entities/absorption_cocoon_entity.json"
+      },
+      {
+         "path" : "entities/animals/deer.json"
+      },
+      {
+         "path" : "entities/animals/dinosaur.json"
+      },
+      {
+         "path" : "entities/animals/giant_fish.json"
+      },
+      {
+         "path" : "entities/animals/namekian_frog.json"
+      },
+      {
+         "path" : "entities/animals/pterosaur.json"
+      },
+      {
+         "path" : "entities/animals/saber_tooth_tiger.json"
+      },
+      {
+         "path" : "entities/damage_indicator.json"
+      },
+      {
+         "path" : "entities/npcs/akira_toriyama.json"
+      },
+      {
+         "path" : "entities/npcs/announcer.json"
+      },
+      {
+         "path" : "entities/npcs/babidi.json"
+      },
+      {
+         "path" : "entities/npcs/beerus.json"
+      },
+      {
+         "path" : "entities/npcs/bulma.json"
+      },
+      {
+         "path" : "entities/npcs/capsule_corp_engineer.json"
+      },
+      {
+         "path" : "entities/npcs/cell_npc.json"
+      },
+      {
+         "path" : "entities/npcs/chi_chi.json"
+      },
+      {
+         "path" : "entities/npcs/enma_daioh.json"
+      },
+      {
+         "path" : "entities/npcs/goku.json"
+      },
+      {
+         "path" : "entities/npcs/grand_elder_guru.json"
+      },
+      {
+         "path" : "entities/npcs/kami_sama.json"
+      },
+      {
+         "path" : "entities/npcs/king_kai.json"
+      },
+      {
+         "path" : "entities/npcs/korin.json"
+      },
+      {
+         "path" : "entities/npcs/krillin.json"
+      },
+      {
+         "path" : "entities/npcs/master_roshi.json"
+      },
+      {
+         "path" : "entities/npcs/merchant.json"
+      },
+      {
+         "path" : "entities/npcs/mr_popo.json"
+      },
+      {
+         "path" : "entities/npcs/piccolo.json"
+      },
+      {
+         "path" : "entities/npcs/porunga.json"
+      },
+      {
+         "path" : "entities/npcs/shenron.json"
+      },
+      {
+         "path" : "entities/npcs/unigame.json"
+      },
+      {
+         "path" : "entities/npcs/vegeta_npc.json"
+      },
+      {
+         "path" : "entities/npcs/whis.json"
+      },
+      {
+         "path" : "entities/opponents/advanced_enemies/battle_jacket.json"
+      },
+      {
+         "path" : "entities/opponents/advanced_enemies/bear_thief.json"
+      },
+      {
+         "path" : "entities/opponents/advanced_enemies/pirate_robot.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/android_17.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/android_18.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/android_19.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/android_20.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/beerus_enemy.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/botamo.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/burter.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/cabba.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/cell.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/cell_junior.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/corrupted_fused_zamasu.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/cui.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/dabura.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/dodoria.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/fat_buu.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/frieza.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/frieza_soldier.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/frost.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/fused_zamasu.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/general_black.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/ginyu.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/goku_black.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/guldo.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/hitto.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/jeice.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/kid_buu.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/king_cold.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/magetta.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/majin_vegeta.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/nappa.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/puipui.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/raditz.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/recoome.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/saibabrute.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/saibaman.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/shisami.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/super_buu.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/tagoma.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/test_enemy.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/vegeta.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/yakon.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/zamasu.json"
+      },
+      {
+         "path" : "entities/opponents/common_enemies/zarbon.json"
+      },
+      {
+         "path" : "entities/opponents/future_trunks_enemy.json"
+      },
+      {
+         "path" : "entities/opponents/goku_enemy.json"
+      },
+      {
+         "path" : "entities/opponents/namekian.json"
+      },
+      {
+         "path" : "entities/opponents/piccolo_enemy.json"
+      },
+      {
+         "path" : "entities/opponents/shadow_dummy.json"
+      },
+      {
+         "path" : "entities/player.json"
+      },
+      {
+         "path" : "entities/player_fly.json"
+      },
+      {
+         "path" : "entities/projectiles/ki_attack.json"
+      },
+      {
+         "path" : "entities/projectiles/missile.json"
+      },
+      {
+         "path" : "entities/projectiles/pirate_robot_bullet.json"
+      },
+      {
+         "path" : "entities/props/angel_staff_entity.json"
+      },
+      {
+         "path" : "entities/props/earth.json"
+      },
+      {
+         "path" : "entities/props/location.json"
+      },
+      {
+         "path" : "entities/props/time_machine.json"
+      },
+      {
+         "path" : "entities/training_orb.json"
+      },
+      {
+         "path" : "entities/vehicles/capsule_991.json"
+      },
+      {
+         "path" : "entities/vehicles/drive_test_car.json"
+      },
+      {
+         "path" : "entities/vehicles/flying_nimbus.json"
+      },
+      {
+         "path" : "entities/vehicles/frieza_pod.json"
+      },
+      {
+         "path" : "entities/vehicles/saiyan_pod.json"
+      },
+      {
+         "path" : "entities/vehicles/space_pod.json"
+      },
+      {
+         "path" : "entities/villagers/demonic_iron_golem.json"
+      },
+      {
+         "path" : "entities/villagers/frieza_villager.json"
+      },
+      {
+         "path" : "entities/villagers/hell_villager.json"
+      },
+      {
+         "path" : "entities/villagers/saiyan_villager.json"
+      },
+      {
+         "path" : "entities/villagers/yardrat_villager.json"
+      },
+      {
+         "path" : "feature_rules/diablo_desert/diablo_desert_surface_short_dry_grass_feature.json"
+      },
+      {
+         "path" : "feature_rules/dirtstone/dirtstone_surface_dirtstone_rubble_feature.json"
+      },
+      {
+         "path" : "feature_rules/dirtstone/dirtstone_surface_tall_grass_feature.json"
+      },
+      {
+         "path" : "feature_rules/dirtstone/dirtstone_surface_trees_feature.json"
+      },
+      {
+         "path" : "feature_rules/namek/namek_first_namek_bush_feature.json"
+      },
+      {
+         "path" : "feature_rules/namek/namek_surface_medical_moss_feature.json"
+      },
+      {
+         "path" : "feature_rules/namek/namek_surface_mushrooms_feature.json"
+      },
+      {
+         "path" : "feature_rules/namek/namek_surface_tall_grass_feature.json"
+      },
+      {
+         "path" : "feature_rules/namek/namek_surface_trees_feature.json"
+      },
+      {
+         "path" : "feature_rules/namek/namek_underground_evolitium_ore_feature.json"
+      },
+      {
+         "path" : "feature_rules/overworld_underground_evolitium_ore_feature.json"
+      },
+      {
+         "path" : "feature_rules/west_forest/west_forest_surface_trees_feature.json"
+      },
+      {
+         "path" : "features/ajisa_tree_1_feature.json"
+      },
+      {
+         "path" : "features/ajisa_tree_2_feature.json"
+      },
+      {
+         "path" : "features/ajisa_tree_3_feature.json"
+      },
+      {
+         "path" : "features/ajisa_tree_4_feature.json"
+      },
+      {
+         "path" : "features/dirtstone_oak_tree_feature.json"
+      },
+      {
+         "path" : "features/dirtstone_rubble_feature.json"
+      },
+      {
+         "path" : "features/dirtstone_tall_grass_feature.json"
+      },
+      {
+         "path" : "features/dirtstone_tree_1_feature.json"
+      },
+      {
+         "path" : "features/dirtstone_tree_2_feature.json"
+      },
+      {
+         "path" : "features/dirtstone_tree_3_feature.json"
+      },
+      {
+         "path" : "features/dirtstone_tree_4_feature.json"
+      },
+      {
+         "path" : "features/dirtstone_tree_5_feature.json"
+      },
+      {
+         "path" : "features/evolitium_ore_feature.json"
+      },
+      {
+         "path" : "features/medical_moss_feature.json"
+      },
+      {
+         "path" : "features/namek_bush_feature.json"
+      },
+      {
+         "path" : "features/namek_mushroom_feature.json"
+      },
+      {
+         "path" : "features/namek_tall_grass_feature.json"
+      },
+      {
+         "path" : "features/random_dirtstone_rubble_feature.json"
+      },
+      {
+         "path" : "features/scatter_ajisa_tree_feature.json"
+      },
+      {
+         "path" : "features/scatter_dirtstone_tall_grass_feature.json"
+      },
+      {
+         "path" : "features/scatter_dirtstone_tree_feature.json"
+      },
+      {
+         "path" : "features/scatter_dry_grass_feature.json"
+      },
+      {
+         "path" : "features/scatter_namek_mushrooms_feature.json"
+      },
+      {
+         "path" : "features/scatter_namek_tall_grass_feature.json"
+      },
+      {
+         "path" : "features/select_ajisa_tree_feature.json"
+      },
+      {
+         "path" : "features/select_dirtstone_tree_feature.json"
+      },
+      {
+         "path" : "features/select_dry_grass_feature.json"
+      },
+      {
+         "path" : "features/short_dry_grass_feature.json"
+      },
+      {
+         "path" : "features/tall_dry_grass_feature.json"
+      },
+      {
+         "path" : "item_catalog/crafting_item_catalog.json"
+      },
+      {
+         "path" : "items/armors/bardock_battle_boots.json"
+      },
+      {
+         "path" : "items/armors/bardock_battle_chestplate.json"
+      },
+      {
+         "path" : "items/armors/bardock_battle_leggings.json"
+      },
+      {
+         "path" : "items/armors/battle_boots.json"
+      },
+      {
+         "path" : "items/armors/battle_chestplate.json"
+      },
+      {
+         "path" : "items/armors/battle_leggings.json"
+      },
+      {
+         "path" : "items/armors/broly_battle_boots.json"
+      },
+      {
+         "path" : "items/armors/broly_battle_chestplate.json"
+      },
+      {
+         "path" : "items/armors/broly_battle_leggings.json"
+      },
+      {
+         "path" : "items/armors/vegeta_battle_boots.json"
+      },
+      {
+         "path" : "items/armors/vegeta_battle_chestplate.json"
+      },
+      {
+         "path" : "items/armors/vegeta_battle_leggings.json"
+      },
+      {
+         "path" : "items/armors/vegeta_cell_battle_boots.json"
+      },
+      {
+         "path" : "items/armors/vegeta_cell_battle_chestplate.json"
+      },
+      {
+         "path" : "items/armors/vegeta_cell_battle_leggings.json"
+      },
+      {
+         "path" : "items/armors/vegeta_super_battle_boots.json"
+      },
+      {
+         "path" : "items/armors/vegeta_super_battle_chestplate.json"
+      },
+      {
+         "path" : "items/armors/vegeta_super_battle_leggings.json"
+      },
+      {
+         "path" : "items/black_flying_nimbus.json"
+      },
+      {
+         "path" : "items/blocks/ajisa_door.json"
+      },
+      {
+         "path" : "items/blocks/ajisa_log.json"
+      },
+      {
+         "path" : "items/blocks/ajisa_planks.json"
+      },
+      {
+         "path" : "items/blocks/ajisa_sapling.json"
+      },
+      {
+         "path" : "items/blocks/dirtstone.json"
+      },
+      {
+         "path" : "items/blocks/dirtstone_tall_grass.json"
+      },
+      {
+         "path" : "items/blocks/dragon_ball.json"
+      },
+      {
+         "path" : "items/blocks/evolitium_cluster.json"
+      },
+      {
+         "path" : "items/blocks/katchin_block.json"
+      },
+      {
+         "path" : "items/blocks/mafuba_pot.json"
+      },
+      {
+         "path" : "items/blocks/namek_dragon_ball.json"
+      },
+      {
+         "path" : "items/blocks/namek_mushroom.json"
+      },
+      {
+         "path" : "items/blocks/namek_stone.json"
+      },
+      {
+         "path" : "items/blocks/namek_tall_grass.json"
+      },
+      {
+         "path" : "items/bucket_medical_liquid.json"
+      },
+      {
+         "path" : "items/change_hair.json"
+      },
+      {
+         "path" : "items/clothes/android_13_boots.json"
+      },
+      {
+         "path" : "items/clothes/android_13_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/android_13_hat.json"
+      },
+      {
+         "path" : "items/clothes/android_13_leggings.json"
+      },
+      {
+         "path" : "items/clothes/android_16_boots.json"
+      },
+      {
+         "path" : "items/clothes/android_16_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/android_16_leggings.json"
+      },
+      {
+         "path" : "items/clothes/android_17_boots.json"
+      },
+      {
+         "path" : "items/clothes/android_17_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/android_17_leggings.json"
+      },
+      {
+         "path" : "items/clothes/android_18_boots.json"
+      },
+      {
+         "path" : "items/clothes/android_18_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/android_18_leggings.json"
+      },
+      {
+         "path" : "items/clothes/android_21_majin_boots.json"
+      },
+      {
+         "path" : "items/clothes/android_21_majin_leggings.json"
+      },
+      {
+         "path" : "items/clothes/android_21_majin_shirt.json"
+      },
+      {
+         "path" : "items/clothes/broly_boots.json"
+      },
+      {
+         "path" : "items/clothes/broly_leggings.json"
+      },
+      {
+         "path" : "items/clothes/broly_pendant.json"
+      },
+      {
+         "path" : "items/clothes/bunny_costume_boots.json"
+      },
+      {
+         "path" : "items/clothes/bunny_costume_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/bunny_costume_ears.json"
+      },
+      {
+         "path" : "items/clothes/bunny_costume_leggings.json"
+      },
+      {
+         "path" : "items/clothes/chi_chi_boots.json"
+      },
+      {
+         "path" : "items/clothes/chi_chi_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/chi_chi_leggings.json"
+      },
+      {
+         "path" : "items/clothes/christmas_costume.json"
+      },
+      {
+         "path" : "items/clothes/elegant_suit_boots.json"
+      },
+      {
+         "path" : "items/clothes/elegant_suit_hat.json"
+      },
+      {
+         "path" : "items/clothes/elegant_suit_jacket.json"
+      },
+      {
+         "path" : "items/clothes/elegant_suit_leggings.json"
+      },
+      {
+         "path" : "items/clothes/fused_zamasu_boots.json"
+      },
+      {
+         "path" : "items/clothes/fused_zamasu_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/fused_zamasu_leggings.json"
+      },
+      {
+         "path" : "items/clothes/goku_af_boots.json"
+      },
+      {
+         "path" : "items/clothes/goku_af_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/goku_af_leggings.json"
+      },
+      {
+         "path" : "items/clothes/goku_black_boots.json"
+      },
+      {
+         "path" : "items/clothes/goku_black_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/goku_black_leggings.json"
+      },
+      {
+         "path" : "items/clothes/goku_boots.json"
+      },
+      {
+         "path" : "items/clothes/goku_casual_boots.json"
+      },
+      {
+         "path" : "items/clothes/goku_casual_jacket.json"
+      },
+      {
+         "path" : "items/clothes/goku_casual_leggings.json"
+      },
+      {
+         "path" : "items/clothes/goku_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/goku_gt_boots.json"
+      },
+      {
+         "path" : "items/clothes/goku_gt_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/goku_gt_leggings.json"
+      },
+      {
+         "path" : "items/clothes/goku_leggings.json"
+      },
+      {
+         "path" : "items/clothes/grandpa_gohan_mask.json"
+      },
+      {
+         "path" : "items/clothes/kaioshin_boots.json"
+      },
+      {
+         "path" : "items/clothes/kaioshin_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/kaioshin_leggings.json"
+      },
+      {
+         "path" : "items/clothes/maid_costume_boots.json"
+      },
+      {
+         "path" : "items/clothes/maid_costume_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/maid_costume_hat.json"
+      },
+      {
+         "path" : "items/clothes/maid_costume_skirt.json"
+      },
+      {
+         "path" : "items/clothes/majin_buu_boots.json"
+      },
+      {
+         "path" : "items/clothes/majin_buu_bracers.json"
+      },
+      {
+         "path" : "items/clothes/majin_buu_leggings.json"
+      },
+      {
+         "path" : "items/clothes/majin_vegeta_boots.json"
+      },
+      {
+         "path" : "items/clothes/majin_vegeta_leggings.json"
+      },
+      {
+         "path" : "items/clothes/majin_vegeta_shirt.json"
+      },
+      {
+         "path" : "items/clothes/piccolo_boots.json"
+      },
+      {
+         "path" : "items/clothes/piccolo_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/piccolo_leggings.json"
+      },
+      {
+         "path" : "items/clothes/piccolo_turban.json"
+      },
+      {
+         "path" : "items/clothes/pride_troopers_boots.json"
+      },
+      {
+         "path" : "items/clothes/pride_troopers_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/pride_troopers_leggings.json"
+      },
+      {
+         "path" : "items/clothes/saiyaman_boots.json"
+      },
+      {
+         "path" : "items/clothes/saiyaman_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/saiyaman_helmet.json"
+      },
+      {
+         "path" : "items/clothes/saiyaman_leggings.json"
+      },
+      {
+         "path" : "items/clothes/tapion_boots.json"
+      },
+      {
+         "path" : "items/clothes/tapion_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/tapion_leggings.json"
+      },
+      {
+         "path" : "items/clothes/tien_boots.json"
+      },
+      {
+         "path" : "items/clothes/tien_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/tien_leggings.json"
+      },
+      {
+         "path" : "items/clothes/trunks_boots.json"
+      },
+      {
+         "path" : "items/clothes/trunks_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/trunks_leggings.json"
+      },
+      {
+         "path" : "items/clothes/vegeta_gt_boots.json"
+      },
+      {
+         "path" : "items/clothes/vegeta_gt_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/vegeta_gt_leggings.json"
+      },
+      {
+         "path" : "items/clothes/xeno_goku_boots.json"
+      },
+      {
+         "path" : "items/clothes/xeno_goku_leggings.json"
+      },
+      {
+         "path" : "items/clothes/xeno_goku_shirt.json"
+      },
+      {
+         "path" : "items/clothes/zamasu_boots.json"
+      },
+      {
+         "path" : "items/clothes/zamasu_chestplate.json"
+      },
+      {
+         "path" : "items/clothes/zamasu_leggings.json"
+      },
+      {
+         "path" : "items/dragon_radar.json"
+      },
+      {
+         "path" : "items/equipments/bansho_fan.json"
+      },
+      {
+         "path" : "items/equipments/brave_sword.json"
+      },
+      {
+         "path" : "items/equipments/evolitium_axe.json"
+      },
+      {
+         "path" : "items/equipments/evolitium_hoe.json"
+      },
+      {
+         "path" : "items/equipments/evolitium_pickaxe.json"
+      },
+      {
+         "path" : "items/equipments/evolitium_shovel.json"
+      },
+      {
+         "path" : "items/equipments/evolitium_sword.json"
+      },
+      {
+         "path" : "items/equipments/katana.json"
+      },
+      {
+         "path" : "items/equipments/power_pole.json"
+      },
+      {
+         "path" : "items/equipments/z_sword.json"
+      },
+      {
+         "path" : "items/evolitium_crystal.json"
+      },
+      {
+         "path" : "items/flying_nimbus.json"
+      },
+      {
+         "path" : "items/foods/ajisa_orange.json"
+      },
+      {
+         "path" : "items/foods/cooked_dinosaur_meat.json"
+      },
+      {
+         "path" : "items/foods/cooked_giant_fish.json"
+      },
+      {
+         "path" : "items/foods/demonic_apple.json"
+      },
+      {
+         "path" : "items/foods/giant_fish.json"
+      },
+      {
+         "path" : "items/foods/medicinal_soup.json"
+      },
+      {
+         "path" : "items/foods/power_fruit.json"
+      },
+      {
+         "path" : "items/foods/ramen.json"
+      },
+      {
+         "path" : "items/foods/raw_dinosaur_meat.json"
+      },
+      {
+         "path" : "items/foods/senzu_bean.json"
+      },
+      {
+         "path" : "items/full_scouter.json"
+      },
+      {
+         "path" : "items/glasses.json"
+      },
+      {
+         "path" : "items/halo.json"
+      },
+      {
+         "path" : "items/headband.json"
+      },
+      {
+         "path" : "items/hoi_poi_capsule/blue_hoi_poi_capsule.png.json"
+      },
+      {
+         "path" : "items/hoi_poi_capsule/green_hoi_poi_capsule.png.json"
+      },
+      {
+         "path" : "items/hoi_poi_capsule/purple_hoi_poi_capsule.png.json"
+      },
+      {
+         "path" : "items/hoi_poi_capsule/red_hoi_poi_capsule.png.json"
+      },
+      {
+         "path" : "items/hoi_poi_capsule/yellow_hoi_poi_capsule.png.json"
+      },
+      {
+         "path" : "items/katchin_shard.json"
+      },
+      {
+         "path" : "items/medical_moss.json"
+      },
+      {
+         "path" : "items/medical_moss_seeds.json"
+      },
+      {
+         "path" : "items/music_disc_hero.json"
+      },
+      {
+         "path" : "items/namek_space_pod.json"
+      },
+      {
+         "path" : "items/nanochip.json"
+      },
+      {
+         "path" : "items/pirate_robot_head.json"
+      },
+      {
+         "path" : "items/potara_earring.json"
+      },
+      {
+         "path" : "items/potara_earrings.json"
+      },
+      {
+         "path" : "items/props/time_machine.json"
+      },
+      {
+         "path" : "items/redeemables/angel_staff.json"
+      },
+      {
+         "path" : "items/redeemables/baby_armor_boots.json"
+      },
+      {
+         "path" : "items/redeemables/baby_armor_chestplate.json"
+      },
+      {
+         "path" : "items/redeemables/baby_armor_leggings.json"
+      },
+      {
+         "path" : "items/redeemables/beat_boots.json"
+      },
+      {
+         "path" : "items/redeemables/beat_chestplate.json"
+      },
+      {
+         "path" : "items/redeemables/beat_leggings.json"
+      },
+      {
+         "path" : "items/redeemables/divine_halo.json"
+      },
+      {
+         "path" : "items/redeemables/frieza_pod.json"
+      },
+      {
+         "path" : "items/redeemables/hakaishin_boots.json"
+      },
+      {
+         "path" : "items/redeemables/hakaishin_chestplate.json"
+      },
+      {
+         "path" : "items/redeemables/hakaishin_leggings.json"
+      },
+      {
+         "path" : "items/redeemables/xeno_goku_black_boots.json"
+      },
+      {
+         "path" : "items/redeemables/xeno_goku_black_leggings.json"
+      },
+      {
+         "path" : "items/redeemables/xeno_goku_black_mask.json"
+      },
+      {
+         "path" : "items/redeemables/xeno_goku_black_shirt.json"
+      },
+      {
+         "path" : "items/saber_tooth_tiger_hide.json"
+      },
+      {
+         "path" : "items/sacred_water_flask.json"
+      },
+      {
+         "path" : "items/saibaman_seed.json"
+      },
+      {
+         "path" : "items/saiyan_pod.json"
+      },
+      {
+         "path" : "items/scouter.json"
+      },
+      {
+         "path" : "items/space_helmet.json"
+      },
+      {
+         "path" : "items/space_pod.json"
+      },
+      {
+         "path" : "items/star_navigator.json"
+      },
+      {
+         "path" : "items/system/functions.json"
+      },
+      {
+         "path" : "items/system/menu.json"
+      },
+      {
+         "path" : "items/system/techniques.json"
+      },
+      {
+         "path" : "items/tournament_invitation.json"
+      },
+      {
+         "path" : "items/vanilla/apple.json"
+      },
+      {
+         "path" : "items/vanilla/appleEnchanted.json"
+      },
+      {
+         "path" : "items/vanilla/baked_potato.json"
+      },
+      {
+         "path" : "items/vanilla/beef.json"
+      },
+      {
+         "path" : "items/vanilla/beetroot.json"
+      },
+      {
+         "path" : "items/vanilla/beetroot_soup.json"
+      },
+      {
+         "path" : "items/vanilla/bread.json"
+      },
+      {
+         "path" : "items/vanilla/breeze_rod.json"
+      },
+      {
+         "path" : "items/vanilla/carrot.json"
+      },
+      {
+         "path" : "items/vanilla/chicken.json"
+      },
+      {
+         "path" : "items/vanilla/chorus_fruit.json"
+      },
+      {
+         "path" : "items/vanilla/clownfish.json"
+      },
+      {
+         "path" : "items/vanilla/cooked_beef.json"
+      },
+      {
+         "path" : "items/vanilla/cooked_chicken.json"
+      },
+      {
+         "path" : "items/vanilla/cooked_fish.json"
+      },
+      {
+         "path" : "items/vanilla/cooked_porkchop.json"
+      },
+      {
+         "path" : "items/vanilla/cooked_rabbit.json"
+      },
+      {
+         "path" : "items/vanilla/cooked_salmon.json"
+      },
+      {
+         "path" : "items/vanilla/cookie.json"
+      },
+      {
+         "path" : "items/vanilla/dried_kelp.json"
+      },
+      {
+         "path" : "items/vanilla/fish.json"
+      },
+      {
+         "path" : "items/vanilla/golden_apple.json"
+      },
+      {
+         "path" : "items/vanilla/golden_carrot.json"
+      },
+      {
+         "path" : "items/vanilla/honey_bottle.json"
+      },
+      {
+         "path" : "items/vanilla/melon.json"
+      },
+      {
+         "path" : "items/vanilla/mushroom_stew.json"
+      },
+      {
+         "path" : "items/vanilla/muttonCooked.json"
+      },
+      {
+         "path" : "items/vanilla/muttonRaw.json"
+      },
+      {
+         "path" : "items/vanilla/poisonous_potato.json"
+      },
+      {
+         "path" : "items/vanilla/porkchop.json"
+      },
+      {
+         "path" : "items/vanilla/potato.json"
+      },
+      {
+         "path" : "items/vanilla/pufferfish.json"
+      },
+      {
+         "path" : "items/vanilla/pumpkin_pie.json"
+      },
+      {
+         "path" : "items/vanilla/rabbit.json"
+      },
+      {
+         "path" : "items/vanilla/rabbit_stew.json"
+      },
+      {
+         "path" : "items/vanilla/rotten_flesh.json"
+      },
+      {
+         "path" : "items/vanilla/salmon.json"
+      },
+      {
+         "path" : "items/vanilla/spider_eye.json"
+      },
+      {
+         "path" : "items/vanilla/suspicious_stew.json"
+      },
+      {
+         "path" : "items/vanilla/sweet_berries.json"
+      },
+      {
+         "path" : "items/weights/milk_box.json"
+      },
+      {
+         "path" : "items/weights/piccolo_cape.json"
+      },
+      {
+         "path" : "items/weights/training_armor.json"
+      },
+      {
+         "path" : "items/weights/training_shirt.json"
+      },
+      {
+         "path" : "items/weights/turtle_shell.json"
+      },
+      {
+         "path" : "items/weights/workout_weights.json"
+      },
+      {
+         "path" : "loot_tables/blocks/ajisa_door.json"
+      },
+      {
+         "path" : "loot_tables/blocks/ajisa_leaves.json"
+      },
+      {
+         "path" : "loot_tables/blocks/ajisa_log.json"
+      },
+      {
+         "path" : "loot_tables/blocks/ajisa_planks.json"
+      },
+      {
+         "path" : "loot_tables/blocks/ajisa_sapling.json"
+      },
+      {
+         "path" : "loot_tables/blocks/deepslate_evolitium_ore.json"
+      },
+      {
+         "path" : "loot_tables/blocks/dirtstone.json"
+      },
+      {
+         "path" : "loot_tables/blocks/dirtstone_evolitium_ore.json"
+      },
+      {
+         "path" : "loot_tables/blocks/dirtstone_grass.json"
+      },
+      {
+         "path" : "loot_tables/blocks/dirtstone_rubble.json"
+      },
+      {
+         "path" : "loot_tables/blocks/dirtstone_tall_grass.json"
+      },
+      {
+         "path" : "loot_tables/blocks/dragon_ball.json"
+      },
+      {
+         "path" : "loot_tables/blocks/dry_soil.json"
+      },
+      {
+         "path" : "loot_tables/blocks/evolitium_cluster.json"
+      },
+      {
+         "path" : "loot_tables/blocks/evolitium_ore.json"
+      },
+      {
+         "path" : "loot_tables/blocks/frieza_rock.json"
+      },
+      {
+         "path" : "loot_tables/blocks/frieza_soil.json"
+      },
+      {
+         "path" : "loot_tables/blocks/gravity_machine.json"
+      },
+      {
+         "path" : "loot_tables/blocks/medical_moss/medical_moss.json"
+      },
+      {
+         "path" : "loot_tables/blocks/medical_moss/medical_moss_seeds.json"
+      },
+      {
+         "path" : "loot_tables/blocks/medical_moss/medical_moss_stage_3.json"
+      },
+      {
+         "path" : "loot_tables/blocks/namek_dragon_ball.json"
+      },
+      {
+         "path" : "loot_tables/blocks/namek_grass.json"
+      },
+      {
+         "path" : "loot_tables/blocks/namek_mushroom/stage_1.json"
+      },
+      {
+         "path" : "loot_tables/blocks/namek_mushroom/stage_2.json"
+      },
+      {
+         "path" : "loot_tables/blocks/namek_mushroom/stage_3.json"
+      },
+      {
+         "path" : "loot_tables/blocks/namek_mushroom/stage_4.json"
+      },
+      {
+         "path" : "loot_tables/blocks/namek_stone.json"
+      },
+      {
+         "path" : "loot_tables/blocks/namek_stone_evolitium_ore.json"
+      },
+      {
+         "path" : "loot_tables/blocks/namek_tall_grass.json"
+      },
+      {
+         "path" : "loot_tables/blocks/packed_sand.json"
+      },
+      {
+         "path" : "loot_tables/blocks/senzu_beans/senzu_beans.json"
+      },
+      {
+         "path" : "loot_tables/blocks/senzu_beans/senzu_beans_stage_3.json"
+      },
+      {
+         "path" : "loot_tables/blocks/vegeta_rock.json"
+      },
+      {
+         "path" : "loot_tables/blocks/vegeta_soil.json"
+      },
+      {
+         "path" : "loot_tables/blocks/yardrat_rock.json"
+      },
+      {
+         "path" : "loot_tables/blocks/yardrat_soil.json"
+      },
+      {
+         "path" : "loot_tables/chests/namek_house.json"
+      },
+      {
+         "path" : "loot_tables/chests/space/crashed_pod.json"
+      },
+      {
+         "path" : "loot_tables/chests/space/frieza_outpost.json"
+      },
+      {
+         "path" : "loot_tables/chests/space/vegeta_ruins.json"
+      },
+      {
+         "path" : "loot_tables/chests/space/yardrat_dome.json"
+      },
+      {
+         "path" : "loot_tables/entities/deer.json"
+      },
+      {
+         "path" : "loot_tables/entities/demonic_iron_golem.json"
+      },
+      {
+         "path" : "loot_tables/entities/dinosaur.json"
+      },
+      {
+         "path" : "loot_tables/entities/frieza_villager.json"
+      },
+      {
+         "path" : "loot_tables/entities/giant_fish.json"
+      },
+      {
+         "path" : "loot_tables/entities/hell_villager.json"
+      },
+      {
+         "path" : "loot_tables/entities/namekian.json"
+      },
+      {
+         "path" : "loot_tables/entities/pterosaur.json"
+      },
+      {
+         "path" : "loot_tables/entities/saber_tooth_tiger.json"
+      },
+      {
+         "path" : "loot_tables/entities/saibaman.json"
+      },
+      {
+         "path" : "loot_tables/entities/saiyan_pod_drop.json"
+      },
+      {
+         "path" : "loot_tables/entities/saiyan_villager.json"
+      },
+      {
+         "path" : "loot_tables/entities/vegeta.json"
+      },
+      {
+         "path" : "loot_tables/entities/whis_gear.json"
+      },
+      {
+         "path" : "loot_tables/entities/yardrat_villager.json"
+      },
+      {
+         "path" : "manifest.json"
+      },
+      {
+         "path" : "pack_icon.png"
+      },
+      {
+         "path" : "recipes/blocks/ajisa_door.json"
+      },
+      {
+         "path" : "recipes/blocks/ajisa_planks.json"
+      },
+      {
+         "path" : "recipes/blocks/ajisa_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/black_tile.json"
+      },
+      {
+         "path" : "recipes/blocks/black_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/blue_tile.json"
+      },
+      {
+         "path" : "recipes/blocks/blue_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/gravity_machine.json"
+      },
+      {
+         "path" : "recipes/blocks/katchin_block.json"
+      },
+      {
+         "path" : "recipes/blocks/lime_tile.json"
+      },
+      {
+         "path" : "recipes/blocks/lime_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/orange_tile.json"
+      },
+      {
+         "path" : "recipes/blocks/orange_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/packed_sand.json"
+      },
+      {
+         "path" : "recipes/blocks/pink_tile.json"
+      },
+      {
+         "path" : "recipes/blocks/pink_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/purple_tile.json"
+      },
+      {
+         "path" : "recipes/blocks/purple_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/red_tile.json"
+      },
+      {
+         "path" : "recipes/blocks/red_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/sand_from_packed_sand.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_black_tile_to_black_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_blue_tile_to_blue_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_lime_tile_to_lime_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_orange_tile_to_orange_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_pink_tile_to_pink_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_purple_tile_to_purple_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_red_tile_to_red_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_white_tile_to_white_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_yellow_tile_to_yellow_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/white_tile.json"
+      },
+      {
+         "path" : "recipes/blocks/white_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/yellow_tile.json"
+      },
+      {
+         "path" : "recipes/blocks/yellow_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/items/armors/battle_boots.json"
+      },
+      {
+         "path" : "recipes/items/armors/battle_chestplate.json"
+      },
+      {
+         "path" : "recipes/items/armors/battle_leggings.json"
+      },
+      {
+         "path" : "recipes/items/armors/broly_battle_boots.json"
+      },
+      {
+         "path" : "recipes/items/armors/broly_battle_chestplate.json"
+      },
+      {
+         "path" : "recipes/items/armors/broly_battle_leggings.json"
+      },
+      {
+         "path" : "recipes/items/armors/headband_red.json"
+      },
+      {
+         "path" : "recipes/items/armors/vegeta_battle_boots.json"
+      },
+      {
+         "path" : "recipes/items/armors/vegeta_battle_chestplate.json"
+      },
+      {
+         "path" : "recipes/items/armors/vegeta_battle_leggings.json"
+      },
+      {
+         "path" : "recipes/items/bucket_medical_liquid.json"
+      },
+      {
+         "path" : "recipes/items/change_hair.json"
+      },
+      {
+         "path" : "recipes/items/dragon_radar.json"
+      },
+      {
+         "path" : "recipes/items/evolitium_axe.json"
+      },
+      {
+         "path" : "recipes/items/evolitium_hoe.json"
+      },
+      {
+         "path" : "recipes/items/evolitium_pickaxe.json"
+      },
+      {
+         "path" : "recipes/items/evolitium_shovel.json"
+      },
+      {
+         "path" : "recipes/items/evolitium_sword.json"
+      },
+      {
+         "path" : "recipes/items/furnace_ajisa_log.json"
+      },
+      {
+         "path" : "recipes/items/furnace_deepslate_evolitium_ore.json"
+      },
+      {
+         "path" : "recipes/items/furnace_dirtstone_evolitium_ore.json"
+      },
+      {
+         "path" : "recipes/items/furnace_evolitium_ore.json"
+      },
+      {
+         "path" : "recipes/items/furnace_giant_fish.json"
+      },
+      {
+         "path" : "recipes/items/furnace_namek_stone_evolitium_ore.json"
+      },
+      {
+         "path" : "recipes/items/furnace_raw_dinosaur_meat.json"
+      },
+      {
+         "path" : "recipes/items/katana.json"
+      },
+      {
+         "path" : "recipes/items/katchin_shard.json"
+      },
+      {
+         "path" : "recipes/items/medicinal_soup.json"
+      },
+      {
+         "path" : "recipes/items/namek_space_pod.json"
+      },
+      {
+         "path" : "recipes/items/nanochip.json"
+      },
+      {
+         "path" : "recipes/items/potara_earring.json"
+      },
+      {
+         "path" : "recipes/items/potara_earrings.json"
+      },
+      {
+         "path" : "recipes/items/ramen.json"
+      },
+      {
+         "path" : "recipes/items/saiyan_pod.json"
+      },
+      {
+         "path" : "recipes/items/scouter.json"
+      },
+      {
+         "path" : "recipes/items/space_helmet.json"
+      },
+      {
+         "path" : "recipes/items/space_pod.json"
+      },
+      {
+         "path" : "recipes/items/star_navigator.json"
+      },
+      {
+         "path" : "recipes/items/tournament_invitation.json"
+      },
+      {
+         "path" : "recipes/items/z_sword.json"
+      },
+      {
+         "path" : "scripts/config/config.js"
+      },
+      {
+         "path" : "scripts/data/achievements_data.js"
+      },
+      {
+         "path" : "scripts/data/challenge_quests_data.js"
+      },
+      {
+         "path" : "scripts/data/dialogues_data.js"
+      },
+      {
+         "path" : "scripts/data/dragon_balls_data.js"
+      },
+      {
+         "path" : "scripts/data/entities_data.js"
+      },
+      {
+         "path" : "scripts/data/global_transformations_data.js"
+      },
+      {
+         "path" : "scripts/data/ki_colors_data.js"
+      },
+      {
+         "path" : "scripts/data/main_quests_data.js"
+      },
+      {
+         "path" : "scripts/data/masters_data.js"
+      },
+      {
+         "path" : "scripts/data/modifiers_data.js"
+      },
+      {
+         "path" : "scripts/data/races_data.js"
+      },
+      {
+         "path" : "scripts/data/regions_data.js"
+      },
+      {
+         "path" : "scripts/data/shop_data.js"
+      },
+      {
+         "path" : "scripts/data/side_quests_data.js"
+      },
+      {
+         "path" : "scripts/data/skills_data.js"
+      },
+      {
+         "path" : "scripts/data/tournaments_data.js"
+      },
+      {
+         "path" : "scripts/data/variables.js"
+      },
+      {
+         "path" : "scripts/data/wish_data.js"
+      },
+      {
+         "path" : "scripts/hell_dimension.js"
+      },
+      {
+         "path" : "scripts/hell_terrain.js"
+      },
+      {
+         "path" : "scripts/index.js"
+      },
+      {
+         "path" : "scripts/kai_dimension.js"
+      },
+      {
+         "path" : "scripts/namek_dimension.js"
+      },
+      {
+         "path" : "scripts/other_world_kai.js"
+      },
+      {
+         "path" : "scripts/planet_villages.js"
+      },
+      {
+         "path" : "scripts/space_planets.js"
+      },
+      {
+         "path" : "scripts/universe_6_dimension.js"
+      },
+      {
+         "path" : "spawn_rules/bear_thief.json"
+      },
+      {
+         "path" : "spawn_rules/chicken.json"
+      },
+      {
+         "path" : "spawn_rules/cow.json"
+      },
+      {
+         "path" : "spawn_rules/deer.json"
+      },
+      {
+         "path" : "spawn_rules/dinosaur.json"
+      },
+      {
+         "path" : "spawn_rules/frieza.json"
+      },
+      {
+         "path" : "spawn_rules/frieza_soldier.json"
+      },
+      {
+         "path" : "spawn_rules/giant_fish.json"
+      },
+      {
+         "path" : "spawn_rules/king_cold.json"
+      },
+      {
+         "path" : "spawn_rules/merchant.json"
+      },
+      {
+         "path" : "spawn_rules/namekian.json"
+      },
+      {
+         "path" : "spawn_rules/namekian_frog.json"
+      },
+      {
+         "path" : "spawn_rules/nappa.json"
+      },
+      {
+         "path" : "spawn_rules/pig.json"
+      },
+      {
+         "path" : "spawn_rules/pterosaur.json"
+      },
+      {
+         "path" : "spawn_rules/saber_tooth_tiger.json"
+      },
+      {
+         "path" : "spawn_rules/saibabrute.json"
+      },
+      {
+         "path" : "spawn_rules/saibaman.json"
+      },
+      {
+         "path" : "spawn_rules/sheep.json"
+      },
+      {
+         "path" : "spawn_rules/vegeta.json"
+      },
+      {
+         "path" : "structures/Torneio_de_artes_marciais_mundial.mcstructure"
+      },
+      {
+         "path" : "structures/ajisa_tree_1.mcstructure"
+      },
+      {
+         "path" : "structures/ajisa_tree_2.mcstructure"
+      },
+      {
+         "path" : "structures/ajisa_tree_3.mcstructure"
+      },
+      {
+         "path" : "structures/ajisa_tree_4.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/babidi_spaceship_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/babidi_spaceship_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/babidi_spaceship_3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/cell_arena.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/buildings/park_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/buildings/small_building_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/buildings/small_building_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/buildings/small_building_3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/buildings/small_building_4.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/buildings/tower_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/streets/curve_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/streets/dead_end_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/streets/dead_end_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/streets/intersection_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/streets/intersection_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/streets/roundabout_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/city/streets/straight_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/dirtstone_tree_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/dirtstone_tree_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/dirtstone_tree_3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/dirtstone_tree_4.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/dirtstone_tree_5.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/enma_daioh_palace_back.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/enma_daioh_palace_front.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/goku_house.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/hyperbolic_time_chamber.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/lookout.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/master_roshi_house.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/namek_village/houses/namek_medium_house_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/namek_village/streets/curve_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/namek_village/streets/curve_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/namek_village/streets/intersection_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/namek_village/streets/intersection_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/namek_village/streets/straight_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/namek_village/village_centers/meeting_point_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/west_city.mcstructure"
+      },
+      {
+         "path" : "structures/king_kai_planet.mcstructure"
+      },
+      {
+         "path" : "structures/snake_path_1.mcstructure"
+      },
+      {
+         "path" : "structures/snake_path_2.mcstructure"
+      },
+      {
+         "path" : "structures/snake_path_3.mcstructure"
+      },
+      {
+         "path" : "structures/snake_path_4.mcstructure"
+      },
+      {
+         "path" : "structures/snake_path_end.mcstructure"
+      },
+      {
+         "path" : "structures/snake_path_start.mcstructure"
+      },
+      {
+         "path" : "texts/en_US.lang"
+      },
+      {
+         "path" : "texts/es_ES.lang"
+      },
+      {
+         "path" : "texts/languages.json"
+      },
+      {
+         "path" : "texts/pt_BR.lang"
+      },
+      {
+         "path" : "trading/namekian_trades.json"
+      },
+      {
+         "path" : "worldgen/processors/namek_streets.json"
+      },
+      {
+         "path" : "worldgen/structure_sets/babidi_spaceship.json"
+      },
+      {
+         "path" : "worldgen/structure_sets/cell_arena.json"
+      },
+      {
+         "path" : "worldgen/structure_sets/city.txt"
+      },
+      {
+         "path" : "worldgen/structure_sets/goku_house.json"
+      },
+      {
+         "path" : "worldgen/structure_sets/master_roshi_house.json"
+      },
+      {
+         "path" : "worldgen/structure_sets/namek_village.json"
+      },
+      {
+         "path" : "worldgen/structure_sets/west_city.json"
+      },
+      {
+         "path" : "worldgen/structures/babidi_spaceship.json"
+      },
+      {
+         "path" : "worldgen/structures/cell_arena.json"
+      },
+      {
+         "path" : "worldgen/structures/city.json"
+      },
+      {
+         "path" : "worldgen/structures/goku_house.json"
+      },
+      {
+         "path" : "worldgen/structures/master_roshi_house.json"
+      },
+      {
+         "path" : "worldgen/structures/namek_village.json"
+      },
+      {
+         "path" : "worldgen/structures/west_city.json"
+      },
+      {
+         "path" : "worldgen/template_pools/babidi_spaceship/babidi_spaceship_1.json"
+      },
+      {
+         "path" : "worldgen/template_pools/babidi_spaceship/babidi_spaceship_2.json"
+      },
+      {
+         "path" : "worldgen/template_pools/babidi_spaceship/babidi_spaceship_3.json"
+      },
+      {
+         "path" : "worldgen/template_pools/cell_arena.json"
+      },
+      {
+         "path" : "worldgen/template_pools/city/buildings.json"
+      },
+      {
+         "path" : "worldgen/template_pools/city/city_centers.json"
+      },
+      {
+         "path" : "worldgen/template_pools/city/straight_streets.json"
+      },
+      {
+         "path" : "worldgen/template_pools/city/street_dead_ends.json"
+      },
+      {
+         "path" : "worldgen/template_pools/city/streets.json"
+      },
+      {
+         "path" : "worldgen/template_pools/goku_house.json"
+      },
+      {
+         "path" : "worldgen/template_pools/master_roshi_house.json"
+      },
+      {
+         "path" : "worldgen/template_pools/namek_village/houses.json"
+      },
+      {
+         "path" : "worldgen/template_pools/namek_village/straight_streets.json"
+      },
+      {
+         "path" : "worldgen/template_pools/namek_village/streets.json"
+      },
+      {
+         "path" : "worldgen/template_pools/namek_village/village_centers.json"
+      },
+      {
+         "path" : "worldgen/template_pools/west_city.json"
+      }
+   ],
+   "version" : 1
+}

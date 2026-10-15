@@ -1,0 +1,475 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.majin_hair",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 5,
+				"visible_bounds_height": 4,
+				"visible_bounds_offset": [0, 1, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "waist",
+					"parent": "root",
+					"pivot": [0, 12, 0]
+				},
+				{
+					"name": "body",
+					"parent": "waist",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "hair",
+					"parent": "head",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "antenna7",
+					"parent": "hair",
+					"pivot": [0, 34, -3],
+					"rotation": [85, 75, -162.5],
+					"cubes": [
+						{"origin": [-1, 36, -4.5], "size": [2, 3, 2], "inflate": 0.3, "pivot": [0, -1, -1], "rotation": [-2.5, 0, 0], "uv": [0, 32]},
+						{"origin": [-1, 47.95, 24.5], "size": [2, 2, 2], "inflate": 0.2, "pivot": [0, 10, 28], "rotation": [45, 0, 0], "uv": [0, 36]}
+					]
+				},
+				{
+					"name": "antenna8",
+					"parent": "antenna7",
+					"pivot": [0, 39, -3],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 39, -3], "size": [2, 6, 2], "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna9",
+					"parent": "antenna8",
+					"pivot": [0, 45, -4],
+					"rotation": [-17.5, 0, 0],
+					"cubes": [
+						{"origin": [0, 45, -2.5], "size": [0, 5, 2], "uv": [8, 32]}
+					]
+				},
+				{
+					"name": "antenna10",
+					"parent": "hair",
+					"pivot": [0, 34, -3],
+					"rotation": [85, -75, 162.5],
+					"cubes": [
+						{"origin": [-1, 36, -4.5], "size": [2, 3, 2], "inflate": 0.3, "pivot": [0, -1, -1], "rotation": [-2.5, 0, 0], "uv": [0, 32], "mirror": true},
+						{"origin": [-1, 47.95, 24.5], "size": [2, 2, 2], "inflate": 0.2, "pivot": [0, 10, 28], "rotation": [45, 0, 0], "uv": [0, 36]}
+					]
+				},
+				{
+					"name": "antenna11",
+					"parent": "antenna10",
+					"pivot": [0, 39, -3],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 39, -3], "size": [2, 6, 2], "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna12",
+					"parent": "antenna11",
+					"pivot": [0, 45, -4],
+					"rotation": [-17.5, 0, 0],
+					"cubes": [
+						{"origin": [0, 45, -2.5], "size": [0, 5, 2], "uv": [8, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna27",
+					"parent": "hair",
+					"pivot": [0, 34, 0],
+					"rotation": [-106.18087, 69.19062, -0.00087],
+					"cubes": [
+						{"origin": [-1, 36, 0], "size": [2, 3, 2], "inflate": 0.3, "uv": [0, 32]},
+						{"origin": [-1, 48, 27.5], "size": [2, 2, 2], "inflate": 0.2, "pivot": [0, 10, 31], "rotation": [45, 0, 0], "uv": [0, 36]}
+					]
+				},
+				{
+					"name": "antenna28",
+					"parent": "antenna27",
+					"pivot": [0, 39, 0],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 39, 0], "size": [2, 4, 2], "inflate": 0.2, "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna29",
+					"parent": "antenna28",
+					"pivot": [0, 48, 2],
+					"rotation": [7.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 42, -0.7], "size": [2, 4, 2], "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna88",
+					"parent": "antenna29",
+					"pivot": [0, 48, 2],
+					"rotation": [172.5, 0, -180],
+					"cubes": [
+						{"origin": [0, 46, 3.3], "size": [0, 4, 2], "uv": [8, 32]}
+					]
+				},
+				{
+					"name": "antenna24",
+					"parent": "hair",
+					"pivot": [0, 34, 0],
+					"rotation": [-106.18087, -69.19062, 0.00087],
+					"cubes": [
+						{"origin": [-1, 36, 0], "size": [2, 3, 2], "inflate": 0.3, "uv": [0, 32], "mirror": true},
+						{"origin": [-1, 48, 27.5], "size": [2, 2, 2], "inflate": 0.2, "pivot": [0, 10, 31], "rotation": [45, 0, 0], "uv": [0, 36]}
+					]
+				},
+				{
+					"name": "antenna25",
+					"parent": "antenna24",
+					"pivot": [0, 39, 0],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 39, 0], "size": [2, 4, 2], "inflate": 0.2, "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna26",
+					"parent": "antenna25",
+					"pivot": [0, 48, 2],
+					"rotation": [7.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 42, -0.7], "size": [2, 4, 2], "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna89",
+					"parent": "antenna26",
+					"pivot": [0, 48, 2],
+					"rotation": [172.5, 0, 180],
+					"cubes": [
+						{"origin": [0, 46, 3.3], "size": [0, 4, 2], "uv": [8, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna34",
+					"parent": "hair",
+					"pivot": [0, 34, 0],
+					"rotation": [-115.37353, -42.90165, 5.5476],
+					"cubes": [
+						{"origin": [-1, 37, 0], "size": [2, 3, 2], "inflate": 0.3, "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna35",
+					"parent": "antenna34",
+					"pivot": [0, 40, 0],
+					"rotation": [-45, 0, 0],
+					"cubes": [
+						{"origin": [-1, 40, 0], "size": [2, 4, 2], "inflate": 0.2, "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna36",
+					"parent": "antenna35",
+					"pivot": [0, 46, 3],
+					"rotation": [172.5, 180, -180],
+					"cubes": [
+						{"origin": [-1, 43, 0.5], "size": [2, 4, 2], "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna86",
+					"parent": "antenna36",
+					"pivot": [0, 46, 3],
+					"rotation": [172.5, 0, 180],
+					"cubes": [
+						{"origin": [0, 47, 3.3], "size": [0, 4, 2], "uv": [8, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna4",
+					"parent": "hair",
+					"pivot": [0, 34, 0],
+					"rotation": [-115.37353, 42.90165, -5.5476],
+					"cubes": [
+						{"origin": [-1, 37, 0], "size": [2, 3, 2], "inflate": 0.3, "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna5",
+					"parent": "antenna4",
+					"pivot": [0, 40, 0],
+					"rotation": [-45, 0, 0],
+					"cubes": [
+						{"origin": [-1, 40, 0], "size": [2, 4, 2], "inflate": 0.2, "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna33",
+					"parent": "antenna5",
+					"pivot": [0, 46, 3],
+					"rotation": [172.5, -180, 180],
+					"cubes": [
+						{"origin": [-1, 43, 0.5], "size": [2, 4, 2], "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna87",
+					"parent": "antenna33",
+					"pivot": [0, 46, 3],
+					"rotation": [172.5, 0, -180],
+					"cubes": [
+						{"origin": [0, 47, 3.3], "size": [0, 4, 2], "uv": [8, 32]}
+					]
+				},
+				{
+					"name": "antenna80",
+					"parent": "hair",
+					"pivot": [0, 34, 0],
+					"rotation": [-111.21483, 22.49166, -2.37566],
+					"cubes": [
+						{"origin": [-1, 37, 0], "size": [2, 3, 2], "inflate": 0.3, "uv": [0, 32]},
+						{"origin": [-1, 49, 27.2], "size": [2, 2, 2], "inflate": 0.2, "pivot": [0, 11, 31], "rotation": [45, 0, 0], "uv": [0, 36]}
+					]
+				},
+				{
+					"name": "antenna81",
+					"parent": "antenna80",
+					"pivot": [0, 39, -1],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 41, -1], "size": [2, 5, 2], "inflate": 0.2, "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna82",
+					"parent": "antenna81",
+					"pivot": [0, 47, 2],
+					"rotation": [-12.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 45, -0.5], "size": [2, 4, 2], "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna40",
+					"parent": "antenna82",
+					"pivot": [0, 47, 2],
+					"rotation": [165, 0, -180],
+					"cubes": [
+						{"origin": [0, 49, 2.3], "size": [0, 4, 2], "uv": [8, 32]}
+					]
+				},
+				{
+					"name": "antenna37",
+					"parent": "hair",
+					"pivot": [0, 34, 0],
+					"rotation": [-111.21483, -22.49166, 2.37566],
+					"cubes": [
+						{"origin": [-1, 37, 0], "size": [2, 3, 2], "inflate": 0.3, "uv": [0, 32], "mirror": true},
+						{"origin": [-1, 49, 27.2], "size": [2, 2, 2], "inflate": 0.2, "pivot": [0, 11, 31], "rotation": [45, 0, 0], "uv": [0, 36]}
+					]
+				},
+				{
+					"name": "antenna38",
+					"parent": "antenna37",
+					"pivot": [0, 39, -1],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 41, -1], "size": [2, 5, 2], "inflate": 0.2, "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna39",
+					"parent": "antenna38",
+					"pivot": [0, 47, 2],
+					"rotation": [-12.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 45, -0.5], "size": [2, 4, 2], "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna41",
+					"parent": "antenna39",
+					"pivot": [0, 47, 2],
+					"rotation": [165, 0, 180],
+					"cubes": [
+						{"origin": [0, 49, 2.3], "size": [0, 4, 2], "uv": [8, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna42",
+					"parent": "hair",
+					"pivot": [0, 34, 0],
+					"rotation": [-114.57538, 0, 0],
+					"cubes": [
+						{"origin": [-1, 37, 0], "size": [2, 3, 2], "inflate": 0.3, "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna83",
+					"parent": "antenna42",
+					"pivot": [0, 39, -1],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 41, -1], "size": [2, 5, 2], "inflate": 0.2, "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna84",
+					"parent": "antenna83",
+					"pivot": [0, 47, 2],
+					"rotation": [-12.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 45, -0.5], "size": [2, 4, 2], "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna85",
+					"parent": "antenna84",
+					"pivot": [0, 47, 2],
+					"rotation": [165, 0, 180],
+					"cubes": [
+						{"origin": [0, 49, 2.3], "size": [0, 4, 2], "uv": [8, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna13",
+					"parent": "hair",
+					"pivot": [0, 34, -2],
+					"rotation": [95, -87.5, 157.5],
+					"cubes": [
+						{"origin": [-1, 36, -2], "size": [2, 3, 2], "inflate": 0.3, "uv": [0, 32], "mirror": true},
+						{"origin": [-1, 48, 25.5], "size": [2, 2, 2], "inflate": 0.2, "pivot": [0, 10, 29], "rotation": [45, 0, 0], "uv": [0, 36]}
+					]
+				},
+				{
+					"name": "antenna14",
+					"parent": "antenna13",
+					"pivot": [0, 39, -2],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 39, -2], "size": [2, 5, 2], "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna15",
+					"parent": "antenna14",
+					"pivot": [0, 44, 1],
+					"rotation": [-165, 0, 180],
+					"cubes": [
+						{"origin": [0, 43, 2.5], "size": [0, 5, 2], "uv": [8, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna16",
+					"parent": "hair",
+					"pivot": [0, 34, -2],
+					"rotation": [95, 87.5, -157.5],
+					"cubes": [
+						{"origin": [-1, 36, -2], "size": [2, 3, 2], "inflate": 0.3, "uv": [0, 32]},
+						{"origin": [-1, 48, 25.5], "size": [2, 2, 2], "inflate": 0.2, "pivot": [0, 10, 29], "rotation": [45, 0, 0], "uv": [0, 36]}
+					]
+				},
+				{
+					"name": "antenna17",
+					"parent": "antenna16",
+					"pivot": [0, 39, -2],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 39, -2], "size": [2, 5, 2], "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna18",
+					"parent": "antenna17",
+					"pivot": [0, 44, 1],
+					"rotation": [-165, 0, -180],
+					"cubes": [
+						{"origin": [0, 43, 2.5], "size": [0, 5, 2], "uv": [8, 32]}
+					]
+				},
+				{
+					"name": "antenna23",
+					"parent": "hair",
+					"pivot": [0, 34, 0],
+					"rotation": [0, -90, -110],
+					"cubes": [
+						{"origin": [-1, 36, 0], "size": [2, 3, 2], "inflate": 0.2, "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna30",
+					"parent": "antenna23",
+					"pivot": [0, 39, 0],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 39, 0], "size": [2, 4, 2], "inflate": -0.1, "uv": [0, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna31",
+					"parent": "antenna30",
+					"pivot": [0, 45, -1],
+					"rotation": [-10, 0, 0]
+				},
+				{
+					"name": "antenna32",
+					"parent": "antenna31",
+					"pivot": [0, 45, 4],
+					"rotation": [167.5, 0, 180],
+					"cubes": [
+						{"origin": [0, 43, 6.1], "size": [0, 6, 2], "uv": [8, 32], "mirror": true}
+					]
+				},
+				{
+					"name": "antenna19",
+					"parent": "hair",
+					"pivot": [0, 34, 0],
+					"rotation": [0, 90, 110],
+					"cubes": [
+						{"origin": [-1, 36, 0], "size": [2, 3, 2], "inflate": 0.2, "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna20",
+					"parent": "antenna19",
+					"pivot": [0, 39, 0],
+					"rotation": [-52.5, 0, 0],
+					"cubes": [
+						{"origin": [-1, 39, 0], "size": [2, 4, 2], "inflate": -0.1, "uv": [0, 32]}
+					]
+				},
+				{
+					"name": "antenna21",
+					"parent": "antenna20",
+					"pivot": [0, 45, -1],
+					"rotation": [-10, 0, 0]
+				},
+				{
+					"name": "antenna22",
+					"parent": "antenna21",
+					"pivot": [0, 45, 4],
+					"rotation": [167.5, 0, -180],
+					"cubes": [
+						{"origin": [0, 43, 6.1], "size": [0, 6, 2], "uv": [8, 32]}
+					]
+				}
+			]
+		}
+	]
+}

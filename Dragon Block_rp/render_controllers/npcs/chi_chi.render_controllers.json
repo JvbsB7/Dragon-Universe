@@ -1,0 +1,22 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.chi_chi": {
+            "arrays": {
+                "textures": {
+                    "Array.skins": [
+                        "Texture.default",
+                        "Texture.angry"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "q.property('dbe:skin') ? Material.animated : Material.default" } ],
+            "textures": [ "Array.skins[q.property('dbe:skin')]" ],
+            "uv_anim": {
+                "scale": [ 1, "1 / 5" ],
+                "offset": [ 0, "Math.mod(Math.floor(query.life_time * 4), 5) / 5" ]
+            }
+        }
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "dbe:time_machine",
+            "is_spawnable": false,
+            "is_summonable": true
+        },
+
+        "component_groups": {
+            "dbe:despawn": {
+                "minecraft:instant_despawn": { }
+            }
+        },
+
+        "components": {
+            "minecraft:collision_box": {
+                "width": 2.7,
+                "height": 3.7
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "deals_damage": "no"
+                }
+            },
+            "minecraft:health": {
+                "value": 1,
+                "max": 1,
+                "min": 1
+            },
+            "minecraft:rideable": {
+                "crouching_skip_interact": true,
+                "interact_text": "action.interact.ride.vehicle",
+                "passenger_max_width": 1.2,
+                "family_types": [
+                    "player"
+                ],
+                "seats": {
+                    "lock_rider_rotation": 90,
+                    "position": [ 0, 2, 0 ]
+                }
+            },
+            "minecraft:type_family": {
+                "family": [
+                    "inanimate",
+                    "time_machine"
+                ]
+            },
+            "minecraft:conditional_bandwidth_optimization": { },
+            "minecraft:fire_immune": { },
+            "minecraft:physics": { }
+        },
+
+        "events": {
+            "dbe:despawn": {
+                "add": {
+                    "component_groups": [ "dbe:despawn" ]
+                }
+            }
+        }
+    }
+}

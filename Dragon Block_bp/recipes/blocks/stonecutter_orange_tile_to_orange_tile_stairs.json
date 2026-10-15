@@ -1,0 +1,23 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "dbe:stonecutter_orange_tile_to_orange_tile_stairs"
+        },
+
+        "tags": [ "stonecutter" ],
+        "ingredients": [
+            {
+                "item": "dbe:orange_tile"
+            }
+        ],
+        "unlock": [
+            {
+                "item": "dbe:orange_tile"
+            }
+        ],
+        "result": {
+            "item": "dbe:orange_tile_stairs"
+        }
+    }
+}

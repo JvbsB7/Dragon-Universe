@@ -1,0 +1,41 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.master_roshi.base_pose": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"rotation": [22.5, 0, 0],
+					"position": [0, 0, -4]
+				},
+				"head": {
+					"rotation": [-25, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [-21.75384, -16.61181, -6.18028],
+					"position": [1, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [-109.56838, 26.12797, -8.89674],
+					"position": [-1, 0, 0]
+				},
+				"turtleShell": {
+					"rotation": [-7.5, 0, 0],
+					"position": [0, -2, 2]
+				},
+				"leftLeg": {
+					"rotation": [0, -10, 0],
+					"position": [1, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [0, 12.5, 0],
+					"position": [-1, 0, 0]
+				},
+				"bengal": {
+					"rotation": [12.5, 0, 0],
+					"position": [0, -1, 0]
+				}
+			}
+		}
+	}
+}

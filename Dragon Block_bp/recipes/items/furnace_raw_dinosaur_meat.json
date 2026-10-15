@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "dbe:furnace_raw_dinosaur_meat"
+    },
+    
+    "tags": [ "furnace", "smoker", "campfire" ],
+    "unlock": [
+      {
+        "item": "dbe:raw_dinosaur_meat"
+      }
+    ],
+    "input": "dbe:raw_dinosaur_meat",
+    "output": "dbe:cooked_dinosaur_meat"
+  }
+}

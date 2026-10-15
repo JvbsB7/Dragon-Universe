@@ -1,0 +1,7 @@
+{
+	"format_version": "1.21.30",
+	"minecraft:texture_set": {
+		"color": "ki_attack",
+		"metalness_emissive_roughness_subsurface": "ki_attack_mer"
+	}
+}

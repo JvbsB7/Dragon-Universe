@@ -1,0 +1,22 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.saibaman.spawn": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"animations": [ "spawn" ],
+					"transitions": [
+						{
+							"root": "q.any_animation_finished"
+						}
+					]
+				},
+				"root": {
+					"blend_transition": 0.2,
+					"animations": [ "root" ]
+				}
+			}
+		}
+	}
+}

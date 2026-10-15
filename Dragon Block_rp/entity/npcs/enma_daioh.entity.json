@@ -1,0 +1,28 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:enma_daioh",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/npcs/enma_daioh"
+            },
+            "geometry": {
+                "default": "geometry.enma_daioh"
+            },
+            "scripts": {
+                "animate": [
+                    "idle"
+                ]
+            },
+            "animations": {
+                "idle": "animation.enma_daioh.idle"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

@@ -1,0 +1,17 @@
+[
+    {
+        "atlas_tile": "dragon_ball_activated",
+        "flipbook_texture": "textures/blocks/dragon_ball_activated",
+        "ticks_per_frame": 10
+    },
+    {
+        "atlas_tile": "gravity_machine_activated_top",
+        "flipbook_texture": "textures/blocks/gravity_machine_activated_top",
+        "ticks_per_frame": 1
+    },
+    {
+        "atlas_tile": "namek_dragon_ball_activated",
+        "flipbook_texture": "textures/blocks/namek_dragon_ball_activated",
+        "ticks_per_frame": 10
+    }
+]

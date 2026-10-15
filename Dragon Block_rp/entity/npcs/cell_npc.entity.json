@@ -1,0 +1,49 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:cell_npc",
+            "materials": {
+                "default": "entity_alphatest",
+                "alphatest_change_color": "entity_alphatest_change_color"
+            },
+            "textures": {
+                "eyes_imperfect_cell": "textures/entity/races/bio_android/eyes/imperfect_form",
+                "eyes_semi_perfect_cell": "textures/entity/races/bio_android/eyes/semi_perfect_form",
+                "eyes_perfect_cell": "textures/entity/races/bio_android/eyes/perfect_form",
+                "eyes_ultimate_form": "textures/entity/races/bio_android/eyes/ultimate_form",
+                "eyes_beast_form": "textures/entity/races/bio_android/eyes/beast_form",
+                "skin_imperfect_cell": "textures/entity/races/bio_android/imperfect_form_1",
+                "skin_semi_perfect_cell": "textures/entity/races/bio_android/semi_perfect_form_1",
+                "skin_perfect_cell": "textures/entity/races/bio_android/perfect_form_1",
+                "skin_beast_form": "textures/entity/races/bio_android/beast_form_1",
+                "ki_attack": "textures/entity/ki_attack"
+            },
+            "geometry": {
+                "default": "geometry.bio_android",
+                "eyes": "geometry.eyes"
+            },
+            "scripts": {
+                "pre_animation": [
+                    "v.transformation = 2;"
+                ],
+                "animate": [
+                    "root",
+                    "tail_move"
+                ]
+            },
+            "animations": {
+                "root": "controller.animation.npc.root",
+                "blink": "animation.humanoid.blink",
+                "bob": "animation.player.bob",
+                "look_at_target": "animation.humanoid.look_at_target.default",
+                // private
+                "tail_move": "animation.player.tail.move"
+            },
+            "render_controllers": [
+                "controller.render.cell",
+                "controller.render.cell.eyes"
+            ]
+        }
+    }
+}

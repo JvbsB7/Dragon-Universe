@@ -1,0 +1,14 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.god_stigma": {
+            "geometry": "Geometry.god_stigma",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.god_stigma" ],
+            "part_visibility": [
+                { "*": true },
+                { "breasts": "v.is_female" }
+            ]
+        }
+    }
+}

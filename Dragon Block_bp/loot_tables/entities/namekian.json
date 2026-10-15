@@ -1,0 +1,18 @@
+{
+    "pools": [
+        {
+            "rolls": 2,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "dbe:medical_moss",
+                    "weight": 2
+                },
+                {
+                    "type": "empty",
+                    "weight": 8
+                }
+            ]
+        }
+    ]
+}

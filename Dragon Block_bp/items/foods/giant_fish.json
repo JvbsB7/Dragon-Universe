@@ -1,0 +1,40 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:giant_fish",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+
+        "components": {
+            "minecraft:icon": "giant_fish",
+            "minecraft:food": {
+                "nutrition": 8,
+                "saturation_modifier": 0.4,
+                "can_always_eat": true
+            },
+            "minecraft:use_modifiers": {
+                "movement_modifier": 1,
+                "use_duration": 2
+            },
+            "minecraft:use_animation": {
+                "value": "eat"
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_fish",
+                    "minecraft:is_food"
+                ]
+            },
+            "dbe:consumable_buff": {
+                "duration": 60,
+                "modifiers": {
+                    "constitution": 0.9,
+                    "strength": 1.1
+                }
+            }
+        }
+    }
+}

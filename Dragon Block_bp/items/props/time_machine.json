@@ -1,0 +1,21 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:time_machine",
+            "menu_category": {
+                "category": "none"
+            }
+        },
+
+        "components": {
+            "minecraft:icon": "time_machine",
+            "minecraft:max_stack_size": 1,
+            "minecraft:rarity": "epic",
+            "minecraft:entity_placer": {
+                "entity": "dbe:time_machine"
+            },
+            "dbe:keep_on_death": { }
+        }
+    }
+}

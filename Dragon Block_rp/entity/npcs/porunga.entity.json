@@ -1,0 +1,38 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:porunga",
+            "materials": {
+                "default": "entity_emissive_alpha"
+            },
+            "textures": {
+                "default": "textures/entity/npcs/porunga"
+            },
+            "geometry": {
+                "default": "geometry.porunga"
+            },
+            "sound_effects": {
+                "dialogue": "mob.porunga.dialogue"
+            },
+            "scripts": {
+                "pre_animation": [
+                    "v.fade_alpha = math.max(0, 1 - q.life_time / 2);"
+                ],
+                "animate": [
+                    "idle",
+                    "look_at_target",
+                    "spawn"
+                ]
+            },
+            "animations": {
+                "idle": "animation.porunga.idle",
+                "look_at_target": "animation.shenron.look_at_target",
+                "spawn": "animation.shenron.spawn"
+            },
+            "render_controllers": [
+                "controller.render.shenron"
+            ]
+        }
+    }
+}

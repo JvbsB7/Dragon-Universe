@@ -1,0 +1,23 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "dbe:stonecutter_pink_tile_to_pink_tile_stairs"
+        },
+
+        "tags": [ "stonecutter" ],
+        "ingredients": [
+            {
+                "item": "dbe:pink_tile"
+            }
+        ],
+        "unlock": [
+            {
+                "item": "dbe:pink_tile"
+            }
+        ],
+        "result": {
+            "item": "dbe:pink_tile_stairs"
+        }
+    }
+}

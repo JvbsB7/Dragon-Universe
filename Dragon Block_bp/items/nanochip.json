@@ -1,0 +1,15 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:nanochip",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+
+        "components": {
+            "minecraft:icon": "nanochip"
+        }
+    }
+}

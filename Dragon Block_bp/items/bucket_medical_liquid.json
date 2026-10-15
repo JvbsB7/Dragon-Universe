@@ -1,0 +1,26 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:bucket_medical_liquid",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+
+        "components": {
+            "minecraft:icon": "bucket_medical_liquid",
+            "minecraft:max_stack_size": 1,
+            "minecraft:food": {
+                "using_converts_to": "bucket",
+                "can_always_eat": true
+            },
+            "minecraft:use_modifiers": {
+                "use_duration": 1
+            },
+            "minecraft:use_animation": {
+                "value": "drink"
+            }
+        }
+    }
+}

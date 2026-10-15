@@ -1,0 +1,38 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "dbe:star_navigator"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            "IEI",
+            "ENE",
+            "IRI"
+        ],
+        "key": {
+            "I": {
+                "item": "minecraft:iron_ingot"
+            },
+            "E": {
+                "item": "minecraft:ender_pearl"
+            },
+            "N": {
+                "item": "dbe:nanochip"
+            },
+            "R": {
+                "item": "minecraft:redstone"
+            }
+        },
+        "unlock": [
+            {
+                "item": "dbe:nanochip"
+            }
+        ],
+        "result": {
+            "item": "dbe:star_navigator"
+        }
+    }
+}

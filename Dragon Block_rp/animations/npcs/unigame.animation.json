@@ -1,0 +1,39 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.unigame.setup": {
+			"loop": true,
+			"bones": {
+				"leg0": {
+					"rotation": [-5.24133, -17.43127, 1.5741]
+				},
+				"leg1": {
+					"rotation": [-5.24133, 17.43127, -1.5741]
+				},
+				"leg2": {
+					"rotation": [-4.11405, 22.13991, -10.80524]
+				},
+				"leg3": {
+					"rotation": [-4.11405, -22.13991, 10.80524]
+				}
+			}
+		},
+		"animation.unigame.base_pose": {
+			"loop": true,
+			"bones": {
+				"leg0": {
+					"rotation": [-5.24133, -17.43127, 1.5741]
+				},
+				"leg1": {
+					"rotation": [-5.24133, 17.43127, -1.5741]
+				},
+				"leg2": {
+					"rotation": [-4.11405, 22.13991, -10.80524]
+				},
+				"leg3": {
+					"rotation": [-4.11405, -22.13991, 10.80524]
+				}
+			}
+		}
+	}
+}

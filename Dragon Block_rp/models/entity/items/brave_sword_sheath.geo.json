@@ -1,0 +1,59 @@
+{
+	"format_version": "1.16.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.brave_sword_sheath",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "waist",
+					"parent": "root",
+					"pivot": [0, 12, 0]
+				},
+				{
+					"name": "body",
+					"parent": "waist",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "sheath",
+					"parent": "body",
+					"pivot": [0, 18, 3],
+					"rotation": [0, 0, -37.5],
+					"cubes": [
+						{"origin": [-1, 10.87943, -3], "size": [2, 15, 5], "inflate": 0.15, "uv": [0, 21]},
+						{"origin": [-1.5, 7, 2.5], "size": [3, 20, 1], "inflate": 0.3, "uv": [14, 21]},
+						{"origin": [-1.5, 22, 2.5], "size": [3, 2, 1], "inflate": 0.4, "uv": [28, 30]},
+						{"origin": [-1.5, 10, 2.5], "size": [3, 2, 1], "inflate": 0.4, "uv": [28, 30]},
+						{"origin": [0, 6.125, 2.5], "size": [2, 2, 1], "inflate": 0.27, "pivot": [0, 8.125, 3], "rotation": [0, 0, 45], "uv": [36, 30]}
+					]
+				},
+				{
+					"name": "braveSword",
+					"parent": "sheath",
+					"pivot": [0, 35.3, 3],
+					"rotation": [0, -90, 90],
+					"cubes": [
+						{"origin": [-0.5, 34.3, -4], "size": [1, 2, 7], "uv": [22, 21]},
+						{"origin": [-1, 31.8, -5], "size": [2, 7, 1], "uv": [22, 30]},
+						{"origin": [-0.5, 33.8, -6], "size": [1, 3, 1], "uv": [32, 37]},
+						{"origin": [-0.5, 37.8, -5], "size": [1, 2, 2], "uv": [28, 33]},
+						{"origin": [-0.5, 30.8, -5], "size": [1, 2, 2], "uv": [34, 33]},
+						{"origin": [-0.5, 33.8, -24], "size": [1, 3, 18], "uv": [0, 0]},
+						{"origin": [0, 33.8, -26], "size": [0, 3, 2], "uv": [28, 37]}
+					]
+				}
+			]
+		}
+	]
+}

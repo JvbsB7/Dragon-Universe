@@ -1,0 +1,57 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:ki_attack",
+            "materials": {
+                "default": "entity_alphatest",
+                "outline": "outline"
+            },
+            "textures": {
+                "default": "textures/entity/ki_attack",
+                "beam": "textures/entity/ki_beam"
+            },
+            "geometry": {
+                "default": "geometry.ki_attack",
+                "beam": "geometry.ki_beam",
+                "beam_outline": "geometry.ki_beam_outline",
+                "outline": "geometry.ki_attack_outline"
+            },
+            "particle_effects": {
+                "lightning": "dbe:lightning"
+            },
+            "sound_effects": {
+                "attack": "common.ki_blast"
+            },
+            "scripts": {
+                "pre_animation": [
+                    "v.attack_type = q.property('dbe:attack_type');",
+                    "v.attack_index = v.attack_type == 'beam' || v.attack_type == 'blast' ? 0 : 1;",
+                    "v.beam_gap = q.property('dbe:beam_gap');",
+                    "v.color_0_r = q.property('dbe:color_1_r') / 255;",
+                    "v.color_0_g = q.property('dbe:color_1_g') / 255;",
+                    "v.color_0_b = q.property('dbe:color_1_b') / 255;",
+                    "v.color_1_r = q.property('dbe:color_2_r') / 255;",
+                    "v.color_1_g = q.property('dbe:color_2_g') / 255;",
+                    "v.color_1_b = q.property('dbe:color_2_b') / 255;",
+                    "v.has_spiral = q.property('dbe:has_spiral');"
+                ],
+                "animate": [
+                    { "beam_setup": "v.attack_type == 'beam'" },
+                    "flying_controller"
+                ]
+            },
+            "animations": {
+                "beam_setup": "animation.ki_beam.setup",
+                "flying_controller": "controller.animation.ki_attack.flying",
+                "flying": "animation.ki_attack.flying"
+            },
+            "render_controllers": [
+                "controller.render.ki_attack",
+                "controller.render.ki_attack.armor",
+                { "controller.render.ki_beam": "v.attack_type == 'beam'" },
+                { "controller.render.ki_beam.armor": "v.attack_type == 'beam'" }
+            ]
+        }
+    }
+}

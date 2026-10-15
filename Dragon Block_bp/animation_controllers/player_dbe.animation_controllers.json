@@ -1,0 +1,48 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+        "controller.animation.player.climb_korin_tower": {
+            "states": {
+                "default": {
+                    "transitions": [
+                        {
+                            "climb": "q.target_x_rotation < -70"
+                        }
+                    ]
+                },
+                "climb": {
+                    "transitions": [
+                        {
+                            "default": "1.0"
+                        }
+                    ],
+                    "on_entry": [
+                        "/effect @s[x=151,y=-64,z=151,dx=-2,dy=287,dz=-2] levitation 1 9 true"
+                    ]
+                }
+            }
+        },
+        "controller.animation.player.stop_aura_sound": {
+            "states": {
+                "default": {
+                    "transitions": [
+                        {
+                            "stop_sound": "!q.property('dbe:aura_boost') && !q.is_sneaking"
+                        }
+                    ]
+                },
+                "stop_sound": {
+                    "transitions": [
+                        {
+                            "default": "q.is_sneaking || q.property('dbe:aura_boost')"
+                        }
+                    ],
+                    "on_entry": [
+                        "/stopsound @a common.charge_loop",
+                        "/stopsound @a common.charge_god_loop"
+                    ]
+                }
+            }
+        }
+    }
+}

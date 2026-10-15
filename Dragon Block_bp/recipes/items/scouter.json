@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "dbe:scouter"
+    },
+
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "CD",
+      "AB"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:lime_stained_glass_pane"
+      },
+      "B": {
+        "item": "minecraft:iron_ingot"
+      },
+      "C": {
+        "item": "minecraft:redstone"
+      },
+      "D": {
+        "item": "dbe:nanochip"
+      }
+    },
+    "unlock": [
+      {
+        "item": "dbe:nanochip"
+      }
+    ],
+    "result": {
+      "item": "dbe:scouter"
+    }
+  }
+}

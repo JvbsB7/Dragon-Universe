@@ -1,0 +1,28 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "dbe:ajisa_door"
+        },
+
+        "tags": [ "crafting_table" ],
+        "pattern": [
+            "AA",
+            "AA",
+            "AA"
+        ],
+        "key": {
+            "A": {
+                "item": "dbe:ajisa_planks"
+            }
+        },
+        "unlock": [
+            {
+                "item": "dbe:ajisa_planks"
+            }
+        ],
+        "result": {
+            "item": "dbe:ajisa_door"
+        }
+    }
+}

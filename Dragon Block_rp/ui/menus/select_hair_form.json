@@ -1,0 +1,127 @@
+{
+    "namespace": "select_hair_form",
+
+    "select_hair_form@server_form.long_form": {
+        "size": [ 295, 195 ],
+        "$child_control": "select_hair_form.select_hair_panel",
+        "$custom_background": "custom_server_form.background",
+        "$default_button_texture": "textures/ui/buttons/menu_button",
+        "$hover_button_texture": "textures/ui/buttons/menu_button_hover"
+    },
+
+    "select_hair_panel": {
+        "type": "panel",
+        "layer": 1,
+        "controls": [
+            {
+                "player_panel": {
+                    "type": "panel",
+                    "size": [ "55%", "100%" ],
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "clips_children": true,
+                    "controls": [
+                        {
+                            "player_renderer": {
+                                "type": "custom",
+                                "renderer": "live_player_renderer",
+                                "size": [ 70, 70 ],
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "layer": 2,
+                                "property_bag": {
+                                    "#look_at_cursor": true
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "description": {
+                    "type": "label",
+                    "size": [ "45%", "100%" ],
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "text": "#form_text",
+                    "line_padding": 4,
+                    "text_alignment": "center",
+                    "color": "$7_color_format",
+                    "controls": [
+                        {
+                            "previous_buttons_panel": {
+                                "type": "stack_panel",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "collection_name": "form_buttons",
+                                "controls": [
+                                    {
+                                        "button_1@customization_form.previous_button": {
+                                            "collection_index": 0
+                                        }
+                                    },
+                                    {
+                                        "button_2@customization_form.previous_button": {
+                                            "collection_index": 2
+                                        }
+                                    },
+                                    {
+                                        "button_3@customization_form.previous_button": {
+                                            "collection_index": 4
+                                        }
+                                    },
+                                    {
+                                        "button_4@customization_form.previous_button": {
+                                            "collection_index": 6
+                                        }
+                                    },
+                                    {
+                                        "button_5@customization_form.previous_button": {
+                                            "collection_index": 8
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "next_buttons_panel": {
+                                "type": "stack_panel",
+                                "size": [ 15, "100%" ],
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "collection_name": "form_buttons",
+                                "controls": [
+                                    {
+                                        "button_1@customization_form.next_button": {
+                                            "collection_index": 1
+                                        }
+                                    },
+                                    {
+                                        "button_2@customization_form.next_button": {
+                                            "collection_index": 3
+                                        }
+                                    },
+                                    {
+                                        "button_3@customization_form.next_button": {
+                                            "collection_index": 5
+                                        }
+                                    },
+                                    {
+                                        "button_4@customization_form.next_button": {
+                                            "collection_index": 7
+                                        }
+                                    },
+                                    {
+                                        "button_5@customization_form.next_button": {
+                                            "collection_index": 9
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

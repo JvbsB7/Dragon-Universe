@@ -1,0 +1,198 @@
+{
+    "entity_sounds": {
+        "entities": {
+            "player": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "throw": {
+                        "sound": "random.bow",
+                        "volume": 0.5,
+                        "pitch": [ 0.33, 0.5 ]
+                    },
+                    "hurt": "game.player.hurt",
+                    "death": "game.player.die",
+                    "hurt.in.water": "game.player.hurt",
+                    "death.in.water": "game.player.die",
+                    "attack.nodamage": "",
+                    "attack.strong": "",
+                    "jump": "common.jump"
+                },
+                "variants": {
+                    "key": "q.property('dbe:race')",
+                    "map": {
+                        "bio_android": {
+                            "volume": 1,
+                            "pitch": [ 0.8, 1.2 ],
+                            "events": {
+                                "step": "mob.frieza.step"
+                            }
+                        },
+                        "frost_demon": {
+                            "volume": 1,
+                            "pitch": [ 0.8, 1.2 ],
+                            "events": {
+                                "step": "mob.frieza.step"
+                            }
+                        }
+                    }
+                }
+            },
+            "dbe:battle_jacket": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "step": "mob.battle_jacket.step"
+                }
+            },
+            "dbe:cell": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "step": "mob.cell.step"
+                }
+            },
+            "dbe:cell_junior": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "step": "mob.cell.step"
+                }
+            },
+            "dbe:deer": {
+                "pitch": [ 0.8, 1.2 ],
+                "volume": 1,
+                "events": {
+                    "ambient": "mob.deer.ambient",
+                    "death": {
+                        "sound": "mob.deer.hurt",
+                        "pitch": 0.5
+                    },
+                    "hurt": "mob.deer.hurt"
+                }
+            },
+            "dbe:dinosaur": {
+                "volume": 1,
+                "pitch": [ 0.9, 1.1 ],
+                "events": {
+                    "ambient": "mob.dinosaur.ambient",
+                    "attack": "mob.dinosaur.ambient",
+                    "death": {
+                        "sound": "mob.dinosaur.death",
+                        "volume": 0.1
+                    },
+                    "hurt": {
+                        "sound": "mob.dinosaur.hurt",
+                        "volume": 0.3
+                    },
+                    "step": "mob.dinosaur.step"
+                }
+            },
+            "dbe:drive_test_car": {
+                "events": {
+                    "step": ""
+                }
+            },
+            "dbe:flying_nimbus": {
+                "volume": 1,
+                "pitch": 1,
+                "events": {
+                    "ambient": "mob.flying_nimbus.ambient"
+                }
+            },
+            "dbe:frieza": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "step": "mob.frieza.step"
+                }
+            },
+            "dbe:frost": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "step": "mob.frieza.step"
+                }
+            },
+            "dbe:giant_fish": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "hurt": "mob.fish.hurt",
+                    "hurt.in.water": "mob.fish.hurt",
+                    "flop": {
+                        "pitch": 1,
+                        "sound": "mob.fish.flop",
+                        "volume": 1
+                    },
+                    "step": {
+                        "pitch": 1,
+                        "sound": "mob.fish.step",
+                        "volume": 0.15
+                    }
+                }
+            },
+            "dbe:king_cold": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "step": "mob.frieza.step"
+                }
+            },
+            "dbe:namekian_frog": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "ambient": "mob.frog.ambient",
+                    "ambient.baby": {
+                        "pitch": 1.2,
+                        "sound": "mob.frog.ambient",
+                        "volume": 2.5
+                    },
+                    "death": "mob.frog.death",
+                    "eat": "mob.frog.eat",
+                    "hurt": "mob.frog.hurt",
+                    "jump_to_block": "mob.frog.jump_to_block",
+                    "step": "mob.frog.step"
+                }
+            },
+            "dbe:pirate_robot": {
+                "volume": 1,
+                "pitch": 1,
+                "events": {
+                    "ambient": "mob.pirate_robot.step"
+                }
+            },
+            "dbe:pterosaur": {
+                "pitch": [ 0.8, 1.2 ],
+                "volume": 1,
+                "events": {
+                    "flap": "mob.phantom.flap"
+                }
+            },
+            "dbe:saber_tooth_tiger": {
+                "pitch": [ 0.8, 1.2 ],
+                "volume": 1,
+                "events": {
+                    "ambient": "mob.saber_tooth_tiger.ambient",
+                    "attack": "mob.saber_tooth_tiger.attack",
+                    "death": {
+                        "sound": "mob.saber_tooth_tiger.hurt",
+                        "pitch": 0.5
+                    },
+                    "hurt": "mob.saber_tooth_tiger.hurt"
+                }
+            },
+            "dbe:saibaman": {
+                "volume": 1,
+                "pitch": [ 0.8, 1.2 ],
+                "events": {
+                    "ambient": "mob.saibaman.ambient",
+                    "attack": "mob.saibaman.attack",
+                    "death": "mob.saibaman.death",
+                    "hurt": "mob.saibaman.hurt"
+                }
+            }
+        }
+    }
+}

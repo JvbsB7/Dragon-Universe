@@ -1,0 +1,94 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.pirate_robot.general": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{ "idling": "v.is_idle && q.is_on_ground" },
+						{ "levitate": "v.is_idle && !q.is_on_ground" },
+						{ "dashing": "v.is_sprinting && q.is_on_ground" },
+						{ "levitate_moving": "v.is_walking && !v.is_sprinting" }
+					]
+				},
+				"idling": {
+					"blend_transition": 0.2,
+					"animations": [ "idle" ],
+					"transitions": [
+						{ "levitate": "v.is_idle && !q.is_on_ground" },
+						{ "dashing": "v.is_sprinting && q.is_on_ground" },
+						{ "levitate_moving": "v.is_walking && !v.is_sprinting" }
+					]
+				},
+				"levitate": {
+					"blend_transition": 0.2,
+					"animations": [ "levitate" ],
+					"transitions": [
+						{ "idling": "v.is_idle && q.is_on_ground" },
+						{ "dashing": "v.is_sprinting && q.is_on_ground" },
+						{ "levitate_moving": "v.is_walking && !v.is_sprinting" }
+					]
+				},
+				"dashing": {
+					"blend_transition": 0.2,
+					"animations": [ "moving" ],
+					"transitions": [
+						{ "idling": "v.is_idle && q.is_on_ground" },
+						{ "levitate": "v.is_idle && !q.is_on_ground" },
+						{ "levitate_moving": "v.is_walking && !v.is_sprinting" }
+					]
+				},
+				"levitate_moving": {
+					"blend_transition": 0.2,
+					"animations": [ "levitate_moving" ],
+					"transitions": [
+						{ "idling": "v.is_idle && q.is_on_ground" },
+						{ "levitate": "v.is_idle && !q.is_on_ground" },
+						{ "dashing": "v.is_sprinting && q.is_on_ground" }
+					]
+				}
+			}
+		},
+		"controller.animation.pirate_robot.attack": {
+			"states": {
+				"default": {
+					"transitions": [
+						{ "attack": "q.is_delayed_attacking" },
+						{ "preparing_ranged_attack": "q.facing_target_to_range_attack" }
+					],
+					"blend_transition": 0.3
+				},
+				"attack": {
+					"animations": [
+						{ "melee_attack_1": "v.attack_index == 0" },
+						{ "melee_attack_2": "v.attack_index == 1" }
+					],
+					"on_entry": [ "v.attack_index = math.random_integer(0, 1);" ],
+					"transitions": [
+						{ "default": "!q.is_delayed_attacking" }
+					],
+					"blend_transition": 0.3
+				},
+				"preparing_ranged_attack": {
+					"animations": [ "start_shooting" ],
+					"transitions": [
+						{ "ranged_attack": "q.all_animations_finished" }
+					]
+				},
+				"ranged_attack": {
+					"animations": [ "shooting" ],
+					"transitions": [
+						{ "stoping_ranged_attack": "!q.facing_target_to_range_attack" }
+					]
+				},
+				"stoping_ranged_attack": {
+					"animations": [ "stop_shooting" ],
+					"transitions": [
+						{ "default": "q.all_animations_finished" }
+					]
+				}
+			}
+		}
+	}
+}

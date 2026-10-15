@@ -1,0 +1,28 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "dbe:katchin_block"
+        },
+        
+        "tags": [ "crafting_table" ],
+        "pattern": [
+            "AAA",
+            "AAA",
+            "AAA"
+        ],
+        "key": {
+            "A": {
+                "item": "dbe:katchin_shard"
+            }
+        },
+        "unlock": [
+            {
+                "item": "dbe:katchin_shard"
+            }
+        ],
+        "result": {
+            "item": "dbe:katchin_block"
+        }
+    }
+}

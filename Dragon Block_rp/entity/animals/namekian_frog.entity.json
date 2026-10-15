@@ -1,0 +1,58 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:namekian_frog",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "blue": "textures/entity/animals/namekian_frog/namekian_frog_blue",
+                "brown": "textures/entity/animals/namekian_frog/namekian_frog_brown",
+                "gambunta": "textures/entity/animals/namekian_frog/namekian_frog_gambunta",
+                "ginyu_wife": "textures/entity/animals/namekian_frog/namekian_frog_ginyu_wife",
+                "green": "textures/entity/animals/namekian_frog/namekian_frog_green",
+                "gronkel": "textures/entity/animals/namekian_frog/namekian_frog_gronkel",
+                "light_furry": "textures/entity/animals/namekian_frog/namekian_frog_light_fury",
+                "pink": "textures/entity/animals/namekian_frog/namekian_frog_pink",
+                "porunga": "textures/entity/animals/namekian_frog/namekian_frog_porunga",
+                "purple": "textures/entity/animals/namekian_frog/namekian_frog_purple",
+                "red": "textures/entity/animals/namekian_frog/namekian_frog_red",
+                "toothless": "textures/entity/animals/namekian_frog/namekian_frog_toothless",
+                "white": "textures/entity/animals/namekian_frog/namekian_frog_white",
+                "yellow": "textures/entity/animals/namekian_frog/namekian_frog_yellow"
+            },
+            "geometry": {
+                "default": "geometry.namekian_frog"
+            },
+            "spawn_egg": {
+                "texture": "spawn_egg_namekian_frog"
+            },
+            "scripts": {
+                "pre_animation": [
+                    "v.moving = q.ground_speed > 0 || q.vertical_speed > 0;"
+                ],
+                "animate": [
+                    "general",
+                    "croaking",
+                    "eat_mob"
+                ]
+            },
+            "animations": {
+                "general": "controller.animation.frog.general",
+                "croaking": "controller.animation.frog.croaking",
+                "eat_mob": "controller.animation.frog.eat_mob",
+                "croak": "animation.frog.croak",
+                "jump": "animation.frog.jump",
+                "tongue": "animation.frog.tongue",
+                "walk": "animation.frog.walk",
+                "swim": "animation.frog.swim",
+                "idle_water": "animation.frog.idle.water",
+                "look_at_target": "animation.common.look_at_target"
+            },
+            "render_controllers": [
+                "controller.render.namekian_frog"
+            ]
+        }
+    }
+}

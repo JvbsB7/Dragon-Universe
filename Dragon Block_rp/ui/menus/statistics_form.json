@@ -1,0 +1,162 @@
+{
+    "namespace": "statistics_form",
+
+    "statistics_form@server_form.long_form": {
+        "size": [ 295, 195 ],
+        "$child_control": "statistics_form.statistics_scrolling_panel",
+        "$custom_background": "custom_server_form.background",
+        "$default_button_texture": "textures/ui/buttons/menu_button",
+        "$hover_button_texture": "textures/ui/buttons/menu_button_hover"
+    },
+
+    "statistics_scrolling_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "fixed_menu_buttons@menu_form.fixed_menu_buttons": { }
+            },
+            {
+                "scrolling_panel@common.scrolling_panel": {
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "size": [ "100%", "100%" ],
+                    "$show_background": false,
+                    "$scrolling_content": "statistics_form.statistics_scrolling_content",
+                    "$scroll_size": [ 5, "100% - 4px" ],
+                    "$scrolling_pane_size": [ "100% - 4px", "100% - 2px" ],
+                    "$scrolling_pane_offset": [ 2, 0 ],
+                    "$scroll_bar_right_padding_size": [ 0, 0 ]
+                }
+            },
+            {
+                "player_panel": {
+                    "type": "panel",
+                    "size": [ "55%", "100%" ],
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "clips_children": true,
+                    "controls": [
+                        {
+                            "player_renderer": {
+                                "type": "custom",
+                                "renderer": "live_player_renderer",
+                                "size": [ 70, 70 ],
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "layer": 2,
+                                "property_bag": {
+                                    "#look_at_cursor": true
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "buttons_panel": {
+                    "type": "stack_panel",
+                    "size": [ "35%", "100%c" ],
+                    "offset": [ -7, 0 ],
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right",
+                    "collection_name": "form_buttons",
+                    "controls": [
+                        {
+                            "button@custom_server_form.text_button": {
+                                "collection_index": 10
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "statistics_scrolling_content": {
+        "type": "stack_panel",
+        "size": [ "100% - 4px", "100%c" ],
+        "layer": 1,
+        "controls": [
+            {
+                "description_panel": {
+                    "type": "panel",
+                    "size": [ "100%", "100%c" ],
+                    "controls": [
+                        {
+                            "description_label": {
+                                "type": "label",
+                                "size": [ "100%", "default" ],
+                                "text": "#form_text",
+                                "color": "$7_color_format"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "buttons_panel": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "collection_name": "form_buttons",
+                    "controls": [
+                        {
+                            "button_2@statistics_form.up_button": {
+                                "collection_index": 11
+                            }
+                        },
+                        {
+                            "button_4@statistics_form.up_button": {
+                                "collection_index": 12
+                            }
+                        },
+                        {
+                            "button_5@statistics_form.up_button": {
+                                "collection_index": 13
+                            }
+                        },
+                        {
+                            "button_6@statistics_form.up_button": {
+                                "collection_index": 14
+                            }
+                        },
+                        {
+                            "button_6@statistics_form.up_button": {
+                                "collection_index": 15
+                            }
+                        },
+                        {
+                            "button_1@statistics_form.up_button": {
+                                "collection_index": 16
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "up_button@custom_server_form.button": {
+        "size": [ 14, 14 ],
+        "sound_volume": 0,
+        "$button_type_panel": "statistics_form.up_button_label",
+        "$default_button_texture": "textures/ui/buttons/up_button",
+        "$hover_button_texture": "textures/ui/buttons/up_button_hover"
+    },
+
+    "up_button_label": {
+        "type": "label",
+        "offset": [ 14, 0 ],
+        "anchor_from": "left_middle",
+        "anchor_to": "left_middle",
+        "text": "#form_button_text",
+        "color": "$7_color_format",
+        "bindings": [
+            {
+                "binding_name": "#form_button_text",
+                "binding_type": "collection",
+                "binding_collection_name": "form_buttons"
+            }
+        ]
+    }
+}

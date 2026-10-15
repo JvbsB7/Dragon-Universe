@@ -1,0 +1,118 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "dbe:capsule_991",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "properties": {
+                "dbe:color": {
+                    "type": "int",
+                    "range": [ 0, 15 ],
+                    "default": 0,
+                    "client_sync": true
+                },
+                "dbe:rotation_x": {
+                    "type": "float",
+                    "range": [ -180.0, 180.0 ],
+                    "default": 0.0,
+                    "client_sync": true
+                },
+                "dbe:rotation_z": {
+                    "type": "float",
+                    "range": [ -180.0, 180.0 ],
+                    "default": 0.0,
+                    "client_sync": true
+                },
+                "dbe:movement_direction": {
+                    "type": "float",
+                    "range": [ -90.0, 90.0 ],
+                    "default": 0.0,
+                    "client_sync": true
+                },
+                "dbe:wheel_speed": {
+                    "type": "float",
+                    "range": [ -100.0, 100.0 ],
+                    "default": 0.0,
+                    "client_sync": true
+                }
+            }
+        },
+
+        "component_groups": {
+            "dbe:despawn": {
+                "minecraft:instant_despawn": { }
+            }
+        },
+
+        "components": {
+            "minecraft:collision_box": {
+                "width": 3.2,
+                "height": 2.5
+            },
+            "minecraft:custom_hit_test": {
+                "hitboxes": [
+                    {
+                        "width": 1,
+                        "height": 1,
+                        "pivot": [ 0, 0.5, 0.5 ]
+                    },
+                    {
+                        "width": 1,
+                        "height": 1,
+                        "pivot": [ 0, 0.5, -0.5 ]
+                    }
+                ]
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "deals_damage": "no",
+                    "on_damage": {
+                        "event": "dbe:despawn"
+                    }
+                }
+            },
+            "minecraft:flying_speed": {
+                "value": 0
+            },
+            "minecraft:health": {
+                "value": 1,
+                "max": 1
+            },
+            "minecraft:movement": {
+                "value": 0
+            },
+            "minecraft:rideable": {
+                "crouching_skip_interact": true,
+                "interact_text": "action.interact.ride.capsule_991",
+                "passenger_max_width": 1.2,
+                "family_types": [
+                    "player"
+                ],
+                "seats": {
+                    "lock_rider_rotation": 90,
+                    "position": [ 0, 0.4, 0.3 ],
+                    "third_person_camera_radius": 12
+                }
+            },
+            "minecraft:type_family": {
+                "family": [
+                    "inanimate",
+                    "capsule_991"
+                ]
+            },
+            "minecraft:is_collidable": { },
+            "minecraft:movement.hover": { },
+            "minecraft:navigation.hover": { },
+            "minecraft:physics": { }
+        },
+
+        "events": {
+            "dbe:despawn": {
+                "add": {
+                    "component_groups": [ "dbe:despawn" ]
+                }
+            }
+        }
+    }
+}

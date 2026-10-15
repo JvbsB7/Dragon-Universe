@@ -1,0 +1,68 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "dbe:enma_daioh",
+            "is_spawnable": false,
+            "is_summonable": true
+        },
+
+        "component_groups": {
+            "dbe:despawn": {
+                "minecraft:instant_despawn": { }
+            }
+        },
+
+        "components": {
+            "minecraft:type_family": {
+                "family": [ "npc" ]
+            },
+            "minecraft:health": {
+                "value": 1,
+                "max": 1,
+                "min": 1
+            },
+            "minecraft:collision_box": {
+                "width": 1,
+                "height": 3.5
+            },
+            "minecraft:custom_hit_test": {
+                "hitboxes": [
+                    {
+                        "width": 2,
+                        "height": 4,
+                        "pivot": [ 0, 2, 0 ]
+                    },
+                    {
+                        "width": 3,
+                        "height": 3,
+                        "pivot": [ 0, 3.5, 3 ]
+                    }
+                ]
+            },
+            "minecraft:knockback_resistance": {
+                "value": 1
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "deals_damage": "no"
+                }
+            },
+            "minecraft:nameable": {
+                "always_show": true
+            },
+            "minecraft:conditional_bandwidth_optimization": { },
+            "minecraft:fire_immune": { },
+            "minecraft:persistent": { },
+            "minecraft:physics": { }
+        },
+
+        "events": {
+            "dbe:despawn": {
+                "add": {
+                    "component_groups": [ "dbe:despawn" ]
+                }
+            }
+        }
+    }
+}

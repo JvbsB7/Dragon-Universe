@@ -1,0 +1,71 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.turtle_shell",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 3,
+				"visible_bounds_offset": [0, 1.5, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "waist",
+					"parent": "root",
+					"pivot": [0, 12, 0]
+				},
+				{
+					"name": "body",
+					"parent": "waist",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "customCape",
+					"parent": "body",
+					"pivot": [0, 24, 2]
+				},
+				{
+					"name": "turtleShell",
+					"parent": "customCape",
+					"pivot": [0, 24, 2],
+					"cubes": [
+						{"origin": [-8, 6.5, 4], "size": [16, 20, 5], "uv": [0, 0]},
+						{"origin": [-9, 5.5, 2], "size": [18, 22, 2], "inflate": 0.1, "uv": [0, 25]}
+					]
+				},
+				{
+					"name": "rightArm",
+					"parent": "body",
+					"pivot": [-5, 22, 0]
+				},
+				{
+					"name": "rightStripe",
+					"parent": "rightArm",
+					"pivot": [-4, 22, 0],
+					"cubes": [
+						{"origin": [-4.5, 19, -3], "size": [1, 6, 6], "uv": [40, 37]}
+					]
+				},
+				{
+					"name": "leftArm",
+					"parent": "body",
+					"pivot": [5, 22, 0]
+				},
+				{
+					"name": "leftStripe",
+					"parent": "leftArm",
+					"pivot": [4, 22, 0],
+					"cubes": [
+						{"origin": [3.5, 19, -3], "size": [1, 6, 6], "uv": [40, 25]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,38 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:saiyaman_leggings",
+            "materials": {
+                "default": "armor"
+            },
+            "textures": {
+                "default": "textures/models/armors/great_saiyaman/great_saiyaman",
+                "female_clothes": "textures/models/armors/great_saiyaman/female_great_saiyaman"
+            },
+            "geometry": {
+                "default": "geometry.great_saiyaman.leggings"
+            },
+            "scripts": {
+                "parent_setup": "v.leg_layer_visible = 0.0;",
+                "pre_animation": [
+                    "v.is_female = q.has_property('dbe:gender') ? q.property('dbe:gender') : false;"
+                ],
+                "animate": [
+                    "offset"
+                ]
+            },
+            "animations": {
+                "offset": "animation.armor.leggings.offset"
+            },
+            "render_controllers": [
+                {
+                    "controller.render.clothes": "!v.is_female"
+                },
+                {
+                    "controller.render.female_clothes": "v.is_female"
+                }
+            ]
+        }
+    }
+}

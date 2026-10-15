@@ -1,0 +1,20 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.bulma": {
+            "arrays": {
+                "textures": {
+                    "Array.skins": [
+                        "Texture.bulma_android_saga",
+                        "Texture.bulma_classic",
+                        "Texture.bulma_oolong_saga",
+                        "Texture.bulma_pre_namek"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.skins[q.property('dbe:skin')]" ]
+        }
+    }
+}

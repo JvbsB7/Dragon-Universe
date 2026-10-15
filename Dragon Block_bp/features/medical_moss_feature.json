@@ -1,0 +1,52 @@
+{
+    "format_version": "1.21.40",
+    "minecraft:single_block_feature": {
+        "description": {
+            "identifier": "dbe:medical_moss_feature"
+        },
+
+        "places_block": [
+            {
+                "block": {
+                    "name": "dbe:medical_moss",
+                    "states": {
+                        "solariscore:growth": 0
+                    }
+                },
+                "weight": 1
+            },
+            {
+                "block": {
+                    "name": "dbe:medical_moss",
+                    "states": {
+                        "solariscore:growth": 1
+                    }
+                },
+                "weight": 2
+            },
+            {
+                "block": {
+                    "name": "dbe:medical_moss",
+                    "states": {
+                        "solariscore:growth": 2
+                    }
+                },
+                "weight": 3
+            },
+            {
+                "block": {
+                    "name": "dbe:medical_moss",
+                    "states": {
+                        "solariscore:growth": 3
+                    }
+                },
+                "weight": 2
+            }
+        ],
+        "enforce_placement_rules": false,
+        "enforce_survivability_rules": true,
+        "may_replace": [
+            "minecraft:air"
+        ]
+    }
+}

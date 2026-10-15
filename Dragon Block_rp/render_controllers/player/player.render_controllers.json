@@ -1,0 +1,35 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.player.first_person": {
+            "rebuild_animation_matrices": false,
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.empty" ]
+        },
+        "controller.render.player.third_person": {
+            "rebuild_animation_matrices": false,
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.empty" ]
+        },
+        "controller.render.player.brave_sword_sheath": {
+            "geometry": "Geometry.brave_sword_sheath",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.brave_sword_sheath" ],
+            "part_visibility": [
+                { "*": true },
+                { "braveSword": "!q.is_item_name_any('slot.weapon.mainhand', 0, 'dbe:brave_sword')" }
+            ]
+        },
+        "controller.render.player.power_pole_sheath": {
+            "geometry": "Geometry.power_pole_sheath",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.power_pole_sheath" ],
+            "part_visibility": [
+                { "*": true },
+                { "powerPole": "!q.is_item_name_any('slot.weapon.mainhand', 0, 'dbe:power_pole')" }
+            ]
+        }
+    }
+}

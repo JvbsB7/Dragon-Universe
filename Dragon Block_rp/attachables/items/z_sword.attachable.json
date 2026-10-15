@@ -1,0 +1,28 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:z_sword",
+            "materials": {
+                "default": "entity_alphatest",
+                "enchanted": "entity_alphatest_glint"
+            },
+            "textures": {
+                "default": "textures/entity/z_sword",
+                "enchanted": "textures/misc/enchanted_item_glint"
+            },
+            "geometry": {
+                "default": "geometry.z_sword"
+            },
+            "scripts": {
+                "animate": [
+                    "holding"
+                ]
+            },
+            "animations": {
+                "holding": "animation.z_sword.holding"
+            },
+            "render_controllers": [ "controller.render.item_default" ]
+        }
+    }
+}

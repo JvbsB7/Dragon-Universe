@@ -1,0 +1,12 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "dbe:furnace_ajisa_log"
+    },
+
+    "tags": [ "furnace" ],
+    "input": "dbe:ajisa_log",
+    "output": "minecraft:charcoal"
+  }
+}

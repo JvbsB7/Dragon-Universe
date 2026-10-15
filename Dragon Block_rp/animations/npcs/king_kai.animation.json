@@ -1,0 +1,35 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.king_kai.idle": {
+			"loop": true,
+			"bones": {
+				"waist": {
+					"rotation": ["q.target_x_rotation * 0.2", "q.target_y_rotation * 0.4", 0],
+					"position": [0, "-0.2-math.cos(q.life_time * 110) * 0.5 * 0.5", 0]
+				},
+				"leftArm": {
+					"rotation": [-0.32902, -7.49282, "-1.4785-((math.cos(q.life_time * 105) * 2.8) + 7)"],
+					"position": [0, "math.sin(q.life_time * 110) * 0.5 * 0.5", 0]
+				},
+				"rightArm": {
+					"rotation": [-0.44067, 9.99038, "1.4615+((math.cos(q.life_time * 105) * 2.8) + 7)"],
+					"position": [0, "math.sin(q.life_time * 110) * 0.5 * 0.5", 0]
+				},
+				"leftLeg": {
+					"rotation": [0, 0, -2.5]
+				},
+				"rightLeg": {
+					"rotation": [0, 0, 2.5]
+				},
+				"head": {
+					"rotation": ["q.target_x_rotation * 0.5", "q.target_y_rotation * 0.5", 0]
+				},
+				"halo": {
+					"rotation": ["2.5-math.cos(q.anim_time*90*1.5)*1", 0, 0],
+					"position": [0, "0-math.sin(q.anim_time*90*1.5)*0.3", 0]
+				}
+			}
+		}
+	}
+}

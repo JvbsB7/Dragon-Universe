@@ -1,0 +1,36 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:bulma",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "bulma_android_saga": "textures/entity/npcs/bulma/bulma_android_saga",
+                "bulma_classic": "textures/entity/npcs/bulma/bulma_classic",
+                "bulma_oolong_saga": "textures/entity/npcs/bulma/bulma_oolong_saga",
+                "bulma_pre_namek": "textures/entity/npcs/bulma/bulma_pre_namek"
+            },
+            "geometry": {
+                "default": "geometry.bulma"
+            },
+            "scripts": {
+                "animate": [
+                    "root",
+                    "base_pose"
+                ]
+            },
+            "animations": {
+                "root": "controller.animation.npc.root",
+                "blink": "animation.humanoid.blink",
+                "bob": "animation.player.bob",
+                "look_at_target": "animation.humanoid.look_at_target.default",
+                "base_pose": "animation.bulma.base_pose"
+            },
+            "render_controllers": [
+                "controller.render.bulma"
+            ]
+        }
+    }
+}

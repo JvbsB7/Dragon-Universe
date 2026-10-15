@@ -1,0 +1,109 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dbe:namek_dragon_ball",
+            "states": {
+                "dbe:is_petrified": [ false, true ],
+                "dbe:is_powered": [ false, true ],
+                "dbe:level": {
+                    "values": {
+                        "min": 0,
+                        "max": 6
+                    }
+                }
+            }
+        },
+
+        "components": {
+            "minecraft:geometry": "geometry.namek_dragon_ball",
+            "minecraft:light_dampening": 0,
+            "minecraft:light_emission": 3,
+            "minecraft:loot": "loot_tables/blocks/namek_dragon_ball.json",
+            "minecraft:map_color": "#f4ac3b",
+            "minecraft:collision_box": {
+                "origin": [ -6, 0.5, -6 ],
+                "size": [ 12, 12, 12 ]
+            },
+            "minecraft:connection_rule": {
+                "accepts_connections_from": "none"
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 0.5
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0.5
+            },
+            "minecraft:destruction_particles": {
+                "texture": "namek_dragon_ball"
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "can_contain_liquid": true
+                    }
+                ]
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "namek_dragon_ball",
+                    "render_method": "blend",
+                    "ambient_occlusion": false,
+                    "face_dimming": false
+                },
+                "outline": {
+                    "texture": "namek_dragon_ball",
+                    "render_method": "blend",
+                    "ambient_occlusion": false,
+                    "face_dimming": false
+                }
+            },
+            "minecraft:selection_box": {
+                "origin": [ -6, 0.5, -6 ],
+                "size": [ 12, 12, 12 ]
+            },
+            "minecraft:tick": {
+                "interval_range": [ 1, 1 ]
+            },
+            "dbe:dragon_ball": { }
+        },
+
+        "permutations": [
+            {
+                "condition": "q.block_state('dbe:is_petrified')",
+                "components": {
+                    "minecraft:light_emission": 0,
+                    "minecraft:destruction_particles": {
+                        "texture": "petrified_namek_dragon_ball"
+                    },
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "petrified_namek_dragon_ball",
+                            "render_method": "opaque"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('dbe:is_powered') && !q.block_state('dbe:is_petrified')",
+                "components": {
+                    "minecraft:light_emission": 15,
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "namek_dragon_ball_activated",
+                            "render_method": "blend",
+                            "ambient_occlusion": false,
+                            "face_dimming": false
+                        },
+                        "outline": {
+                            "texture": "namek_dragon_ball_activated",
+                            "render_method": "blend",
+                            "ambient_occlusion": false,
+                            "face_dimming": false
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

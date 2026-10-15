@@ -1,0 +1,17 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dbe:namek_village/village_centers"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/namek_village/village_centers/meeting_point_1",
+                    "processors": "dbe:namek_streets"
+                }
+            }
+        ]
+    }
+}

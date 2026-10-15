@@ -1,0 +1,97 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.frost_demon_chilled_horns",
+				"texture_width": 32,
+				"texture_height": 32,
+				"visible_bounds_width": 6,
+				"visible_bounds_height": 3,
+				"visible_bounds_offset": [0, 1.5, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "waist",
+					"parent": "root",
+					"pivot": [0, 12, 0]
+				},
+				{
+					"name": "body",
+					"parent": "waist",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "headLayer",
+					"parent": "head",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "leftBackHorn",
+					"parent": "head",
+					"pivot": [4, 29, 5],
+					"rotation": [0, -22.5, -45],
+					"cubes": [
+						{"origin": [4, 29, 4], "size": [4, 2, 2], "uv": [0, 8], "mirror": true},
+						{"origin": [8, 29, 5], "size": [4, 5, 0], "uv": [12, 8], "mirror": true}
+					]
+				},
+				{
+					"name": "leftFrontHorn",
+					"parent": "head",
+					"pivot": [4, 29, -2],
+					"rotation": [0, 22.5, -22.5],
+					"cubes": [
+						{"origin": [4, 29, -3], "size": [2, 2, 2], "uv": [12, 13], "mirror": true}
+					]
+				},
+				{
+					"name": "leftFrontHorn2",
+					"parent": "leftFrontHorn",
+					"pivot": [9, 29, -2],
+					"cubes": [
+						{"origin": [5, 29, -2], "size": [7, 8, 0], "uv": [0, 0], "mirror": true},
+						{"origin": [4, 29, -3], "size": [4, 2, 2], "uv": [0, 12], "mirror": true}
+					]
+				},
+				{
+					"name": "rightBackHorn",
+					"parent": "head",
+					"pivot": [-4, 29, 5],
+					"rotation": [0, 22.5, 45],
+					"cubes": [
+						{"origin": [-8, 29, 4], "size": [4, 2, 2], "uv": [0, 8]},
+						{"origin": [-12, 29, 5], "size": [4, 5, 0], "uv": [12, 8]}
+					]
+				},
+				{
+					"name": "rightFrontHorn",
+					"parent": "head",
+					"pivot": [-4, 29, -2],
+					"rotation": [0, -22.5, 22.5],
+					"cubes": [
+						{"origin": [-6, 29, -3], "size": [2, 2, 2], "uv": [12, 13]}
+					]
+				},
+				{
+					"name": "rightFrontHorn2",
+					"parent": "rightFrontHorn",
+					"pivot": [-9, 28, -2],
+					"cubes": [
+						{"origin": [-12, 29, -2], "size": [7, 8, 0], "uv": [0, 0]},
+						{"origin": [-8, 29, -3], "size": [4, 2, 2], "uv": [0, 12]}
+					]
+				}
+			]
+		}
+	]
+}

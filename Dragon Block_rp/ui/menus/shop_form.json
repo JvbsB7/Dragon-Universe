@@ -1,0 +1,158 @@
+{
+    "namespace": "shop_form",
+
+    "shop_form": {
+        "type": "panel",
+        "controls": [
+            {
+                "background": {
+                    "size": [ "100%", "100%" ],
+                    "type": "image",
+                    "texture": "textures/ui/backgrounds/black_background",
+                    "alpha": 0.75
+                }
+            },
+            {
+                "form@server_form.long_form": {
+                    "size": [ 295, 195 ],
+                    "$child_control": "shop_form.shop_scrolling_panel",
+                    "$custom_background": "custom_server_form.background",
+                    "$background_texture": "textures/ui/backgrounds/shop_background",
+                    "$default_button_texture": "textures/ui/buttons/shop_item_button",
+                    "$hover_button_texture": "textures/ui/buttons/shop_item_button_hover"
+                }
+            }
+        ]
+    },
+
+    "shop_scrolling_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "back_button@custom_server_form.back_button": { }
+            },
+            {
+                "scrolling_panel@common.scrolling_panel": {
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "size": [ "100%", "100%" ],
+                    "$show_background": false,
+                    "$scrolling_content": "shop_form.shop_scrolling_content",
+                    "$scroll_size": [ 5, "100% - 4px" ],
+                    "$scrolling_pane_size": [ "100% - 4px", "100% - 2px" ],
+                    "$scrolling_pane_offset": [ 2, 0 ],
+                    "$scroll_bar_right_padding_size": [ 0, 0 ]
+                }
+            }
+        ]
+    },
+
+    "dynamic_button": {
+        "type": "panel",
+        "size": [ "100%", 70 ],
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "size": [ "100%", "100% - 2px" ],
+                    "texture": "textures/ui/backgrounds/shop_item_background"
+                }
+            },
+            {
+                "button": {
+                    "type": "stack_panel",
+                    "size": [ "100% - 6px", "100% - 6px" ],
+                    "offset": [ 1, 0 ],
+                    "orientation": "horizontal",
+                    "controls": [
+                        {
+                            "image_panel": {
+                                "type": "panel",
+                                "size": [ 70, "100%" ],
+                                "controls": [
+                                    {
+                                        "imageT": {
+                                            "type": "image",
+                                            "size": [ "100% - 2px", "100% - 2px" ],
+                                            "alpha": 0.05,
+                                            "bindings": [
+                                                {
+                                                    "binding_name": "#form_button_texture",
+                                                    "binding_name_override": "#texture",
+                                                    "binding_type": "collection",
+                                                    "binding_collection_name": "form_buttons"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "image": {
+                                            "type": "image",
+                                            "size": [ "50%", "50%" ],
+                                            "bindings": [
+                                                {
+                                                    "binding_name": "#form_button_texture",
+                                                    "binding_name_override": "#texture",
+                                                    "binding_type": "collection",
+                                                    "binding_collection_name": "form_buttons"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "button@custom_server_form.text_button": {
+                                "size": [ "fill", "100%" ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "form_buttons"
+            },
+            {
+                "binding_name": "#form_button_text",
+                "binding_type": "collection",
+                "binding_collection_name": "form_buttons"
+            },
+            {
+                "binding_type": "view",
+                "source_property_name": "(not ((#form_button_text = '') or (#form_button_text = 'ui.dbe.backButton')))",
+                "target_property_name": "#visible"
+            }
+        ]
+    },
+
+    "shop_scrolling_content": {
+        "type": "panel",
+        "size": [ "100% - 4px", "100%c" ],
+        "layer": 1,
+        "controls": [
+            {
+                "buttons_panel": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "factory": {
+                        "name": "buttons",
+                        "control_name": "shop_form.dynamic_button"
+                    },
+                    "collection_name": "form_buttons",
+                    "$button_label_text_alignment": "left_middle",
+                    "bindings": [
+                        {
+                            "binding_name": "#form_button_length",
+                            "binding_name_override": "#collection_length"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

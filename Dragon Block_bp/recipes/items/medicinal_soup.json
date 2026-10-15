@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "dbe:medicinal_soup"
+    },
+
+    "tags": [ "crafting_table" ],
+    "ingredients": [
+      {
+        "item": "minecraft:bowl"
+      },
+      {
+        "item": "dbe:medical_moss"
+      },
+      {
+        "item": "dbe:namek_mushroom"
+      },
+      {
+        "item": "dbe:raw_dinosaur_meat"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "dbe:namek_mushroom"
+      }
+    ],
+    "result": {
+      "item": "dbe:medicinal_soup"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:processor_list": {
+        "description": {
+            "identifier": "dbe:namek_streets"
+        },
+        "processors": [
+            {
+                "processor_type": "minecraft:rule",
+                "rules": [
+                    {
+                        "input_predicate": {
+                            "block": "dbe:namek_stone",
+                            "predicate_type": "minecraft:block_match"
+                        },
+                        "location_predicate": {
+                            "block": "minecraft:water",
+                            "predicate_type": "minecraft:block_match"
+                        },
+                        "output_state": {
+                            "name": "dbe:ajisa_planks"
+                        }
+                    },
+                    {
+                        "input_predicate": {
+                            "block": "dbe:namek_stone",
+                            "predicate_type": "minecraft:random_block_match",
+                            "probability": 0.5
+                        },
+                        "location_predicate": {
+                            "predicate_type": "minecraft:always_true"
+                        },
+                        "output_state": {
+                            "name": "dbe:namek_grass"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

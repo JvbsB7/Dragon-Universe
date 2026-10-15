@@ -1,0 +1,97 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "dbe:piccolo_chestplate",
+                    "weight": 4
+                },
+                {
+                    "type": "item",
+                    "name": "dbe:piccolo_leggings",
+                    "weight": 4
+                },
+                {
+                    "type": "item",
+                    "name": "dbe:piccolo_boots",
+                    "weight": 4
+                },
+                // {
+                //     "type": "item",
+                //     "name": "dbe:namek_dragon_ball_item",
+                //     "weight": 1
+                // },
+                {
+                    "type": "empty",
+                    "weight": 7
+                }
+            ]
+        },
+        {
+            "rolls": {
+                "min": 2,
+                "max": 7
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "dbe:ajisa_sapling",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 3
+                            }
+                        }
+                    ],
+                    "weight": 6
+                },
+                {
+                    "type": "item",
+                    "name": "dbe:medical_moss",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 2,
+                                "max": 4
+                            }
+                        }
+                    ],
+                    "weight": 5
+                },
+                {
+                    "type": "item",
+                    "name": "dbe:medical_moss_seeds",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 6
+                            }
+                        }
+                    ],
+                    "weight": 4
+                },
+                {
+                    "type": "item",
+                    "name": "dbe:ajisa_orange",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ],
+                    "weight": 4
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.merchant": {
+            "arrays": {
+                "textures": {
+                    "Array.skins": [
+                        "Texture.merchant_skin_1",
+                        "Texture.merchant_skin_2",
+                        "Texture.merchant_skin_3"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.skins[q.property('dbe:skin')]" ],
+            "part_visibility": [
+                { "*": true },
+                { "backpack": "q.property('dbe:has_backpack')" },
+                { "glasses": "q.property('dbe:has_glasses')" }
+            ]
+        }
+    }
+}

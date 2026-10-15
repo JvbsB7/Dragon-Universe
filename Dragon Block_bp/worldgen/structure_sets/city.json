@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:structure_set": {
+        "description": {
+            "identifier": "dbe:city"
+        },
+        "placement": {
+            "type": "minecraft:random_spread",
+            "salt": 95834565,
+            "separation": 14,
+            "spacing": 30,
+            "spread_type": "linear"
+        },
+        "structures": [
+            {
+                "structure": "dbe:city",
+                "weight": 1
+            }
+        ]
+    }
+}

@@ -1,0 +1,21 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.ki_attack.flying": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"animations": [
+						"flying"
+					],
+					"particle_effects": [
+						{
+							"effect": "lightning",
+							"locator": "lightning"
+						}
+					]
+				}
+			}
+		}
+	}
+}

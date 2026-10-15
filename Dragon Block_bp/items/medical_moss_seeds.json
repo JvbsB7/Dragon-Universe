@@ -1,0 +1,21 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:medical_moss_seeds",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+
+        "components": {
+            "minecraft:icon": "medical_moss_seeds",
+            "minecraft:block_placer": {
+                "block": "dbe:medical_moss"
+            },
+            "minecraft:compostable": {
+                "composting_chance": 30
+            }
+        }
+    }
+}

@@ -1,0 +1,41 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.bulma.base_pose": {
+			"loop": true,
+			"bones": {
+				"head": {
+					"rotation": [0, -17.5, 0]
+				},
+				"bunch": {
+					"rotation": [2.5, 0, -5]
+				},
+				"rightArm": {
+					"rotation": [-67.77027, -50.06288, 30.50809],
+					"position": [-3, 0, 3]
+				},
+				"leftArm": {
+					"rotation": [0, -7.5, -5],
+					"position": [0, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [0.27582, -9.82156, -7.05425],
+					"position": [0, 0, 0]
+				},
+				"waist": {
+					"rotation": [0, 22.5, 0]
+				},
+				"hair": {
+					"position": [0, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-1.44293, 7.77572, 2.6526],
+					"position": [0, 0, 0]
+				},
+				"root": {
+					"position": [0, 0, 0]
+				}
+			}
+		}
+	}
+}

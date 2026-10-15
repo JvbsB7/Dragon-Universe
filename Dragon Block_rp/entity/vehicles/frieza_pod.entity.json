@@ -1,0 +1,18 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:frieza_pod",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/vehicles/frieza_pod"
+            },
+            "geometry": {
+                "default": "geometry.frieza_pod"
+            },
+            "render_controllers": [ "controller.render.default" ]
+        }
+    }
+}

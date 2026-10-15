@@ -1,0 +1,23 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dbe:namek_village/houses"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/namek_village/houses/namek_medium_house_1"
+                },
+                "weight": 1
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:empty_pool_element"
+                },
+                "weight": 5
+            }
+        ]
+    }
+}

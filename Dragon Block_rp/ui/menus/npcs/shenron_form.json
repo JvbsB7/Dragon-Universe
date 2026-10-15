@@ -1,0 +1,58 @@
+{
+    "namespace": "shenron_wishes_form",
+
+    "shenron_form@server_form.long_form": {
+        "size": [ 250, 175 ],
+        "$child_control": "shenron_wishes_form.shenron_scrolling_panel",
+        "$custom_background": "custom_server_form.background",
+        "$background_texture": "textures/ui/backgrounds/menu_background",
+        "$default_button_texture": "textures/ui/buttons/menu_button",
+        "$hover_button_texture": "textures/ui/buttons/menu_button_hover"
+    },
+
+    "shenron_scrolling_panel": {
+        "type": "panel",
+        "layer": 1,
+        "controls": [
+            {
+                "scrolling_panel@common.scrolling_panel": {
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "size": [ "100%", "100%" ],
+                    "$show_background": false,
+                    "$scrolling_content": "shenron_wishes_form.shenron_wishes_scrolling_content",
+                    "$scroll_size": [ 5, "100% - 4px" ],
+                    "$scrolling_pane_size": [ "100% - 4px", "100% - 2px" ],
+                    "$scrolling_pane_offset": [ 2, 0 ],
+                    "$scroll_bar_right_padding_size": [ 0, 0 ]
+                }
+            }
+        ]
+    },
+
+    "shenron_wishes_scrolling_content": {
+        "type": "stack_panel",
+        "size": [ "100% - 4px", "100%c" ],
+        "layer": 1,
+        "controls": [
+            {
+                "buttons_panel": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "collection_name": "form_buttons",
+                    "factory": {
+                        "name": "buttons",
+                        "control_name": "custom_server_form.text_button"
+                    },
+                    "bindings": [
+                        {
+                            "binding_name": "#form_button_length",
+                            "binding_name_override": "#collection_length"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

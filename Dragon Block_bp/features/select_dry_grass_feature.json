@@ -1,0 +1,13 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "dbe:select_dry_grass_feature"
+        },
+
+        "features": [
+            [ "dbe:short_dry_grass_feature", 1 ],
+            [ "dbe:tall_dry_grass_feature", 1 ]
+        ]
+    }
+}

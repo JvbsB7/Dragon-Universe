@@ -1,0 +1,76 @@
+{
+    "namespace": "quest_form",
+
+    "quest_form@server_form.long_form": {
+        "size": [ 295, 195 ],
+        "$child_control": "quest_form.quest_scrolling_panel",
+        "$custom_background": "custom_server_form.background",
+        "$background_texture": "textures/ui/backgrounds/menu_background",
+        "$default_button_texture": "textures/ui/buttons/menu_button",
+        "$hover_button_texture": "textures/ui/buttons/menu_button_hover"
+    },
+
+    "quest_scrolling_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "back_button@custom_server_form.back_button": { }
+            },
+            {
+                "scrolling_panel@common.scrolling_panel": {
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "size": [ "100%", "100%" ],
+                    "$show_background": false,
+                    "$scrolling_content": "quest_form.quest_scrolling_content",
+                    "$scroll_size": [ 5, "100% - 4px" ],
+                    "$scrolling_pane_size": [ "100% - 4px", "100% - 2px" ],
+                    "$scrolling_pane_offset": [ 2, 0 ],
+                    "$scroll_bar_right_padding_size": [ 0, 0 ]
+                }
+            },
+            {
+                "buttons_panel": {
+                    "type": "stack_panel",
+                    "size": [ "25%", "100%c" ],
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "collection_name": "form_buttons",
+                    "controls": [
+                        {
+                            "button@custom_server_form.text_button": {
+                                "collection_index": 1
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "quest_scrolling_content": {
+        "type": "panel",
+        "size": [ "100% - 4px", "100%c" ],
+        "layer": 1,
+        "controls": [
+            {
+                "description_panel": {
+                    "type": "panel",
+                    "size": [ "100%", "100%c" ],
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "controls": [
+                        {
+                            "description_label": {
+                                "type": "label",
+                                "size": [ "100%", "default" ],
+                                "text": "#form_text",
+                                "color": "$7_color_format"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:mr_popo",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/npcs/mr_popo"
+            },
+            "geometry": {
+                "default": "geometry.mr_popo"
+            },
+            "scripts": {
+                "animate": [
+                    "root"
+                ]
+            },
+            "animations": {
+                "root": "controller.animation.npc.root",
+                "blink": "animation.humanoid.blink",
+                "bob": "animation.player.bob",
+                "look_at_target": "animation.humanoid.look_at_target.default"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

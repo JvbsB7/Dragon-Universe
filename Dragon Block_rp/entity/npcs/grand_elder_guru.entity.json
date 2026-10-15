@@ -1,0 +1,28 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:grand_elder_guru",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/npcs/grand_elder_guru"
+            },
+            "geometry": {
+                "default": "geometry.grand_elder_guru"
+            },
+            "scripts": {
+                "animate": [
+                    "sit"
+                ]
+            },
+            "animations": {
+                "sit": "animation.grand_elder_guru.sit"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

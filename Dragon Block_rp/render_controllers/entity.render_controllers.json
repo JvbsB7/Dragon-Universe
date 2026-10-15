@@ -1,0 +1,43 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.entity_armor": {
+            "geometry": "Geometry.armor",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.armor" ],
+            "part_visibility": [
+                { "*": true },
+                { "breasts": false }
+            ]
+
+        },
+        "controller.render.entity_armor2": {
+            "geometry": "Geometry.armor2",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.armor2" ],
+            "part_visibility": [
+                { "*": true },
+                { "breasts": false }
+            ]
+        },
+        "controller.render.entity_earrings": {
+            "geometry": "Geometry.earrings",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.earrings" ]
+        },
+        "controller.render.entity_eyes": {
+            "geometry": "Geometry.eyes",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.eyes" ]
+        },
+        "controller.render.entity_scouter": {
+            "geometry": "Geometry.scouter",
+            "materials": [ { "*": "Material.alphablend" } ],
+            "textures": [ "Texture.scouter" ],
+            "part_visibility": [
+                { "*": true },
+                { "fullScouter": false }
+            ]
+        }
+    }
+}

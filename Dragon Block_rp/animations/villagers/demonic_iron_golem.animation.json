@@ -1,0 +1,58 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.dbe_demonic_iron_golem.walk": {
+      "loop": true,
+      "animation_length": 1.0,
+      "bones": {
+        "leg_right": {
+          "rotation": [
+            "math.cos(q.anim_time*360)*35*q.modified_move_speed*2.5",
+            0,
+            0
+          ]
+        },
+        "leg_left": {
+          "rotation": [
+            "-math.cos(q.anim_time*360)*35*q.modified_move_speed*2.5",
+            0,
+            0
+          ]
+        },
+        "arm_right": {
+          "rotation": [
+            "-math.cos(q.anim_time*360)*25*q.modified_move_speed*2.5",
+            0,
+            0
+          ]
+        },
+        "arm_left": {
+          "rotation": [
+            "math.cos(q.anim_time*360)*25*q.modified_move_speed*2.5",
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "animation.dbe_demonic_iron_golem.attack": {
+      "loop": true,
+      "bones": {
+        "arm_right": {
+          "rotation": [
+            "-100*math.sin(v.attack_time*180)",
+            0,
+            0
+          ]
+        },
+        "arm_left": {
+          "rotation": [
+            "-100*math.sin(v.attack_time*180)",
+            0,
+            0
+          ]
+        }
+      }
+    }
+  }
+}

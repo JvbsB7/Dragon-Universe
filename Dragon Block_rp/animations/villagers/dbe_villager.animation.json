@@ -1,0 +1,102 @@
+{
+    "format_version": "1.8.0",
+    "animations": {
+        "animation.dbe_villager.move": {
+            "loop": true,
+            "bones": {
+                "right_arm": {
+                    "rotation": [
+                        "math.cos(q.modified_distance_moved * 38.17 + 180) * 70 * q.modified_move_speed",
+                        0,
+                        0
+                    ]
+                },
+                "left_arm": {
+                    "rotation": [
+                        "math.cos(q.modified_distance_moved * 38.17) * 70 * q.modified_move_speed",
+                        0,
+                        0
+                    ]
+                },
+                "right_leg": {
+                    "rotation": [
+                        "math.cos(q.modified_distance_moved * 38.17) * 80 * q.modified_move_speed",
+                        0,
+                        0
+                    ]
+                },
+                "left_leg": {
+                    "rotation": [
+                        "math.cos(q.modified_distance_moved * 38.17 + 180) * 80 * q.modified_move_speed",
+                        0,
+                        0
+                    ]
+                },
+                "tail": {
+                    "rotation": [
+                        0,
+                        "math.cos(q.modified_distance_moved * 38.17) * 18 * q.modified_move_speed",
+                        0
+                    ]
+                }
+            }
+        },
+        "animation.dbe_villager.look": {
+            "loop": true,
+            "bones": {
+                "head": {
+                    "rotation": [
+                        "q.target_x_rotation",
+                        "q.target_y_rotation",
+                        0
+                    ]
+                }
+            }
+        },
+        "animation.dbe_villager.idle": {
+            "loop": true,
+            "bones": {
+                "right_arm": {
+                    "rotation": [
+                        0,
+                        0,
+                        "1.2 + math.cos(q.life_time * 103.2) * 2.0"
+                    ]
+                },
+                "left_arm": {
+                    "rotation": [
+                        0,
+                        0,
+                        "-1.2 - math.cos(q.life_time * 103.2) * 2.0"
+                    ]
+                },
+                "tail": {
+                    "rotation": [
+                        0,
+                        "math.sin(q.life_time * 90) * 10",
+                        0
+                    ]
+                }
+            }
+        },
+        "animation.dbe_villager.attack": {
+            "loop": true,
+            "bones": {
+                "right_arm": {
+                    "rotation": [
+                        "-math.sin(v.attack_time * 180) * 110",
+                        0,
+                        0
+                    ]
+                },
+                "left_arm": {
+                    "rotation": [
+                        "-math.sin(v.attack_time * 180) * 40",
+                        0,
+                        0
+                    ]
+                }
+            }
+        }
+    }
+}

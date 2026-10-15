@@ -1,0 +1,31 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.super_buu_antenna": {
+            "geometry": "Geometry.majin_antenna",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.default" ]
+        },
+        "controller.render.super_buu_clothes": {
+            "arrays": {
+                "textures": {
+                    "Array.textures": [
+                        "Texture.clothes",
+                        "Texture.clothes",
+                        "Texture.clothes",
+                        "Texture.clothes",
+                        "Texture.clothes",
+                        "Texture.clothes",
+                        "Texture.clothes",
+                        "Texture.clothes",
+                        "Texture.gohan_clothes",
+                        "Texture.gotenks_clothes"
+                    ]
+                }
+            },
+            "geometry": "geometry.clothes",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.textures[v.transformation]" ]
+        }
+    }
+}

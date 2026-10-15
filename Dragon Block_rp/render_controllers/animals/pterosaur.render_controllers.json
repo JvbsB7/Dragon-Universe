@@ -1,0 +1,27 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.pterosaur": {
+            "arrays": {
+                "textures": {
+                    "Array.colors": [
+                        "Texture.pterosaur_blue",
+                        "Texture.pterosaur_green",
+                        "Texture.pterosaur_purple",
+                        "Texture.pterosaur_red"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [
+                "Array.colors[q.variant]",
+                "q.is_saddled ? Texture.saddle : Texture.empty",
+                "Texture.empty"
+            ],
+            "part_visibility": [
+                { "*chest": "q.is_chested" }
+            ]
+        }
+    }
+}

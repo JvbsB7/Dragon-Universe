@@ -1,0 +1,14 @@
+{
+    "namespace": "christmas_form",
+
+    "christmas_form@server_form.long_form": {
+        "size": [ "100%", "100%" ],
+        "$child_control": "christmas_form.christmas_panel",
+        "$custom_background": "custom_server_form.background",
+        "$background_texture": "textures/ui/images/christmas"
+    },
+
+    "christmas_panel": {
+        "type": "panel"
+    }
+}

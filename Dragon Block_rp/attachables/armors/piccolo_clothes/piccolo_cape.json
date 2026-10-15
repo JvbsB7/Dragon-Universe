@@ -1,0 +1,30 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:piccolo_cape",
+            "materials": {
+                "default": "armor"
+            },
+            "textures": {
+                "default": "textures/models/armors/piccolo_cape"
+            },
+            "geometry": {
+                "default": "geometry.piccolo_cape"
+            },
+            "scripts": {
+                "animate": [
+                    "custom_cape"
+                ]
+            },
+            "animations": {
+                "custom_cape": "animation.player.custom_cape"
+            },
+            "render_controllers": [
+                {
+                    "controller.render.clothes": "q.is_item_name_any('slot.weapon.offhand', 0, 'dbe:piccolo_cape') && !c.is_first_person"
+                }
+            ]
+        }
+    }
+}

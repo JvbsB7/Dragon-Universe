@@ -1,0 +1,29 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.player.kienzan": {
+			"states": {
+				"default": {
+					"blend_transition": 0.2,
+					"transitions": [
+						{
+							"kienzan": "v.charging_attack"
+						}
+					]
+				},
+				"kienzan": {
+					"blend_transition": 0.2,
+					"animations": [
+						"ki_attack_setup",
+						"kienzan"
+					],
+					"transitions": [
+						{
+							"default": "!v.charging_attack"
+						}
+					]
+				}
+			}
+		}
+	}
+}

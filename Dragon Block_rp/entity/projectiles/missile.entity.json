@@ -1,0 +1,30 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:missile",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/missile"
+            },
+            "geometry": {
+                "default": "geometry.missile"
+            },
+            "particle_effects": {
+                "fire": "dbe:missile_flame"
+            },
+            "scripts": {
+                "animate": [
+                    "flying_controller"
+                ]
+            },
+            "animations": {
+                "flying": "animation.missile.flying",
+                "flying_controller": "controller.animation.missile.flying"
+            },
+            "render_controllers": [ "controller.render.default" ]
+        }
+    }
+}

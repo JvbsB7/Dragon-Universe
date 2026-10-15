@@ -1,0 +1,91 @@
+{
+    "armor_renderer": {
+        "visible": false,
+        "bindings": [ ]
+    },
+
+    "anim_chat_bg_alpha": {
+        "anim_type": "alpha",
+        "easing": "in_quart",
+        "destroy_at_end": "chat_grid_item",
+        "duration": 1,
+        "from": "$chat_background_opacity",
+        "to": 0
+    },
+
+    "heart_renderer": {
+        "visible": false,
+        "bindings": [ ]
+    },
+
+    "hud_player_renderer": {
+        "visible": false
+    },
+
+    "hud_actionbar_text": {
+        "type": "image",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [ -2, 51 ],
+        "texture": "textures/empty",
+        "controls": [
+            {
+                "actionbar_message": {
+                    "type": "label",
+                    "text": "$actionbar_text",
+                    "text_alignment": "left",
+                    "shadow": true,
+                    "alpha": 0.75
+                }
+            }
+        ]
+    },
+
+    "chat_grid_item": {
+        "type": "panel",
+        "size": [ "100%", "100%c + 2px" ],
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "$chat_background_opacity": 0.3,
+        "controls": [
+            {
+                "chat_background": {
+                    "type": "image",
+                    "texture": "textures/ui/backgrounds/chat_background",
+                    "size": [ "100%", "100%c" ],
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "anims": [ "@hud.anim_chat_bg_wait" ],
+                    "alpha": "$chat_background_opacity",
+                    "controls": [
+                        {
+                            "chat_text@chat_label": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [ 2, 0 ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "root_panel": {
+        "modifications": [
+            {
+                "control_name": "chat_stack",
+                "operation": "remove"
+            },
+            {
+                "array_name": "controls",
+                "operation": "insert_front",
+                "value": [
+                    {
+                        "custom_hud_screen@custom_hud_screen.custom_root_panel": { }
+                    }
+                ]
+            }
+        ]
+    }
+}

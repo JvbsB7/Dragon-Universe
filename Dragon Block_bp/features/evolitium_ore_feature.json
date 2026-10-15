@@ -1,0 +1,44 @@
+{
+    "format_version": "1.16.0",
+    "minecraft:ore_feature": {
+        "description": {
+            "identifier": "dbe:evolitium_ore_feature"
+        },
+        
+        "count": 5,
+        "replace_rules": [
+            {
+                "places_block": "dbe:deepslate_evolitium_ore",
+                "may_replace": [
+                    {
+                        "name": "minecraft:deepslate"
+                    }
+                ]
+            },
+            {
+                "places_block": "dbe:dirtstone_evolitium_ore",
+                "may_replace": [
+                    {
+                        "name": "dbe:dirtstone"
+                    }
+                ]
+            },
+            {
+                "places_block": "dbe:namek_stone_evolitium_ore",
+                "may_replace": [
+                    {
+                        "name": "dbe:namek_stone"
+                    }
+                ]
+            },
+            {
+                "places_block": "dbe:evolitium_ore",
+                "may_replace": [
+                    {
+                        "name": "minecraft:stone"
+                    }
+                ]
+            }
+        ]
+    }
+}

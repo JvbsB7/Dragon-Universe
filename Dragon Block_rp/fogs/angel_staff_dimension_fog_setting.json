@@ -1,0 +1,17 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:fog_settings": {
+        "description": {
+            "identifier": "dbe:fog_angel_staff_dimension"
+        },
+
+        "distance": {
+            "air": {
+                "fog_start": 1,
+                "fog_end": 48,
+                "fog_color": "#ffffff",
+                "render_distance_type": "fixed"
+            }
+        }
+    }
+}

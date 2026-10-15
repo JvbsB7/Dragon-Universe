@@ -1,0 +1,92 @@
+{
+    "namespace": "gravity_machine_form",
+
+    "gravity_machine_form@server_form.long_form": {
+        "size": [ 250, 135 ],
+        "$child_control": "gravity_machine_form.gravity_machine_scrolling_panel",
+        "$custom_background": "custom_server_form.background",
+        "$background_texture": "textures/ui/backgrounds/gravity_machine_background",
+        "$default_button_texture": "textures/ui/buttons/gravity_machine_button",
+        "$hover_button_texture": "textures/ui/buttons/gravity_machine_button_hover"
+    },
+
+    "gravity_machine_scrolling_panel": {
+        "type": "panel",
+        "layer": 1,
+        "controls": [
+            {
+                "scrolling_panel@common.scrolling_panel": {
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "size": [ "100%", "100%" ],
+                    "$show_background": false,
+                    "$scrolling_content": "gravity_machine_form.gravity_machine_scrolling_content",
+                    "$scroll_size": [ 5, "100% - 4px" ],
+                    "$scrolling_pane_size": [ "100% - 4px", "100% - 2px" ],
+                    "$scrolling_pane_offset": [ 2, 0 ],
+                    "$scroll_bar_right_padding_size": [ 0, 0 ]
+                }
+            }
+        ]
+    },
+
+    "gravity_machine_scrolling_content": {
+        "type": "stack_panel",
+        "size": [ "100% - 4px", "100%c" ],
+        "layer": 1,
+        "controls": [
+           {
+                "description_panel": {
+                    "type": "panel",
+                    "size": [ "100%", "100%c" ],
+                    "controls": [
+                        {
+                            "description_label": {
+                                "type": "label",
+                                "size": [ "100%", "default" ],
+                                "text": "#form_text",
+                                "color": "black"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "buttons_panel": {
+                    "type": "grid",
+                    "size": [ "100%", "100%c" ],
+                    "grid_item_template": "gravity_machine_form.gravity_button",
+                    "grid_rescaling_type": "horizontal",
+                    "collection_name": "form_buttons",
+                    "bindings": [
+                        {
+                            "binding_name": "#form_button_length",
+                            "binding_name_override": "#maximum_grid_items"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "gravity_button@custom_server_form.text_button": {
+        "size": [ 32, 32 ],
+        "sound_volume": 0,
+        "$button_type_panel": "gravity_machine_form.button_label"
+    },
+
+    "button_label": {
+        "type": "label",
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "text": "#form_button_text",
+        "color": "$7_color_format",
+        "bindings": [
+            {
+                "binding_name": "#form_button_text",
+                "binding_type": "collection",
+                "binding_collection_name": "form_buttons"
+            }
+        ]
+    }
+}

@@ -1,0 +1,48 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.namekian": {
+            "arrays": {
+                "textures": {
+                    "Array.textures": [
+                        "Texture.skin_1",
+                        "Texture.skin_2",
+                        "Texture.skin_3",
+                        "Texture.skin_4"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.masked" } ],
+            "textures": [
+                "Array.textures[q.skin_id]",
+                "Texture.skin_details"
+            ],
+            "part_visibility": [
+                { "*": true },
+                { "leftAntenna2": false },
+                { "rightAntenna2": false }
+            ]
+        },
+        "controller.render.namekian.clothes": {
+            "arrays": {
+                "textures": {
+                    "Array.textures": [
+                        "Texture.clothes_1",
+                        "Texture.clothes_2"
+                    ]
+                }
+            },
+            "geometry": "geometry.clothes",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.textures[q.variant]" ],
+            "part_visibility": [
+                { "*": true },
+                { "body": "!v.is_warrior" },
+                { "head": "!v.is_warrior" },
+                { "leftArm": "!v.is_warrior" },
+                { "rightArm": "!v.is_warrior" }
+            ]
+        }
+    }
+}

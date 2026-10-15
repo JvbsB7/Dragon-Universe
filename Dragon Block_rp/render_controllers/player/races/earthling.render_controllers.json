@@ -1,0 +1,248 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.player.earthling.beard": {
+            "arrays": {
+                "textures": {
+                    "Array.beards": [
+                        "Texture.empty",
+                        "Texture.beard_1",
+                        "Texture.beard_2",
+                        "Texture.beard_3",
+                        "Texture.beard_4",
+                        "Texture.beard_5"
+                    ]
+                }
+            },
+            "geometry": "Geometry.beard",
+            "materials": [ { "*": "Material.alphatest_change_color" } ],
+            "textures": [ "Array.beards[v.customization2]" ],
+            "color": {
+                "r": "v.color_1_r",
+                "g": "v.color_1_g",
+                "b": "v.color_1_b"
+            }
+        },
+        "controller.render.player.earthling.eyebrows": {
+            "arrays": {
+                "textures": {
+                    "Array.female_eyes": [
+                        "Texture.eyes_female_1",
+                        "Texture.eyes_female_2",
+                        "Texture.eyes_female_3"
+                    ],
+                    "Array.male_eyes": [
+                        "Texture.eyes_male_1",
+                        "Texture.eyes_male_2",
+                        "Texture.eyes_male_3"
+                    ]
+                }
+            },
+            "geometry": "Geometry.eyes",
+            "materials": [ { "*": "Material.alphatest_change_color" } ],
+            "textures": [ "v.is_female ? Array.female_eyes[v.customization3] : Array.male_eyes[v.customization3]" ],
+            "part_visibility": [
+                { "*": false },
+                { "eyebrows": true }
+            ],
+            "color": {
+                "r": "v.color_1_r",
+                "g": "v.color_1_g",
+                "b": "v.color_1_b"
+            }
+        },
+        "controller.render.player.earthling.eyes_iris": {
+            "arrays": {
+                "textures": {
+                    "Array.female_eyes": [
+                        "Texture.eyes_female_1",
+                        "Texture.eyes_female_2",
+                        "Texture.eyes_female_3"
+                    ],
+                    "Array.male_eyes": [
+                        "Texture.eyes_male_1",
+                        "Texture.eyes_male_2",
+                        "Texture.eyes_male_3"
+                    ]
+                }
+            },
+            "geometry": "Geometry.eyes",
+            "materials": [ { "*": "Material.alphatest_change_color" } ],
+            "textures": [ "v.is_female ? Array.female_eyes[v.customization3] : Array.male_eyes[v.customization3]" ],
+            "part_visibility": [
+                { "*": false },
+                { "leftIris": true },
+                { "middleIrisTEST": true },
+                { "rightIris": true }
+            ],
+            "color": {
+                "r": "v.color_2_r",
+                "g": "v.color_2_g",
+                "b": "v.color_2_b"
+            }
+        },
+        "controller.render.player.earthling.eyes_sclera": {
+            "arrays": {
+                "textures": {
+                    "Array.female_eyes": [
+                        "Texture.eyes_female_1",
+                        "Texture.eyes_female_2",
+                        "Texture.eyes_female_3"
+                    ],
+                    "Array.male_eyes": [
+                        "Texture.eyes_male_1",
+                        "Texture.eyes_male_2",
+                        "Texture.eyes_male_3"
+                    ]
+                }
+            },
+            "geometry": "Geometry.eyes",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.is_female ? Array.female_eyes[v.customization3] : Array.male_eyes[v.customization3]" ],
+            "part_visibility": [
+                { "*": false },
+                { "leftEye": true },
+                { "middleEye": true },
+                { "rightEye": true }
+            ]
+        },
+        "controller.render.player.earthling.first_person": {
+            "arrays": {
+                "textures": {
+                    "Array.female_skins": [
+                        "Texture.skin_female_1",
+                        "Texture.skin_female_2",
+                        "Texture.skin_female_3",
+                        "Texture.skin_female_4",
+                        "Texture.skin_female_5",
+                        "Texture.skin_female_6",
+                        "Texture.skin_female_7",
+                        "Texture.skin_female_8",
+                        "Texture.skin_female_9",
+                        "Texture.skin_female_10"
+                    ],
+                    "Array.male_skins": [
+                        "Texture.skin_male_1",
+                        "Texture.skin_male_2",
+                        "Texture.skin_male_3",
+                        "Texture.skin_male_4",
+                        "Texture.skin_male_5",
+                        "Texture.skin_male_6",
+                        "Texture.skin_male_7",
+                        "Texture.skin_male_8",
+                        "Texture.skin_male_9",
+                        "Texture.skin_male_10"
+                    ]
+                }
+            },
+            "geometry": "Geometry.earthling",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "(v.race == 'android' && v.transformation == 6) ? (v.is_female ? Texture.android_majin_skin_female : Texture.android_majin_skin_male) : (v.is_female ? Array.female_skins[v.customization0] : Array.male_skins[v.customization0])" ],
+            "part_visibility": [
+                { "*": false },
+                { "rightArm": "v.rightarm_visible || q.get_equipped_item_name(0, 1) == '' || q.get_equipped_item_name(0, 1) == 'filled_map'" },
+                { "leftArm": "v.leftarm_visible || (q.get_equipped_item_name(0, 1) == 'filled_map' && q.get_equipped_item_name('off_hand') != 'shield') || (q.get_equipped_item_name('off_hand') == 'filled_map' && !q.item_is_charged) || (!q.item_is_charged && (v.item_use_normalized > 0 && v.item_use_normalized < 1.0))" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+        "controller.render.player.earthling.third_person": {
+            "arrays": {
+                "textures": {
+                    "Array.female_skins": [
+                        "Texture.skin_female_1",
+                        "Texture.skin_female_2",
+                        "Texture.skin_female_3",
+                        "Texture.skin_female_4",
+                        "Texture.skin_female_5",
+                        "Texture.skin_female_6",
+                        "Texture.skin_female_7",
+                        "Texture.skin_female_8",
+                        "Texture.skin_female_9",
+                        "Texture.skin_female_10"
+                    ],
+                    "Array.male_skins": [
+                        "Texture.skin_male_1",
+                        "Texture.skin_male_2",
+                        "Texture.skin_male_3",
+                        "Texture.skin_male_4",
+                        "Texture.skin_male_5",
+                        "Texture.skin_male_6",
+                        "Texture.skin_male_7",
+                        "Texture.skin_male_8",
+                        "Texture.skin_male_9",
+                        "Texture.skin_male_10"
+                    ]
+                }
+            },
+            "geometry": "Geometry.earthling",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "(v.race == 'android' && v.transformation == 6) ? (v.is_female ? Texture.android_majin_skin_female : Texture.android_majin_skin_male) : (v.is_female ? Array.female_skins[v.customization0] : Array.male_skins[v.customization0])" ],
+            "part_visibility": [
+                { "*": true },
+                { "bra": "!v.hide_bra" },
+                { "breasts": "v.is_female" },
+                { "breastsBra": "!v.hide_bra" },
+                { "leftUnderpants": "!v.hide_underpants" },
+                { "rightUnderpants": "!v.hide_underpants" },
+                { "underpants": "!v.hide_underpants" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+        "controller.render.player.earthling.hair": {
+            "arrays": {
+                "textures": {
+                    "Array.hairs": [
+                        "Texture.empty",
+                        "Texture.goku_hair",
+                        "Texture.vegeta_hair",
+                        "Texture.gohan_hair",
+                        "Texture.adult_gohan_hair",
+                        "Texture.uub_hair",
+                        "Texture.raditz_hair",
+                        "Texture.zamasu_hair",
+                        "Texture.fused_zamasu_hair",
+                        "Texture.caulifla_hair",
+                        "Texture.gogeta_hair",
+                        "Texture.supreme_kai_hair"
+                    ],
+                    "Array.hairs_grayscale": [
+                        "Texture.empty",
+                        "Texture.goku_hair_grayscale",
+                        "Texture.vegeta_hair_grayscale",
+                        "Texture.gohan_hair_grayscale",
+                        "Texture.adult_gohan_hair_grayscale",
+                        "Texture.uub_hair_grayscale",
+                        "Texture.raditz_hair_grayscale",
+                        "Texture.zamasu_hair_grayscale",
+                        "Texture.fused_zamasu_hair_grayscale",
+                        "Texture.caulifla_hair_grayscale",
+                        "Texture.gogeta_hair_grayscale",
+                        "Texture.supreme_kai_hair_grayscale"
+                    ]
+                }
+            },
+            "geometry": "Geometry.hair_base",
+            "materials": [ { "*": "v.is_grayscale_hair ? Material.alphatest_change_color : Material.default" } ],
+            "textures": [ "v.is_grayscale_hair ? Array.hairs_grayscale[v.customization1] : Array.hairs[v.customization1]" ],
+            "part_visibility": [
+                { "*": "!v.hide_hair" },
+                { "head": true }
+            ],
+            "color": {
+                "r": "v.color_1_r",
+                "g": "v.color_1_g",
+                "b": "v.color_1_b"
+            }
+        }
+    }
+}

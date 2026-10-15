@@ -1,0 +1,20 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "dbe:ajisa_tree_2_feature"
+        },
+
+        "structure_name": "mystructure:ajisa_tree_2",
+        "facing_direction": "random",
+        "constraints": {
+            "unburied": { },
+            "grounded": { },
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:air"
+                ]
+            }
+        }
+    }
+}

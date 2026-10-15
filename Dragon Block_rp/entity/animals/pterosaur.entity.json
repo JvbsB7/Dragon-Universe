@@ -1,0 +1,47 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:pterosaur",
+            "materials": {
+                "default": "entity_multitexture_alpha_test"
+            },
+            "textures": {
+                "pterosaur_blue": "textures/entity/animals/pterosaur/pterosaur_blue",
+                "pterosaur_green": "textures/entity/animals/pterosaur/pterosaur_green",
+                "pterosaur_purple": "textures/entity/animals/pterosaur/pterosaur_purple",
+                "pterosaur_red": "textures/entity/animals/pterosaur/pterosaur_red",
+                "empty": "textures/empty",
+                "saddle": "textures/entity/animals/pterosaur/saddle"
+            },
+            "geometry": {
+                "default": "geometry.pterosaur"
+            },
+            "spawn_egg": {
+                "texture": "spawn_egg_pterosaur"
+            },
+            "scripts": {
+                "pre_animation": [
+                    "v.is_flying = q.can_fly && !q.is_on_ground;",
+                    "v.is_hovering = v.is_flying && q.vertical_speed < -0.2;",
+                    "v.is_idling = q.is_on_ground && !q.ground_speed;",
+                    "v.is_walking =  q.is_on_ground && q.ground_speed;"
+                ],
+                "animate": [
+                    "general"
+                ]
+            },
+            "animations": {
+                "general": "controller.animation.pterosaur.general",
+                "fly": "animation.pterosaur.fly",
+                "hover": "animation.pterosaur.hover",
+                "idle": "animation.pterosaur.idle",
+                "walk": "animation.pterosaur.walk",
+                "sitting": "animation.pterosaur.sit"
+            },
+            "render_controllers": [
+                "controller.render.pterosaur"
+            ]
+        }
+    }
+}

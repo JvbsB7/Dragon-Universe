@@ -1,0 +1,84 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "dbe:player_fly",
+            "is_spawnable": false,
+            "is_summonable": true
+        },
+
+        "component_groups": {
+            "dbe:despawn": {
+                "minecraft:instant_despawn": { }
+            }
+        },
+
+        "components": {
+            "minecraft:collision_box": {
+                "width": 0.6,
+                "height": 1.9
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "deals_damage": "no"
+                }
+            },
+            "minecraft:despawn": {
+                "filters": {
+                    "any_of": [
+                        {
+                            "test": "rider_count",
+                            "value": 0
+                        },
+                        {
+                            "test": "distance_to_nearest_player",
+                            "operator": ">",
+                            "value": 32
+                        }
+                    ]
+                }
+            },
+            "minecraft:flying_speed": {
+                "value": 0
+            },
+            "minecraft:health": {
+                "value": 1,
+                "max": 1
+            },
+            "minecraft:physics": {
+                "has_gravity": false
+            },
+            "minecraft:rideable": {
+                "seats": {
+                    "position": [ 0, 0.6, 0 ]
+                }
+            },
+            "minecraft:type_family": {
+                "family": [
+                    "inanimate",
+                    "player_fly"
+                ]
+            },
+            "minecraft:underwater_movement": {
+                "value": 0
+            },
+            "minecraft:variable_max_auto_step": {
+                "base_value": 1,
+                "controlled_value": 1,
+                "jump_prevented_value": 1
+            },
+            "minecraft:dash_action": { },
+            "minecraft:free_camera_controlled": { },
+            "minecraft:movement.hover": { },
+            "minecraft:navigation.hover": { }
+        },
+
+        "events": {
+            "dbe:despawn": {
+                "add": {
+                    "component_groups": [ "dbe:despawn" ]
+                }
+            }
+        }
+    }
+}

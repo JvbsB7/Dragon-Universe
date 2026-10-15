@@ -1,0 +1,26 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "dbe:headband"
+        },
+        
+        "tags": [ "crafting_table" ],
+        "pattern": [
+            "AAA"
+        ],
+        "key": {
+            "A": {
+                "item": "minecraft:red_wool"
+            }
+        },
+        "unlock": [
+            {
+                "item": "minecraft:wool"
+            }
+        ],
+        "result": {
+            "item": "dbe:headband"
+        }
+    }
+}

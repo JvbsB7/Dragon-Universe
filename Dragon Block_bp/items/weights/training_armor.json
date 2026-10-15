@@ -1,0 +1,27 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:training_armor",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+
+        "components": {
+            "minecraft:icon": "training_armor",
+            "minecraft:rarity": "uncommon",
+            "minecraft:max_stack_size": 1,
+            "minecraft:allow_off_hand": true,
+            "minecraft:tags": {
+                "tags": [
+                    "invisible_item"
+                ]
+            },
+            "dbe:keep_on_death": { },
+            "dbe:weight": {
+                "value": 1.8
+            }
+        }
+    }
+}

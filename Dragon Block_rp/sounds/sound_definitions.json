@@ -1,0 +1,724 @@
+{
+    "format_version": "1.14.0",
+    "sound_definitions": {
+        "common.bukujyutsu_down": {
+            "category": "player",
+            "sounds": [ "sounds/common/bukujyutsu_down" ]
+        },
+        "common.bukujyutsu_end": {
+            "category": "player",
+            "sounds": [ "sounds/common/bukujyutsu_end" ]
+        },
+        "common.bukujyutsu_move": {
+            "category": "player",
+            "sounds": [ "sounds/common/bukujyutsu_move" ]
+        },
+        "common.bukujyutsu_up": {
+            "category": "player",
+            "sounds": [ "sounds/common/bukujyutsu_up" ]
+        },
+        "common.charge_loop": {
+            "sounds": [
+                {
+                    "name": "sounds/common/charge_loop",
+                    "volume": 0.1
+                },
+                {
+                    "name": "sounds/common/charge_loop",
+                    "pitch": 0.95,
+                    "volume": 0.1
+                },
+                {
+                    "name": "sounds/common/charge_loop",
+                    "pitch": 1.05,
+                    "volume": 0.1
+                }
+            ]
+        },
+        "common.charge_god_loop": {
+            "sounds": [
+                {
+                    "name": "sounds/common/charge_god_loop",
+                    "volume": 0.1
+                }
+            ]
+        },
+        "common.dodge": {
+            "sounds": [
+                {
+                    "name": "sounds/common/dodge1",
+                    "volume": 0.1
+                },
+                {
+                    "name": "sounds/common/dodge2",
+                    "volume": 0.1
+                },
+                {
+                    "name": "sounds/common/dodge3",
+                    "volume": 0.1
+                }
+            ]
+        },
+        "common.explode": {
+            "category": "block",
+            "sounds": [ "sounds/common/explode" ]
+        },
+        "common.force": {
+            "sounds": [ "sounds/common/force" ]
+        },
+        "common.fusion_potara": {
+            "sounds": [
+                {
+                    "name": "sounds/common/fusion_potara",
+                    "volume": 0.5
+                }
+            ]
+        },
+        "common.guard": {
+            "sounds": [
+                "sounds/common/guard1",
+                "sounds/common/guard2"
+            ]
+        },
+        "common.guard_brake": {
+            "sounds": [ "sounds/common/guard_brake" ]
+        },
+        "common.jump": {
+            "category": "neutral",
+            "sounds": [ "sounds/common/jump" ]
+        },
+        "common.ki_blast": {
+            "sounds": [
+                {
+                    "name": "sounds/common/ki_blast",
+                    "volume": 0.1
+                }
+            ]
+        },
+        "common.ki_sense": {
+            "sounds": [
+                {
+                    "name": "sounds/common/ki_sense",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "common.looking_full_moon": {
+            "category": "neutral",
+            "sounds": [ "sounds/common/looking_full_moon" ]
+        },
+        "common.power_down": {
+            "category": "neutral",
+            "sounds": [ "sounds/common/power_down" ]
+        },
+        "common.spark": {
+            "sounds": [
+                "sounds/common/spark1",
+                "sounds/common/spark2",
+                {
+                    "name": "sounds/common/spark1",
+                    "pitch": 1.2
+                },
+                {
+                    "name": "sounds/common/spark2",
+                    "pitch": 1.2
+                }
+            ]
+        },
+        "common.swing": {
+            "sounds": [
+                "sounds/common/swing1",
+                "sounds/common/swing2",
+                "sounds/common/swing3"
+            ]
+        },
+        "common.transform": {
+            "sounds": [
+                {
+                    "name": "sounds/common/transform",
+                    "volume": 0.4
+                }
+            ]
+        },
+        "common.teleport1": {
+            "sounds": [
+                {
+                    "name": "sounds/common/teleport1",
+                    "volume": 0.4
+                }
+            ]
+        },
+        "common.teleport2": {
+            "sounds": [
+                {
+                    "name": "sounds/common/teleport2",
+                    "volume": 0.25
+                }
+            ]
+        },
+        "common.whoosh": {
+            "category": "neutral",
+            "sounds": [
+                {
+                    "name": "sounds/common/slash1",
+                    "volume": 0.08
+                },
+                {
+                    "name": "sounds/common/slash2",
+                    "volume": 0.08
+                },
+                {
+                    "name": "sounds/common/slash3",
+                    "volume": 0.08
+                },
+                {
+                    "name": "sounds/common/slash4",
+                    "volume": 0.08
+                }
+            ]
+        },
+        "combat.small_hit": {
+            "category": "neutral",
+            "sounds": [
+                "sounds/common/hit_small1",
+                "sounds/common/hit_small2"
+            ]
+        },
+        "combat.middle_hit": {
+            "category": "neutral",
+            "sounds": [ "sounds/common/hit_middle1" ]
+        },
+        "combat.large_hit": {
+            "category": "neutral",
+            "sounds": [ "sounds/common/hit_large1" ]
+        },
+        "combat.xlarge_hit": {
+            "category": "neutral",
+            "sounds": [ "sounds/common/hit_xlarge1" ]
+        },
+        "item.dragon_radar.beep": {
+            "sounds": [
+                {
+                    "name": "sounds/item/dragon_radar_beep",
+                    "volume": 0.04
+                }
+            ]
+        },
+        "item.senzu_bean.use": {
+            "sounds": [ "sounds/item/senzu_bean_use" ]
+        },
+        "item.scouter.warn": {
+            "sounds": [
+                {
+                    "name": "sounds/item/scouter_warn",
+                    "volume": 0.04
+                }
+            ]
+        },
+        "block.dragon_ball.glowing": {
+            "category": "ambient",
+            "sounds": [ "sounds/block/dragon_ball/glowing" ]
+        },
+        "block.gravity_machine.ambient": {
+            "category": "block",
+            "sounds": [
+                {
+                    "name": "sounds/block/gravity_machine/ambient",
+                    "volume": 0.5
+                }
+            ]
+        },
+        "metamoran.foot": {
+            "sounds": [
+                "sounds/metamoran/foot"
+            ]
+        },
+        "metamoran.finish": {
+            "sounds": [
+                "sounds/metamoran/finish"
+            ]
+        },
+        "mob.battle_jacket.step": {
+            "category": "hostile",
+            "sounds": [ "sounds/mob/battle_jacket/step" ]
+        },
+        "mob.cell.step": {
+            "category": "hostile",
+            "sounds": [ "sounds/mob/cell/step" ]
+        },
+        "mob.deer.ambient": {
+            "category": "neutral",
+            "sounds": [
+                "sounds/mob/deer/ambient1",
+                "sounds/mob/deer/ambient2",
+                "sounds/mob/deer/ambient3"
+            ]
+        },
+        "mob.deer.hurt": {
+            "category": "neutral",
+            "sounds": [
+                "sounds/mob/deer/hurt1",
+                "sounds/mob/deer/hurt2"
+            ]
+        },
+        "mob.dinosaur.ambient": {
+            "category": "neutral",
+            "sounds": [
+                "sounds/mob/dinosaur/ambient1",
+                "sounds/mob/dinosaur/ambient2",
+                "sounds/mob/dinosaur/ambient3"
+            ]
+        },
+        "mob.dinosaur.death": {
+            "category": "neutral",
+            "sounds": [ "sounds/mob/dinosaur/death" ]
+        },
+        "mob.dinosaur.hurt": {
+            "category": "neutral",
+            "sounds": [ "sounds/mob/dinosaur/hurt" ]
+        },
+        "mob.dinosaur.step": {
+            "category": "neutral",
+            "sounds": [
+                "sounds/mob/dinosaur/step1",
+                "sounds/mob/dinosaur/step2",
+                "sounds/mob/dinosaur/step3"
+            ]
+        },
+        "mob.flying_nimbus.ambient": {
+            "category": "neutral",
+            "sounds": [
+                {
+                    "name": "sounds/mob/flying_nimbus/ambient",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "mob.frieza.step": {
+            "category": "hostile",
+            "sounds": [
+                {
+                    "name": "sounds/mob/frieza/step",
+                    "volume": 0.6
+                }
+            ]
+        },
+        "mob.porunga.dialogue": {
+            "category": "neutral",
+            "max_distance": 124,
+            "sounds": [
+                {
+                    "name": "sounds/mob/porunga/dialogue",
+                    "volume": 10
+                }
+            ]
+        },
+        "mob.pirate_robot.shoot": {
+            "category": "hostile",
+            "sounds": [ "sounds/mob/pirate_robot/shoot1" ]
+        },
+        "mob.pirate_robot.step": {
+            "category": "hostile",
+            "sounds": [
+                {
+                    "name": "sounds/mob/pirate_robot/step",
+                    "volume": 0.6
+                }
+            ]
+        },
+        "mob.pirate_robot.sword_swing_end": {
+            "category": "hostile",
+            "sounds": [ "sounds/mob/pirate_robot/sword_swing_end1" ]
+        },
+        "mob.pirate_robot.sword_swing_start": {
+            "category": "hostile",
+            "sounds": [ "sounds/mob/pirate_robot/sword_swing_start1" ]
+        },
+        "mob.pirate_robot.sword_swing": {
+            "category": "hostile",
+            "sounds": [
+                {
+                    "name": "sounds/mob/pirate_robot/sword_swing1",
+                    "volume": 0.5
+                },
+                {
+                    "name": "sounds/mob/pirate_robot/sword_swing1",
+                    "volume": 0.5,
+                    "pitch": 0.8
+                },
+                {
+                    "name": "sounds/mob/pirate_robot/sword_swing1",
+                    "volume": 0.5,
+                    "pitch": 1.2
+                },
+                {
+                    "name": "sounds/mob/pirate_robot/sword_swing2",
+                    "volume": 0.3
+                },
+                {
+                    "name": "sounds/mob/pirate_robot/sword_swing2",
+                    "volume": 0.3,
+                    "pitch": 0.8
+                },
+                {
+                    "name": "sounds/mob/pirate_robot/sword_swing2",
+                    "volume": 0.3,
+                    "pitch": 1.2
+                }
+            ]
+        },
+        "mob.saber_tooth_tiger.ambient": {
+            "category": "neutral",
+            "sounds": [
+                "sounds/mob/saber_tooth_tiger/ambient1",
+                "sounds/mob/saber_tooth_tiger/ambient2",
+                "sounds/mob/saber_tooth_tiger/ambient3"
+            ]
+        },
+        "mob.saber_tooth_tiger.attack": {
+            "category": "neutral",
+            "sounds": [
+                "sounds/mob/saber_tooth_tiger/attack1",
+                "sounds/mob/saber_tooth_tiger/attack2"
+            ]
+        },
+        "mob.saber_tooth_tiger.hurt": {
+            "category": "neutral",
+            "sounds": [ "sounds/mob/saber_tooth_tiger/hurt" ]
+        },
+        "mob.saibaman.ambient": {
+            "category": "hostile",
+            "sounds": [
+                {
+                    "name": "sounds/mob/saibaman/ambient1",
+                    "volume": 0.4
+                },
+                {
+                    "name": "sounds/mob/saibaman/ambient2",
+                    "volume": 0.4
+                },
+                {
+                    "name": "sounds/mob/saibaman/ambient3",
+                    "volume": 0.4
+                }
+            ]
+        },
+        "mob.saibaman.attack": {
+            "category": "hostile",
+            "sounds": [
+                {
+                    "name": "sounds/mob/saibaman/attack1",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "mob.saibaman.death": {
+            "category": "hostile",
+            "sounds": [
+                {
+                    "name": "sounds/mob/saibaman/death1",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "mob.saibaman.hurt": {
+            "category": "hostile",
+            "sounds": [
+                {
+                    "name": "sounds/mob/saibaman/hurt1",
+                    "volume": 0.2
+                },
+                {
+                    "name": "sounds/mob/saibaman/hurt2",
+                    "volume": 0.2
+                },
+                {
+                    "name": "sounds/mob/saibaman/hurt3",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "mob.shenron.appear": {
+            "category": "neutral",
+            "sounds": [ "sounds/mob/shenron/appear" ]
+        },
+        "mob.shenron.flying": {
+            "category": "neutral",
+            "sounds": [ "sounds/mob/shenron/flying" ]
+        },
+        "music.game.cha-la_head-cha-la": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/cha-la_head-cha-la",
+                    "volume": 0.25,
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.christmas": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/christmas",
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.hyperbolic_time_chamber_theme": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/hyperbolic_time_chamber_theme",
+                    "volume": 0.7,
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.king_kai_planet_theme": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/king_kai_planet_theme",
+                    "volume": 0.2,
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.lookout_theme": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/lookout_theme",
+                    "volume": 0.1,
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.other_world_theme": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/other_world_theme",
+                    "volume": 0.1,
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.porunga_theme": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/porunga_theme",
+                    "volume": 0.1,
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.quest_completed": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/quest_completed",
+                    "volume": 0.1,
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.shenron_theme": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/shenron_theme",
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.ultra_instinct_opening_theme": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/ultra_instinct_opening_theme",
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.world_martial_arts_tournament_intro": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/world_martial_arts_tournament_intro",
+                    "stream": false
+                }
+            ]
+        },
+        "music.game.world_martial_arts_tournament_theme": {
+            "category": "music",
+            "sounds": [
+                {
+                    "name": "sounds/music/world_martial_arts_tournament_theme_1",
+                    "stream": false
+                }
+            ]
+        },
+        "music.game": {
+            "sounds": [
+                {
+                    "name": "sounds/music/cha-la_head-cha-la",
+                    "stream": false
+                }
+            ]
+        },
+        "record.hero": {
+            "__use_legacy_max_distance": "true",
+            "category": "record",
+            "max_distance": 64,
+            "sounds": [
+                {
+                    "load_on_low_memory": true,
+                    "name": "sounds/music/game/records/hero",
+                    "stream": true,
+                    "volume": 0.5
+                }
+            ]
+        },
+        "skill.absorption.absorbing": {
+            "sounds": [ "sounds/skill/absorbing" ]
+        },
+        "skill.galick_gun": {
+            "sounds": [
+                {
+                    "name": "sounds/skill/galick_gun",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "skill.galick_gun_launch": {
+            "sounds": [
+                {
+                    "name": "sounds/skill/galick_gun_launch",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "skill.kamehameha": {
+            "sounds": [
+                {
+                    "name": "sounds/skill/kamehameha",
+                    "volume": 0.05
+                }
+            ]
+        },
+        "skill.kamehameha_launch": {
+            "sounds": [
+                {
+                    "name": "sounds/skill/kamehameha_launch",
+                    "volume": 0.05
+                }
+            ]
+        },
+        "skill.kienzan_loop": {
+            "category": "ambient",
+            "sounds": [
+                {
+                    "name": "sounds/skill/kienzan_loop",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "skill.makankosappo": {
+            "category": "ambient",
+            "sounds": [
+                {
+                    "name": "sounds/skill/makankosappo",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "skill.makankosappo.launch": {
+            "category": "ambient",
+            "sounds": [
+                {
+                    "name": "sounds/skill/makankosappo_launch",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "ui.arrow": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/ui/arrow",
+                    "volume": 0.3
+                }
+            ]
+        },
+        "ui.challenge_complete": {
+            "sounds": [
+                {
+                    "name": "sounds/ui/challenge_complete",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "ui.level_up": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/ui/level_up",
+                    "volume": 0.35
+                }
+            ]
+        },
+        "ui.menu_click": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/ui/menu_click",
+                    "volume": 0.1
+                }
+            ]
+        },
+        "ui.upgrade": {
+            "category": "ui",
+            "sounds": [
+                {
+                    "name": "sounds/ui/upgrade",
+                    "volume": 0.08
+                }
+            ]
+        },
+        "vehicle.drifting": {
+            "sounds": [
+                {
+                    "name": "sounds/mob/car/drifting1",
+                    "volume": 0.5
+                }
+            ]
+        },
+        "vehicle.motor_idle1": {
+            "sounds": [
+                {
+                    "name": "sounds/mob/car/motor_idle1",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "vehicle.motor_idle2": {
+            "sounds": [
+                {
+                    "name": "sounds/mob/car/motor_idle2",
+                    "volume": 0.2
+                }
+            ]
+        },
+        "vehicle.motor_idle3": {
+            "sounds": [
+                {
+                    "name": "sounds/mob/car/motor_idle3",
+                    "volume": 0.2
+                }
+            ]
+        }
+    }
+}

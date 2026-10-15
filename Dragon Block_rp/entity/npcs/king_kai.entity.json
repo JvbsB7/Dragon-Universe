@@ -1,0 +1,33 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:king_kai",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/npcs/king_kai"
+            },
+            "geometry": {
+                "default": "geometry.king_kai"
+            },
+            "scripts": {
+                "animate": [
+                    "root",
+                    "idle"
+                ]
+            },
+            "animations": {
+                "root": "controller.animation.npc.root",
+                "blink": "animation.humanoid.blink",
+                "bob": "animation.player.bob",
+                "look_at_target": "animation.humanoid.look_at_target.default",
+                "idle": "animation.king_kai.idle"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

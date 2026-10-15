@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "dbe:nanochip"
+    },
+
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "ACA",
+      "BDB"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:redstone"
+      },
+      "B": {
+        "item": "minecraft:copper_ingot"
+      },
+      "C": {
+        "item": "minecraft:iron_ingot"
+      },
+      "D": {
+        "item": "dbe:evolitium_crystal"
+      }
+    },
+    "unlock": [
+      {
+        "item": "dbe:evolitium_crystal"
+      }
+    ],
+    "result": {
+      "item": "dbe:nanochip"
+    }
+  }
+}

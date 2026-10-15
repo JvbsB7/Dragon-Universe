@@ -1,0 +1,22 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:katchin_block",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+
+        "components": {
+            "minecraft:fire_resistant": { },
+            "minecraft:display_name": {
+                "value": "tile.dbe:katchin_block.name"
+            },
+            "minecraft:block_placer": {
+                "block": "dbe:katchin_block",
+                "replace_block_item": true
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:merchant",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "merchant_skin_1": "textures/entity/npcs/merchant/merchant_1",
+                "merchant_skin_2": "textures/entity/npcs/merchant/merchant_2",
+                "merchant_skin_3": "textures/entity/npcs/merchant/merchant_3"
+            },
+            "geometry": {
+                "default": "geometry.merchant"
+            },
+            "scripts": {
+                "animate": [
+                    "root"
+                ]
+            },
+            "animations": {
+                "root": "controller.animation.npc.root",
+                "blink": "animation.humanoid.blink",
+                "bob": "animation.player.bob",
+                "look_at_target": "animation.humanoid.look_at_target.default"
+            },
+            "render_controllers": [
+                "controller.render.merchant"
+            ]
+        }
+    }
+}

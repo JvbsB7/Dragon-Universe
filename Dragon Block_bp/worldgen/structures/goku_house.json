@@ -1,0 +1,25 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:jigsaw": {
+        "description": {
+            "identifier": "dbe:goku_house"
+        },
+        "biome_filters": [
+            {
+                "test": "has_biome_tag",
+                "value": "dirtstone"
+            }
+        ],
+        "start_height": {
+            "type": "constant",
+            "value": {
+                "absolute": 0
+            }
+        },
+        "heightmap_projection": "world_surface",
+        "max_depth": 1,
+        "start_pool": "dbe:goku_house",
+        "step": "surface_structures",
+        "terrain_adaptation": "beard_thin"
+    }
+}

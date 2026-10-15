@@ -1,0 +1,13 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.flying_nimbus.flying": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"rotation": [ "-q.target_x_rotation", 0, 0 ]
+				}
+			}
+		}
+	}
+}

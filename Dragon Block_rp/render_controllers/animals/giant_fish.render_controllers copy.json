@@ -1,0 +1,20 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.giant_fish": {
+            "arrays": {
+                "textures": {
+                    "Array.colors": [
+                        "Texture.giant_fish_blue",
+                        "Texture.giant_fish_green",
+                        "Texture.giant_fish_red",
+                        "Texture.giant_fish_yellow"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.colors[q.variant]" ]
+        }
+    }
+}

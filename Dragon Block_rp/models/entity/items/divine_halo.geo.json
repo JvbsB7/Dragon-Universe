@@ -1,0 +1,45 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.divine_halo",
+				"texture_width": 30,
+				"texture_height": 30,
+				"visible_bounds_width": 5,
+				"visible_bounds_height": 5,
+				"visible_bounds_offset": [0, 1.5, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "waist",
+					"parent": "root",
+					"pivot": [0, 12, 0]
+				},
+				{
+					"name": "body",
+					"parent": "waist",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "divineHalo",
+					"parent": "body",
+					"pivot": [0, 34, 9],
+					"cubes": [
+						{
+							"origin": [-15, 19, 9],
+							"size": [30, 30, 0],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [30, 30]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

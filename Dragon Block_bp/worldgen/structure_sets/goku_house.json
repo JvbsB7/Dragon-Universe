@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:structure_set": {
+        "description": {
+            "identifier": "dbe:goku_house"
+        },
+        "placement": {
+            "type": "minecraft:random_spread",
+            "salt": 12345678,
+            "separation": 14,
+            "spacing": 30,
+            "spread_type": "linear"
+        },
+        "structures": [
+            {
+                "structure": "dbe:goku_house",
+                "weight": 1
+            }
+        ]
+    }
+}

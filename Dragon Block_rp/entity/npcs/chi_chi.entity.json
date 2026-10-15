@@ -1,0 +1,33 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:chi_chi",
+            "materials": {
+                "default": "entity_alphatest",
+                "animated": "player_animated"
+            },
+            "textures": {
+                "default": "textures/entity/npcs/chi_chi/chi_chi",
+                "angry": "textures/entity/npcs/chi_chi/angry_chi_chi"
+            },
+            "geometry": {
+                "default": "geometry.chi_chi"
+            },
+            "scripts": {
+                "animate": [
+                    "root" 
+                ]
+            },
+            "animations": {
+                "root": "controller.animation.npc.root",
+                "blink": "animation.humanoid.blink",
+                "bob": "animation.player.bob",
+                "look_at_target": "animation.humanoid.look_at_target.default" 
+            },
+            "render_controllers": [
+                "controller.render.chi_chi"
+            ]
+        }
+    }
+}

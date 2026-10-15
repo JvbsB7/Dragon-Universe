@@ -1,0 +1,31 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:capsule_991",
+            "materials": {
+                "default": "entity_emissive_alpha"
+            },
+            "textures": {
+                "default": "textures/entity/vehicles/capsule_991/capsule_991"
+            },
+            "geometry": {
+                "default": "geometry.capsule_991"
+            },
+            "particle_effects": {
+                "engine": "dbe:capsule_991_engine"
+            },
+            "scripts": {
+                "animate": [
+                    "fly"
+                ]
+            },
+            "animations": {
+                "fly": "animation.capsule_991.fly"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

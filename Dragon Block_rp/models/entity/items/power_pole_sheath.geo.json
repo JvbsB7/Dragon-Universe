@@ -1,0 +1,49 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.power_pole_sheath",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "waist",
+					"parent": "root",
+					"pivot": [0, 12, 0]
+				},
+				{
+					"name": "body",
+					"parent": "waist",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "sheath",
+					"parent": "body",
+					"pivot": [0, 18, 3],
+					"rotation": [0, 0, -35],
+					"cubes": [
+						{"origin": [-0.88238, 10.87943, -3], "size": [1, 15, 5], "inflate": 0.15, "uv": [15, 42]},
+						{"origin": [-1.38238, 8.87943, 2], "size": [2, 19, 2], "inflate": 0.3, "uv": [0, 48]}
+					]
+				},
+				{
+					"name": "powerPole",
+					"parent": "sheath",
+					"pivot": [-0.38238, 21.87943, 3],
+					"cubes": [
+						{"origin": [-1.38238, 8.87943, 2], "size": [2, 25, 2], "uv": [24, 16]}
+					]
+				}
+			]
+		}
+	]
+}

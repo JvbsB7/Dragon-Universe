@@ -1,0 +1,25 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:christmas_costume"
+        },
+
+        "components": {
+            "minecraft:icon": "christmas_costume",
+            "minecraft:max_stack_size": 1,
+            "minecraft:dyeable": {
+                "default_color": "#FFFFFF"
+            },
+            "minecraft:wearable": {
+                "slot": "slot.armor.chest"
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "hide_hair"
+                ]
+            },
+            "dbe:keep_on_death": { }
+        }
+    }
+}

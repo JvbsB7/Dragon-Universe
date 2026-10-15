@@ -1,0 +1,179 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.player.majin.eyes_iris": {
+            "geometry": "Geometry.eyes",
+            "materials": [ { "*": "Material.alphatest_change_color" } ],
+            "textures": [ "v.is_female ? Texture.majin_eyes_female : Texture.majin_eyes_male" ],
+            "part_visibility": [
+                { "*": false },
+                { "leftIris": true },
+                { "rightIris": true }
+            ],
+            "color": {
+                "r": "v.color_2_r",
+                "g": "v.color_2_g",
+                "b": "v.color_2_b"
+            }
+        },
+        "controller.render.player.majin.eyes_sclera": {
+            "geometry": "Geometry.eyes",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.is_female ? Texture.majin_eyes_female : Texture.majin_eyes_male" ],
+            "part_visibility": [
+                { "*": false },
+                { "leftEye": true },
+                { "rightEye": true }
+            ]
+        },
+        "controller.render.player.majin.first_person": {
+            "arrays": {
+                "textures": {
+                    "Array.female_skins": [
+                        "Texture.majin_skin_female_1",
+                        "Texture.majin_skin_female_2",
+                        "Texture.majin_skin_female_3",
+                        "Texture.majin_skin_female_4",
+                        "Texture.majin_skin_female_5",
+                        "Texture.majin_skin_female_6",
+                        "Texture.majin_skin_female_7",
+                        "Texture.majin_skin_female_8",
+                        "Texture.majin_skin_female_9"
+                    ],
+                    "Array.male_skins": [
+                        "Texture.majin_skin_male_1",
+                        "Texture.majin_skin_male_2",
+                        "Texture.majin_skin_male_3",
+                        "Texture.majin_skin_male_4",
+                        "Texture.majin_skin_male_5",
+                        "Texture.majin_skin_male_6",
+                        "Texture.majin_skin_male_7",
+                        "Texture.majin_skin_male_8",
+                        "Texture.majin_skin_male_9"
+                    ]
+                }
+            },
+            "geometry": "Geometry.majin",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.ultra_instinct == 2 ? (v.is_female ? Texture.majin_skin_female_ultra_instinct : Texture.majin_skin_male_ultra_instinct) : (v.is_female ? Array.female_skins[v.customization0] : Array.male_skins[v.customization0])" ],
+            "part_visibility": [
+                { "*": false },
+                { "rightArm": "v.rightarm_visible || q.get_equipped_item_name(0, 1) == '' || q.get_equipped_item_name(0, 1) == 'filled_map'" },
+                { "leftArm": "v.leftarm_visible || (q.get_equipped_item_name(0, 1) == 'filled_map' && q.get_equipped_item_name('off_hand') != 'shield') || (q.get_equipped_item_name('off_hand') == 'filled_map' && !q.item_is_charged) || (!q.item_is_charged && (v.item_use_normalized > 0 && v.item_use_normalized < 1.0))" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+        "controller.render.player.majin.third_person": {
+            "arrays": {
+                "textures": {
+                    "Array.female_skins": [
+                        "Texture.majin_skin_female_1",
+                        "Texture.majin_skin_female_2",
+                        "Texture.majin_skin_female_3",
+                        "Texture.majin_skin_female_4",
+                        "Texture.majin_skin_female_5",
+                        "Texture.majin_skin_female_6",
+                        "Texture.majin_skin_female_7",
+                        "Texture.majin_skin_female_8",
+                        "Texture.majin_skin_female_9"
+                    ],
+                    "Array.male_skins": [
+                        "Texture.majin_skin_male_1",
+                        "Texture.majin_skin_male_2",
+                        "Texture.majin_skin_male_3",
+                        "Texture.majin_skin_male_4",
+                        "Texture.majin_skin_male_5",
+                        "Texture.majin_skin_male_6",
+                        "Texture.majin_skin_male_7",
+                        "Texture.majin_skin_male_8",
+                        "Texture.majin_skin_male_9"
+                    ]
+                }
+            },
+            "geometry": "Geometry.majin",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.ultra_instinct == 2 ? (v.is_female ? Texture.majin_skin_female_ultra_instinct : Texture.majin_skin_male_ultra_instinct) : (v.is_female ? Array.female_skins[v.customization0] : Array.male_skins[v.customization0])" ],
+            "part_visibility": [
+                { "*": true },
+                { "*antenna*": "!v.hide_hair && v.transformation < 2" },
+                { "*bigAntenna*": "!v.hide_hair && v.transformation >= 2" },
+                { "bra": "!v.hide_bra" },
+                { "breasts": "v.is_female" },
+                { "breastsBra": "!v.hide_bra" },
+                { "leftEar": "!v.hide_left_ear" },
+                { "rightEar": "!v.hide_right_ear" },
+                { "leftUnderpants": "!v.hide_underpants" },
+                { "rightUnderpants": "!v.hide_underpants" },
+                { "underpants": "!v.hide_underpants" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+        "controller.render.player.majin.hair": {
+            "arrays": {
+                "textures": {
+                    "Array.female_skins": [
+                        "Texture.majin_skin_female_1",
+                        "Texture.majin_skin_female_2",
+                        "Texture.majin_skin_female_3",
+                        "Texture.majin_skin_female_4",
+                        "Texture.majin_skin_female_5",
+                        "Texture.majin_skin_female_6",
+                        "Texture.majin_skin_female_7",
+                        "Texture.majin_skin_female_8",
+                        "Texture.majin_skin_female_9"
+                    ],
+                    "Array.male_skins": [
+                        "Texture.majin_skin_male_1",
+                        "Texture.majin_skin_male_2",
+                        "Texture.majin_skin_male_3",
+                        "Texture.majin_skin_male_4",
+                        "Texture.majin_skin_male_5",
+                        "Texture.majin_skin_male_6",
+                        "Texture.majin_skin_male_7",
+                        "Texture.majin_skin_male_8",
+                        "Texture.majin_skin_male_9"
+                    ]
+                },
+                "geometries": {
+                    "Array.male": [
+                        "Geometry.majin_antenna",
+                        "Geometry.majin_antenna",
+                        "Geometry.majin_big_antenna",
+                        "Geometry.majin_big_antenna",
+                        "Geometry.majin_big_antenna",
+                        "Geometry.majin_big_antenna",
+                        "Geometry.majin_big_antenna"
+                    ],
+                    "Array.female": [
+                        "Geometry.majin_hair",
+                        "Geometry.majin_hair",
+                        "Geometry.majin_long_hair",
+                        "Geometry.majin_long_hair",
+                        "Geometry.majin_long_hair",
+                        "Geometry.majin_long_hair",
+                        "Geometry.majin_long_hair"
+                    ]
+                }
+            },
+            "geometry": "v.is_female ? Array.female[v.transformation] : Array.male[v.transformation]",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.ultra_instinct == 2 ? (v.is_female ? Texture.majin_skin_female_ultra_instinct : Texture.majin_skin_male_ultra_instinct) : (v.is_female ? Array.female_skins[v.customization0] : Array.male_skins[v.customization0])" ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        }
+    }
+}

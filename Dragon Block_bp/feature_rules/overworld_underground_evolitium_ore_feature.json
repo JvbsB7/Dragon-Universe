@@ -1,0 +1,41 @@
+{
+    "format_version": "1.16.0",
+    "minecraft:feature_rules": {
+        "description": {
+            "identifier": "dbe:overworld_underground_evolitium_ore_feature",
+            "places_feature": "dbe:evolitium_ore_feature"
+        },
+
+        "conditions": {
+            "placement_pass": "underground_pass",
+            "minecraft:biome_filter": {
+                "any_of": [
+                    {
+                        "test": "has_biome_tag",
+                        "value": "overworld"
+                    },
+                    {
+                        "test": "has_biome_tag",
+                        "value": "overworld_generation"
+                    }
+                ]
+            }
+        },
+        "distribution": {
+            "iterations": 36,
+            "coordinate_eval_order": "zyx",
+            "x": {
+                "distribution": "uniform",
+                "extent": [ 0, 16 ]
+            },
+            "y": {
+                "distribution": "triangle",
+                "extent": [ -64, 70 ]
+            },
+            "z": {
+                "distribution": "uniform",
+                "extent": [ 0, 16 ]
+            }
+        }
+    }
+}

@@ -1,0 +1,222 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.ki_attack.flying": {
+			"loop": true,
+			"bones": {
+				"kiAttackRoot": {
+					"rotation": ["-q.body_x_rotation", "-q.body_y_rotation", 0]
+				},
+				"ballShape": {
+					"rotation": ["q.anim_time * 1000", "q.anim_time * 1000", 0]
+				},
+				"discShape": {
+					"rotation": [0, "q.anim_time * 1000", 0]
+				}
+			}
+		},
+		"animation.ki_beam.setup": {
+			"loop": true,
+			"bones": {
+				"spiral": {
+					"scale": "v.beam_gap >= 0"
+				},
+				"spiral2": {
+					"scale": "v.beam_gap >= 1"
+				},
+				"spiral3": {
+					"scale": "v.beam_gap >= 2"
+				},
+				"spiral4": {
+					"scale": "v.beam_gap >= 3"
+				},
+				"spiral5": {
+					"scale": "v.beam_gap >= 4"
+				},
+				"spiral6": {
+					"scale": "v.beam_gap >= 5"
+				},
+				"spiral7": {
+					"scale": "v.beam_gap >= 6"
+				},
+				"spiral8": {
+					"scale": "v.beam_gap >= 7"
+				},
+				"spiral9": {
+					"scale": "v.beam_gap >= 8"
+				},
+				"spiral10": {
+					"scale": "v.beam_gap >= 9"
+				},
+				"spiral11": {
+					"scale": "v.beam_gap >= 10"
+				},
+				"spiral12": {
+					"scale": "v.beam_gap >= 11"
+				},
+				"spiral13": {
+					"scale": "v.beam_gap >= 12"
+				},
+				"spiral14": {
+					"scale": "v.beam_gap >= 13"
+				},
+				"spiral15": {
+					"scale": "v.beam_gap >= 14"
+				},
+				"spiral16": {
+					"scale": "v.beam_gap >= 15"
+				},
+				"spiral17": {
+					"scale": "v.beam_gap >= 16"
+				},
+				"spiral18": {
+					"scale": "v.beam_gap >= 17"
+				},
+				"spiral19": {
+					"scale": "v.beam_gap >= 18"
+				},
+				"spiral20": {
+					"scale": "v.beam_gap >= 19"
+				},
+				"spiral21": {
+					"scale": "v.beam_gap >= 20"
+				},
+				"spiral22": {
+					"scale": "v.beam_gap >= 21"
+				},
+				"spiral23": {
+					"scale": "v.beam_gap >= 22"
+				},
+				"spiral24": {
+					"scale": "v.beam_gap >= 23"
+				},
+				"spiral25": {
+					"scale": "v.beam_gap >= 24"
+				},
+				"spiral26": {
+					"scale": "v.beam_gap >= 25"
+				},
+				"spiral27": {
+					"scale": "v.beam_gap >= 26"
+				},
+				"spiral28": {
+					"scale": "v.beam_gap >= 27"
+				},
+				"spiral29": {
+					"scale": "v.beam_gap >= 28"
+				},
+				"spiral30": {
+					"scale": "v.beam_gap >= 29"
+				},
+				"spiral31": {
+					"scale": "v.beam_gap >= 30"
+				},
+				"spiral32": {
+					"scale": "v.beam_gap >= 31"
+				},
+				"spiral33": {
+					"scale": "v.beam_gap >= 32"
+				},
+				"spiral34": {
+					"scale": "v.beam_gap >= 33"
+				},
+				"spiral35": {
+					"scale": "v.beam_gap >= 34"
+				},
+				"spiral36": {
+					"scale": "v.beam_gap >= 35"
+				},
+				"spiral37": {
+					"scale": "v.beam_gap >= 36"
+				},
+				"spiral38": {
+					"scale": "v.beam_gap >= 37"
+				},
+				"spiral39": {
+					"scale": "v.beam_gap >= 38"
+				},
+				"spiral40": {
+					"scale": "v.beam_gap >= 39"
+				},
+				"spiral41": {
+					"scale": "v.beam_gap >= 40"
+				},
+				"spiral42": {
+					"scale": "v.beam_gap >= 41"
+				},
+				"spiral43": {
+					"scale": "v.beam_gap >= 42"
+				},
+				"spiral44": {
+					"scale": "v.beam_gap >= 43"
+				},
+				"spiral45": {
+					"scale": "v.beam_gap >= 44"
+				},
+				"spiral46": {
+					"scale": "v.beam_gap >= 45"
+				},
+				"spiral47": {
+					"scale": "v.beam_gap >= 46"
+				},
+				"spiral48": {
+					"scale": "v.beam_gap >= 47"
+				},
+				"spiral49": {
+					"scale": "v.beam_gap >= 48"
+				},
+				"spiral50": {
+					"scale": "v.beam_gap >= 49"
+				},
+				"spiral51": {
+					"scale": "v.beam_gap >= 50"
+				},
+				"spiral52": {
+					"scale": "v.beam_gap >= 51"
+				},
+				"spiral53": {
+					"scale": "v.beam_gap >= 52"
+				},
+				"spiral54": {
+					"scale": "v.beam_gap >= 53"
+				},
+				"spiral55": {
+					"scale": "v.beam_gap >= 54"
+				},
+				"spiral56": {
+					"scale": "v.beam_gap >= 55"
+				},
+				"spiral57": {
+					"scale": "v.beam_gap >= 56"
+				},
+				"spiral58": {
+					"scale": "v.beam_gap >= 57"
+				},
+				"spiral59": {
+					"scale": "v.beam_gap >= 58"
+				},
+				"spiral60": {
+					"scale": "v.beam_gap >= 59"
+				},
+				"spiral61": {
+					"scale": "v.beam_gap >= 60"
+				},
+				"spiral62": {
+					"scale": "v.beam_gap >= 61"
+				},
+				"spiral63": {
+					"scale": "v.beam_gap >= 62"
+				},
+				"spiral64": {
+					"scale": "v.beam_gap >= 63"
+				},
+				"core": {
+					"scale": [1, 1, "math.floor(v.beam_gap + 1)"]
+				},
+				"beamTrail": {
+					"rotation": [0, 0, "q.anim_time * 1000"]
+				}
+			}
+		}
+	}
+}

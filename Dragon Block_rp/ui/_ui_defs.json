@@ -1,0 +1,33 @@
+{
+    "ui_defs": [
+        "ui/custom_hud_screen.json",
+        "ui/custom_server_form.json",
+        "ui/common/common_bar.json",
+        "ui/common/templates.json",
+        "ui/hud_screen/charge_bar.json",
+        "ui/hud_screen/stats_bar.json",
+        "ui/hud_screen/status_indicator.json",
+        "ui/hud_screen/techniques_sidebar.json",
+        "ui/hud_screen/zeni_indicator.json",
+        "ui/menus/npcs/npc_dialog_form.json",
+        "ui/menus/npcs/npc_skills_form.json",
+        "ui/menus/npcs/shenron_form.json",
+        "ui/menus/achievement_list_form.json",
+        "ui/menus/alignment_question_form.json",
+        "ui/menus/christmas_form.json",
+        "ui/menus/customization_form.json",
+        "ui/menus/functions_form.json",
+        "ui/menus/gravity_machine_form.json",
+        "ui/menus/news_form.json",
+        "ui/menus/menu_form.json",
+        "ui/menus/quest_form.json",
+        "ui/menus/quest_list_form.json",
+        "ui/menus/select_hair_form.json",
+        "ui/menus/select_race_form.json",
+        "ui/menus/shop_form.json",
+        "ui/menus/skills_form.json",
+        "ui/menus/statistics_form.json",
+        "ui/menus/training_form.json",
+        "ui/menus/transformations_form.json"
+    ]
+}

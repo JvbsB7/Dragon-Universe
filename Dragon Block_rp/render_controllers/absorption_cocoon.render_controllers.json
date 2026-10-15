@@ -1,0 +1,25 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.absorption_cocoon": {
+            "arrays": {
+                "textures": {
+                    "Array.colors": [
+                        "Texture.absorption_cocoon_1",
+                        "Texture.absorption_cocoon_2",
+                        "Texture.absorption_cocoon_3",
+                        "Texture.absorption_cocoon_4",
+                        "Texture.absorption_cocoon_5",
+                        "Texture.absorption_cocoon_6",
+                        "Texture.absorption_cocoon_7",
+                        "Texture.absorption_cocoon_8",
+                        "Texture.absorption_cocoon_9"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.colors[q.property('dbe:color')]" ]
+        }
+    }
+}

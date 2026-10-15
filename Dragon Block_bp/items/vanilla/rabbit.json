@@ -1,0 +1,17 @@
+{
+  "format_version": "1.10",
+  "minecraft:item": {
+    "description": {
+      "identifier": "minecraft:rabbit"
+    },
+
+    "components": {
+      "minecraft:use_duration": 32,
+      "minecraft:food": {
+        "can_always_eat": true,
+        "nutrition": 3,
+        "saturation_modifier": "low"
+      }
+    }
+  }
+}

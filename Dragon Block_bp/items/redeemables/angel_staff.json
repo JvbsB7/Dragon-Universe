@@ -1,0 +1,31 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:angel_staff",
+            "menu_category": {
+                "is_hidden_in_commands": true
+            }
+        },
+
+        "components": {
+            "minecraft:can_destroy_in_creative": false,
+            "minecraft:fire_resistant": { },
+            "minecraft:hand_equipped": true,
+            "minecraft:icon": "angel_staff",
+            "minecraft:max_stack_size": 1,
+            "minecraft:rarity": "epic",
+            "minecraft:damage": {
+                "value": 5
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "hold"
+                ]
+            },
+            "dbe:angel_staff": { },
+            "dbe:keep_on_death": { },
+            "dbe:patreon": { }
+        }
+    }
+}

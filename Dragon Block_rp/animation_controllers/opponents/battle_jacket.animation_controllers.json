@@ -1,0 +1,101 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.battle_jacket.attack": {
+			"states": {
+				"default": {
+					"blend_transition": 0.1,
+					"transitions": [
+						{
+							"attack": "v.attack_time"
+						}
+					]
+				},
+				"attack": {
+					"blend_transition": 0.2,
+					"transitions": [
+						{
+							"default": "q.any_animation_finished"
+						}
+					],
+					"animations": [
+						{
+							"attack_0": "v.attack_index == 0"
+						},
+						{
+							"attack_1": "v.attack_index == 1"
+						},
+						{
+							"attack_2": "v.attack_index == 2"
+						}
+					],
+					"on_entry": [
+						"v.attack_index = math.floor(math.random(0, 2));"
+					]
+				}
+			}
+		},
+
+		"controller.animation.battle_jacket.idle": {
+			"states": {
+				"default": {
+					"blend_transition": 0.2,
+					"transitions": [
+						{
+							"idle": "v.is_idle"
+						}
+					]
+				},
+				"idle": {
+					"blend_transition": 0.2,
+					"animations": [ "idle" ],
+					"transitions": [
+						{
+							"default": "!v.is_idle"
+						}
+					]
+				}
+			}
+		},
+
+		"controller.animation.battle_jacket.move": {
+			"states": {
+				"default": {
+					"blend_transition": 0.3,
+					"transitions": [
+						{
+							"dash": "v.is_sprinting"
+						},
+						{
+							"walk": "v.is_walking"
+						}
+					]
+				},
+				"dash": {
+					"blend_transition": 0.3,
+					"animations": [ "dash" ],
+					"transitions": [
+						{
+							"default": "!v.is_sprinting"
+						},
+						{
+							"walk": "v.is_walking"
+						}
+					]
+				},
+				"walk": {
+					"blend_transition": 0.3,
+					"animations": [ "walk" ],
+					"transitions": [
+						{
+							"default": "!v.is_walking"
+						},
+						{
+							"dash": "v.is_sprinting"
+						}
+					]
+				}
+			}
+		}
+	}
+}

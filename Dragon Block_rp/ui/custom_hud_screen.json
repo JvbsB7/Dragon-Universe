@@ -1,0 +1,44 @@
+{
+    "namespace": "custom_hud_screen",
+
+    "custom_root_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "charge_bar@charge_bar.charge_bar_panel": { }
+            },
+            {
+                "stats_bar@stats_bar.stats_bar_root": { }
+            },
+            {
+                "status_icons@status_indicator.status_indicator_panel": { }
+            },
+            {
+                "techniques_sidebar@techniques_sidebar.techniques_sidebar_panel": { }
+            },
+            {
+                "player_position@hud.player_position": {
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right"
+                }
+            },
+            {
+                "custom_chat_stack": {
+                    "type": "stack_panel",
+                    "size": [ "40%", "0%" ],
+                    "offset": [ 2, -32 ],
+                    "anchor_from": "bottom_left",
+                    "anchor_to": "bottom_left",
+                    "controls": [
+                        {
+                            "chat_panel@hud.chat_panel": { }
+                        }
+                    ]
+                }
+            },
+            {
+                "zeni_indicator@zeni_indicator.zeni_panel": { }
+            }
+        ]
+    }
+}

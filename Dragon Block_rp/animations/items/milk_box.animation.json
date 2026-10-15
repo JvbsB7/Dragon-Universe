@@ -1,0 +1,23 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.milk_box.wild": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"milkBox": {
+					"position": [6, 20.60609, -5.39631]
+				}
+			}
+		},
+		"animation.milk_box.wield_first_person": {
+			"loop": true,
+			"bones": {
+				"milkBox": {
+					"rotation": [79.5239, 62.3427, -52.1469],
+					"position": [-4.62661, 24.21323, -12.96676]
+				}
+			}
+		}
+	}
+}

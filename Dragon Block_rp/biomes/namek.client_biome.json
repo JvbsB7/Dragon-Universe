@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.40",
+    "minecraft:client_biome": {
+        "description": {
+            "identifier": "dbe:namek"
+        },
+        "components": {
+            "minecraft:fog_appearance": {
+                "fog_identifier": "dbe:fog_namek"
+            },
+            "minecraft:sky_color": {
+                "sky_color": "#1eb432"
+            },
+            "minecraft:water_appearance": {
+                "surface_color": "#1eb432"
+            }
+        }
+    }
+}

@@ -1,0 +1,146 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "dbe:bear_thief",
+            "is_experimental": false,
+            "is_spawnable": false,
+            "is_summonable": true,
+            "properties": {
+                "dbe:selected_attack": {
+                    "type": "enum",
+                    "values": [ "melee", "sword_smash", "thrust" ],
+                    "default": "melee",
+                    "client_sync": true
+                }
+            }
+        },
+
+        "component_groups": {
+            "dbe:melee_attack": {
+                "minecraft:attack": {
+                    "damage": 3
+                },
+                "minecraft:behavior.delayed_attack": {
+                    "priority": 3,
+                    "attack_duration": 0.375,
+                    "hit_delay_pct": 0.1725,
+                    "melee_fov": 22.5,
+                    "reach_multiplier": 3
+                }
+            },
+            "dbe:sword_smash_attack": {
+                "minecraft:behavior.knockback_roar": {
+                    "priority": 2,
+                    "attack_time": 0.75,
+                    "cooldown_time": 10,
+                    "duration": 1.7083,
+                    "knockback_damage": 10,
+                    "knockback_horizontal_strength": 4,
+                    "knockback_range": 4,
+                    "knockback_vertical_strength": 4
+                }
+            },
+            "dbe:despawn": {
+                "minecraft:instant_despawn": { }
+            }
+        },
+
+        "components": {
+            "minecraft:behavior.nearest_attackable_target": {
+                "priority": 0,
+                "entity_types": [
+                    {
+                        "filters": {
+                            "test": "is_family",
+                            "subject": "other",
+                            "value": "player"
+                        },
+                        "max_dist": 32
+                    }
+                ]
+            },
+            "minecraft:collision_box": {
+                "width": 1.5,
+                "height": 2.5
+            },
+            "minecraft:damage_sensor": {
+                "triggers": [
+                    {
+                        "cause": "fall",
+                        "deals_damage": "no"
+                    }
+                ]
+            },
+            "minecraft:health": {
+                "value": 200,
+                "max": 200
+            },
+            "minecraft:knockback_resistance": {
+                "value": 0.5
+            },
+            "minecraft:movement": {
+                "value": 0.4
+            },
+            "minecraft:movement.basic": {
+                "max_turn": 20
+            },
+            "minecraft:navigation.walk": {
+                "avoid_damage_blocks": false,
+                "can_jump": true
+            },
+            "minecraft:pushable": {
+                "is_pushable": false,
+                "is_pushable_by_piston": false
+            },
+            "minecraft:target_nearby_sensor": {
+                "inside_range": 2,
+                "outside_range": 8,
+                "on_inside_range": {
+                    "event": "dbe:start_sword_smash_attack"
+                },
+                "on_outside_range": {
+                    "event": "dbe:stop_sword_smash_attack"
+                }
+            },
+            "minecraft:can_climb": { },
+            "minecraft:conditional_bandwidth_optimization": { },
+            "minecraft:is_hidden_when_invisible": { },
+            "minecraft:jump.static": { },
+            "minecraft:nameable": { },
+            "minecraft:persistent": { },
+            "minecraft:physics": { }
+        },
+
+        "events": {
+            "minecraft:entity_spawned": {
+                "add": {
+                    "component_groups": [
+                        "dbe:melee_attack"
+                    ]
+                }
+            },
+            "dbe:start_sword_smash_attack": {
+                "add": {
+                    "component_groups": [
+                        "dbe:sword_smash_attack"
+                    ]
+                }
+            },
+            "dbe:stop_sword_smash_attack": {
+                "remove": {
+                    "component_groups": [
+                        "dbe:sword_smash_attack"
+                    ]
+                }
+            },
+            "dbe:despawn": {
+                "add": {
+                    "component_groups": [
+                        "dbe:despawn"
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,123 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.saber_tooth_tiger.general": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{
+							"idling": "!q.is_sitting"
+						},
+						{
+							"sitting": "q.is_sitting"
+						},
+						{
+							"sleeping": "q.is_sleeping"
+						}
+					]
+				},
+				"idling": {
+					"blend_transition": 0.4,
+					"animations": [
+						"idle"
+					],
+					"transitions": [
+						{
+							"sitting": "q.is_sitting"
+						},
+						{
+							"moving": "q.ground_speed"
+						},
+						{
+							"sleeping": "q.is_sleeping"
+						}
+					]
+				},
+				"moving": {
+					"blend_transition": 0.4,
+					"animations": [
+						"moving"
+					],
+					"transitions": [
+						{
+							"idling": "!q.ground_speed"
+						}
+					]
+				},
+				"sitting": {
+					"blend_transition": 0.4,
+					"animations": [
+						"sitting"
+					],
+					"transitions": [
+						{
+							"idling": "!q.is_sitting"
+						}
+					]
+				},
+				"sleeping": {
+					"blend_transition": 0.7,
+					"animations": [
+						"sleeping"
+					],
+					"transitions": [
+						{
+							"idling": "!q.is_sleeping"
+						}
+					]
+				}
+			}
+		},
+		"controller.animation.saber_tooth_tiger.attack": {
+			"states": {
+				"default": {
+					"blend_transition": 0.1,
+					"transitions": [
+						{
+							"attacking": "v.attack_time"
+						}
+					]
+				},
+				"attacking": {
+					"blend_transition": 0.2,
+					"animations": [
+						{ "attack_1": "v.attack_index == 0" },
+						{ "attack_2": "v.attack_index == 1" }
+					],
+					"transitions": [
+						{
+							"default": "q.any_animation_finished"
+						}
+					],
+					"on_entry": [
+						"v.attack_index = math.random_integer(0, 1);"
+					]
+				}
+			}
+		},
+		"controller.animation.saber_tooth_tiger.tail": {
+			"states": {
+				"default": {
+					"blend_transition": 0.2,
+					"transitions": [
+						{
+							"tail_move": "!q.is_sitting && !q.is_sleeping"
+						}
+					]
+				},
+				"tail_move": {
+					"blend_transition": 0.2,
+					"animations": [
+						"tail"
+					],
+					"transitions": [
+						{
+							"default": "q.is_sitting || q.is_sleeping"
+						}
+					]
+				}
+			}
+		}
+	}
+}

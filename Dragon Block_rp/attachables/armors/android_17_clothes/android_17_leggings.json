@@ -1,0 +1,27 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:android_17_leggings",
+            "materials": {
+                "default": "armor"
+            },
+            "textures": {
+                "default": "textures/models/armors/clothes/android_17_clothes"
+            },
+            "geometry": {
+                "default": "geometry.clothes.leggings"
+            },
+            "scripts": {
+                "parent_setup": "v.leg_layer_visible = 0.0;",
+                "animate": [
+                    "offset"
+                ]
+            },
+            "animations": {
+                "offset": "animation.armor.leggings.offset"
+            },
+            "render_controllers": [ "controller.render.clothes" ]
+        }
+    }
+}

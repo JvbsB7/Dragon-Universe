@@ -1,0 +1,21 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:scatter_feature": {
+        "description": {
+            "identifier": "dbe:scatter_ajisa_tree_feature"
+        },
+
+        "iterations": 2,
+        "scatter_chance": 30,
+        "x": {
+            "distribution": "uniform",
+            "extent": [ 0, 15 ]
+        },
+        "y": 0,
+        "z": {
+            "distribution": "uniform",
+            "extent": [ 0, 15 ]
+        },
+        "places_feature": "dbe:select_ajisa_tree_feature"
+    }
+}

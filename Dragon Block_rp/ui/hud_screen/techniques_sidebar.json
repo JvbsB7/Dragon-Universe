@@ -1,0 +1,166 @@
+{
+    "namespace": "techniques_sidebar",
+
+    "techniques_sidebar_panel": {
+        "type": "stack_panel",
+        "size": [ 20, 108 ],
+        "offset": [ -1, 0 ],
+        "anchor_from": "right_middle",
+        "anchor_to": "right_middle",
+        "controls": [
+            {
+                "technique_slot_0@techniques_sidebar.technique_slot_panel": {
+                    "$technique_slot": 0
+                }
+            },
+            {
+                "technique_slot_1@techniques_sidebar.technique_slot_panel": {
+                    "$technique_slot": 1
+                }
+            },
+            {
+                "technique_slot_2@techniques_sidebar.technique_slot_panel": {
+                    "$technique_slot": 2
+                }
+            },
+            {
+                "technique_slot_3@techniques_sidebar.technique_slot_panel": {
+                    "$technique_slot": 3
+                }
+            },
+            {
+                "technique_slot_4@techniques_sidebar.technique_slot_panel": {
+                    "$technique_slot": 4
+                }
+            },
+            {
+                "technique_slot_5@techniques_sidebar.technique_slot_panel": {
+                    "$technique_slot": 5
+                }
+            },
+            {
+                "technique_slot_6@techniques_sidebar.technique_slot_panel": {
+                    "$technique_slot": 6
+                }
+            },
+            {
+                "technique_slot_7@techniques_sidebar.technique_slot_panel": {
+                    "$technique_slot": 7
+                }
+            }
+        ]
+    },
+
+    "technique_slot_panel": {
+        "type": "panel",
+        "size": [ 20, 18 ],
+        "controls": [
+            {
+                "technique_slot_image": {
+                    "type": "image",
+                    "texture": "textures/ui/technique_slot",
+                    "size": [ 18, 18 ],
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "alpha": 0.6,
+                    "$slot_condition": "('technique_slot_' + $technique_slot + ':')",
+                    "controls": [
+                        {
+                            "absorption_image@techniques_sidebar.technique_panel": {
+                                "$icon_texture": "textures/ui/technique_icons/absorption",
+                                "$technique_id": "absorption"
+                            }
+                        },
+                        {
+                            "final_flash_image@techniques_sidebar.technique_panel": {
+                                "$icon_texture": "textures/ui/technique_icons/final_flash",
+                                "$technique_id": "final_flash"
+                            }
+                        },
+                        {
+                            "galick_gun_image@techniques_sidebar.technique_panel": {
+                                "$icon_texture": "textures/ui/technique_icons/galick_gun",
+                                "$technique_id": "galick_gun"
+                            }
+                        },
+                        {
+                            "genki_dama_image@techniques_sidebar.technique_panel": {
+                                "$icon_texture": "textures/ui/technique_icons/genki_dama",
+                                "$technique_id": "genki_dama"
+                            }
+                        },
+                        {
+                            "kamehameha_image@techniques_sidebar.technique_panel": {
+                                "$icon_texture": "textures/ui/technique_icons/kamehameha",
+                                "$technique_id": "kamehameha"
+                            }
+                        },
+                        {
+                            "ki_blast_image@techniques_sidebar.technique_panel": {
+                                "$icon_texture": "textures/ui/technique_icons/ki_blast",
+                                "$technique_id": "ki_blast"
+                            }
+                        },
+                        {
+                            "kienzan_image@techniques_sidebar.technique_panel": {
+                                "$icon_texture": "textures/ui/technique_icons/kienzan",
+                                "$technique_id": "kienzan"
+                            }
+                        },
+                        {
+                            "makankosappo_image@techniques_sidebar.technique_panel": {
+                                "$icon_texture": "textures/ui/technique_icons/makankosappo",
+                                "$technique_id": "makankosappo"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "selected_slot_image": {
+                    "type": "image",
+                    "texture": "textures/ui/selected_technique_slot",
+                    "size": [ 20, 20 ],
+                    "$condition": "('selected_technique_index:' + $technique_slot)",
+                    "bindings": [
+                        {
+                            "binding_name": "#hud_title_text_string"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(not((#hud_title_text_string - $condition) = #hud_title_text_string))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "technique_panel": {
+        "type": "panel",
+        "size": [ 16, 16 ],
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "$technique_id|default": "",
+        "controls": [
+            {
+                "technique_image": {
+                    "type": "image",
+                    "texture": "$icon_texture",
+                    "$condition": "($slot_condition + $technique_id)",
+                    "bindings": [
+                        {
+                            "binding_name": "#hud_title_text_string"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(not((#hud_title_text_string - $condition) = #hud_title_text_string))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

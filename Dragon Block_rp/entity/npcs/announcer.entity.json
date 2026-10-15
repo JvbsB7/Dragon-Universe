@@ -1,0 +1,33 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:announcer",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/npcs/announcer/announcer"
+            },
+            "geometry": {
+                "default": "geometry.announcer"
+            },
+            "scripts": {
+                "animate": [
+                    "root",
+                    "setup"
+                ]
+            },
+            "animations": {
+                "root": "controller.animation.npc.root",
+                "blink": "animation.humanoid.blink",
+                "bob": "animation.player.bob",
+                "look_at_target": "animation.humanoid.look_at_target.default",
+                "setup": "animation.announcer.setup"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

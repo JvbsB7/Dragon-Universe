@@ -1,0 +1,11 @@
+{
+    "format_version": "1.16.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "dbe:random_dirtstone_rubble_feature"
+        },
+        "features": [
+            [ "dbe:dirtstone_rubble_feature", 18 ]
+        ]
+    }
+}

@@ -1,0 +1,117 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dbe:red_tile_slab",
+            "menu_category": {
+                "category": "items"
+            },
+            "states": {
+                "dbe:double_bit": [ false, true ]
+            },
+            "traits": {
+                "minecraft:placement_position": {
+                    "enabled_states": [
+                        "minecraft:vertical_half"
+                    ]
+                }
+            }
+        },
+
+        "components": {
+            "minecraft:map_color": "#4e50cf",
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 1.5
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1.5
+            },
+            "minecraft:geometry": {
+                "identifier": "geometry.slab",
+                "bone_visibility": {
+                    "bottom": "q.block_state('minecraft:vertical_half') == 'bottom'",
+                    "top": "q.block_state('minecraft:vertical_half') == 'top'"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": {
+                    "identifier": "geometry.slab",
+                    "bone_visibility": {
+                        "bottom": true,
+                        "top": false
+                    }
+                },
+                "material_instances": {
+                    "*": {
+                        "texture": "red_tile"
+                    }
+                }
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "red_tile"
+                }
+            },
+            "dbe:slab": { },
+            "tag:minecraft:is_pickaxe_item_destructible": { }
+        },
+
+        "permutations": [
+            {
+                "condition": "q.block_state('minecraft:vertical_half') == 'bottom' && !q.block_state('dbe:double_bit')",
+                "components": {
+                    "minecraft:collision_box": {
+                        "origin": [ -8, 0, -8 ],
+                        "size": [ 16, 8, 16 ]
+                    },
+                    "minecraft:liquid_detection": {
+                        "detection_rules": [
+                            {
+                                "liquid_type": "water",
+                                "can_contain_liquid": true,
+                                "on_liquid_touches": "blocking",
+                                "stops_liquid_flowing_from_direction": [
+                                    "down"
+                                ]
+                            }
+                        ]
+                    },
+                    "minecraft:selection_box": {
+                        "origin": [ -8, 0, -8 ],
+                        "size": [ 16, 8, 16 ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:vertical_half') == 'top' && !q.block_state('dbe:double_bit')",
+                "components": {
+                    "minecraft:collision_box": {
+                        "origin": [ -8, 8, -8 ],
+                        "size": [ 16, 8, 16 ]
+                    },
+                    "minecraft:liquid_detection": {
+                        "detection_rules": [
+                            {
+                                "liquid_type": "water",
+                                "can_contain_liquid": true,
+                                "on_liquid_touches": "blocking"
+                            }
+                        ]
+                    },
+                    "minecraft:selection_box": {
+                        "origin": [ -8, 8, -8 ],
+                        "size": [ 16, 8, 16 ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('dbe:double_bit')",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "minecraft:geometry.full_block"
+                    }
+                }
+            }
+        ]
+    }
+}

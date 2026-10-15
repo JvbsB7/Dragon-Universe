@@ -1,0 +1,45 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.earth.atmosphere": {
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.default" ],
+            "part_visibility": [
+                { "*": false },
+                { "atmosphere": true }
+            ],
+            "ignore_lighting": true
+        },
+        "controller.render.earth.continents": {
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.default" ],
+            "part_visibility": [
+                { "*": false },
+                { "continents": true }
+            ],
+            "ignore_lighting": true
+        },
+        "controller.render.earth.clouds": {
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.default" ],
+            "part_visibility": [
+                { "*": false },
+                { "clouds": true }
+            ],
+            "ignore_lighting": true
+        },
+        "controller.render.earth.ocean": {
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.default" ],
+            "part_visibility": [
+                { "*": false },
+                { "ocean": true }
+            ],
+            "ignore_lighting": true
+        }
+    }
+}

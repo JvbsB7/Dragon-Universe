@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "dbe:furnace_evolitium_ore"
+    },
+    
+    "tags": [ "furnace", "blast_furnace" ],
+    "unlock": [
+      {
+        "item": "dbe:evolitium_ore"
+      }
+    ],
+    "input": "dbe:evolitium_ore",
+    "output": "dbe:evolitium_crystal"
+  }
+}

@@ -1,0 +1,32 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:elegant_suit_hat",
+            "materials": {
+                "default": "armor",
+                "dyed": "entity_alphatest_change_color"
+            },
+            "textures": {
+                "default": "textures/models/armors/elegant_suit/elegant_suit",
+                "dyed": "textures/models/armors/elegant_suit/elegant_suit_grayscale"
+            },
+            "geometry": {
+                "default": "geometry.elegant_suit.helmet"
+            },
+            "scripts": {
+                "parent_setup": "v.helmet_layer_visible = 0.0;",
+                "pre_animation": [
+                    "v.is_dyed = q.armor_color_slot(0, 0) != 1 || q.armor_color_slot(0, 1) != 1 || q.armor_color_slot(0, 2) != 1 || q.armor_color_slot(0, 3) != 1;"
+                ],
+                "animate": [
+                    "offset"
+                ]
+            },
+            "animations": {
+                "offset": "animation.armor.helmet.offset"
+            },
+            "render_controllers": [ "controller.render.dyed_clothes" ]
+        }
+    }
+}

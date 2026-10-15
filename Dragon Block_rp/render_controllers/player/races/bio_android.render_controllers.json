@@ -1,0 +1,212 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.player.bio_android.eyes": {
+            "arrays": {
+                "textures": {
+                    "Array.eyes": [
+                        "Texture.bio_android_eyes_imperfect_form",
+                        "Texture.bio_android_eyes_semi_perfect_form",
+                        "Texture.bio_android_eyes_perfect_form",
+                        "Texture.bio_android_eyes_perfect_form",
+                        "Texture.bio_android_eyes_perfect_form",
+                        "Texture.bio_android_eyes_ultimate_form",
+                        "Texture.bio_android_eyes_beast_form",
+                        "Texture.bio_android_eyes_perfect_form"
+                    ],
+                    "Array.eyes_ultra_instinct": [
+                        "Texture.bio_android_eyes_imperfect_form_ultra_instinct",
+                        "Texture.bio_android_eyes_ultra_instinct",
+                        "Texture.bio_android_eyes_ultra_instinct",
+                        "Texture.bio_android_eyes_ultra_instinct",
+                        "Texture.bio_android_eyes_ultra_instinct",
+                        "Texture.bio_android_eyes_ultra_instinct",
+                        "Texture.bio_android_eyes_ultra_instinct",
+                        "Texture.bio_android_eyes_ultra_instinct",
+                        "Texture.bio_android_eyes_ultra_instinct",
+                        "Texture.bio_android_eyes_ultra_instinct"
+                    ]
+                }
+            },
+            "geometry": "Geometry.eyes",
+            "materials": [
+                { "*": "Material.default" },
+                { "leftEye": "material.emissive" },
+                { "rightEye": "material.emissive" }
+            ],
+            "textures": [ "v.ultra_instinct ? array.eyes_ultra_instinct[v.transformation] : array.eyes[v.transformation]" ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+        "controller.render.player.bio_android.first_person": {
+            "arrays": {
+                "textures": {
+                    "Array.skin_1": [
+                        "Texture.bio_android_skin_imperfect_form_1",
+                        "Texture.bio_android_skin_semi_perfect_form_1",
+                        "Texture.bio_android_skin_perfect_form_1",
+                        "Texture.bio_android_skin_perfect_form_1",
+                        "Texture.bio_android_skin_perfect_form_1",
+                        "Texture.bio_android_skin_perfect_form_1",
+                        "Texture.bio_android_skin_beast_form_1",
+                        "Texture.bio_android_skin_perfect_form_1"
+                    ],
+                    "Array.skin_2": [
+                        "Texture.bio_android_skin_imperfect_form_2",
+                        "Texture.bio_android_skin_semi_perfect_form_2",
+                        "Texture.bio_android_skin_perfect_form_2",
+                        "Texture.bio_android_skin_perfect_form_2",
+                        "Texture.bio_android_skin_perfect_form_2",
+                        "Texture.bio_android_skin_perfect_form_2",
+                        "Texture.bio_android_skin_beast_form_2",
+                        "Texture.bio_android_skin_perfect_form_2"
+                    ],
+                    "Array.skin_3": [
+                        "Texture.bio_android_skin_imperfect_form_3",
+                        "Texture.bio_android_skin_semi_perfect_form_3",
+                        "Texture.bio_android_skin_perfect_form_3",
+                        "Texture.bio_android_skin_perfect_form_3",
+                        "Texture.bio_android_skin_perfect_form_3",
+                        "Texture.bio_android_skin_perfect_form_3",
+                        "Texture.bio_android_skin_beast_form_3",
+                        "Texture.bio_android_skin_perfect_form_3"
+                    ],
+                    "Array.skin_4": [
+                        "Texture.bio_android_skin_imperfect_form_4",
+                        "Texture.bio_android_skin_semi_perfect_form_4",
+                        "Texture.bio_android_skin_perfect_form_4",
+                        "Texture.bio_android_skin_perfect_form_4",
+                        "Texture.bio_android_skin_perfect_form_4",
+                        "Texture.bio_android_skin_perfect_form_4",
+                        "Texture.bio_android_skin_beast_form_4",
+                        "Texture.bio_android_skin_perfect_form_4"
+                    ],
+                    "Array.skin_5": [
+                        "Texture.bio_android_skin_imperfect_form_5",
+                        "Texture.bio_android_skin_semi_perfect_form_5",
+                        "Texture.bio_android_skin_perfect_form_5",
+                        "Texture.bio_android_skin_perfect_form_5",
+                        "Texture.bio_android_skin_perfect_form_5",
+                        "Texture.bio_android_skin_perfect_form_5",
+                        "Texture.bio_android_skin_beast_form_5",
+                        "Texture.bio_android_skin_perfect_form_5"
+                    ],
+                    "Array.skin_6": [
+                        "Texture.bio_android_skin_imperfect_form_6",
+                        "Texture.bio_android_skin_semi_perfect_form_6",
+                        "Texture.bio_android_skin_perfect_form_6",
+                        "Texture.bio_android_skin_perfect_form_6",
+                        "Texture.bio_android_skin_perfect_form_6",
+                        "Texture.bio_android_skin_perfect_form_6",
+                        "Texture.bio_android_skin_beast_form_6",
+                        "Texture.bio_android_skin_perfect_form_6"
+                    ]
+                }
+            },
+            "geometry": "Geometry.bio_android",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.customization0 == 0 ? Array.skin_1[v.transformation] : v.customization0 == 1 ? Array.skin_2[v.transformation] : v.customization0 == 2 ? Array.skin_3[v.transformation] : v.customization0 == 3 ? Array.skin_4[v.transformation] : v.customization0 == 4 ? Array.skin_5[v.transformation] : Array.skin_6[v.transformation]" ],
+            "part_visibility": [
+                { "*": false },
+                { "rightArm": "v.rightarm_visible || q.get_equipped_item_name(0, 1) == '' || q.get_equipped_item_name(0, 1) == 'filled_map'" },
+                { "leftArm": "v.leftarm_visible || (q.get_equipped_item_name(0, 1) == 'filled_map' && q.get_equipped_item_name('off_hand') != 'shield') || (q.get_equipped_item_name('off_hand') == 'filled_map' && !q.item_is_charged) || (!q.item_is_charged && (v.item_use_normalized > 0 && v.item_use_normalized < 1.0))" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+        "controller.render.player.bio_android.third_person": {
+            "arrays": {
+                "textures": {
+                    "Array.skin_1": [
+                        "Texture.bio_android_skin_imperfect_form_1",
+                        "Texture.bio_android_skin_semi_perfect_form_1",
+                        "Texture.bio_android_skin_perfect_form_1",
+                        "Texture.bio_android_skin_perfect_form_1",
+                        "Texture.bio_android_skin_perfect_form_1",
+                        "Texture.bio_android_skin_perfect_form_1",
+                        "Texture.bio_android_skin_beast_form_1",
+                        "Texture.bio_android_skin_perfect_form_1"
+                    ],
+                    "Array.skin_2": [
+                        "Texture.bio_android_skin_imperfect_form_2",
+                        "Texture.bio_android_skin_semi_perfect_form_2",
+                        "Texture.bio_android_skin_perfect_form_2",
+                        "Texture.bio_android_skin_perfect_form_2",
+                        "Texture.bio_android_skin_perfect_form_2",
+                        "Texture.bio_android_skin_perfect_form_2",
+                        "Texture.bio_android_skin_beast_form_2",
+                        "Texture.bio_android_skin_perfect_form_2"
+                    ],
+                    "Array.skin_3": [
+                        "Texture.bio_android_skin_imperfect_form_3",
+                        "Texture.bio_android_skin_semi_perfect_form_3",
+                        "Texture.bio_android_skin_perfect_form_3",
+                        "Texture.bio_android_skin_perfect_form_3",
+                        "Texture.bio_android_skin_perfect_form_3",
+                        "Texture.bio_android_skin_perfect_form_3",
+                        "Texture.bio_android_skin_beast_form_3",
+                        "Texture.bio_android_skin_perfect_form_3"
+                    ],
+                    "Array.skin_4": [
+                        "Texture.bio_android_skin_imperfect_form_4",
+                        "Texture.bio_android_skin_semi_perfect_form_4",
+                        "Texture.bio_android_skin_perfect_form_4",
+                        "Texture.bio_android_skin_perfect_form_4",
+                        "Texture.bio_android_skin_perfect_form_4",
+                        "Texture.bio_android_skin_perfect_form_4",
+                        "Texture.bio_android_skin_beast_form_4",
+                        "Texture.bio_android_skin_perfect_form_4"
+                    ],
+                    "Array.skin_5": [
+                        "Texture.bio_android_skin_imperfect_form_5",
+                        "Texture.bio_android_skin_semi_perfect_form_5",
+                        "Texture.bio_android_skin_perfect_form_5",
+                        "Texture.bio_android_skin_perfect_form_5",
+                        "Texture.bio_android_skin_perfect_form_5",
+                        "Texture.bio_android_skin_perfect_form_5",
+                        "Texture.bio_android_skin_beast_form_5",
+                        "Texture.bio_android_skin_perfect_form_5"
+                    ],
+                    "Array.skin_6": [
+                        "Texture.bio_android_skin_imperfect_form_6",
+                        "Texture.bio_android_skin_semi_perfect_form_6",
+                        "Texture.bio_android_skin_perfect_form_6",
+                        "Texture.bio_android_skin_perfect_form_6",
+                        "Texture.bio_android_skin_perfect_form_6",
+                        "Texture.bio_android_skin_perfect_form_6",
+                        "Texture.bio_android_skin_beast_form_6",
+                        "Texture.bio_android_skin_perfect_form_6"
+                    ]
+                }
+            },
+            "geometry": "Geometry.bio_android",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.customization0 == 0 ? Array.skin_1[v.transformation] : v.customization0 == 1 ? Array.skin_2[v.transformation] : v.customization0 == 2 ? Array.skin_3[v.transformation] : v.customization0 == 3 ? Array.skin_4[v.transformation] : v.customization0 == 4 ? Array.skin_5[v.transformation] : Array.skin_6[v.transformation]" ],
+            "part_visibility": [
+                { "*": true },
+                { "leftEar": "!v.hide_left_ear" },
+                { "rightEar": "!v.hide_right_ear" },
+                { "horns": "!v.hide_hair && v.transformation == 0" },
+                { "horns2": "!v.hide_hair && v.transformation != 0" },
+                { "leftWing": "v.transformation != 1" },
+                { "rightWing": "v.transformation != 1" },
+                { "sting": "!v.tail_curled && v.transformation >= 2" },
+                { "*tail*": "!v.tail_curled && v.transformation < 2" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        }
+    }
+}

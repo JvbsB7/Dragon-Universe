@@ -1,0 +1,32 @@
+{
+    "format_version": "1.10.0",
+    "animation_controllers": {
+        "controller.animation.sword.attack": {
+            "states": {
+                "default": {
+                    "blend_transition": 0.1,
+                    "transitions": [
+                        {
+                            "attack": "v.attack_time && q.equipped_item_any_tag('slot.weapon.mainhand', 'dbe:area_damage')"
+                        }
+                    ]
+                },
+                "attack": {
+                    "blend_transition": 0.1,
+                    "on_exit": [
+                        "v.sword_animation_index = !v.sword_animation_index;"
+                    ],
+                    "animations": [
+                        { "sword_attack_1": "v.sword_animation_index == 0" },
+                        { "sword_attack_2": "v.sword_animation_index == 1" }
+                    ],
+                    "transitions": [
+                        {
+                            "default": "q.any_animation_finished || v.is_first_person"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

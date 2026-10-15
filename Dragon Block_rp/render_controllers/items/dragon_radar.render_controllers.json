@@ -1,0 +1,20 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.dragon_radar": {
+            "arrays": {
+                "textures": {
+                    "Array.frames": [
+                        "Texture.dragon_radar_0",
+                        "Texture.dragon_radar_1",
+                        "Texture.dragon_radar_2",
+                        "Texture.dragon_radar_3"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "t.life_time = q.life_time * 4; return Array.frames[t.life_time];" ]
+        }
+    }
+}

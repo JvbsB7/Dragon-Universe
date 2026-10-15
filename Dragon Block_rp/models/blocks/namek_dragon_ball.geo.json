@@ -1,0 +1,84 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.namek_dragon_ball",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "block",
+					"pivot": [0, 8, 0],
+					"cubes": [
+						{
+							"origin": [-6, 0.5, -6],
+							"size": [12, 12, 12],
+							"uv": {
+								"north": {"uv": [13, 26], "uv_size": [12, 12]},
+								"east": {"uv": [26, 13], "uv_size": [12, 12]},
+								"south": {"uv": [25, 26], "uv_size": [12, 12]},
+								"west": {"uv": [37, 25], "uv_size": [12, 12]},
+								"up": {"uv": [37, 37], "uv_size": [12, 12]},
+								"down": {"uv": [13, 50], "uv_size": [12, -12]}
+							}
+						}
+					]
+				},
+				{
+					"name": "blockOutline",
+					"parent": "block",
+					"pivot": [-1.5, 8, 1.5],
+					"cubes": [
+						{
+							"origin": [-6.5, 0, -6.5],
+							"size": [13, 13, 0],
+							"uv": {
+								"south": {"uv": [0, 0], "uv_size": [13, 13], "material_instance": "outline"}
+							}
+						},
+						{
+							"origin": [6.5, 0, -6.5],
+							"size": [0, 13, 13],
+							"uv": {
+								"east": {"uv": [0, 13], "uv_size": [13, 13], "material_instance": "outline"}
+							}
+						},
+						{
+							"origin": [-6.5, 0, 6.5],
+							"size": [13, 13, 0],
+							"uv": {
+								"north": {"uv": [13, 0], "uv_size": [13, 13], "material_instance": "outline"}
+							}
+						},
+						{
+							"origin": [-6.5, 0, -6.5],
+							"size": [0, 13, 13],
+							"uv": {
+								"west": {"uv": [13, 13], "uv_size": [13, 13], "material_instance": "outline"}
+							}
+						},
+						{
+							"origin": [-6.5, 0, -6.5],
+							"size": [13, 0, 13],
+							"uv": {
+								"up": {"uv": [0, 26], "uv_size": [13, 13], "material_instance": "outline"}
+							}
+						},
+						{
+							"origin": [-6.5, 13, -6.5],
+							"size": [13, 0, 13],
+							"uv": {
+								"down": {"uv": [26, 13], "uv_size": [13, -13], "material_instance": "outline"}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

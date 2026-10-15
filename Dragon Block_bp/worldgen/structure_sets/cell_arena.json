@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:structure_set": {
+        "description": {
+            "identifier": "dbe:cell_arena"
+        },
+        "placement": {
+            "type": "minecraft:random_spread",
+            "salt": 40028922,
+            "separation": 14,
+            "spacing": 30,
+            "spread_type": "linear"
+        },
+        "structures": [
+            {
+                "structure": "dbe:cell_arena",
+                "weight": 1
+            }
+        ]
+    }
+}

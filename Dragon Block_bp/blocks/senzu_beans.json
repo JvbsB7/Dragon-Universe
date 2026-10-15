@@ -1,0 +1,133 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:block": {
+        "description": {
+            "identifier": "dbe:senzu_beans",
+            "states": {
+                "solariscore:growth": {
+                    "values": {
+                        "min": 0,
+                        "max": 15
+                    }
+                }
+            }
+        },
+
+        "components": {
+            "minecraft:collision_box": false,
+            "minecraft:geometry": "geometry.crop",
+            "minecraft:light_dampening": 0,
+            "minecraft:map_color": "#177c04",
+            "minecraft:loot": "loot_tables/blocks/senzu_beans/senzu_beans.json",
+            "minecraft:connection_rule": {
+                "accepts_connections_from": "none"
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 0
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0
+            },
+            "minecraft:destruction_particles": {
+                "texture": "senzu_beans_stage_0"
+            },
+            "minecraft:flammable": {
+                "catch_chance_modifier": 60,
+                "destroy_chance_modifier": 100
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "on_liquid_touches": "popped"
+                    }
+                ]
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "senzu_beans_stage_0",
+                    "render_method": "alpha_test_single_sided",
+                    "ambient_occlusion": false,
+                    "face_dimming": false
+                }
+            },
+            "minecraft:movable": {
+                "movement_type": "popped"
+            },
+            "minecraft:placement_filter": {
+                "conditions": [
+                    {
+                        "block_filter": [ "minecraft:farmland" ],
+                        "allowed_faces": [ "up" ]
+                    }
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [ -8, 0, -8 ],
+                "size": [ 16, 3, 16 ]
+            },
+            "minecraft:transformation": {
+                "translation": [ 0, -0.0625, 0 ]
+            },
+            "solariscore:crop": {
+                "bone_meal_multiplication": false,
+                "max_stage": 15,
+                "natural_growth": true
+            }
+        },
+
+        "permutations": [
+            {
+                "condition": "q.block_state('solariscore:growth') > 4 && q.block_state('solariscore:growth') < 10",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "senzu_beans_stage_1",
+                            "render_method": "alpha_test_single_sided",
+                            "ambient_occlusion": false,
+                            "face_dimming": false
+                        }
+                    },
+                    "minecraft:selection_box": {
+                        "origin": [ -8, 0, -8 ],
+                        "size": [ 16, 6, 16 ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('solariscore:growth') > 9 && q.block_state('solariscore:growth') < 15",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "senzu_beans_stage_2",
+                            "render_method": "alpha_test_single_sided",
+                            "ambient_occlusion": false,
+                            "face_dimming": false
+                        }
+                    },
+                    "minecraft:selection_box": {
+                        "origin": [ -8, 0, -8 ],
+                        "size": [ 16, 9, 16 ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('solariscore:growth') == 15",
+                "components": {
+                    "minecraft:loot": "loot_tables/blocks/senzu_beans/senzu_beans_stage_3.json",
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "senzu_beans_stage_3",
+                            "render_method": "alpha_test_single_sided",
+                            "ambient_occlusion": false,
+                            "face_dimming": false
+                        }
+                    },
+                    "minecraft:selection_box": {
+                        "origin": [ -8, 0, -8 ],
+                        "size": [ 16, 12, 16 ]
+                    }
+                }
+            }
+        ]
+    }
+}

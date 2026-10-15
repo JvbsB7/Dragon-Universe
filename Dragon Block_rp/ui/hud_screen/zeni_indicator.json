@@ -1,0 +1,38 @@
+{
+    "namespace": "zeni_indicator",
+
+    "zeni_panel": {
+        "type": "panel",
+        "offset": [ 0, 15 ],
+        "size": [ 116, 16 ],
+        "anchor_from": "top_right",
+        "anchor_to": "top_right",
+        "controls": [
+            {
+                "zeni_image": {
+                    "type": "image",
+                    "size": [ 16, 16 ],
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "texture": "textures/ui/zeni"
+                }
+            },
+            {
+                "zeni_label@zeni_indicator.zeni_label": {
+                    "size": [ 100, 16 ],
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "$update_string": "zeni_value:"
+                }
+            }
+        ]
+    },
+
+    "zeni_label@templates.preserved_title_display": {
+        "font_type": "MinecraftTen",
+        "text_alignment": "right",
+        "shadow": true,
+        "alpha": 0.8,
+        "layer": 1
+    }
+}

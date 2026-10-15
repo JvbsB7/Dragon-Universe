@@ -1,0 +1,69 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.pterosaur.general": {
+			"initial_state": "default",
+			"states": {
+				"default": {
+					"transitions": [
+						{ "flying": "v.is_flying" },
+						{ "hovering": "v.is_hovering" },
+						{ "idling": "v.is_idling && !q.is_sitting" },
+						{ "sitting": "q.is_sitting" },
+						{ "walking": "v.is_walking" }
+					]
+				},
+				"flying": {
+					"blend_transition": 0.5,
+					"animations": [ "fly" ],
+					"transitions": [
+						{ "idling": "v.is_idling" },
+						{ "hovering": "v.is_hovering" },
+						{ "sitting": "q.is_sitting" },
+						{ "walking": "v.is_walking" }
+					]
+				},
+				"hovering": {
+					"blend_transition": 0.5,
+					"animations": [ "hover" ],
+					"transitions": [
+						{ "flying": "!v.is_hovering" },
+						{ "idling": "v.is_idling" },
+						{ "sitting": "q.is_sitting" },
+						{ "walking": "v.is_walking" }
+					]
+				},
+				"idling": {
+					"blend_transition": 0.5,
+					"animations": [ "idle" ],
+					"transitions": [
+						{ "flying": "v.is_flying" },
+						{ "hovering": "v.is_hovering" },
+						{ "sitting": "q.is_sitting" },
+						{ "walking": "v.is_walking" }
+					]
+				},
+				"sitting": {
+					"blend_transition": 0.5,
+					"animations": [ "sitting" ],
+					"transitions": [
+						{ "flying": "v.is_flying" },
+						{ "hovering": "v.is_hovering" },
+						{ "idling": "!q.is_sitting && v.is_idling" },
+						{ "walking": "v.is_walking" }
+					]
+				},
+				"walking": {
+					"blend_transition": 0.5,
+					"animations": [ "walk" ],
+					"transitions": [
+						{ "flying": "v.is_flying" },
+						{ "hovering": "v.is_hovering" },
+						{ "idling": "v.is_idling" },
+						{ "sitting": "q.is_sitting" }
+					]
+				}
+			}
+		}
+	}
+}

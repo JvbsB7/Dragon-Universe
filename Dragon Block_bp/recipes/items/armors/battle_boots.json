@@ -1,0 +1,27 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "dbe:battle_boots"
+        },
+
+        "tags": [ "crafting_table" ],
+        "pattern": [
+            "A A",
+            "A A"
+        ],
+        "key": {
+            "A": {
+                "item": "dbe:evolitium_crystal"
+            }
+        },
+        "unlock": [
+            {
+                "item": "dbe:evolitium_crystal"
+            }
+        ],
+        "result": {
+            "item": "dbe:battle_boots"
+        }
+    }
+}

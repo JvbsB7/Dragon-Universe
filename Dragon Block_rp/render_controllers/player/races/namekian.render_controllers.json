@@ -1,0 +1,153 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.player.namekian.eyes": {
+            "arrays": {
+                "textures": {
+                    "Array.eyes": [
+                        "Texture.namekian_eyes",
+                        "Texture.namekian_eyes",
+                        "Texture.namekian_eyes_potential_unleashed",
+                        "Texture.namekian_eyes_ultimate_form",
+                        "Texture.namekian_eyes_orange_form",
+                        "Texture.namekian_eyes_beast_form",
+                        "Texture.namekian_eyes_beast_form"
+                    ]
+                }
+            },
+            "geometry": "Geometry.eyes",
+            "materials": [
+                { "*": "Material.default" },
+                { "leftEye": "material.emissive" },
+                { "rightEye": "material.emissive" }
+            ],
+            "textures": [ "v.ultra_instinct ? Texture.namekian_eyes_ultra_instinct : Array.eyes[v.transformation]" ]
+        },
+        "controller.render.player.namekian.first_person": {
+            "arrays": {
+                "textures": {
+                    "Array.skins": [
+                        "Texture.namekian_skin_1",
+                        "Texture.namekian_skin_2",
+                        "Texture.namekian_skin_3",
+                        "Texture.namekian_skin_4"
+                    ],
+                    "Array.beast_skins": [
+                        "Texture.namekian_skin_beast_form_1",
+                        "Texture.namekian_skin_beast_form_2",
+                        "Texture.namekian_skin_beast_form_3",
+                        "Texture.namekian_skin_beast_form_4"
+                    ],
+                    "Array.skin_details_1": [
+                        "Texture.namekian_skin_details_1",
+                        "Texture.namekian_skin_details_1",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_1",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_1",
+                        "Texture.namekian_skin_details_1"
+                    ],
+                    "Array.skin_details_2": [
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2"
+                    ],
+                    "Array.skin_faces": [
+                        "Texture.empty",
+                        "Texture.namekian_skin_face_1",
+                        "Texture.namekian_skin_face_2"
+                    ]
+                }
+            },
+            "geometry": "Geometry.namekian",
+            "materials": [ { "*": "Material.masked" } ],
+            "textures": [
+                "v.transformation == 6 ? Texture.namekian_skin_ultra_ego : v.transformation == 5 ? Array.beast_skins[v.customization0] : v.transformation == 4 ? Texture.namekian_skin_orange_form : v.transformation == 2 ? Texture.namekian_skin_potential_unleashed : Array.skins[v.customization0]",
+                "v.customization1 ? Array.skin_details_1[v.transformation] : Array.skin_details_2[v.transformation]",
+                "Array.skin_faces[v.customization2]"
+            ],
+            "part_visibility": [
+                { "*": false },
+                { "rightArm": "v.rightarm_visible || q.get_equipped_item_name(0, 1) == '' || q.get_equipped_item_name(0, 1) == 'filled_map'" },
+                { "leftArm": "v.leftarm_visible || (q.get_equipped_item_name(0, 1) == 'filled_map' && q.get_equipped_item_name('off_hand') != 'shield') || (q.get_equipped_item_name('off_hand') == 'filled_map' && !q.item_is_charged) || (!q.item_is_charged && (v.item_use_normalized > 0 && v.item_use_normalized < 1.0))" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        },
+        "controller.render.player.namekian.third_person": {
+            "arrays": {
+                "textures": {
+                    "Array.skins": [
+                        "Texture.namekian_skin_1",
+                        "Texture.namekian_skin_2",
+                        "Texture.namekian_skin_3",
+                        "Texture.namekian_skin_4"
+                    ],
+                    "Array.beast_skins": [
+                        "Texture.namekian_skin_beast_form_1",
+                        "Texture.namekian_skin_beast_form_2",
+                        "Texture.namekian_skin_beast_form_3",
+                        "Texture.namekian_skin_beast_form_4"
+                    ],
+                    "Array.skin_details_1": [
+                        "Texture.namekian_skin_details_1",
+                        "Texture.namekian_skin_details_1",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_1",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_1",
+                        "Texture.namekian_skin_details_1"
+                    ],
+                    "Array.skin_details_2": [
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2",
+                        "Texture.namekian_skin_details_2"
+                    ],
+                    "Array.skin_faces": [
+                        "Texture.empty",
+                        "Texture.namekian_skin_face_1",
+                        "Texture.namekian_skin_face_2"
+                    ]
+                }
+            },
+            "geometry": "Geometry.namekian",
+            "materials": [ { "*": "Material.masked" } ],
+            "textures": [
+                "v.transformation == 6 ? Texture.namekian_skin_ultra_ego : v.transformation == 5 ? Array.beast_skins[v.customization0] : v.transformation == 4 ? Texture.namekian_skin_orange_form : v.transformation == 2 ? Texture.namekian_skin_potential_unleashed : Array.skins[v.customization0]",
+                "v.customization1 ? Array.skin_details_1[v.transformation] : Array.skin_details_2[v.transformation]",
+                "Array.skin_faces[v.customization2]"
+            ],
+            "part_visibility": [
+                { "*": true },
+                { "face": "v.customization2" },
+                { "leftAntenna": "!v.hide_hair && !v.customization3" },
+                { "rightAntenna": "!v.hide_hair && !v.customization3" },
+                { "leftAntenna2": "!v.hide_hair && v.customization3" },
+                { "rightAntenna2": "!v.hide_hair && v.customization3" },
+                { "leftEar": "!v.hide_left_ear" },
+                { "rightEar": "!v.hide_right_ear" },
+                { "leftUnderpants": "!v.hide_underpants" },
+                { "rightUnderpants": "!v.hide_underpants" },
+                { "underpants": "!v.hide_underpants" }
+            ],
+            "overlay_color": {
+                "r": "v.is_hakai ? 0.65 : v.kaioken_enabled ? 1 : 0",
+                "g": 0,
+                "b": "v.is_hakai ? 0.8 : 0",
+                "a": "(v.is_hakai || v.kaioken_enabled) ? 0.2 : 0"
+            }
+        }
+    }
+}

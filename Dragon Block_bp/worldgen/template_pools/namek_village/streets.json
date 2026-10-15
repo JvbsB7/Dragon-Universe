@@ -1,0 +1,55 @@
+{
+    "format_version": "1.21.20",
+    "minecraft:template_pool": {
+        "description": {
+            "identifier": "dbe:namek_village/streets"
+        },
+        "elements": [
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/namek_village/streets/intersection_1",
+                    "processors": "dbe:namek_streets",
+                    "projection": "terrain_matching"
+                },
+                "weight": 1
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/namek_village/streets/intersection_2",
+                    "processors": "dbe:namek_streets",
+                    "projection": "terrain_matching"
+                },
+                "weight": 2
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/namek_village/streets/curve_1",
+                    "processors": "dbe:namek_streets",
+                    "projection": "terrain_matching"
+                },
+                "weight": 10
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/namek_village/streets/curve_2",
+                    "processors": "dbe:namek_streets",
+                    "projection": "terrain_matching"
+                },
+                "weight": 10
+            },
+            {
+                "element": {
+                    "element_type": "minecraft:single_pool_element",
+                    "location": "dbe/namek_village/streets/straight_1",
+                    "processors": "dbe:namek_streets",
+                    "projection": "terrain_matching"
+                },
+                "weight": 36
+            }
+        ]
+    }
+}

@@ -1,0 +1,173 @@
+{
+    "format_version": "1.8.0",
+    "minecraft:spawn_rules": {
+        "description": {
+            "identifier": "dbe:dinosaur",
+            "population_control": "animal"
+        },
+        "conditions": [
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_on_block_filter": [
+                    "minecraft:grass",
+                    "minecraft:sand",
+                    "dbe:dirtstone_grass",
+                    "dbe:namek_grass",
+                    "dbe:packed_sand"
+                ],
+                "minecraft:brightness_filter": {
+                    "min": 7,
+                    "max": 15,
+                    "adjust_for_weather": false
+                },
+                "minecraft:weight": {
+                    "default": 2
+                },
+                "minecraft:density_limit": {
+                    "surface": 1
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "diablo_desert"
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_on_block_filter": [
+                    "minecraft:grass",
+                    "minecraft:sand",
+                    "dbe:dirtstone_grass",
+                    "dbe:namek_grass",
+                    "dbe:packed_sand"
+                ],
+                "minecraft:brightness_filter": {
+                    "min": 7,
+                    "max": 15,
+                    "adjust_for_weather": false
+                },
+                "minecraft:weight": {
+                    "default": 7
+                },
+                "minecraft:density_limit": {
+                    "surface": 3
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "dirtstone"
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:brightness_filter": {
+                    "min": 7,
+                    "max": 15,
+                    "adjust_for_weather": false
+                },
+                "minecraft:weight": {
+                    "default": 7
+                },
+                "minecraft:density_limit": {
+                    "surface": 2
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "namek"
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_on_block_filter": [
+                    "dbe:vegeta_soil"
+                ],
+                "minecraft:weight": {
+                    "default": 3
+                },
+                "minecraft:density_limit": {
+                    "surface": 2
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "vegeta"
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_on_block_filter": [
+                    "dbe:frieza_soil"
+                ],
+                "minecraft:weight": {
+                    "default": 3
+                },
+                "minecraft:density_limit": {
+                    "surface": 2
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "frieza_planet"
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_on_block_filter": [
+                    "dbe:yardrat_soil"
+                ],
+                "minecraft:weight": {
+                    "default": 3
+                },
+                "minecraft:density_limit": {
+                    "surface": 2
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "yardrat"
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:brightness_filter": {
+                    "min": 7,
+                    "max": 15,
+                    "adjust_for_weather": false
+                },
+                "minecraft:weight": {
+                    "default": 2
+                },
+                "minecraft:density_limit": {
+                    "surface": 1
+                },
+                "minecraft:biome_filter": {
+                    "all_of": [
+                        {
+                            "test": "has_biome_tag",
+                            "value": "animal"
+                        },
+                        {
+                            "none_of": [
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "namek"
+                                },
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "yardrat"
+                                },
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "dirtstone"
+                                },
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "west_forest"
+                                },
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "diablo_desert"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.player.ki_scythe": {
+            "geometry": "Geometry.ki_scythe",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.ki_attack" ],
+            "light_color_multiplier": 10,
+            "ignore_lighting": true
+        },
+        "controller.render.player.ki_scythe.outline": {
+            "geometry": "Geometry.ki_scythe_outline",
+            "materials": [ { "*": "Material.outline" } ],
+            "textures": [ "Texture.ki_scythe" ],
+            "overlay_color": {
+                "r": "v.aura_color.r",
+                "g": "v.aura_color.g",
+                "b": "v.aura_color.b",
+                "a": 1
+            },
+            "ignore_lighting": true
+        }
+    }
+}

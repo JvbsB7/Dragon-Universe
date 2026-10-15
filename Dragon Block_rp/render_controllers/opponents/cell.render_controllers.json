@@ -1,0 +1,52 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.cell": {
+            "arrays": {
+                "textures": {
+                    "Array.textures": [
+                        "Texture.skin_imperfect_cell",
+                        "Texture.skin_semi_perfect_cell",
+                        "Texture.skin_perfect_cell",
+                        "Texture.skin_perfect_cell",
+                        "Texture.skin_perfect_cell",
+                        "Texture.skin_perfect_cell",
+                        "Texture.skin_beast_form",
+                        "Texture.skin_perfect_cell"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.textures[v.transformation]" ],
+            "part_visibility": [
+                { "*": true },
+                { "horns": "v.transformation == 0" },
+                { "horns2": "v.transformation != 0" },
+                { "leftWing": "v.transformation != 1" },
+                { "rightWing": "v.transformation != 1" },
+                { "sting": "v.transformation >= 2" },
+                { "*tail*": "v.transformation < 2" }
+            ]
+        },
+        "controller.render.cell.eyes": {
+            "arrays": {
+                "textures": {
+                    "Array.textures": [
+                        "Texture.eyes_imperfect_cell",
+                        "Texture.eyes_semi_perfect_cell",
+                        "Texture.eyes_perfect_cell",
+                        "Texture.eyes_perfect_cell",
+                        "Texture.eyes_perfect_cell",
+                        "Texture.eyes_perfect_cell",
+                        "Texture.eyes_beast_form",
+                        "Texture.eyes_perfect_cell"
+                    ]
+                }
+            },
+            "geometry": "Geometry.eyes",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.textures[v.transformation]" ]
+        }
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:absorption_cocoon_entity",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "absorption_cocoon_1": "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_1",
+                "absorption_cocoon_2": "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_2",
+                "absorption_cocoon_3": "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_3",
+                "absorption_cocoon_4": "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_4",
+                "absorption_cocoon_5": "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_5",
+                "absorption_cocoon_6": "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_6",
+                "absorption_cocoon_7": "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_7",
+                "absorption_cocoon_8": "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_8",
+                "absorption_cocoon_9": "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_9"
+            },
+            "geometry": {
+                "default": "geometry.absorption_cocoon_entity"
+            },
+            "sound_effects": {
+                "absorbing": "skill.absorption.absorbing"
+            },
+            "scripts": {
+                "animate": [
+                    "absorbing_controller"
+                ]
+            },
+            "animations": {
+                "absorbing_controller": "controller.animation.absorption_cocoon_entity.absorbing",
+                "absorbing": "animation.absorption_cocoon_entity.absorbing",
+                "absorbing_sound": "animation.absorption_cocoon_entity.absorbing_sound",
+                "spawn": "animation.absorption_cocoon_entity.spawn"
+            },
+            "render_controllers": [ "controller.render.absorption_cocoon" ]
+        }
+    }
+}

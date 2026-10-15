@@ -1,0 +1,55 @@
+{
+	"format_version": "1.10.0",
+	"particle_effect": {
+		"description": {
+			"identifier": "dbe:kaioken_aura",
+			"basic_render_parameters": {
+				"material": "particles_add",
+				"texture": "textures/models/aura/aura"
+			}
+		},
+		"components": {
+			"minecraft:emitter_local_space": {
+				"position": true,
+				"rotation": true
+			},
+			"minecraft:emitter_rate_steady": {
+				"spawn_rate": 500,
+				"max_particles": 500
+			},
+			"minecraft:emitter_lifetime_looping": {
+				"active_time": 1
+			},
+			"minecraft:emitter_shape_sphere": {
+				"offset": [0, -1, 0],
+				"radius": 1,
+				"surface_only": true,
+				"direction": "inwards"
+			},
+			"minecraft:particle_lifetime_expression": {
+				"max_lifetime": "math.random(0.2, 0.3)"
+			},
+			"minecraft:particle_initial_spin": {
+				"rotation_rate": 100
+			},
+			"minecraft:particle_initial_speed": 4,
+			"minecraft:particle_motion_dynamic": {
+				"linear_acceleration": [0, 50, 0],
+				"linear_drag_coefficient": 10
+			},
+			"minecraft:particle_appearance_billboard": {
+				"size": [0.5, 0.5],
+				"facing_camera_mode": "direction_y",
+				"uv": {
+					"texture_width": 34,
+					"texture_height": 34,
+					"uv": [0, 0],
+					"uv_size": [34, 34]
+				}
+			},
+			"minecraft:particle_appearance_tinting": {
+				"color": ["v.r", "v.g", "v.b", "v.particle_age / v.particle_lifetime"]
+			}
+		}
+	}
+}

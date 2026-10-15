@@ -1,0 +1,33 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:beerus",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/opponents/beerus"
+            },
+            "geometry": {
+                "default": "geometry.beerus"
+            },
+            "scripts": {
+                "animate": [
+                    "root",
+                    "tail_move"
+                ]
+            },
+            "animations": {
+                "root": "controller.animation.npc.root",
+                "blink": "animation.humanoid.blink",
+                "bob": "animation.player.bob",
+                "look_at_target": "animation.humanoid.look_at_target.default",
+                "tail_move": "animation.player.tail.move"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

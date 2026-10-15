@@ -1,0 +1,35 @@
+{
+    "format_version": "1.21.40",
+    "minecraft:single_block_feature": {
+        "description": {
+            "identifier": "dbe:dirtstone_rubble_feature"
+        },
+
+        "places_block": [
+            {
+                "block": {
+                    "name": "dbe:dirtstone_rubble",
+                    "states": {
+                        "dbe:amount": 0
+                    }
+                },
+                "weight": 1
+            },
+            {
+                "block": {
+                    "name": "dbe:dirtstone_rubble",
+                    "states": {
+                        "dbe:amount": 1
+                    }
+                },
+                "weight": 1
+            }
+        ],
+        "randomize_rotation": true,
+        "enforce_placement_rules": true,
+        "enforce_survivability_rules": true,
+        "may_replace": [
+            "minecraft:air"
+        ]
+    }
+}

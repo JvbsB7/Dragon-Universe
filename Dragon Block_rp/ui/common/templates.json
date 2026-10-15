@@ -1,0 +1,42 @@
+{
+    "namespace": "templates",
+
+    "preserved_title_display": {
+        "type": "label",
+        "text": "#text",
+        "$update_string": "update",
+        "controls": [
+            {
+                "$update_string": {
+                    "type": "panel",
+                    "property_bag": {
+                        "#preserved_text": ""
+                    },
+                    "bindings": [
+                        {
+                            "binding_name": "#hud_subtitle_text_string"
+                        },
+                        {
+                            "binding_name": "#hud_subtitle_text_string",
+                            "binding_name_override": "#preserved_text",
+                            "binding_condition": "visibility_changed"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(not (#hud_subtitle_text_string = #preserved_text) and not ((#hud_subtitle_text_string - $update_string) = #hud_subtitle_text_string))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            }
+        ],
+        "bindings": [
+            {
+                "binding_type": "view",
+                "source_control_name": "$update_string",
+                "source_property_name": "(#preserved_text - $update_string)",
+                "target_property_name": "#text"
+            }
+        ]
+    }
+}

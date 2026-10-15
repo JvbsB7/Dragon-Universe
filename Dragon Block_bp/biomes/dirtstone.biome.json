@@ -1,0 +1,69 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:biome": {
+        "description": {
+            "identifier": "dbe:dirtstone"
+        },
+
+        "components": {
+            "minecraft:climate": {
+                "downfall": 0.8,
+                "snow_accumulation": [ 0, 0.125 ],
+                "temperature": 1.2
+            },
+            "minecraft:overworld_height": {
+                "noise_type": "mountains"
+            },
+            "minecraft:surface_builder": {
+                "builder": {
+                    "type": "minecraft:mesa",
+                    "bryce_pillars": true,
+                    "clay_material": "dbe:dirtstone",
+                    "sea_floor_depth": 7,
+                    "sea_floor_material": "minecraft:gravel",
+                    "foundation_material": "minecraft:stone",
+                    "hard_clay_material": {
+                        "name": "dbe:dirtstone",
+                        "states": {
+                            "dbe:dirtstone_type": 1
+                        }
+                    },
+                    "has_forest": false,
+                    "mid_material": "dbe:dirtstone",
+                    "top_material": "dbe:dirtstone_grass",
+                    "sea_material": "minecraft:water"
+                }
+            },
+            "minecraft:surface_material_adjustments": {
+                "adjustments": [
+                    {
+                        "materials": {
+                            "top_material": "dbe:dry_soil"
+                        },
+                        "noise_frequency_scale": 0.0625,
+                        "noise_range": [ 0.212, 1 ]
+                    }
+                ]
+            },
+            "minecraft:replace_biomes": {
+                "replacements": [
+                    {
+                        "dimension": "minecraft:overworld",
+                        "noise_frequency_scale": 0.1,
+                        "amount": 0.6,
+                        "targets": [
+                            "minecraft:plains"
+                        ]
+                    }
+                ]
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "animal",
+                    "dirtstone",
+                    "overworld"
+                ]
+            }
+        }
+    }
+}

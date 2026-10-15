@@ -1,0 +1,17 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:katchin_shard",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+
+        "components": {
+            "minecraft:fire_resistant": { },
+            "minecraft:icon": "katchin_shard",
+            "minecraft:rarity": "uncommon"
+        }
+    }
+}

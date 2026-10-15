@@ -1,0 +1,16 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "dbe:select_dirtstone_tree_feature"
+        },
+
+        "features": [
+            [ "dbe:dirtstone_tree_1_feature", 4 ],
+            [ "dbe:dirtstone_tree_2_feature", 8 ],
+            [ "dbe:dirtstone_tree_3_feature", 8 ],
+            [ "dbe:dirtstone_tree_4_feature", 2 ],
+            [ "dbe:dirtstone_tree_5_feature", 1 ]
+        ]
+    }
+}

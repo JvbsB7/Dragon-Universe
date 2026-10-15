@@ -1,0 +1,29 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "dbe:purple_tile_stairs"
+        },
+
+        "tags": [ "crafting_table" ],
+        "pattern": [
+            "A  ",
+            "AA ",
+            "AAA"
+        ],
+        "key": {
+            "A": {
+                "item": "dbe:purple_tile"
+            }
+        },
+        "unlock": [
+            {
+                "item": "dbe:purple_tile"
+            }
+        ],
+        "result": {
+            "item": "dbe:purple_tile_stairs",
+            "count": 4
+        }
+    }
+}

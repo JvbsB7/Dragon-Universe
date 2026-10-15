@@ -1,0 +1,22 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.saber_tooth_tiger": {
+            "arrays": {
+                "textures": {
+                    "Array.colors": [
+                        "Texture.saber_tooth_tiger_black",
+                        "Texture.saber_tooth_tiger_orange",
+                        "Texture.saber_tooth_tiger_white"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Array.colors[q.variant]" ],
+            "part_visibility": [
+                { "eyes": "!q.is_sleeping" }
+            ]
+        }
+    }
+}

@@ -1,0 +1,55 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.enma_daioh.idle": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"rotation": [15, 0, 0],
+					"position": [0, "-math.cos(q.anim_time*90*2)*0.05", "-math.cos(q.anim_time*90*2)*0.03"]
+				},
+				"leftLeg": {
+					"rotation": [0, 0, -5]
+				},
+				"rightLeg": {
+					"rotation": [0, 0, 5]
+				},
+				"waist": {
+					"rotation": ["0.4+math.cos(q.anim_time*90*2-50)*0.4", 0, 0]
+				},
+				"head": {
+					"rotation": ["-0.9667+0.7*math.cos(q.anim_time*90*2-125)", 0.77272, "4.9401+math.sin(q.anim_time*90*0.5-70)*1.2"]
+				},
+				"hair5": {
+					"rotation": [0, 0, -17.5]
+				},
+				"hair6": {
+					"rotation": [0, 0, 20]
+				},
+				"hair8": {
+					"rotation": [15, 0, 15]
+				},
+				"hair9": {
+					"rotation": [0, 0, -20]
+				},
+				"left_beard": {
+					"rotation": [0, 0, "1.6*math.cos(q.anim_time*90*2-135)"]
+				},
+				"right_beard": {
+					"rotation": [0, 0, "-1.6*math.cos(q.anim_time*90*2-135)"]
+				},
+				"leftArm": {
+					"rotation": [-211.37025, 0.37688, -39.37585],
+					"position": [6, -6, -24]
+				},
+				"rightArm": {
+					"rotation": [-144.88204, 18.93307, "90.4773+1.6*math.cos(q.anim_time*90*2-135)"],
+					"position": [0, -6, -18]
+				},
+				"root": {
+					"position": [0, 0, 1]
+				}
+			}
+		}
+	}
+}

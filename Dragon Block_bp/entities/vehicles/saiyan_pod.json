@@ -1,0 +1,92 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "dbe:saiyan_pod",
+            "is_spawnable": false,
+            "is_summonable": true
+        },
+        "component_groups": {
+            "dbe:despawn": {
+                "minecraft:spawn_entity": {
+                    "entities": {
+                        "min_wait_time": 0,
+                        "max_wait_time": 0,
+                        "spawn_item": "dbe:saiyan_pod",
+                        "single_use": true
+                    }
+                },
+                "minecraft:instant_despawn": {}
+            }
+        },
+        "components": {
+            "minecraft:type_family": {
+                "family": [
+                    "inanimate",
+                    "saiyan_pod"
+                ]
+            },
+            "minecraft:health": {
+                "value": 1,
+                "max": 1
+            },
+            "minecraft:collision_box": {
+                "width": 1.4,
+                "height": 1.9
+            },
+            "minecraft:custom_hit_test": {
+                "hitboxes": [
+                    {
+                        "width": 1.4,
+                        "height": 1.9,
+                        "pivot": [
+                            0,
+                            0.95,
+                            0
+                        ]
+                    }
+                ]
+            },
+            "minecraft:flying_speed": {
+                "value": 0.7
+            },
+            "minecraft:rideable": {
+                "crouching_skip_interact": true,
+                "interact_text": "action.interact.ride.vehicle",
+                "family_types": [
+                    "player"
+                ],
+                "seats": {
+                    "position": [
+                        0,
+                        0.35,
+                        0
+                    ]
+                }
+            },
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "on_damage": {
+                        "event": "dbe:despawn"
+                    },
+                    "deals_damage": "no"
+                }
+            },
+            "minecraft:free_camera_controlled": {},
+            "minecraft:movement.hover": {},
+            "minecraft:navigation.hover": {},
+            "minecraft:physics": {
+                "has_gravity": false
+            }
+        },
+        "events": {
+            "dbe:despawn": {
+                "add": {
+                    "component_groups": [
+                        "dbe:despawn"
+                    ]
+                }
+            }
+        }
+    }
+}

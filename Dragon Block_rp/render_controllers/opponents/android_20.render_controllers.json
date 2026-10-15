@@ -1,0 +1,10 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.android_20": {
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "v.transformation == 0 ? Texture.skin_default : Texture.skin_buffed" ]
+        }
+    }
+}

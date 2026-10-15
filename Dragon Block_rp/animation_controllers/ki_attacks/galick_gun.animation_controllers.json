@@ -1,0 +1,74 @@
+{
+	"format_version": "1.10.0",
+	"animation_controllers": {
+		"controller.animation.player.galick_gun": {
+			"states": {
+				"default": {
+					"blend_transition": 0.2,
+					"transitions": [
+						{
+							"first_person_galick_gun": "v.is_first_person && v.charging_attack"
+						},
+						{
+							"third_person_galick_gun": "!v.is_first_person && v.charging_attack"
+						}
+					]
+				},
+				"first_person_galick_gun": {
+					"blend_transition": 0.2,
+					"animations": [
+						"ki_attack_setup",
+						"first_person_galick_gun"
+					],
+					"particle_effects": [
+						{
+							"effect": "beam",
+							"locator": "rightkiball"
+						}
+					],
+					"transitions": [
+						{
+							"default": "!v.charging_attack"
+						},
+						{
+							"third_person_galick_gun": "!v.is_first_person && v.charging_attack"
+						}
+					]
+				},
+				"third_person_galick_gun": {
+					"blend_transition": 0.2,
+					"animations": [
+						"ki_attack_setup",
+						"galick_gun"
+					],
+					"particle_effects": [
+						{
+							"effect": "beam",
+							"locator": "rightkiball"
+						}
+					],
+					"transitions": [
+						{
+							"default": "!v.charging_attack"
+						},
+						{
+							"first_person_galick_gun": "v.is_first_person && v.charging_attack"
+						},
+						{
+							"third_person_galick_gun_launch": "!v.is_first_person && v.charging_attack == -1"
+						}
+					]
+				},
+				"third_person_galick_gun_launch": {
+					"blend_transition": 0.2,
+					"animations": [ "galick_gun_launch" ],
+					"transitions": [
+						{
+							"default": "q.any_animation_finished"
+						}
+					]
+				}
+			}
+		}
+	}
+}

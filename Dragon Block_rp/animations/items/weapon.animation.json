@@ -1,0 +1,59 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.bansho_fan.holding": {
+			"loop": true,
+			"bones": {
+				"banshoFan": {
+					"rotation": [90, 0, 0],
+					"position": [0, 23, 5]
+				}
+			}
+		},
+		"animation.angel_staff.holding": {
+			"loop": true,
+			"bones": {
+				"angelStaff": {
+					"rotation": [90, 0, 0],
+					"position": [0, 23, 18]
+				}
+			}
+		},
+		"animation.brave_sword.holding": {
+			"loop": true,
+			"bones": {
+				"braveSword": {
+					"rotation": [90, 0, 0],
+					"position": [0, 23, 3]
+				}
+			}
+		},
+		"animation.katana.holding": {
+			"loop": true,
+			"bones": {
+				"katana": {
+					"rotation": [90, 0, 0],
+					"position": [0, 23, 5]
+				}
+			}
+		},
+		"animation.power_pole.holding": {
+			"loop": true,
+			"bones": {
+				"magicStick": {
+					"rotation": [90, 0, 0],
+					"position": [0, 23, 22]
+				}
+			}
+		},
+		"animation.z_sword.holding": {
+			"loop": true,
+			"bones": {
+				"zSword": {
+					"rotation": [90, 0, 0],
+					"position": [0, 23, 5]
+				}
+			}
+		}
+	}
+}

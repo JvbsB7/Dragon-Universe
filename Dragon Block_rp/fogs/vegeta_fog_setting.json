@@ -1,0 +1,22 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:fog_settings": {
+        "description": {
+            "identifier": "dbe:fog_vegeta"
+        },
+        "distance": {
+            "air": {
+                "fog_start": 0.35,
+                "fog_end": 0.75,
+                "fog_color": "#a63a22",
+                "render_distance_type": "render"
+            },
+            "water": {
+                "fog_start": 0,
+                "fog_end": 15,
+                "fog_color": "#7a1a10",
+                "render_distance_type": "fixed"
+            }
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "dbe:z_sword"
+    },
+    
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "  B",
+      "CB ",
+      "AC "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:emerald"
+      },
+      "B": {
+        "item": "dbe:katchin_shard"
+      },
+      "C": {
+        "item": "minecraft:gold_nugget"
+      }
+    },
+    "unlock": [
+      {
+        "item": "dbe:katchin_shard"
+      }
+    ],
+    "result": {
+      "item": "dbe:z_sword"
+    }
+  }
+}

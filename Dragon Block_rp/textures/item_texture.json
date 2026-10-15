@@ -1,0 +1,666 @@
+{
+    "resource_pack_name": "dragon_evolution",
+    "texture_name": "atlas.items",
+    "texture_data": {
+        "ajisa_door": {
+            "textures": "textures/items/ajisa_door"
+        },
+        "ajisa_orange": {
+            "textures": "textures/items/ajisa_orange"
+        },
+        "ajisa_sapling": {
+            "textures": "textures/blocks/ajisa_sapling"
+        },
+        "android_13_boots": {
+            "textures": "textures/items/armors/android_13_boots"
+        },
+        "android_13_chestplate": {
+            "textures": "textures/items/armors/android_13_chestplate"
+        },
+        "android_13_hat": {
+            "textures": "textures/items/armors/android_13_hat"
+        },
+        "android_13_leggings": {
+            "textures": "textures/items/armors/android_13_leggings"
+        },
+        "android_16_boots": {
+            "textures": "textures/items/armors/android_16_boots"
+        },
+        "android_16_chestplate": {
+            "textures": "textures/items/armors/android_16_chestplate"
+        },
+        "android_16_leggings": {
+            "textures": "textures/items/armors/android_16_leggings"
+        },
+        "android_17_boots": {
+            "textures": "textures/items/armors/android_17_boots"
+        },
+        "android_17_chestplate": {
+            "textures": "textures/items/armors/android_17_chestplate"
+        },
+        "android_17_leggings": {
+            "textures": "textures/items/armors/android_17_leggings"
+        },
+        "android_18_boots": {
+            "textures": "textures/items/armors/android_18_boots"
+        },
+        "android_18_chestplate": {
+            "textures": "textures/items/armors/android_18_chestplate"
+        },
+        "android_18_leggings": {
+            "textures": "textures/items/armors/android_18_leggings"
+        },
+        "android_21_majin_boots": {
+            "textures": "textures/items/armors/android_21_majin_boots"
+        },
+        "android_21_majin_leggings": {
+            "textures": "textures/items/armors/android_21_majin_leggings"
+        },
+        "android_21_majin_shirt": {
+            "textures": "textures/items/armors/android_21_majin_shirt"
+        },
+        "angel_staff": {
+            "textures": "textures/items/angel_staff"
+        },
+        "baby_armor_boots": {
+            "textures": "textures/items/armors/baby_armor_boots"
+        },
+        "baby_armor_chestplate": {
+            "textures": "textures/items/armors/baby_armor_chestplate"
+        },
+        "baby_armor_leggings": {
+            "textures": "textures/items/armors/baby_armor_leggings"
+        },
+        "bansho_fan": {
+            "textures": "textures/items/bansho_fan"
+        },
+        "bardock_battle_boots": {
+            "textures": "textures/items/armors/bardock_battle_boots"
+        },
+        "bardock_battle_chestplate": {
+            "textures": "textures/items/armors/bardock_battle_chestplate"
+        },
+        "bardock_battle_leggings": {
+            "textures": "textures/items/armors/bardock_battle_leggings"
+        },
+        "battle_boots": {
+            "textures": "textures/items/armors/battle_boots"
+        },
+        "battle_boots_gray": {
+            "textures": "textures/items/armors/battle_boots_gray"
+        },
+        "battle_chestplate": {
+            "textures": "textures/items/armors/battle_chestplate"
+        },
+        "battle_chestplate_gray": {
+            "textures": "textures/items/armors/battle_chestplate_gray"
+        },
+        "battle_leggings": {
+            "textures": "textures/items/armors/battle_leggings"
+        },
+        "battle_leggings_gray": {
+            "textures": "textures/items/armors/battle_leggings_gray"
+        },
+        "beat_boots": {
+            "textures": "textures/items/armors/beat_boots"
+        },
+        "beat_chestplate": {
+            "textures": "textures/items/armors/beat_chestplate"
+        },
+        "beat_leggings": {
+            "textures": "textures/items/armors/beat_leggings"
+        },
+        "black_flying_nimbus": {
+            "textures": "textures/items/black_flying_nimbus"
+        },
+        "blue_hoi_poi_capsule": {
+            "textures": "textures/items/hoi_poi_capsule/blue_hoi_poi_capsule"
+        },
+        "brave_sword": {
+            "textures": "textures/items/brave_sword"
+        },
+        "broly_battle_boots": {
+            "textures": "textures/items/armors/broly_battle_boots"
+        },
+        "broly_battle_chestplate": {
+            "textures": "textures/items/armors/broly_battle_chestplate"
+        },
+        "broly_battle_leggings": {
+            "textures": "textures/items/armors/broly_battle_leggings"
+        },
+        "broly_boots": {
+            "textures": "textures/items/armors/broly_boots"
+        },
+        "broly_leggings": {
+            "textures": "textures/items/armors/broly_leggings"
+        },
+        "broly_pendant": {
+            "textures": "textures/items/armors/broly_pendant"
+        },
+        "bucket_medical_liquid": {
+            "textures": "textures/items/bucket_medical_liquid"
+        },
+        "bunny_costume_ears": {
+            "textures": "textures/items/armors/bunny_costume_ears"
+        },
+        "bunny_costume_boots": {
+            "textures": "textures/items/armors/bunny_costume_boots"
+        },
+        "bunny_costume_chestplate": {
+            "textures": "textures/items/armors/bunny_costume_chestplate"
+        },
+        "bunny_costume_leggings": {
+            "textures": "textures/items/armors/bunny_costume_leggings"
+        },
+        "change_hair": {
+            "textures": "textures/items/system/change_hair"
+        },
+        "chi_chi_boots": {
+            "textures": "textures/items/armors/chi_chi_boots"
+        },
+        "chi_chi_chestplate": {
+            "textures": "textures/items/armors/chi_chi_chestplate"
+        },
+        "chi_chi_leggings": {
+            "textures": "textures/items/armors/chi_chi_leggings"
+        },
+        "cooked_dinosaur_meat": {
+            "textures": "textures/items/cooked_dinosaur_meat"
+        },
+        "cooked_giant_fish": {
+            "textures": "textures/items/cooked_giant_fish"
+        },
+        "christmas_costume": {
+            "textures": "textures/items/armors/christmas_costume"
+        },
+        "dirtstone_tall_grass": {
+            "textures": "textures/blocks/dirtstone_tall_grass"
+        },
+        "divine_halo": {
+            "textures": "textures/items/armors/divine_halo"
+        },
+        "dragon_ball": {
+            "textures": "textures/items/dragon_ball"
+        },
+        "dragon_radar": {
+            "textures": "textures/items/dragon_radar"
+        },
+        "elegant_suit_boots": {
+            "textures": "textures/items/armors/elegant_suit_boots"
+        },
+        "elegant_suit_boots_gray": {
+            "textures": "textures/items/armors/elegant_suit_boots"
+        },
+        "elegant_suit_hat": {
+            "textures": "textures/items/armors/elegant_suit_hat"
+        },
+        "elegant_suit_hat_gray": {
+            "textures": "textures/items/armors/elegant_suit_hat"
+        },
+        "elegant_suit_jacket": {
+            "textures": "textures/items/armors/elegant_suit_jacket"
+        },
+        "elegant_suit_jacket_gray": {
+            "textures": "textures/items/armors/elegant_suit_jacket"
+        },
+        "elegant_suit_leggings": {
+            "textures": "textures/items/armors/elegant_suit_leggings"
+        },
+        "elegant_suit_leggings_gray": {
+            "textures": "textures/items/armors/elegant_suit_leggings"
+        },
+        "evolitium_axe": {
+            "textures": "textures/items/evolitium_axe"
+        },
+        "evolitium_crystal": {
+            "textures": "textures/items/evolitium_crystal"
+        },
+        "evolitium_cluster": {
+            "textures": "textures/blocks/evolitium_cluster"
+        },
+        "evolitium_hoe": {
+            "textures": "textures/items/evolitium_hoe"
+        },
+        "evolitium_pickaxe": {
+            "textures": "textures/items/evolitium_pickaxe"
+        },
+        "evolitium_shovel": {
+            "textures": "textures/items/evolitium_shovel"
+        },
+        "evolitium_sword": {
+            "textures": "textures/items/evolitium_sword"
+        },
+        "flying_nimbus": {
+            "textures": "textures/items/flying_nimbus"
+        },
+        "frieza_pod": {
+            "textures": "textures/items/frieza_pod"
+        },
+        "saiyan_pod": {
+            "textures": "textures/items/saiyan_pod"
+        },
+        "space_pod": {
+            "textures": "textures/items/space_pod"
+        },
+        "full_scouter": {
+            "textures": "textures/items/armors/full_scouter"
+        },
+        "full_scouter_gray": {
+            "textures": "textures/items/armors/full_scouter_gray"
+        },
+        "functions": {
+            "textures": "textures/items/system/functions"
+        },
+        "fused_zamasu_boots": {
+            "textures": "textures/items/armors/fused_zamasu_boots"
+        },
+        "fused_zamasu_chestplate": {
+            "textures": "textures/items/armors/fused_zamasu_chestplate"
+        },
+        "fused_zamasu_leggings": {
+            "textures": "textures/items/armors/fused_zamasu_leggings"
+        },
+        "giant_fish": {
+            "textures": "textures/items/giant_fish"
+        },
+        "glasses": {
+            "textures": "textures/items/armors/glasses"
+        },
+        "goku_af_boots": {
+            "textures": "textures/items/armors/goku_af_boots"
+        },
+        "goku_af_chestplate": {
+            "textures": "textures/items/armors/goku_af_chestplate"
+        },
+        "goku_af_leggings": {
+            "textures": "textures/items/armors/goku_af_leggings"
+        },
+        "goku_black_boots": {
+            "textures": "textures/items/armors/goku_black_boots"
+        },
+        "goku_black_chestplate": {
+            "textures": "textures/items/armors/goku_black_chestplate"
+        },
+        "goku_black_leggings": {
+            "textures": "textures/items/armors/goku_black_leggings"
+        },
+        "goku_boots": {
+            "textures": "textures/items/armors/goku_boots"
+        },
+        "goku_casual_boots": {
+            "textures": "textures/items/armors/goku_casual_boots"
+        },
+        "goku_casual_jacket": {
+            "textures": "textures/items/armors/goku_casual_jacket"
+        },
+        "goku_casual_leggings": {
+            "textures": "textures/items/armors/goku_casual_leggings"
+        },
+        "goku_chestplate": {
+            "textures": "textures/items/armors/goku_chestplate"
+        },
+        "goku_leggings": {
+            "textures": "textures/items/armors/goku_leggings"
+        },
+        "goku_gt_boots": {
+            "textures": "textures/items/armors/goku_gt_boots"
+        },
+        "goku_gt_chestplate": {
+            "textures": "textures/items/armors/goku_gt_chestplate"
+        },
+        "goku_gt_leggings": {
+            "textures": "textures/items/armors/goku_gt_leggings"
+        },
+        "grandpa_gohan_mask": {
+            "textures": "textures/items/armors/grandpa_gohan_mask"
+        },
+        "green_hoi_poi_capsule": {
+            "textures": "textures/items/hoi_poi_capsule/green_hoi_poi_capsule"
+        },
+        "hakaishin_boots": {
+            "textures": "textures/items/armors/hakaishin_boots"
+        },
+        "hakaishin_chestplate": {
+            "textures": "textures/items/armors/hakaishin_chestplate"
+        },
+        "hakaishin_leggings": {
+            "textures": "textures/items/armors/hakaishin_leggings"
+        },
+        "halo": {
+            "textures": "textures/items/armors/halo"
+        },
+        "headband": {
+            "textures": "textures/items/armors/headband"
+        },
+        "headband_gray": {
+            "textures": "textures/items/armors/headband_gray"
+        },
+        "kaioshin_boots": {
+            "textures": "textures/items/armors/kaioshin_boots"
+        },
+        "kaioshin_chestplate": {
+            "textures": "textures/items/armors/kaioshin_chestplate"
+        },
+        "kaioshin_leggings": {
+            "textures": "textures/items/armors/kaioshin_leggings"
+        },
+        "katchin_shard": {
+            "textures": "textures/items/katchin_shard"
+        },
+        "katana": {
+            "textures": "textures/items/katana"
+        },
+        "maid_costume_boots": {
+            "textures": "textures/items/armors/maid_costume_boots"
+        },
+        "maid_costume_boots_gray": {
+            "textures": "textures/items/armors/maid_costume_boots_gray"
+        },
+        "maid_costume_chestplate": {
+            "textures": "textures/items/armors/maid_costume_chestplate"
+        },
+        "maid_costume_chestplate_gray": {
+            "textures": "textures/items/armors/maid_costume_chestplate_gray"
+        },
+        "maid_costume_hat": {
+            "textures": "textures/items/armors/maid_costume_hat"
+        },
+        "maid_costume_hat_gray": {
+            "textures": "textures/items/armors/maid_costume_hat_gray"
+        },
+        "maid_costume_skirt": {
+            "textures": "textures/items/armors/maid_costume_skirt"
+        },
+        "maid_costume_skirt_gray": {
+            "textures": "textures/items/armors/maid_costume_skirt_gray"
+        },
+        "majin_buu_boots": {
+            "textures": "textures/items/armors/majin_buu_boots"
+        },
+        "majin_buu_bracers": {
+            "textures": "textures/items/armors/majin_buu_bracers"
+        },
+        "majin_buu_leggings": {
+            "textures": "textures/items/armors/majin_buu_leggings"
+        },
+        "majin_vegeta_boots": {
+            "textures": "textures/items/armors/majin_vegeta_boots"
+        },
+        "majin_vegeta_shirt": {
+            "textures": "textures/items/armors/majin_vegeta_shirt"
+        },
+        "majin_vegeta_leggings": {
+            "textures": "textures/items/armors/majin_vegeta_leggings"
+        },
+        "mafuba_pot": {
+            "textures": "textures/items/mafuba_pot"
+        },
+        "medical_moss": {
+            "textures": "textures/items/medical_moss"
+        },
+        "medical_moss_seeds": {
+            "textures": "textures/items/medical_moss_seeds"
+        },
+        "medicinal_soup": {
+            "textures": "textures/items/medicinal_soup"
+        },
+        "menu": {
+            "textures": "textures/items/system/menu"
+        },
+        "milk_box": {
+            "textures": "textures/items/milk_box"
+        },
+        "music_disc_hero": {
+            "textures": "textures/items/music_disc_hero"
+        },
+        "namek_dragon_ball": {
+            "textures": "textures/items/namek_dragon_ball"
+        },
+        "namek_mushroom": {
+            "textures": "textures/blocks/potted_namek_mushroom"
+        },
+        "namek_tall_grass": {
+            "textures": "textures/blocks/namek_tall_grass"
+        },
+        "nanochip": {
+            "textures": "textures/items/nanochip"
+        },
+        "piccolo_boots": {
+            "textures": "textures/items/armors/piccolo_boots"
+        },
+        "piccolo_cape": {
+            "textures": "textures/items/armors/piccolo_cape"
+        },
+        "piccolo_chestplate": {
+            "textures": "textures/items/armors/piccolo_chestplate"
+        },
+        "piccolo_leggings": {
+            "textures": "textures/items/armors/piccolo_leggings"
+        },
+        "piccolo_turban": {
+            "textures": "textures/items/armors/piccolo_turban"
+        },
+        "potara_earring": {
+            "textures": "textures/items/armors/potara_earring"
+        },
+        "potara_earrings": {
+            "textures": "textures/items/armors/potara_earrings"
+        },
+        "power_fruit": {
+            "textures": "textures/items/power_fruit"
+        },
+        "power_pole": {
+            "textures": "textures/items/power_pole"
+        },
+        "pride_troopers_boots": {
+            "textures": "textures/items/armors/pride_troopers_boots"
+        },
+        "pride_troopers_chestplate": {
+            "textures": "textures/items/armors/pride_troopers_chestplate"
+        },
+        "pride_troopers_leggings": {
+            "textures": "textures/items/armors/pride_troopers_leggings"
+        },
+        "purple_hoi_poi_capsule": {
+            "textures": "textures/items/hoi_poi_capsule/purple_hoi_poi_capsule"
+        },
+        "ramen": {
+            "textures": "textures/items/ramen"
+        },
+        "raw_dinosaur_meat": {
+            "textures": "textures/items/raw_dinosaur_meat"
+        },
+        "red_hoi_poi_capsule": {
+            "textures": "textures/items/hoi_poi_capsule/red_hoi_poi_capsule"
+        },
+        "saber_tooth_tiger_hide": {
+            "textures": "textures/items/saber_tooth_tiger_hide"
+        },
+        "sacred_water_flask": {
+            "textures": "textures/items/sacred_water_flask"
+        },
+        "namek_space_pod": {
+            "textures": "textures/items/namek_space_pod"
+        },
+        "tournament_invitation": {
+            "textures": "textures/items/tournament_invitation"
+        },
+        "saibaman_seed": {
+            "textures": "textures/items/saibaman_seed"
+        },
+        "saiyaman_boots": {
+            "textures": "textures/items/armors/saiyaman_boots"
+        },
+        "saiyaman_chestplate": {
+            "textures": "textures/items/armors/saiyaman_chestplate"
+        },
+        "saiyaman_helmet": {
+            "textures": "textures/items/armors/saiyaman_helmet"
+        },
+        "saiyaman_leggings": {
+            "textures": "textures/items/armors/saiyaman_leggings"
+        },
+        "scouter": {
+            "textures": "textures/items/armors/scouter"
+        },
+        "scouter_gray": {
+            "textures": "textures/items/armors/scouter_gray"
+        },
+        "senzu_bean": {
+            "textures": "textures/items/senzu_bean"
+        },
+        "spawn_egg_deer": {
+            "textures": "textures/items/spawn_egg_deer"
+        },
+        "spawn_egg_dinosaur": {
+            "textures": "textures/items/spawn_egg_dinosaur"
+        },
+        "spawn_egg_giant_fish": {
+            "textures": "textures/items/spawn_egg_giant_fish"
+        },
+        "spawn_egg_namekian_frog": {
+            "textures": "textures/items/spawn_egg_namekian_frog"
+        },
+        "spawn_egg_pterosaur": {
+            "textures": "textures/items/spawn_egg_pterosaur"
+        },
+        "spawn_egg_saber_tooth_tiger": {
+            "textures": "textures/items/spawn_egg_saber_tooth_tiger"
+        },
+        "tapion_boots": {
+            "textures": "textures/items/armors/tapion_boots"
+        },
+        "tapion_chestplate": {
+            "textures": "textures/items/armors/tapion_chestplate"
+        },
+        "tapion_leggings": {
+            "textures": "textures/items/armors/tapion_leggings"
+        },
+        "techniques": {
+            "textures": "textures/items/system/techniques"
+        },
+        "tien_boots": {
+            "textures": "textures/items/armors/tien_boots"
+        },
+        "tien_chestplate": {
+            "textures": "textures/items/armors/tien_chestplate"
+        },
+        "tien_leggings": {
+            "textures": "textures/items/armors/tien_leggings"
+        },
+        "time_machine": {
+            "textures": "textures/items/time_machine"
+        },
+        "training_armor": {
+            "textures": "textures/items/armors/training_armor"
+        },
+        "training_shirt": {
+            "textures": "textures/items/armors/training_shirt"
+        },
+        "trunks_boots": {
+            "textures": "textures/items/armors/trunks_boots"
+        },
+        "trunks_chestplate": {
+            "textures": "textures/items/armors/trunks_chestplate"
+        },
+        "trunks_leggings": {
+            "textures": "textures/items/armors/trunks_leggings"
+        },
+        "turtle_shell": {
+            "textures": "textures/items/armors/turtle_shell"
+        },
+        "vegeta_battle_boots": {
+            "textures": "textures/items/armors/vegeta_battle_boots"
+        },
+        "vegeta_battle_boots_gray": {
+            "textures": "textures/items/armors/vegeta_battle_boots_gray"
+        },
+        "vegeta_battle_chestplate": {
+            "textures": "textures/items/armors/vegeta_battle_chestplate"
+        },
+        "vegeta_battle_chestplate_gray": {
+            "textures": "textures/items/armors/vegeta_battle_chestplate_gray"
+        },
+        "vegeta_battle_leggings": {
+            "textures": "textures/items/armors/vegeta_battle_leggings"
+        },
+        "vegeta_battle_leggings_gray": {
+            "textures": "textures/items/armors/vegeta_battle_leggings_gray"
+        },
+        "vegeta_cell_battle_boots": {
+            "textures": "textures/items/armors/vegeta_cell_battle_boots"
+        },
+        "vegeta_cell_battle_chestplate": {
+            "textures": "textures/items/armors/vegeta_cell_battle_chestplate"
+        },
+        "vegeta_cell_battle_leggings": {
+            "textures": "textures/items/armors/vegeta_cell_battle_leggings"
+        },
+        "vegeta_gt_boots": {
+            "textures": "textures/items/armors/vegeta_gt_boots"
+        },
+        "vegeta_gt_chestplate": {
+            "textures": "textures/items/armors/vegeta_gt_chestplate"
+        },
+        "vegeta_gt_leggings": {
+            "textures": "textures/items/armors/vegeta_gt_leggings"
+        },
+        "vegeta_super_battle_boots": {
+            "textures": "textures/items/armors/vegeta_super_battle_boots"
+        },
+        "vegeta_super_battle_chestplate": {
+            "textures": "textures/items/armors/vegeta_super_battle_chestplate"
+        },
+        "vegeta_super_battle_leggings": {
+            "textures": "textures/items/armors/vegeta_super_battle_leggings"
+        },
+        "workout_weights": {
+            "textures": "textures/items/armors/workout_weights"
+        },
+        "xeno_goku_black_boots": {
+            "textures": "textures/items/armors/xeno_goku_black_boots"
+        },
+        "xeno_goku_black_leggings": {
+            "textures": "textures/items/armors/xeno_goku_black_leggings"
+        },
+        "xeno_goku_black_mask": {
+            "textures": "textures/items/armors/xeno_goku_black_mask"
+        },
+        "xeno_goku_black_shirt": {
+            "textures": "textures/items/armors/xeno_goku_black_shirt"
+        },
+        "xeno_goku_boots": {
+            "textures": "textures/items/armors/xeno_goku_boots"
+        },
+        "xeno_goku_leggings": {
+            "textures": "textures/items/armors/xeno_goku_leggings"
+        },
+        "xeno_goku_shirt": {
+            "textures": "textures/items/armors/xeno_goku_shirt"
+        },
+        "yellow_hoi_poi_capsule": {
+            "textures": "textures/items/hoi_poi_capsule/yellow_hoi_poi_capsule"
+        },
+        "zamasu_boots": {
+            "textures": "textures/items/armors/zamasu_boots"
+        },
+        "zamasu_chestplate": {
+            "textures": "textures/items/armors/zamasu_chestplate"
+        },
+        "zamasu_leggings": {
+            "textures": "textures/items/armors/zamasu_leggings"
+        },
+        "z_sword": {
+            "textures": "textures/items/z_sword"
+        },
+        "star_navigator": {
+            "textures": "textures/items/star_navigator"
+        },
+        "space_helmet": {
+            "textures": "textures/items/space_helmet"
+        },
+        "demonic_apple": {
+            "textures": "textures/items/demonic_apple"
+        }
+    }
+}

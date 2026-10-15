@@ -1,0 +1,15 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.oozaru_armor": {
+            "geometry": "Geometry.oozaru_armor",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.oozaru_armor" ]
+        },
+        "controller.render.dyed_oozaru_armor": {
+            "geometry": "Geometry.oozaru_armor",
+            "materials": [ { "*": "v.is_dyed ? Material.dyed : Material.default" } ],
+            "textures": [ "v.is_dyed ? Texture.dyed_oozaru_armor : Texture.oozaru_armor" ]
+        }
+    }
+}

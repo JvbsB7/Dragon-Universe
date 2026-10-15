@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "dbe:potara_earring"
+    },
+    
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "A"
+    ],
+    "key": {
+      "A": {
+        "item": "dbe:potara_earrings"
+      }
+    },
+    "unlock": [
+      {
+        "item": "dbe:potara_earrings"
+      }
+    ],
+    "result": [
+      {
+        "item": "dbe:potara_earring"
+      },
+      {
+        "item": "dbe:potara_earring"
+      }
+    ]
+  }
+}

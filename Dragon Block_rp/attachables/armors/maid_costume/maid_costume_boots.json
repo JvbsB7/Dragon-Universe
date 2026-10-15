@@ -1,0 +1,32 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:maid_costume_boots",
+            "materials": {
+                "default": "armor",
+                "dyed": "entity_alphatest_change_color"
+            },
+            "textures": {
+                "default": "textures/models/armors/maid_costume/maid_costume",
+                "dyed": "textures/models/armors/maid_costume/maid_costume_grayscale"
+            },
+            "geometry": {
+                "default": "geometry.maid_costume.boots"
+            },
+            "scripts": {
+                "parent_setup": "v.boot_layer_visible = 0.0;",
+                "pre_animation": [
+                    "v.is_dyed = q.armor_color_slot(3, 0) != 1 || q.armor_color_slot(3, 1) != 1 || q.armor_color_slot(3, 2) != 1 || q.armor_color_slot(3, 3) != 1;"
+                ],
+                "animate": [
+                    "offset"
+                ]
+            },
+            "animations": {
+                "offset": "animation.armor.boots.offset"
+            },
+            "render_controllers": [ "controller.render.dyed_clothes" ]
+        }
+    }
+}

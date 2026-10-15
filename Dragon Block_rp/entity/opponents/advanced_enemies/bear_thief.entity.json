@@ -1,0 +1,44 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:bear_thief",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/opponents/bear_thief"
+            },
+            "geometry": {
+                "default": "geometry.bear_thief"
+            },
+            "scripts": {
+                "initialize": [
+                    "v.sword_attack_index = 0.0;"
+                ],
+                "pre_animation": [
+                    "v.selected_attack = q.property('dbe:selected_attack');",
+                    "v.moving = q.ground_speed;"
+                ],
+                "animate": [
+                    "attack_controller",
+                    "general"
+                ]
+            },
+
+            "animations": {
+                "general": "controller.animation.bear_thief.general",
+                "attack_controller": "controller.animation.bear_thief.attack_controller",
+                "idling": "animation.player.idle",
+                "moving": "animation.player.walk",
+                "roaring": "animation.bear_thief.roar",
+                "sword_attack_1": "animation.bear_thief.sword.attack_1",
+                "sword_attack_2": "animation.bear_thief.sword.attack_2",
+                "sword_smash": "animation.bear_thief.sword.smash"
+            },
+            "render_controllers": [
+                "controller.render.default"
+            ]
+        }
+    }
+}

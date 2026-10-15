@@ -1,0 +1,40 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.missile",
+				"texture_width": 32,
+				"texture_height": 32,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "root",
+					"pivot": [0, 0, -6.5],
+					"cubes": [
+						{"origin": [-1.5, -1.5, -5.5], "size": [3, 3, 11], "pivot": [0, 0, 0], "rotation": [0, 0, -45], "uv": [0, 0]},
+						{"origin": [0, -1.5, -7], "size": [0, 3, 3], "pivot": [0, 0, -5.5], "rotation": [45, 0, 0], "uv": [10, 19]},
+						{"origin": [0, -1.5, -7], "size": [0, 3, 3], "pivot": [0, 0, -5.5], "rotation": [45, 0, 90], "uv": [16, 19]},
+						{"origin": [0, -3, 2.5], "size": [0, 6, 5], "uv": [0, 19]},
+						{"origin": [-3, 0, 2.5], "size": [6, 0, 5], "uv": [0, 14]},
+						{"origin": [-1, 1, 5.5], "size": [2, 0, 1], "uv": [22, 14]},
+						{"origin": [-1, -1, 5.5], "size": [2, 0, 1], "uv": [22, 14]},
+						{"origin": [-1, -1, 5.5], "size": [0, 2, 1], "uv": [22, 15]},
+						{"origin": [1, -1, 5.5], "size": [0, 2, 1], "uv": [22, 15]}
+					],
+					"locators": {
+						"fire": [0, 0, 5.5]
+					}
+				}
+			]
+		}
+	]
+}

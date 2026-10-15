@@ -1,0 +1,43 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.player.ki_manipulation": {
+            "geometry": "Geometry.ki_manipulation",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [ "Texture.ki_attack" ],
+            "part_visibility": [
+                { "*": false },
+                { "leftKiBall": "v.charging_attack == 7 || (v.charging_attack == 3 && !v.ki_blast_hand)" },
+                { "rightKiBall": "q.any(v.charging_attack, 2, 5, 6, 7) || (v.charging_attack == 3 && v.ki_blast_hand)" },
+                { "rightKiDisc": "v.charging_attack == 4" },
+                { "topKiBall": "v.charging_attack == 1" }
+            ],
+            "overlay_color": {
+                "r": "v.ki_attack_color0.r",
+                "g": "v.ki_attack_color0.g",
+                "b": "v.ki_attack_color0.b",
+                "a": 1
+            },
+            "ignore_lighting": true
+        },
+        "controller.render.player.ki_manipulation.outline": {
+            "geometry": "Geometry.ki_manipulation_outline",
+            "materials": [ { "*": "Material.outline" } ],
+            "textures": [ "Texture.ki_attack" ],
+            "part_visibility": [
+                { "*": false },
+                { "leftKiBall": "v.charging_attack == 7 || (v.charging_attack == 3 && !v.ki_blast_hand)" },
+                { "rightKiBall": "q.any(v.charging_attack, 2, 5, 6, 7) || (v.charging_attack == 3 && v.ki_blast_hand)" },
+                { "rightKiDisc": "v.charging_attack == 4" },
+                { "topKiBall": "v.charging_attack == 1" }
+            ],
+            "overlay_color": {
+                "r": "v.ki_attack_color1.r",
+                "g": "v.ki_attack_color1.g",
+                "b": "v.ki_attack_color1.b",
+                "a": 1
+            },
+            "ignore_lighting": true
+        }
+    }
+}

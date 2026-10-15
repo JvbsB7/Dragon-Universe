@@ -1,0 +1,58 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "dbe:absorption_cocoon_entity",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "properties": {
+                "dbe:color": {
+                    "type": "int",
+                    "range": [ 0, 8 ],
+                    "default": 0,
+                    "client_sync": true
+                }
+            }
+        },
+
+        "component_groups": {
+            "dbe:despawn": {
+                "minecraft:instant_despawn": { }
+            }
+        },
+
+        "components": {
+            "minecraft:collision_box": {
+                "width": 1.5,
+                "height": 2.2
+            },
+            "minecraft:despawn": {
+                "filters": {
+                    "test": "distance_to_nearest_player",
+                    "operator": ">",
+                    "value": 32
+                }
+            },
+            "minecraft:health": {
+                "value": 9999999,
+                "max": 9999999
+            },
+            "minecraft:type_family": {
+                "family": [
+                    "inanimate"
+                ]
+            },
+            "minecraft:conditional_bandwidth_optimization": { },
+            "minecraft:fire_immune": { },
+            "minecraft:physics": { }
+        },
+
+        "events": {
+            "dbe:despawn": {
+                "add": {
+                    "component_groups": [ "dbe:despawn" ]
+                }
+            }
+        }
+    }
+}

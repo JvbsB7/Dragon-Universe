@@ -1,0 +1,58 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.ki_attack",
+				"texture_width": 16,
+				"texture_height": 16,
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "kiAttackRoot",
+					"pivot": [0, 3, 0]
+				},
+				{
+					"name": "kiAttackBody",
+					"parent": "kiAttackRoot",
+					"pivot": [0, 3, 0]
+				},
+				{
+					"name": "ballShape",
+					"parent": "kiAttackBody",
+					"pivot": [0, 3, 0],
+					"cubes": [
+						{"origin": [-2, 1, -2], "size": [4, 4, 4], "uv": [3, 2]},
+						{"origin": [-1, 5, -1], "size": [2, 1, 2], "uv": [3, 2]},
+						{"origin": [-1, 0, -1], "size": [2, 1, 2], "uv": [3, 2]},
+						{"origin": [-3, 2, -1], "size": [1, 2, 2], "uv": [3, 2]},
+						{"origin": [2, 2, -1], "size": [1, 2, 2], "uv": [2, 2]},
+						{"origin": [-1, 2, 2], "size": [2, 2, 1], "uv": [1, 0]},
+						{"origin": [-1, 2, -3], "size": [2, 2, 1], "uv": [1, 0]}
+					],
+					"locators": {
+						"lightning": [0, 3, 0]
+					}
+				},
+				{
+					"name": "discShape",
+					"parent": "kiAttackBody",
+					"pivot": [0, 0.5, 0],
+					"cubes": [
+						{"origin": [-9.59076, 0, -5.99729], "size": [6, 1, 8], "pivot": [-5.59076, 0.5, -13.49729], "rotation": [0, 22.5, 0], "uv": [0, 0]},
+						{"origin": [-17.49729, 0, 1.90924], "size": [6, 1, 8], "pivot": [-13.49729, 0.5, -5.59076], "rotation": [0, 67.5, 0], "uv": [0, 0]},
+						{"origin": [-17.49729, 0, 13.09076], "size": [6, 1, 8], "pivot": [-13.49729, 0.5, 5.59076], "rotation": [0, 112.5, 0], "uv": [0, 0]},
+						{"origin": [-9.59076, 0, 20.99729], "size": [6, 1, 8], "pivot": [-5.59076, 0.5, 13.49729], "rotation": [0, 157.5, 0], "uv": [0, 0]},
+						{"origin": [1.59076, 0, 20.99729], "size": [6, 1, 8], "pivot": [5.59076, 0.5, 13.49729], "rotation": [0, -157.5, 0], "uv": [0, 0]},
+						{"origin": [9.49729, 0, 13.09076], "size": [6, 1, 8], "pivot": [13.49729, 0.5, 5.59076], "rotation": [0, -112.5, 0], "uv": [0, 0]},
+						{"origin": [9.49729, 0, 1.90924], "size": [6, 1, 8], "pivot": [13.49729, 0.5, -5.59076], "rotation": [0, -67.5, 0], "uv": [0, 0]},
+						{"origin": [1.59076, 0, -5.99729], "size": [6, 1, 8], "pivot": [5.59076, 0.5, -13.49729], "rotation": [0, -22.5, 0], "uv": [0, 0]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,46 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:giant_fish",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "giant_fish_blue": "textures/entity/animals/giant_fish/giant_fish_blue",
+                "giant_fish_green": "textures/entity/animals/giant_fish/giant_fish_green",
+                "giant_fish_red": "textures/entity/animals/giant_fish/giant_fish_red",
+                "giant_fish_yellow": "textures/entity/animals/giant_fish/giant_fish_yellow"
+            },
+            "geometry": {
+                "default": "geometry.giant_fish"
+            },
+            "spawn_egg": {
+                "texture": "spawn_egg_giant_fish"
+            },
+            "sound_effects": {
+                "bite": "mob.evocation_fangs.attack"
+            },
+            "scripts": {
+                "pre_animation": [
+                    "v.zrot = !q.is_in_water ? math.cos((q.time_stamp + q.frame_alpha) * 14.32) * 90 : 0.0;"
+                ],
+                "animate": [
+                    "general",
+                    "attack_controller"
+                ]
+            },
+            "animations": {
+                "general": "controller.animation.giant_fish.general",
+                "attack": "animation.giant_fish.attack",
+                "attack_controller": "controller.animation.giant_fish.attack",
+                "flop": "animation.giant_fish.flop",
+                "idle": "animation.giant_fish.idle",
+                "swim": "animation.giant_fish.swim"
+            },
+            "render_controllers": [
+                "controller.render.giant_fish"
+            ]
+        }
+    }
+}

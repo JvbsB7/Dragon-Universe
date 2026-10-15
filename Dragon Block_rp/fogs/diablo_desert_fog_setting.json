@@ -1,0 +1,17 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:fog_settings": {
+        "description": {
+            "identifier": "dbe:fog_diablo_desert"
+        },
+
+        "distance": {
+            "air": {
+                "fog_start": 0.01,
+                "fog_end": 0.5,
+                "fog_color": "#f3c560",
+                "render_distance_type": "render"
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "dbe:stonecutter_lime_tile_to_lime_tile_stairs"
+        },
+
+        "tags": [ "stonecutter" ],
+        "ingredients": [
+            {
+                "item": "dbe:lime_tile"
+            }
+        ],
+        "unlock": [
+            {
+                "item": "dbe:lime_tile"
+            }
+        ],
+        "result": {
+            "item": "dbe:lime_tile_stairs"
+        }
+    }
+}

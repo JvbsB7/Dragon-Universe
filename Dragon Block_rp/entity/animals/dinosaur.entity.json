@@ -1,0 +1,53 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "dbe:dinosaur",
+            "materials": {
+                "default": "entity_multitexture_alpha_test"
+            },
+            "textures": {
+                "dinosaur_alien_blue": "textures/entity/animals/dinosaur/dinosaur_alien_blue",
+                "dinosaur_alien_red": "textures/entity/animals/dinosaur/dinosaur_alien_red",
+                "dinosaur_brown": "textures/entity/animals/dinosaur/dinosaur_brown",
+                "dinosaur_gray": "textures/entity/animals/dinosaur/dinosaur_gray",
+                "dinosaur_green": "textures/entity/animals/dinosaur/dinosaur_green",
+                "dinosaur_orange": "textures/entity/animals/dinosaur/dinosaur_orange",
+                "dinosaur_purple": "textures/entity/animals/dinosaur/dinosaur_purple",
+                "dinosaur_yellow": "textures/entity/animals/dinosaur/dinosaur_yellow",
+                "empty": "textures/empty",
+                "saddle": "textures/entity/animals/dinosaur/saddle"
+            },
+            "geometry": {
+                "default": "geometry.dinosaur"
+            },
+            "spawn_egg": {
+                "texture": "spawn_egg_dinosaur"
+            },
+            "scripts": {
+                "pre_animation": [
+                    "v.moving = q.ground_speed;"
+                ],
+                "animate": [
+                    "general",
+                    "attack_controller",
+                    "look_at_target"
+                ]
+            },
+            "animations": {
+                "general": "controller.animation.dinosaur.general",
+                "attack1": "animation.dinosaur.attack1",
+                "attack2": "animation.dinosaur.attack2",
+                "attack_controller": "controller.animation.dinosaur.attack",
+                "idle": "animation.dinosaur.idle",
+                "look_at_target": "animation.dinosaur.look_at_target",
+                "moving": "animation.dinosaur.walk",
+                "sit_down": "animation.dinosaur.sit_down",
+                "sitting": "animation.dinosaur.sit"
+            },
+            "render_controllers": [
+                "controller.render.dinosaur"
+            ]
+        }
+    }
+}

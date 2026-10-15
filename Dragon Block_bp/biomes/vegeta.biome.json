@@ -1,0 +1,42 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:biome": {
+        "description": {
+            "identifier": "dbe:vegeta"
+        },
+        "components": {
+            "minecraft:climate": {
+                "downfall": 0,
+                "snow_accumulation": [
+                    0,
+                    0.125
+                ],
+                "temperature": 1.0
+            },
+            "minecraft:creature_spawn_probability": {
+                "probability": 0
+            },
+            "minecraft:overworld_height": {
+                "noise_type": "mountains"
+            },
+            "minecraft:surface_builder": {
+                "builder": {
+                    "type": "minecraft:overworld",
+                    "sea_floor_depth": 7,
+                    "sea_floor_material": "dbe:vegeta_rock",
+                    "foundation_material": "dbe:vegeta_rock",
+                    "mid_material": "dbe:vegeta_rock",
+                    "top_material": "dbe:vegeta_soil",
+                    "sea_material": "minecraft:lava"
+                }
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "vegeta",
+                    "monster",
+                    "overworld"
+                ]
+            }
+        }
+    }
+}

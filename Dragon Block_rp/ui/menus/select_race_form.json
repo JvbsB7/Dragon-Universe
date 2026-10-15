@@ -1,0 +1,128 @@
+{
+    "namespace": "select_race_form",
+
+    "select_race_form@server_form.long_form": {
+        "size": [ 295, 195 ],
+        "$child_control": "select_race_form.select_race_scrolling_panel",
+        "$custom_background": "custom_server_form.background",
+        "$default_button_texture": "textures/ui/buttons/menu_button",
+        "$hover_button_texture": "textures/ui/buttons/menu_button_hover"
+    },
+
+    "select_race_scrolling_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "back_button@custom_server_form.back_button": { }
+            },
+            {
+                "scrolling_panel@common.scrolling_panel": {
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "size": [ "100%", "100%" ],
+                    "$show_background": false,
+                    "$scrolling_content": "select_race_form.select_race_scrolling_content",
+                    "$scroll_size": [ 5, "100% - 4px" ],
+                    "$scrolling_pane_size": [ "100% - 4px", "100% - 2px" ],
+                    "$scrolling_pane_offset": [ 2, 0 ],
+                    "$scroll_bar_right_padding_size": [ 0, 0 ]
+                }
+            },
+            {
+                "player_renderer": {
+                    "type": "custom",
+                    "renderer": "live_player_renderer",
+                    "size": [ 50, 50 ],
+                    "offset": [ 16, -20 ],
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "layer": 2,
+                    "property_bag": {
+                        "#look_at_cursor": true
+                    }
+                }
+            },
+            {
+                "previus_race_button": {
+                    "type": "stack_panel",
+                    "offset": [ -6, 0 ],
+                    "size": [ 24, 22 ],
+                    "anchor_from": "left_middle",
+                    "anchor_to": "right_middle",
+                    "collection_name": "form_buttons",
+                    "controls": [
+                        {
+                            "button@custom_server_form.big_previous_button": {
+                                "collection_index": 0
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "select_buttons": {
+                    "type": "stack_panel",
+                    "size": [ "30%", "100%c" ],
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "collection_name": "form_buttons",
+                    "controls": [
+                        {
+                            "button@custom_server_form.text_button": {
+                                "collection_index": 1
+                            }
+                        },
+                        {
+                            "button@custom_server_form.text_button": {
+                                "collection_index": 2
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "next_race_button": {
+                    "type": "stack_panel",
+                    "offset": [ 6, 0 ],
+                    "size": [ 24, 22 ],
+                    "anchor_from": "right_middle",
+                    "anchor_to": "left_middle",
+                    "collection_name": "form_buttons",
+                    "controls": [
+                        {
+                            "button@custom_server_form.big_next_button": {
+                                "collection_index": 3
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "select_race_scrolling_content": {
+        "type": "panel",
+        "size": [ "100% - 4px", "100%c" ],
+        "layer": 1,
+        "controls": [
+            {
+                "description_panel": {
+                    "type": "panel",
+                    "size": [ "60%", "100%c" ],
+                    "anchor_to": "top_right",
+                    "anchor_from": "top_right",
+                    "controls": [
+                        {
+                            "description_label": {
+                                "type": "label",
+                                "size": [ "100%", "default" ],
+                                "text": "#form_text",
+                                "color": "$7_color_format"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

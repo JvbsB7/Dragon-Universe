@@ -1,0 +1,70 @@
+{
+    "namespace": "charge_bar",
+
+    "charge_bar_panel": {
+        "type": "panel",
+        "offset": [ 0, -50 ],
+        "size": [ 200, 10 ],
+        "anchor_from": "bottom_middle",
+        "anchor_to": "bottom_middle",
+        "controls": [
+            {
+                "charge_bar@charge_bar.charge_bar_background_image": {
+                    "texture": "textures/ui/charge_bar_background",
+                    "size": [ 147, 9 ],
+                    "$bar_prefix": "charge_bar_frame:",
+                    "$bar_texture": "textures/ui/charge_bar",
+                    "$bar_size": [ 145, 9 ],
+                    "$bar_uv_size": [ 145, 9 ],
+                    "$bar_uv": "@charge_bar.charge_bar_flip_book_animation"
+                }
+            },
+            {
+                "concentration_bar@charge_bar.charge_bar_background_image": {
+                    "texture": "textures/ui/concentration_bar_background",
+                    "size": [ 152, 6 ],
+                    "$bar_prefix": "concentration_bar_frame:",
+                    "$bar_texture": "textures/ui/concentration_bar"
+                }
+            }
+        ]
+    },
+
+    "charge_bar_background_image": {
+        "type": "image",
+        "controls": [
+            {
+                "bar_image@common_bar.bar_panel": {
+                    "$update_string": "concentration_bar_value:"
+                }
+            }
+        ],
+        "bindings": [
+            {
+                "binding_name": "#hud_title_text_string"
+            },
+            {
+                "binding_type": "view",
+                "source_property_name": "(not((#hud_title_text_string - $bar_prefix) = #hud_title_text_string))",
+                "target_property_name": "#visible"
+            }
+        ]
+    },
+
+    "charge_bar_flip_book_animation": {
+        "anim_type": "flip_book",
+        "initial_uv": [ 0, 0 ],
+        "frame_count": 12,
+        "fps": 48
+    },
+
+    "bar_label@templates.preserved_title_display": {
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "font_type": "MinecraftTen",
+        "font_scale_factor": 0.8,
+        "shadow": true,
+        "alpha": 0.8,
+        "layer": 1
+    }
+}

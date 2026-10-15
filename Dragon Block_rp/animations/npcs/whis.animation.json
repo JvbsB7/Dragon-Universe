@@ -1,0 +1,16 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.whis.holding_angel_staff": {
+			"loop": true,
+			"bones": {
+				"rightArm": {
+					"rotation": [-70, 20, 0]
+				},
+				"rightItem": {
+					"rotation": [-18.9, -6.7, -18.9]
+				}
+			}
+		}
+	}
+}

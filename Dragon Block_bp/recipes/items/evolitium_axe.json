@@ -1,0 +1,31 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "dbe:evolitium_axe"
+    },
+
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "AA",
+      "BA",
+      "B "
+    ],
+    "key": {
+      "A": {
+        "item": "dbe:evolitium_crystal"
+      },
+      "B": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "dbe:evolitium_crystal"
+      }
+    ],
+    "result": {
+      "item": "dbe:evolitium_axe"
+    }
+  }
+}

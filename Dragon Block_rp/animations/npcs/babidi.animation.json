@@ -1,0 +1,49 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.babidi.setup": {
+			"loop": true,
+			"bones": {
+				"leftArm": {
+					"rotation": [27.5, 0, 20],
+					"position": [1, 0, 0]
+				},
+				"rigthArm": {
+					"rotation": [27.5, 0, -20],
+					"position": [-1, 0, 0]
+				},
+				"cape": {
+					"rotation": ["-math.sin(q.anim_time * 160) * 2 + 15", 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [0, 20, 0]
+				},
+				"leftLeg": {
+					"rotation": [0, -20, 0]
+				}
+			}
+		},
+		"animation.babidi.base_pose": {
+			"animation_length": 118.8333,
+			"bones": {
+				"leftArm": {
+					"rotation": [27.5, 0, 20],
+					"position": [1, 0, 0]
+				},
+				"rigthArm": {
+					"rotation": [27.5, 0, -20],
+					"position": [-1, 0, 0]
+				},
+				"cape": {
+					"rotation": ["-math.sin(q.anim_time * 160) * 2 + 15", 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [0, 20, 0]
+				},
+				"leftLeg": {
+					"rotation": [0, -20, 0]
+				}
+			}
+		}
+	}
+}

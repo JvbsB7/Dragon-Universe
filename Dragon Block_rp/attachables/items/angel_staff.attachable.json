@@ -1,0 +1,28 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:angel_staff",
+            "materials": {
+                "default": "entity_alphatest",
+                "enchanted": "entity_alphatest_glint"
+            },
+            "textures": {
+                "default": "textures/entity/angel_staff",
+                "enchanted": "textures/misc/enchanted_item_glint"
+            },
+            "geometry": {
+                "default": "geometry.angel_staff"
+            },
+            "scripts": {
+                "animate": [
+                    "holding"
+                ]
+            },
+            "animations": {
+                "holding": "animation.angel_staff.holding"
+            },
+            "render_controllers": [ "controller.render.item_default" ]
+        }
+    }
+}

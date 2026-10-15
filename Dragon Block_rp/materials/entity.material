@@ -1,0 +1,22 @@
+{
+    "materials": {
+        "version": "1.0.0",
+        "aura:entity_alphablend": {
+            "+states": [
+                "EnableAlphaToCoverage",
+                "DisableDepthWrite",
+                "DisableCulling"
+            ],
+            "+defines": [
+                "USE_UV_ANIM",
+                "USE_COLOR_MULTIPLY"
+            ],
+            "blend": "add",
+            "renderQueue": 1
+        },
+        "outline:entity_static": {
+            "+defines": [ "ALPHA_TEST", "USE_OVERLAY" ],
+            "+states": [ "InvertCulling" ]
+        }
+    }
+}

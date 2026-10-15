@@ -1,0 +1,25 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:item": {
+        "description": {
+            "identifier": "dbe:namek_tall_grass",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+
+        "components": {
+            "minecraft:icon": "namek_tall_grass",
+            "minecraft:display_name": {
+                "value": "tile.dbe:namek_tall_grass.name"
+            },
+            "minecraft:block_placer": {
+                "block": "dbe:namek_tall_grass",
+                "replace_block_item": true
+            },
+            "minecraft:compostable": {
+                "composting_chance": 30
+            }
+        }
+    }
+}

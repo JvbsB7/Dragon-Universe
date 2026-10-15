@@ -1,0 +1,26 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "dbe:vegeta_battle_chestplate"
+        },
+        
+        "tags": [ "crafting_table" ],
+        "ingredients": [
+            {
+                "item": "dbe:battle_chestplate"
+            },
+            {
+                "item": "minecraft:blue_dye"
+            }
+        ],
+        "unlock": [
+            {
+                "item": "dbe:battle_chestplate"
+            }
+        ],
+        "result": {
+            "item": "dbe:vegeta_battle_chestplate"
+        }
+    }
+}

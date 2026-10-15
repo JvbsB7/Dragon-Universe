@@ -1,0 +1,26 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:christmas_costume",
+            "materials": {
+                "default": "armor"
+            },
+            "textures": {
+                "christmas_costume_1": "textures/models/armors/christmas_costume/christmas_costume_1",
+                "christmas_costume_2": "textures/models/armors/christmas_costume/christmas_costume_2",
+                "christmas_costume_3": "textures/models/armors/christmas_costume/christmas_costume_3",
+                "christmas_costume_4": "textures/models/armors/christmas_costume/christmas_costume_4",
+                "christmas_costume_5": "textures/models/armors/christmas_costume/christmas_costume_5",
+                "christmas_costume_6": "textures/models/armors/christmas_costume/christmas_costume_6"
+            },
+            "geometry": {
+                "default": "geometry.christmas_costume"
+            },
+            "scripts": {
+                "parent_setup": "v.helmet_layer_visible = 0;"
+            },
+            "render_controllers": [ "controller.render.christmas_costume" ]
+        }
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.dinosaur": {
+            "arrays": {
+                "textures": {
+                    "Array.colors": [
+                        "Texture.dinosaur_brown",
+                        "Texture.dinosaur_gray",
+                        "Texture.dinosaur_green",
+                        "Texture.dinosaur_orange",
+                        "Texture.dinosaur_purple",
+                        "Texture.dinosaur_yellow",
+                        "Texture.dinosaur_alien_blue",
+                        "Texture.dinosaur_alien_red"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [ { "*": "Material.default" } ],
+            "textures": [
+                "Array.colors[q.variant]",
+                "q.is_saddled ? Texture.saddle : Texture.empty",
+                "Texture.empty"
+            ],
+            "part_visibility": [
+                { "*chest": "q.is_chested" }
+            ]
+        }
+    }
+}

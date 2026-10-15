@@ -1,0 +1,190 @@
+{
+    "namespace": "status_indicator",
+
+    "status_indicator_panel": {
+        "type": "stack_panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [ 200, 16 ],
+        "orientation": "horizontal",
+        "size": [ "100%c", 15 ],
+        "controls": [
+            {
+                "status_slot_0@status_indicator.status_slot_panel": {
+                    "$status_slot": 0
+                }
+            },
+            {
+                "status_slot_1@status_indicator.status_slot_panel": {
+                    "$status_slot": 1
+                }
+            },
+            {
+                "status_slot_2@status_indicator.status_slot_panel": {
+                    "$status_slot": 2
+                }
+            },
+            {
+                "status_slot_3@status_indicator.status_slot_panel": {
+                    "$status_slot": 3
+                }
+            },
+            {
+                "status_slot_4@status_indicator.status_slot_panel": {
+                    "$status_slot": 4
+                }
+            },
+            {
+                "status_slot_5@status_indicator.status_slot_panel": {
+                    "$status_slot": 5
+                }
+            },
+            {
+                "status_slot_6@status_indicator.status_slot_panel": {
+                    "$status_slot": 6
+                }
+            },
+            {
+                "status_slot_7@status_indicator.status_slot_panel": {
+                    "$status_slot": 7
+                }
+            },
+            {
+                "status_slot_8@status_indicator.status_slot_panel": {
+                    "$status_slot": 8
+                }
+            },
+            {
+                "status_slot_9@status_indicator.status_slot_panel": {
+                    "$status_slot": 9
+                }
+            }
+        ]
+    },
+
+    "status_slot_panel": {
+        "type": "panel",
+        "size": [ 15, 15 ],
+        "controls": [
+            {
+                "technique_slot_image": {
+                    "type": "image",
+                    "texture": "textures/ui/status_slot",
+                    "size": [ 11, 11 ],
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "$slot_condition": "('status_slot_' + $status_slot + ':')",
+                    "controls": [
+                        {
+                            "divine_ki_icon@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/divine_ki",
+                                "$status_id": "divine_ki"
+                            }
+                        },
+                        {
+                            "friendly_fist_icon@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/friendly_fist",
+                                "$status_id": "friendly_fist"
+                            }
+                        },
+                        {
+                            "hakai_icon@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/hakai",
+                                "$status_id": "hakai"
+                            }
+                        },
+                        {
+                            "kaioken_icon@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/kaioken",
+                                "$status_id": "kaioken"
+                            }
+                        },
+                        {
+                            "legendary_icon@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/legendary",
+                                "$status_id": "legendary"
+                            }
+                        },
+                        {
+                            "majin_mark_icon@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/majin_mark",
+                                "$status_id": "majin_mark"
+                            }
+                        },
+                        {
+                            "metamoran_dance@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/metamoran_dance",
+                                "$status_id": "metamoran_dance"
+                            }
+                        },
+                        {
+                            "metamoran_fusion@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/metamoran_fusion",
+                                "$status_id": "metamoran_fusion"
+                            }
+                        },
+                        {
+                            "moon_icon@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/moon",
+                                "$status_id": "moon"
+                            }
+                        },
+                        {
+                            "orange_form_icon@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/orange_form",
+                                "$status_id": "orange_form"
+                            }
+                        },
+                        {
+                            "potara_fusion@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/potara_fusion",
+                                "$status_id": "potara_fusion"
+                            }
+                        },
+                        {
+                            "ultra_instinct_icon@status_indicator.status_icon_panel": {
+                                "$icon_texture": "textures/ui/status_icons/ultra_instinct",
+                                "$status_id": "ultra_instinct"
+                            }
+                        }
+                    ],
+                    "bindings": [
+                        {
+                            "binding_name": "#hud_title_text_string"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(not((#hud_title_text_string - $slot_condition) = #hud_title_text_string))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "status_icon_panel": {
+        "type": "panel",
+        "size": [ 9, 9 ],
+        "controls": [
+            {
+                "status_image": {
+                    "type": "image",
+                    "texture": "$icon_texture",
+                    "layer": -1,
+                    "$condition": "($slot_condition + $status_id)",
+                    "bindings": [
+                        {
+                            "binding_name": "#hud_title_text_string"
+                        },
+                        {
+                            "binding_type": "view",
+                            "source_property_name": "(not((#hud_title_text_string - $condition) = #hud_title_text_string))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

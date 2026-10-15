@@ -1,0 +1,27 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "dbe:vegeta_gt_chestplate",
+            "materials": {
+                "default": "armor"
+            },
+            "textures": {
+                "default": "textures/models/armors/clothes/vegeta_gt_clothes"
+            },
+            "geometry": {
+                "default": "geometry.clothes.chestplate"
+            },
+            "scripts": {
+                "parent_setup": "v.chest_layer_visible = 0.0;",
+                "animate": [
+                    "offset"
+                ]
+            },
+            "animations": {
+                "offset": "animation.armor.chestplate.offset"
+            },
+            "render_controllers": [ "controller.render.clothes" ]
+        }
+    }
+}
