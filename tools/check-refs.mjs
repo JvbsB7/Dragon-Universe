@@ -305,7 +305,7 @@ function checkSounds(report, d) {
       if (!d.soundFiles.has(stripExt(name))) report.error("Arquivo de som inexistente", `${name} — evento ${event}`);
     }
   }
-  for (const f of d.soundFiles) if (!used.has(f)) report.warn("Arquivo de som não usado em sound_definitions.json", `Dragon Block_rp/${f}`);
+  for (const f of d.soundFiles) if (!used.has(f)) report.warn("Arquivo de som não usado em sound_definitions.json", `Dragon Universe_rp/${f}`);
 
   // Eventos usados em sounds.json.
   const sj = cachedJson(path.join(RP, "sounds.json")).data ?? {};

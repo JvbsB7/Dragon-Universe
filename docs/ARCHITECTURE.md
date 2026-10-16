@@ -8,8 +8,8 @@ A addon é composta por dois packs que dependem um do outro:
 
 | Pack | Pasta | UUID do header | Função |
 |---|---|---|---|
-| Behavior Pack | `Dragon Block_bp/` | `30f1e0c0-ded2-4f7d-b101-6863a4d94abe` | Lógica: scripts, entidades, itens, blocos, dimensões, receitas, loot, worldgen |
-| Resource Pack | `Dragon Block_rp/` | `23e2b6e9-db10-4e77-995a-1a1ce5bcd96c` | Visual e áudio: modelos, texturas, animações, partículas, sons, UI, textos |
+| Behavior Pack | `Dragon Universe_bp/` | `30f1e0c0-ded2-4f7d-b101-6863a4d94abe` | Lógica: scripts, entidades, itens, blocos, dimensões, receitas, loot, worldgen |
+| Resource Pack | `Dragon Universe_rp/` | `23e2b6e9-db10-4e77-995a-1a1ce5bcd96c` | Visual e áudio: modelos, texturas, animações, partículas, sons, UI, textos |
 
 - Versão dos packs: `1.6.17`. `min_engine_version`: `[1, 26, 40]`.
 - Script API: `@minecraft/server` **`beta`** e `@minecraft/server-ui` **`beta`** (exige o experimento *Beta APIs*; APIs beta podem mudar a cada atualização do jogo).
@@ -60,10 +60,10 @@ index.js (núcleo, legível desde a Fase 3)
 
 | Canal | Como funciona | Onde |
 |---|---|---|
-| **Propriedades de entidade** `dbe:*` (`client_sync`) | O script grava; animações e render controllers do RP leem. Ex.: `dbe:race`, `dbe:transformation` (0–31), `dbe:fly_mode`, `dbe:charging_attack` (-1–15), `dbe:aura_type`, `dbe:kaioken`, cores e customizações | `Dragon Block_bp/entities/player.json` |
-| **HUD por title/subtitle** | O script envia `title` com pares `chave:valor` (ex.: `ki_bar_frame:32`, `technique_slot_1:kamehameha`) e `subtitle` com um valor numérico por vez. A JSON UI testa se o texto contém cada token e mostra a imagem correspondente | `Dragon Block_rp/ui/hud_screen.json`, `ui/custom_hud_screen.json`, `ui/hud_screen/*`, `ui/common/*` |
-| **Roteamento de formulários** | O título do `ActionFormData` é uma chave de idioma `ui.dbe.*`; `server_form.json` compara o título e troca o layout vanilla pelo layout customizado | `Dragon Block_rp/ui/server_form.json`, `ui/menus/*` |
-| **Animation controllers do BP** | `climb_korin_tower` (levitação em coordenadas fixas) e `stop_aura_sound` | `Dragon Block_bp/animation_controllers/player_dbe.animation_controllers.json` |
+| **Propriedades de entidade** `dbe:*` (`client_sync`) | O script grava; animações e render controllers do RP leem. Ex.: `dbe:race`, `dbe:transformation` (0–31), `dbe:fly_mode`, `dbe:charging_attack` (-1–15), `dbe:aura_type`, `dbe:kaioken`, cores e customizações | `Dragon Universe_bp/entities/player.json` |
+| **HUD por title/subtitle** | O script envia `title` com pares `chave:valor` (ex.: `ki_bar_frame:32`, `technique_slot_1:kamehameha`) e `subtitle` com um valor numérico por vez. A JSON UI testa se o texto contém cada token e mostra a imagem correspondente | `Dragon Universe_rp/ui/hud_screen.json`, `ui/custom_hud_screen.json`, `ui/hud_screen/*`, `ui/common/*` |
+| **Roteamento de formulários** | O título do `ActionFormData` é uma chave de idioma `ui.dbe.*`; `server_form.json` compara o título e troca o layout vanilla pelo layout customizado | `Dragon Universe_rp/ui/server_form.json`, `ui/menus/*` |
+| **Animation controllers do BP** | `climb_korin_tower` (levitação em coordenadas fixas) e `stop_aura_sound` | `Dragon Universe_bp/animation_controllers/player_dbe.animation_controllers.json` |
 
 Limitação do HUD: qualquer `/title` disparado por outro sistema apaga o estado do HUD até a próxima atualização.
 
@@ -111,7 +111,7 @@ Qualquer mecânica nova baseada em Shift (ex.: treino de flexões) precisa consi
 
 ## 4. Módulos legíveis
 
-### 4.1 Dados (`Dragon Block_bp/scripts/data/`)
+### 4.1 Dados (`Dragon Universe_bp/scripts/data/`)
 
 Consumidos pelo núcleo. É a **principal via de extensão sem tocar no núcleo**.
 
@@ -147,7 +147,7 @@ Objeto `CONFIG` com limites de atributo, custo de atributo, itens banidos em con
 
 ### 4.3 Dimensões (`scripts/*.js`)
 
-Todas as 8 dimensões JSON (`Dragon Block_bp/dimensions/`) são `void`; **o terreno é gerado 100% por script**, chunk a chunk, à medida que jogadores se aproximam. Bedrock em y=-64 serve de marcador de "chunk gerado/decorado".
+Todas as 8 dimensões JSON (`Dragon Universe_bp/dimensions/`) são `void`; **o terreno é gerado 100% por script**, chunk a chunk, à medida que jogadores se aproximam. Bedrock em y=-64 serve de marcador de "chunk gerado/decorado".
 
 | Arquivo | Dimensão | Responsabilidade |
 |---|---|---|
@@ -181,7 +181,7 @@ Há grande duplicação entre esses arquivos (ruído, geração de chunk, viagem
 | Novo conjunto de Esferas | Quase | `dragon_balls_data.js` + bloco com componente `dbe:dragon_ball`; posicionamento especial é hardcoded |
 | Conquista | Sim | `achievements_data.js` |
 | Nova dimensão/planeta | Não | JSON em `dimensions/`, bioma BP/RP, script gerador (ver padrões existentes), destino no Star Navigator |
-| Textos | Sim | `Dragon Block_rp/texts/{en_US,es_ES,pt_BR}.lang` — manter as três línguas sincronizadas |
+| Textos | Sim | `Dragon Universe_rp/texts/{en_US,es_ES,pt_BR}.lang` — manter as três línguas sincronizadas |
 | Regras de dano, voo, entradas, fórmulas | **Não** | `scripts/index.js` (legível; nomes de variáveis ainda curtos) |
 
 Existem scriptevents de registro em tempo de execução (`dbe:quest_registry`, `dbe:dialogue_registry`, `dbe:entity_registry`, `dbe:modifier_registry`, `dbe:shop_registry`) que aceitam JSON; eles não validam a origem nem tratam JSON inválido.

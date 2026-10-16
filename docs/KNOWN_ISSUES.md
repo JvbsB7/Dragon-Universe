@@ -101,23 +101,23 @@ Verificação automática: `node tools/validate.mjs` (ver [README](../README.md#
 - **Validação:** jogar até a saga Freeza e entrar em Namek — **precisa ser confirmado no jogo**.
 
 ### C15 🟡 Som de carga cortado para todos — 🔧
-- **Onde:** `Dragon Block_bp/animation_controllers/player_dbe.animation_controllers.json` (`stop_aura_sound`).
+- **Onde:** `Dragon Universe_bp/animation_controllers/player_dbe.animation_controllers.json` (`stop_aura_sound`).
 - **Causa:** `/stopsound @a`.
 - **Correção aplicada:** `@s`.
 - **Validação:** dois jogadores carregando ki; um para — o som do outro deve continuar.
 
 ### C16 🟡 Barra de ki vermelha invisível — 🔧
-- **Onde:** `Dragon Block_rp/ui/hud_screen/stats_bar.json` (`ki_bar_root`).
+- **Onde:** `Dragon Universe_rp/ui/hud_screen/stats_bar.json` (`ki_bar_root`).
 - **Causa:** só havia painéis blue/green/pink/purple/yellow/white, embora `red` exista em `ki_colors_data.js` e a textura exista.
 - **Observação:** o núcleo envia `auraProperties.kiBarColor` direto para a HUD (padrão `blue`); hoje nenhuma forma usa `red`, então o defeito não aparecia.
 - **Correção aplicada:** painel `red_ki_bar` adicionado. O `check-data` valida `kiBarColor` contra os painéis da HUD.
 
 ### C17 🟡 Arquivos e textos
-- 🔧 `Dragon Block_bp/blocks/decor/red_tile_slab.txt`: definição salva como `.txt`, nunca carregou. Renomeada para `red_tile_slab.json` e incluída no `contents.json`, em `blocks.json` (som) e nos três `.lang` (decisão da equipe: ativar). O componente `dbe:slab` é registrado pelo núcleo. **Pendente:** não há receita (a laje só aparece no inventário criativo); `map_color` é azul (`#4e50cf`); testar laje dupla (`dbe:double_bit`) e o drop ao quebrar.
-- 🔧 `Dragon Block_bp/contents.json`: listava `worldgen/structure_sets/city.txt` (inexistente) no lugar de `city.json`.
+- 🔧 `Dragon Universe_bp/blocks/decor/red_tile_slab.txt`: definição salva como `.txt`, nunca carregou. Renomeada para `red_tile_slab.json` e incluída no `contents.json`, em `blocks.json` (som) e nos três `.lang` (decisão da equipe: ativar). O componente `dbe:slab` é registrado pelo núcleo. **Pendente:** não há receita (a laje só aparece no inventário criativo); `map_color` é azul (`#4e50cf`); testar laje dupla (`dbe:double_bit`) e o drop ao quebrar.
+- 🔧 `Dragon Universe_bp/contents.json`: listava `worldgen/structure_sets/city.txt` (inexistente) no lugar de `city.json`.
 - 🔧 `dbe:medical_moss` era item e bloco ao mesmo tempo, sem `replace_block_item`. O item colhido ganhou `minecraft:block_placer` com `replace_block_item: true` (padrão dos outros pares item/bloco); o id `dbe:medical_moss` foi mantido, então plantações já existentes nos mundos continuam válidas. Efeito colateral: o musgo colhido também pode ser plantado, como a batata vanilla.
 - Texturas ausentes: `textures/ui/buttons/help_button(_hover)` (`ui/menus/menu_form.json`) — **precisa de arte**; `textures/ui/images/patreon_items` e `patreon_chat` (`ui/menus/news_form.json`) — ficam para a substituição do sistema Patreon (Fase 3).
-- 🔧 `Dragon Block_rp/texts/en_US.lang:588`: chave com `saga.` duplicado.
+- 🔧 `Dragon Universe_rp/texts/en_US.lang:588`: chave com `saga.` duplicado.
 - 🔧 Chaves só em pt_BR (saga Future Trunks e convite de mentor): traduzidas para en_US e es_ES — **revisão de texto recomendada**. Os três diálogos da Bulma em `saga_future_trunks_3` (objetivo 1) estão como `""` nas três línguas: **texto a escrever**.
 - 🔧 Geometrias `kale_hair` e `trunks_hair` definidas duas vezes: removidas as cópias de `legacy_hairs/` (nenhuma entidade usa essas duas geometrias).
 - 🔧 `items/music_disc_hero.json` com `format_version: "beta"` → `1.26.4`.
@@ -137,7 +137,7 @@ Verificação automática: `node tools/validate.mjs` (ver [README](../README.md#
 - 🔧 `saga_universe_6_1`: os dados têm 5 objetivos, mas os `.lang` usavam a numeração anterior (sem o objetivo `enter_biome`); os diálogos do Goku e o de conclusão apareciam como chave crua. Chaves renumeradas nas três línguas.
 - Chaves `quest.battle_jacket_return.*` nas três línguas sem missão correspondente nos dados (missão removida ou não implementada).
 - `entities_data.js` `dbe:frieza`: forma `mecha_frieza` sem multiplicadores e fora das formas de `frost_demon`.
-- `Dragon Block_rp/.png`: PNG 16×16 com nome vazio na raiz do RP (listado no `contents.json`).
+- `Dragon Universe_rp/.png`: PNG 16×16 com nome vazio na raiz do RP (listado no `contents.json`).
 - Entidades do BP sem `client_entity` (invisíveis): `dbe:test_enemy`, `dbe:player_fly`, `dbe:location` — provavelmente intencional.
 - Sons sem evento em `sound_definitions.json`: `sounds/ui/exit`, `sounds/ui/kaioken`, `sounds/ui/sair`.
 
@@ -199,6 +199,8 @@ Em investigação:
 
 - `pack.name` (BP e RP, três idiomas) passou de "Dragon Block" para "Dragon Universe"; grupo de itens do inventário, notícias, textos de apoio e mensagens de servidor trocaram "DBE"/"Dragon Evolution" por "Dragon Universe". `pack.credits` passou a "Dragon Universe v1.6.17 - baseado no Dragon Evolution de About04" (crédito ao autor original mantido).
 - **Não alterado de propósito:** namespace `dbe:`, chaves de salvamento `dragon_evolution`, nomes das pastas dos packs e uma mensagem de depuração dentro do núcleo ofuscado ("entidades do DBE").
+- 2026-10-16: pastas renomeadas para `Dragon Universe_bp` e `Dragon Universe_rp`; nome "Dragon Universe" escrito direto nos dois `manifest.json` (antes vinha de `pack.name`) e autores atualizados (equipe + About04). Os UUIDs não mudaram, então os mundos continuam reconhecendo os packs.
+- **Pendente — logo da tela de carregamento:** `Dragon Universe_rp/textures/ui/title.png` (2005×514, PNG RGBA) é uma imagem com o texto "MINECRAFT DRAGON EVOLUTION", mostrada no lugar do logo do Minecraft. Precisa de uma arte nova com "Dragon Universe".
 - **Pendente:** o conteúdo de `pack.news`, `donate.*` e `server.message.*` ainda é o texto do autor original (notícias da versão beta, valores e canais de apoio do Patreon dele); deve ser reescrito com as informações da equipe junto com a troca do sistema Patreon.
 
 ### C29 🟠 Erros do Content Log no Bedrock 26.52 (teste de 2026-10-16) — 🔧

@@ -1,4 +1,4 @@
-// Torna legível o núcleo ofuscado (Dragon Block_bp/scripts/index.js) sem mudar a lógica.
+// Torna legível o núcleo ofuscado (Dragon Universe_bp/scripts/index.js) sem mudar a lógica.
 //
 // O ofuscador guardou todos os textos numa tabela embaralhada (função `a`) lida por um decodificador
 // (função `b`, com vários apelidos como `tk`, `vT`...): `tk(0x1a3)` em vez de "ki". Este script:

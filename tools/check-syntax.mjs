@@ -1,4 +1,4 @@
-// Verifica a sintaxe de todos os .js de Dragon Block_bp/scripts com `node --check`.
+// Verifica a sintaxe de todos os .js de Dragon Universe_bp/scripts com `node --check`.
 // Os scripts do Minecraft são módulos ES. Em `node --check arquivo.js` (sem package.json com
 // "type": "module") o Node 22 não reporta erros de arquivos com import/export, então o código
 // é enviado pela entrada padrão com --input-type=module.

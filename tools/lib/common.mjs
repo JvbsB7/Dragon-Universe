@@ -5,8 +5,8 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
-export const BP = path.join(ROOT, "Dragon Block_bp");
-export const RP = path.join(ROOT, "Dragon Block_rp");
+export const BP = path.join(ROOT, "Dragon Universe_bp");
+export const RP = path.join(ROOT, "Dragon Universe_rp");
 export const PACKS = [
   { name: "BP", dir: BP },
   { name: "RP", dir: RP },
@@ -197,7 +197,7 @@ export function isMain(metaUrl) {
 }
 
 /**
- * Importa os módulos de Dragon Block_bp/scripts/data/*.js sem alterá-los.
+ * Importa os módulos de Dragon Universe_bp/scripts/data/*.js sem alterá-los.
  * Os arquivos usam imports sem extensão ("./variables") e não há package.json com "type": "module",
  * então são copiados para uma pasta temporária como .mjs, com os especificadores relativos corrigidos.
  * Imports de "@minecraft/*" (se surgirem) são trocados por um stub vazio.
@@ -225,7 +225,7 @@ export async function loadDataModules() {
       try {
         modules[f.replace(/\.js$/, "")] = await import(url);
       } catch (err) {
-        errors.push({ file: `Dragon Block_bp/scripts/data/${f}`, message: err.message });
+        errors.push({ file: `Dragon Universe_bp/scripts/data/${f}`, message: err.message });
       }
     }
   } finally {

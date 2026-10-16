@@ -1,6 +1,6 @@
 // Compara o comportamento dos scripts de uma revisão do Git com o da pasta atual, sem Minecraft.
 //
-// Cada versão de Dragon Block_bp/scripts/ é carregada com um @minecraft/server falso; tudo o que ela chama no
+// Cada versão de Dragon Universe_bp/scripts/ é carregada com um @minecraft/server falso; tudo o que ela chama no
 // "jogo" (inscrições em eventos, registros, intervalos, consultas...) é registrado, e os callbacks registrados
 // também são executados. Se os dois registros forem idênticos, a mudança não alterou o que os scripts fazem nesse
 // cenário. Serve para refatorações que não devem mudar a lógica (ex.: renomear variáveis do núcleo). Não substitui
@@ -15,16 +15,25 @@ import url from "node:url";
 
 const root = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), "..");
 const rev = process.argv[2] ?? "HEAD";
-const SCRIPTS = "Dragon Block_bp/scripts";
+const SCRIPTS = "Dragon Universe_bp/scripts";
 const runner = path.join(root, "tools", "lib", "run-with-stub.mjs");
 const work = fs.mkdtempSync(path.join(os.tmpdir(), "du-compare-"));
 
+// revisões anteriores a 2026-10-16 usam o nome antigo da pasta do Behavior Pack
+const OLD_SCRIPTS = "Dragon Block_bp/scripts";
+
 function extractRevision(target) {
   // lista e copia os arquivos da revisão sem mexer na pasta de trabalho
-  const files = execFileSync("git", ["ls-tree", "-r", "--name-only", rev, "--", SCRIPTS], { cwd: root, encoding: "utf8" }).split("\n").filter(Boolean);
+  const list = (dir) => execFileSync("git", ["ls-tree", "-r", "--name-only", rev, "--", dir], { cwd: root, encoding: "utf8" }).split("\n").filter(Boolean);
+  let base = SCRIPTS;
+  let files = list(SCRIPTS);
+  if (!files.length) {
+    base = OLD_SCRIPTS;
+    files = list(OLD_SCRIPTS);
+  }
   if (!files.length) throw new Error(`nenhum arquivo de ${SCRIPTS} na revisão ${rev}`);
   for (const f of files) {
-    const dest = path.join(target, path.relative(SCRIPTS, f));
+    const dest = path.join(target, path.relative(base, f));
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.writeFileSync(dest, execFileSync("git", ["show", `${rev}:${f}`], { cwd: root, maxBuffer: 64 * 1024 * 1024 }));
   }

@@ -35,7 +35,7 @@ Problemas conhecidos: [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md).
 
 ## ▶️ Como instalar e testar
 
-1. Copie `Dragon Block_bp` para a pasta `development_behavior_packs` e `Dragon Block_rp` para `development_resource_packs`, dentro da pasta `com.mojang` do Minecraft Bedrock.
+1. Copie `Dragon Universe_bp` para a pasta `development_behavior_packs` e `Dragon Universe_rp` para `development_resource_packs`, dentro da pasta `com.mojang` do Minecraft Bedrock.
    As pastas `development_*` recarregam os arquivos sem precisar reimportar o pacote.
 2. Crie um mundo de teste, ative o **Behavior Pack** (o Resource Pack é ativado junto) e o experimento **Beta APIs**.
 3. Ative os cheats se quiser usar os comandos administrativos (`/dbe:*`).
@@ -92,11 +92,11 @@ Dragon Universe/
 │  ├─ ROADMAP.md              ← fases, prioridades e checklist de testes
 │  └─ CREDITS.md              ← autor original e equipe
 ├─ tools/                     ← validação automática (Node, sem dependências)
-├─ Dragon Block_bp/           ← Behavior Pack (lógica)
-└─ Dragon Block_rp/           ← Resource Pack (visual, som, UI, textos)
+├─ Dragon Universe_bp/           ← Behavior Pack (lógica)
+└─ Dragon Universe_rp/           ← Resource Pack (visual, som, UI, textos)
 ```
 
-### Behavior Pack (`Dragon Block_bp/`)
+### Behavior Pack (`Dragon Universe_bp/`)
 
 | Pasta | Responsabilidade |
 |---|---|
@@ -109,7 +109,7 @@ Dragon Universe/
 | `dimensions/`, `biomes/`, `features/`, `feature_rules/`, `worldgen/`, `structures/` | Dimensões (todas vazias, terreno por script), biomas e estruturas |
 | `animation_controllers/` | Escalada da Torre de Korin e parada do som da aura |
 
-### Resource Pack (`Dragon Block_rp/`)
+### Resource Pack (`Dragon Universe_rp/`)
 
 | Pasta | Responsabilidade |
 |---|---|
@@ -123,15 +123,15 @@ Dragon Universe/
 
 | Quero alterar… | Arquivo |
 |---|---|
-| Atributos e transformações de uma raça | `Dragon Block_bp/scripts/data/races_data.js` |
+| Atributos e transformações de uma raça | `Dragon Universe_bp/scripts/data/races_data.js` |
 | Transformações globais (Ultimate, Beast, Ultra Ego) | `scripts/data/global_transformations_data.js` |
 | Ataques de ki e técnicas | `scripts/data/skills_data.js` |
 | Chefes e inimigos (nível, skills, formas) | `scripts/data/entities_data.js` |
 | Missões | `scripts/data/main_quests_data.js`, `side_quests_data.js`, `challenge_quests_data.js` |
 | Diálogos de NPC e o que cada um ensina/vende | `scripts/data/dialogues_data.js`, `shop_data.js`, `masters_data.js` |
 | Desejos e Esferas | `scripts/data/wish_data.js`, `dragon_balls_data.js` |
-| Textos exibidos | `Dragon Block_rp/texts/*.lang` |
-| Regras de dano, voo, controles, fórmulas | `Dragon Block_bp/scripts/index.js` — validar com `node tools/compare-scripts.mjs` |
+| Textos exibidos | `Dragon Universe_rp/texts/*.lang` |
+| Regras de dano, voo, controles, fórmulas | `Dragon Universe_bp/scripts/index.js` — validar com `node tools/compare-scripts.mjs` |
 
 Detalhes, limites e cuidados (ex.: transformações novas devem ser acrescentadas **no fim** da lista da raça): [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#5-onde-adicionar-ou-modificar-conteúdo).
 
@@ -140,7 +140,7 @@ Detalhes, limites e cuidados (ex.: transformações novas devem ser acrescentada
 - **Não renomeie** o namespace `dbe:`, os ids existentes nem as chaves de salvamento — mundos existentes perderiam progresso.
 - **Não reordene** transformações nem tarefas de missão já publicadas: o progresso salvo usa a posição na lista.
 - **Não mova arquivos** dos packs sem atualizar referências, `contents.json` e manifests.
-- O nome exibido no jogo é "Dragon Universe" (`pack.name` nos `.lang`). As pastas continuam `Dragon Block_bp`/`Dragon Block_rp` e os ids internos continuam `dbe:` e `dragon_evolution` (chaves de salvamento) — não renomear sem migração.
+- O nome exibido no jogo é "Dragon Universe" (nome direto nos dois `manifest.json` e `pack.name` nos `.lang`); as pastas são `Dragon Universe_bp` e `Dragon Universe_rp`. Os ids internos continuam `dbe:` e as chaves de salvamento `dragon_evolution` — não renomear sem migração. Os UUIDs dos packs não mudaram, então mundos existentes continuam reconhecendo os packs.
 
 ## 👥 Créditos
 

@@ -1,7 +1,7 @@
 {
     "format_version": 2,
     "header": {
-        "name": "pack.name",
+        "name": "Dragon Universe",
         "description": "pack.description",
         "uuid": "23e2b6e9-db10-4e77-995a-1a1ce5bcd96c",
         "version":  [1, 6, 17],
@@ -17,7 +17,8 @@
     "metadata": {
         "product_type": "addon",
         "authors": [
-            "About04"
+            "Equipe Dragon Universe (João Vitor, Ricardo Vinicius, Rian Franco)",
+            "About04 (Dragon Evolution, projeto original)"
         ]
     },
     "dependencies": [

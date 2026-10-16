@@ -1,4 +1,4 @@
-// Integridade dos dados em Dragon Block_bp/scripts/data/*.js (importados sem alteração):
+// Integridade dos dados em Dragon Universe_bp/scripts/data/*.js (importados sem alteração):
 // raças, skills, transformações, cores de ki, treinadores, missões, diálogos, desejos e
 // chaves de idioma nas três línguas (en_US, es_ES, pt_BR).
 // Uso: node tools/check-data.mjs
