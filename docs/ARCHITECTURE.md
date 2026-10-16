@@ -16,14 +16,15 @@ A addon é composta por dois packs que dependem um do outro:
 - Namespace de todo o conteúdo: `dbe:` (de *Dragon Block Evolution*). **Não renomear** — ids salvos em mundos existentes dependem dele.
 - Versão-alvo do jogo definida pela equipe: **Bedrock 26.52**.
 
-## 2. O núcleo ofuscado (`scripts/index.js`)
+## 2. O núcleo (`scripts/index.js`)
 
-`Dragon Block_bp/scripts/index.js` tem ~1,39 MB. As linhas 1–3 são imports legíveis; a linha 4 contém **todo o núcleo** em uma única linha, passado por um *bundler* e depois por um ofuscador (tabela de strings embaralhada, nomes de variáveis sem significado como `i3`, `hO`, `bF`). As linhas 6–19 são um patch legível adicionado depois (Maçã Demoníaca).
+O núcleo veio do autor original passado por um *bundler* e por um ofuscador: ~1,39 MB numa única linha, com todos os textos numa tabela embaralhada. Na Fase 3 (passo 1) ele foi convertido por `tools/deobfuscate-core.mjs` numa versão **legível e equivalente** (~19.600 linhas, ~790 KB): textos decodificados, `obj["x"]` → `obj.x`, números em decimal, tabela e decodificador (código morto) removidos e formatação com o Prettier. A versão ofuscada continua no histórico do Git (commit `2d4f628`).
 
-Consequências práticas:
+O que continua difícil:
 
+- Os **nomes de variáveis** curtos (`sG`, `i3`, `hO`, `bF`...) vieram do ofuscador e não podem ser recuperados; serão renomeados aos poucos (Fase 3, passo 2).
 - Quase toda a lógica de jogo vive nesse arquivo: combate, atributos, raças, transformações, skills, voo, treino, missões, NPCs, lojas, Esferas do Dragão, desejos, comandos, HUD e persistência.
-- Não é possível editar esse código com segurança sem antes torná-lo legível (ver `ROADMAP.md`, Fase 3).
+- Toda mudança que não deve alterar a lógica (renomear, extrair módulos) deve passar por `node tools/compare-scripts.mjs`, que carrega a versão anterior e a atual com um `@minecraft/server` falso e compara todas as chamadas feitas ao jogo.
 - Já existem patches inseridos diretamente no bundle (Maçã Demoníaca, recompensa de raça, multiplicador Demon ×2.25, bônus Glind ×1.1, XP por dimensão, zeni por abate). Eles dependem de nomes internos ofuscados (ex.: `i3.getDBEEntity`) e quebram se o bundle for regenerado.
 
 Os nomes "descritivos" usados abaixo foram dados durante a auditoria; o código não usa esses nomes.
@@ -31,7 +32,7 @@ Os nomes "descritivos" usados abaixo foram dados durante a auditoria; o código 
 ## 3. Mapa dos sistemas
 
 ```
-index.js (núcleo ofuscado)
+index.js (núcleo, legível desde a Fase 3)
  ├─ importa config/config.js e data/*.js (dados legíveis)
  ├─ importa os módulos de dimensão legíveis:
  │    kai_dimension.js ──► space_planets.js ──► planet_villages.js
@@ -112,7 +113,7 @@ Qualquer mecânica nova baseada em Shift (ex.: treino de flexões) precisa consi
 
 ### 4.1 Dados (`Dragon Block_bp/scripts/data/`)
 
-Consumidos pelo núcleo. É a **principal via de extensão sem tocar no código ofuscado**.
+Consumidos pelo núcleo. É a **principal via de extensão sem tocar no núcleo**.
 
 | Arquivo | Export | Conteúdo |
 |---|---|---|
@@ -181,7 +182,7 @@ Há grande duplicação entre esses arquivos (ruído, geração de chunk, viagem
 | Conquista | Sim | `achievements_data.js` |
 | Nova dimensão/planeta | Não | JSON em `dimensions/`, bioma BP/RP, script gerador (ver padrões existentes), destino no Star Navigator |
 | Textos | Sim | `Dragon Block_rp/texts/{en_US,es_ES,pt_BR}.lang` — manter as três línguas sincronizadas |
-| Regras de dano, voo, entradas, fórmulas | **Não** | Núcleo ofuscado — aguardar Fase 3 |
+| Regras de dano, voo, entradas, fórmulas | **Não** | `scripts/index.js` (legível; nomes de variáveis ainda curtos) |
 
 Existem scriptevents de registro em tempo de execução (`dbe:quest_registry`, `dbe:dialogue_registry`, `dbe:entity_registry`, `dbe:modifier_registry`, `dbe:shop_registry`) que aceitam JSON; eles não validam a origem nem tratam JSON inválido.
 
@@ -192,4 +193,4 @@ Existem scriptevents de registro em tempo de execução (`dbe:quest_registry`, `
 | 2026-10-14 | Versão-alvo: Bedrock 26.52 | Definido pela equipe |
 | 2026-10-14 | Não renomear namespace `dbe:` nem chaves de persistência sem migração | Compatibilidade com mundos existentes |
 | 2026-10-14 | Sistema Patreon do autor original será substituído por um sistema próprio da equipe | Definido pela equipe |
-| pendente | Estratégia para o núcleo ofuscado (recomendado: tornar legível progressivamente) | Aguardando aprovação |
+| 2026-10-16 | Núcleo convertido para versão legível equivalente (Prettier como ferramenta de desenvolvimento em `tools/`); renomeação de símbolos aos poucos | Aprovado pela equipe; equivalência verificada com `tools/compare-scripts.mjs` |

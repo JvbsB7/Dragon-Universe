@@ -5,7 +5,7 @@
 > - **Confirmado**: o defeito é evidente no código.
 > - **Possível**: depende de comportamento do motor/API ou de cenário específico; precisa de teste.
 >
-> Problemas no núcleo ofuscado (`scripts/index.js`) são localizados pelo subsistema, pois o arquivo é uma única linha. Problemas em arquivos legíveis trazem `arquivo:linha`.
+> Problemas no núcleo (`scripts/index.js`) são localizados pelo subsistema: o arquivo era uma única linha ofuscada quando a auditoria foi feita (desde 2026-10-16 é a versão legível equivalente). Problemas em arquivos legíveis trazem `arquivo:linha`.
 
 Legenda de severidade: 🔴 crítico · 🟠 alto · 🟡 médio · ⚪ baixo
 

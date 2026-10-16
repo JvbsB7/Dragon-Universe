@@ -69,6 +69,8 @@ Cada verificação também pode ser executada separadamente (aceitam as mesmas o
 | `tools/check-refs.mjs` | Entidades BP↔RP; geometrias, texturas, animações, render controllers e sons usados por entidades e attachables; caminhos `textures/...` da UI, partículas e dados; ícones em `item_texture.json`; texturas de blocos em `terrain_texture.json`/`blocks.json`; arquivos e eventos de `sound_definitions.json`; loot tables, recipes, spawn rules e feature rules; ids `dbe:` usados em `scripts/data/*.js` sem definição JSON; ids duplicados; item e bloco com o mesmo id sem `block_placer.replace_block_item` |
 | `tools/check-data.mjs` | Importa `scripts/data/*.js` e confere: raças, skills, transformações, missões, regiões, diálogos e modificadores referenciados existem; cores de ki existem em `ki_colors_data`; skills com treinador acessível (NPC com submenu de skills) ou obtidas por recompensa; `entityDefinitions` das missões; chaves de idioma de missões, conquistas e diálogos presentes em `en_US`, `es_ES` e `pt_BR`; chaves órfãs, repetidas ou presentes só em parte das línguas |
 | `tools/check-syntax.mjs` | `node --check` em todos os `.js` de `scripts/` (inclusive o núcleo, sem modificá-lo). Aceita caminhos como argumento para checar arquivos específicos |
+| `tools/compare-scripts.mjs [revisão]` | Carrega os scripts da revisão do Git (padrão `HEAD`) e os da pasta atual com um `@minecraft/server` falso, executa os callbacks registrados e compara todas as chamadas feitas ao jogo. Use em mudanças que não devem alterar a lógica. Não substitui o teste no jogo |
+| `tools/deobfuscate-core.mjs <entrada> <saída>` | Conversão (já aplicada) do núcleo ofuscado para a versão legível. Precisa do Prettier: `cd tools && npm install` |
 
 **Erros** são problemas que quebram algo no jogo ou deixam conteúdo inacessível; **avisos** são suspeitas que precisam de análise. Enquanto houver itens pendentes em [KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md) (texturas da UI em C17, raça glind em C18), a validação termina com código `1` — é esperado. Ao corrigir um problema, a contagem de erros deve cair; um erro novo indica regressão.
 
@@ -98,7 +100,7 @@ Dragon Universe/
 
 | Pasta | Responsabilidade |
 |---|---|
-| `scripts/index.js` | **Núcleo ofuscado**: combate, atributos, raças, transformações, skills, voo, treinos, missões, NPCs, lojas, Esferas, comandos, HUD e salvamento. Não editar diretamente (ver [arquitetura](docs/ARCHITECTURE.md#2-o-núcleo-ofuscado-scriptsindexjs)) |
+| `scripts/index.js` | **Núcleo** (legível desde a Fase 3; nomes de variáveis ainda curtos): combate, atributos, raças, transformações, skills, voo, treinos, missões, NPCs, lojas, Esferas, comandos, HUD e salvamento. Não editar diretamente (ver [arquitetura](docs/ARCHITECTURE.md#2-o-núcleo-ofuscado-scriptsindexjs)) |
 | `scripts/data/` | Dados legíveis consumidos pelo núcleo: raças, transformações, skills, missões, diálogos, lojas, desejos, Esferas, regiões, chefes. **Principal ponto de extensão** |
 | `scripts/config/config.js` | Parâmetros gerais: limites de atributo, XP, recompensas, clear lag, stamina, cooldowns |
 | `scripts/*_dimension.js`, `space_planets.js`, `planet_villages.js`, `hell_terrain.js`, `other_world_kai.js` | Geração por script dos planetas e viagem entre dimensões |
@@ -129,7 +131,7 @@ Dragon Universe/
 | Diálogos de NPC e o que cada um ensina/vende | `scripts/data/dialogues_data.js`, `shop_data.js`, `masters_data.js` |
 | Desejos e Esferas | `scripts/data/wish_data.js`, `dragon_balls_data.js` |
 | Textos exibidos | `Dragon Block_rp/texts/*.lang` |
-| Regras de dano, voo, controles, fórmulas | Núcleo ofuscado — aguardando a Fase 3 |
+| Regras de dano, voo, controles, fórmulas | `Dragon Block_bp/scripts/index.js` — validar com `node tools/compare-scripts.mjs` |
 
 Detalhes, limites e cuidados (ex.: transformações novas devem ser acrescentadas **no fim** da lista da raça): [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#5-onde-adicionar-ou-modificar-conteúdo).
 

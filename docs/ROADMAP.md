@@ -5,7 +5,7 @@
 ## Princípios
 
 1. Estabilidade antes de conteúdo: corrigir perda de save, exploits e bloqueios de campanha primeiro.
-2. Nada de novos sistemas em cima do núcleo ofuscado sem antes torná-lo legível.
+2. Mudanças no núcleo (`scripts/index.js`) passam por `node tools/compare-scripts.mjs` quando não devem alterar a lógica.
 3. Compatibilidade de save: não renomear namespace `dbe:`, chaves de persistência nem reordenar listas posicionais (transformações, tarefas de missão) sem migração.
 4. Toda mudança passa pela validação automática (Fase 2a) e por um checklist de regressão no jogo, executado pela equipe.
 5. Versão-alvo: **Bedrock 26.52**.
@@ -43,8 +43,8 @@ Arquivos legíveis (corrigidos no código em 2026-10-15, **aguardando teste no j
 Pendentes de decisão/arte: botão de ajuda (textura `help_button`), imagens do Patreon (Fase 3), raça glind dos Zamasu (Fase 5), diálogos da Bulma em `saga_future_trunks_3`, chaves `battle_jacket_return`.
 
 ### Fase 3 — Núcleo legível e organização
-Estratégia recomendada (aguardando aprovação):
-1. Substituir `index.js` por uma versão com as strings decodificadas e formatada (mesmo comportamento) e validar no jogo.
+Estratégia aprovada em 2026-10-16:
+1. [x] Substituir `index.js` por uma versão com as strings decodificadas e formatada (mesmo comportamento) — feito com `tools/deobfuscate-core.mjs`; equivalência verificada com `tools/compare-scripts.mjs`. **Falta o teste completo no jogo.**
 2. Renomear símbolos e extrair módulos por domínio, um de cada vez, testando a cada passo: `core/` (db, entidades, eventos) → `combat/` → `races/` → `skills/` → `flight/` → `training/` → `quests/` → `ui/` → `world/`.
 3. Extrair o código duplicado das dimensões para `scripts/shared/` (ruído, geração de chunk, viagem/origem) e unificar os scanners em um único agendador.
 4. Substituir o sistema Patreon do autor original pelo sistema próprio da equipe e remover o backdoor.
@@ -66,7 +66,7 @@ Estratégia recomendada (aguardando aprovação):
 8. Novas Esferas (Super, Daima, Cereal) — **somente após corrigir C3/C4**.
 
 ### Fase 6 — Otimização contínua
-- Voo: reescrever só depois do núcleo legível (o mecanismo está todo no código ofuscado).
+- Voo: corrigir peso e tremor no núcleo, agora legível (após o teste do passo 1 da Fase 3).
 - Quantidade de aldeões nas vilas e entidades por tick.
 - Intervalos e consultas por tick.
 
