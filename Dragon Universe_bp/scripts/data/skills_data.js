@@ -187,6 +187,9 @@ const skills_data = [
   {
     type: "ki_attack",
     id: "genki_dama",
+    // sons provisórios: reaproveitam absorção (carga) e Kamehameha (disparo) até existir um som próprio
+    shootSound: "skill.genki_dama_launch",
+    startChargeSound: "skill.genki_dama",
     chargeKiDrain: 50,
     chargeSpeed: 0.5,
     offset: [0, 4, 0],

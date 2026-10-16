@@ -57,9 +57,7 @@
             // },
             "minecraft:tags": {
                 "tags": [
-                    "animal",
-                    "namek",
-                    "overworld"
+                    "namek"
                 ]
             }
         }

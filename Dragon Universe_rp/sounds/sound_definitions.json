@@ -604,6 +604,22 @@
                 }
             ]
         },
+        "skill.genki_dama": {
+            "sounds": [
+                {
+                    "name": "sounds/skill/absorbing",
+                    "volume": 0.4
+                }
+            ]
+        },
+        "skill.genki_dama_launch": {
+            "sounds": [
+                {
+                    "name": "sounds/skill/kamehameha_launch",
+                    "volume": 0.08
+                }
+            ]
+        },
         "skill.kamehameha": {
             "sounds": [
                 {

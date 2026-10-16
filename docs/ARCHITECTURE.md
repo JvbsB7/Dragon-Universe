@@ -11,7 +11,7 @@ A addon é composta por dois packs que dependem um do outro:
 | Behavior Pack | `Dragon Universe_bp/` | `30f1e0c0-ded2-4f7d-b101-6863a4d94abe` | Lógica: scripts, entidades, itens, blocos, dimensões, receitas, loot, worldgen |
 | Resource Pack | `Dragon Universe_rp/` | `23e2b6e9-db10-4e77-995a-1a1ce5bcd96c` | Visual e áudio: modelos, texturas, animações, partículas, sons, UI, textos |
 
-- Versão dos packs: `1.6.17`. `min_engine_version`: `[1, 26, 40]`.
+- Versão dos packs: `1.7.0` (era `1.6.17` na base original; subir a versão a cada pacote distribuído, senão o Minecraft mantém o pack antigo instalado). `min_engine_version`: `[1, 26, 40]`.
 - Script API: `@minecraft/server` **`beta`** e `@minecraft/server-ui` **`beta`** (exige o experimento *Beta APIs*; APIs beta podem mudar a cada atualização do jogo).
 - Namespace de todo o conteúdo: `dbe:` (de *Dragon Block Evolution*). **Não renomear** — ids salvos em mundos existentes dependem dele.
 - Versão-alvo do jogo definida pela equipe: **Bedrock 26.52**.

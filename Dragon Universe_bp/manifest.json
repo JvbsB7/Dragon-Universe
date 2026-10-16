@@ -4,21 +4,21 @@
         "name": "Dragon Universe",
         "description": "pack.description",
         "uuid": "30f1e0c0-ded2-4f7d-b101-6863a4d94abe",
-        "version": [1, 6, 17],
+        "version": [1, 7, 0],
         "min_engine_version": [ 1, 26, 40 ]
     },
     "modules": [
         {
             "type": "data",
             "uuid": "2b538ea0-b207-4cee-9f43-623ad2ddce01",
-            "version": [1, 6, 17]
+            "version": [1, 7, 0]
         },
         {
             "type": "script",
             "language": "javascript",
             "uuid": "ed72aea2-84a4-45ae-819f-981acef841a6",
             "entry": "index.js",
-            "version": [1, 6, 17]
+            "version": [1, 7, 0]
         }
     ],
     "metadata": {
@@ -31,7 +31,7 @@
     "dependencies": [
         {
             "uuid": "23e2b6e9-db10-4e77-995a-1a1ce5bcd96c",
-            "version": [1, 6, 17]
+            "version": [1, 7, 0]
         },
         {
             "module_name": "@minecraft/server",
