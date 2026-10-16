@@ -10,17 +10,12 @@
                 },
                 {
                     "type": "item",
-                    "name": "dbe:space_helmet",
-                    "weight": 3
-                },
-                {
-                    "type": "item",
                     "name": "dbe:nanochip",
                     "weight": 4
                 },
                 {
                     "type": "empty",
-                    "weight": 6
+                    "weight": 9
                 }
             ]
         },

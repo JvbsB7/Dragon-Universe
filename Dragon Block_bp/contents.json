@@ -1168,9 +1168,6 @@
          "path" : "items/medical_moss_seeds.json"
       },
       {
-         "path" : "items/music_disc_hero.json"
-      },
-      {
          "path" : "items/namek_space_pod.json"
       },
       {
@@ -1250,9 +1247,6 @@
       },
       {
          "path" : "items/scouter.json"
-      },
-      {
-         "path" : "items/space_helmet.json"
       },
       {
          "path" : "items/space_pod.json"
@@ -1504,6 +1498,9 @@
          "path" : "loot_tables/blocks/packed_sand.json"
       },
       {
+         "path" : "loot_tables/blocks/red_tile_slab_double.json"
+      },
+      {
          "path" : "loot_tables/blocks/senzu_beans/senzu_beans.json"
       },
       {
@@ -1648,6 +1645,9 @@
          "path" : "recipes/blocks/red_tile_stairs.json"
       },
       {
+         "path" : "recipes/blocks/red_tile_slab.json"
+      },
+      {
          "path" : "recipes/blocks/sand_from_packed_sand.json"
       },
       {
@@ -1670,6 +1670,9 @@
       },
       {
          "path" : "recipes/blocks/stonecutter_red_tile_to_red_tile_stairs.json"
+      },
+      {
+         "path" : "recipes/blocks/stonecutter_red_tile_to_red_tile_slab.json"
       },
       {
          "path" : "recipes/blocks/stonecutter_white_tile_to_white_tile_stairs.json"
@@ -1795,9 +1798,6 @@
          "path" : "recipes/items/scouter.json"
       },
       {
-         "path" : "recipes/items/space_helmet.json"
-      },
-      {
          "path" : "recipes/items/space_pod.json"
       },
       {
@@ -1892,6 +1892,9 @@
       },
       {
          "path" : "scripts/universe_6_dimension.js"
+      },
+      {
+         "path" : "scripts/world_structures.js"
       },
       {
          "path" : "spawn_rules/bear_thief.json"
@@ -2116,25 +2119,7 @@
          "path" : "worldgen/processors/namek_streets.json"
       },
       {
-         "path" : "worldgen/structure_sets/babidi_spaceship.json"
-      },
-      {
-         "path" : "worldgen/structure_sets/cell_arena.json"
-      },
-      {
-         "path" : "worldgen/structure_sets/city.json"
-      },
-      {
-         "path" : "worldgen/structure_sets/goku_house.json"
-      },
-      {
-         "path" : "worldgen/structure_sets/master_roshi_house.json"
-      },
-      {
          "path" : "worldgen/structure_sets/namek_village.json"
-      },
-      {
-         "path" : "worldgen/structure_sets/west_city.json"
       },
       {
          "path" : "worldgen/structures/babidi_spaceship.json"

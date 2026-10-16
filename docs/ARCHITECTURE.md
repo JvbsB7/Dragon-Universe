@@ -154,8 +154,9 @@ Todas as 8 dimensões JSON (`Dragon Block_bp/dimensions/`) são `void`; **o terr
 | `other_world_kai.js` | (Other World) | Esfera de acesso ao Kai no Outro Mundo; retorno ao subir a y≥300 |
 | `hell_dimension.js` + `hell_terrain.js` | `dbe:hell` | Inferno, Portão do Inferno, vilas; acesso caindo abaixo de y-48 no Other World ou por scriptevent |
 | `namek_dimension.js` | `dbe:namek` | Terreno, mar, vilas por estrutura, Esferas de Namek, moradores; acesso pelo `dbe:namek_space_pod` |
-| `space_planets.js` | `dbe:space`, `dbe:vegeta`, `dbe:frieza_planet`, `dbe:yardrat` | Estação orbital, oxigênio, capacete, Space/Saiyan Pod, menu Star Navigator, planetas |
+| `space_planets.js` | `dbe:space`, `dbe:vegeta`, `dbe:frieza_planet`, `dbe:yardrat` | Estação orbital, Space/Saiyan Pod, menu Star Navigator, planetas |
 | `planet_villages.js` | (Vegeta, Freeza, Yardrat, Hell) | Vilas determinísticas, aldeões, golem demoníaco |
+| `world_structures.js` | `minecraft:overworld` | Estruturas únicas/limitadas (Casa do Kame, Casa do Goku, Arena do Cell, Nave do Babidi, 3 West City, 5 cidades), planejadas pela semente e colocadas por script; `/scriptevent dbe:structures` |
 | `universe_6_dimension.js` | `dbe:universe_6_arena` | Arena do Torneio dos Destruidores; acesso pelo `dbe:tournament_invitation` |
 
 O núcleo registra ainda, sem JSON próprio: `dbe:other_world`, `dbe:hyperbolic_time_chamber`, `dbe:future_trunks`, `dbe:world_martial_arts_tournament` e `dbe:angel_staff_dimension_0..49`.

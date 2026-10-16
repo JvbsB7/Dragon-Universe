@@ -149,6 +149,9 @@ const entity_data = [
     }
   },
   {
+    id: "dbe:capsule_991"
+  },
+  {
     id: "dbe:capsule_corp_engineer",
     race: "earthling"
   },

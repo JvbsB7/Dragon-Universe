@@ -37,6 +37,8 @@ Arquivos legíveis (corrigidos no código em 2026-10-15, **aguardando teste no j
 - [ ] C18 — desejo "glind" e recompensa de raça android desativados (aprovado até a Fase 5); Future Trunks com `powerDefinition`; Piccolo ensina `makankosappo`; blocos de luz no `INDESTRUCTIBLE_BLOCKS`
 - [ ] C24 — sons da Final Flash; chaves da `saga_universe_6_1`
 - [ ] C10/C11/C12/C25 — Kai no espaço e regra de altitude; origem de retorno; ticking areas; escadas do U6; `env` das vilas
+- [ ] C27 — estruturas únicas/limitadas por script; animação de voo
+- [ ] C26 — correções do primeiro teste no jogo: laje dupla e receitas, textos de Namek e dimensões, spawn em Namek (itens ✅ e pendências em KNOWN_ISSUES)
 
 Pendentes de decisão/arte: botão de ajuda (textura `help_button`), imagens do Patreon (Fase 3), raça glind dos Zamasu (Fase 5), diálogos da Bulma em `saga_future_trunks_3`, chaves `battle_jacket_return`.
 

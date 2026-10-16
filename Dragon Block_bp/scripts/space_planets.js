@@ -26,11 +26,8 @@
  *     /scriptevent dbe:space <earth|space|namek|vegeta|frieza|yardrat|universe6|kai>
  *
  * Saiyan Pod (dbe:saiyan_pod, craftable, dropped by Saiyans): a round Saiyan attack ball that works exactly like the Space Pod.
- * Space Pod (dbe:space_pod, craftable): place it, sit in and fly. It is pressurised (no helmet needed), fast, and
+ * Space Pod (dbe:space_pod, craftable): place it, sit in and fly. It is fast and
  * goes with you when you enter a planet or leave the atmosphere. Planets are ~240 blocks from the station.
- *
- * Oxygen: open space is airless. Without a Space Helmet (dbe:space_helmet) you have 30 s of
- * air, then take suffocation damage. The Orbital Station dome is pressurised; creative players are immune.
  *
  * Atmosphere exit: fly up to y >= 500 on Earth, Namek or any planet here and you are taken to the Orbital
  * Station (LAUNCH_Y). Your return point is the ground under you, never the sky.
@@ -54,15 +51,11 @@ const U6_KEY = "universe6";
 const KAI_ID = "dbe:kai"; // Kai planet, handled by kai_dimension.js
 const KAI_KEY = "kai";
 const NAVIGATOR_ITEM = "dbe:star_navigator";
-const HELMET_ITEM = "dbe:space_helmet";
-const POD_ID = "dbe:space_pod"; // rideable Space Pod: pressurised, fast, travels with you between worlds
+const POD_ID = "dbe:space_pod"; // rideable Space Pod: fast, travels with you between worlds
 const SAIYAN_POD_ID = "dbe:saiyan_pod"; // Saiyan Pod: same rules as the Space Pod, a faster round ship
 const POD_IDS = [POD_ID, SAIYAN_POD_ID];
 const LAUNCH_Y = 500; // fly this high on any world and you leave the atmosphere for the Orbital Station
 const LAUNCH_COOLDOWN = 400;
-const OXYGEN_TICKS = 600; // 30 s of air without a helmet
-const SUFFOCATE_EVERY = 20; // ticks between damage hits once the air is gone
-const SUFFOCATE_DAMAGE = 2;
 const AIR = "minecraft:air";
 const BEDROCK = "minecraft:bedrock";
 
@@ -561,7 +554,6 @@ const SPACE = {
   prep: 2,
   fog: "dbe:fog_space",
   fogTag: "dbe_space",
-  airless: true,
   effects: [{ id: "slow_falling", amp: 0 }],
 };
 
@@ -1105,10 +1097,7 @@ function terrainFor(W, dim, cx, cz) {
 }
 
 
-// ---------------------------------------------------------------- oxygen
-
-const oxygen = new Map(); // player id -> ticks of air left
-const lastHit = new Map(); // player id -> tick of last suffocation damage
+// ---------------------------------------------------------------- pods
 
 /** The Space Pod entity the player is riding, if any. */
 function ridingPod(p) {
@@ -1134,58 +1123,6 @@ function dockPod(player, pod) {
     player.sendMessage({ translate: "item." + podType });
   } catch (err) {
     /* ignore */
-  }
-}
-
-function hasHelmet(p) {
-  try {
-    const eq = p.getComponent("minecraft:equippable");
-    return eq?.getEquipment("Head")?.typeId === HELMET_ITEM;
-  } catch (e) {
-    return false;
-  }
-}
-
-/** The Orbital Station dome is pressurised. */
-function inPressurisedZone(W, loc) {
-  return W.kind === "space" && Math.hypot(loc.x, loc.z) <= DOME_R - 0.5 && loc.y >= SPACE_Y && loc.y <= SPACE_Y + DOME_R;
-}
-
-function handleOxygen(p, W) {
-  if (!W || !W.airless) {
-    oxygen.delete(p.id);
-    return;
-  }
-  let gm = "";
-  try {
-    gm = String(p.getGameMode()).toLowerCase();
-  } catch (e) {
-    /* older API: assume survival */
-  }
-  const safe = gm === "creative" || gm === "spectator" || hasHelmet(p) || ridingPod(p) !== undefined || inPressurisedZone(W, p.location);
-  let air = oxygen.get(p.id) ?? OXYGEN_TICKS;
-  if (safe) {
-    air = Math.min(OXYGEN_TICKS, air + SCAN_TICKS * 10); // refills quickly
-    oxygen.set(p.id, air);
-    return;
-  }
-  air = Math.max(0, air - SCAN_TICKS);
-  oxygen.set(p.id, air);
-  try {
-    const slots = 10;
-    const filled = Math.ceil((air / OXYGEN_TICKS) * slots);
-    p.onScreenDisplay.setActionBar(tr("dbe.space.oxygen", "§b" + "|".repeat(filled) + "§8" + "|".repeat(slots - filled)));
-  } catch (e) {
-    /* ignore */
-  }
-  if (air <= 0 && system.currentTick - (lastHit.get(p.id) ?? -1000) >= SUFFOCATE_EVERY) {
-    lastHit.set(p.id, system.currentTick);
-    try {
-      p.applyDamage(SUFFOCATE_DAMAGE, { cause: "suffocation" });
-      if (system.currentTick % 100 < SUFFOCATE_EVERY) p.sendMessage(tr("dbe.space.noair"));
-    } catch (e) {
-      /* ignore */
-    }
   }
 }
 
@@ -1277,7 +1214,7 @@ function updateFog(p, W) {
 // ---------------------------------------------------------------- death / respawn safety
 // The add-on sends dead players to the Other World after they respawn (tag dbe:join_other_world, region
 // "other_world"). If you die on a planet or in space the game can respawn you in that same dimension, where the
-// airless / void rules below used to take over and strand you on the Orbital Station. For 30 s after a respawn,
+// void rules below used to take over and strand you on the Orbital Station. For 30 s after a respawn,
 // players carrying the tag are left alone by the space rules and moved to the Other World if that did not happen.
 const DEAD_TAG = "dbe:join_other_world";
 const OTHER_WORLD = { dim: "dbe:other_world", x: 0.5, y: 65, z: 39.5 };
@@ -1315,7 +1252,6 @@ function scan() {
     const W = BY_DIM.get(p.dimension.id);
     updateFog(p, W);
     if (rescueDead(p)) continue;
-    handleOxygen(p, W);
     const dimId = p.dimension.id;
     const canLaunch = W ? W.kind === "planet" : dimId === "minecraft:overworld" || dimId === NAMEK_ID || dimId === U6_ID || dimId === KAI_ID;
     if (canLaunch && p.location.y >= LAUNCH_Y && !travelling.has(p.id) && system.currentTick - (lastLaunch.get(p.id) ?? -10000) > LAUNCH_COOLDOWN) {
@@ -1723,4 +1659,4 @@ try {
 }
 
 // exposed for offline testing only
-export const __testing = { ensureBlocks, usedFallback, scan, oxygen, WORLDS, SPHERES, terrainJob, decorateJob, spaceJob, findSpawn, heightAt, chunkState, SPACE_Y };
+export const __testing = { ensureBlocks, usedFallback, scan, WORLDS, SPHERES, terrainJob, decorateJob, spaceJob, findSpawn, heightAt, chunkState, SPACE_Y };

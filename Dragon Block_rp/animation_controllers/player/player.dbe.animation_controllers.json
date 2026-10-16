@@ -235,7 +235,7 @@
         "controller.animation.player.fly": {
             "states": {
                 "default": {
-                    "blend_transition": 0.2,
+                    "blend_transition": 0.35,
                     "transitions": [
                         {
                             "fly_walking": "v.fly_mode == 'normal'"
@@ -246,7 +246,7 @@
                     ]
                 },
                 "fly_walking": {
-                    "blend_transition": 0.2,
+                    "blend_transition": 0.35,
                     "animations": [
                         {
                             "fly_walking": "!v.is_first_person"
@@ -262,7 +262,7 @@
                     ]
                 },
                 "fly_sprinting": {
-                    "blend_transition": 0.2,
+                    "blend_transition": 0.35,
                     "animations": [
                         {
                             "fly_sprinting": "!v.is_first_person"

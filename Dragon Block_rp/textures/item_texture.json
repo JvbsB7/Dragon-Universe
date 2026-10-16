@@ -410,9 +410,6 @@
         "milk_box": {
             "textures": "textures/items/milk_box"
         },
-        "music_disc_hero": {
-            "textures": "textures/items/music_disc_hero"
-        },
         "namek_dragon_ball": {
             "textures": "textures/items/namek_dragon_ball"
         },
@@ -655,9 +652,6 @@
         },
         "star_navigator": {
             "textures": "textures/items/star_navigator"
-        },
-        "space_helmet": {
-            "textures": "textures/items/space_helmet"
         },
         "demonic_apple": {
             "textures": "textures/items/demonic_apple"

@@ -1,8 +1,8 @@
 ## manifest
-pack.credits=DBE v1.5.0 por About04
+pack.credits=Dragon Universe v1.6.17 - baseado no Dragon Evolution de About04
 pack.description=Desperte o seu poder interior, supere desafios incríveis e enfrente inimigos temíveis do universo de Dragon Ball.
-pack.name=Dragon Block
-pack.news=§uOlá, fãs do DBE! Nas últimas atualizações, nosso foco foi otimizar o desempenho do add-on para que ele funcione melhor em servidores e em uma maior variedade de dispositivos. Diversas melhorias e refatorações foram realizadas, e por isso estamos lançando esta versão em beta para testes. Lembrem-se de que o desenvolvimento ainda está em andamento. Alguns conteúdos ainda estão sendo finalizados e alguns cabelos serão substituídos temporariamente até que suas versões definitivas estejam prontas. Agradecemos a todos que participarem dos testes e enviarem feedback!§r
+pack.name=Dragon Universe
+pack.news=§uOlá, fãs do Dragon Universe! Nas últimas atualizações, nosso foco foi otimizar o desempenho do add-on para que ele funcione melhor em servidores e em uma maior variedade de dispositivos. Diversas melhorias e refatorações foram realizadas, e por isso estamos lançando esta versão em beta para testes. Lembrem-se de que o desenvolvimento ainda está em andamento. Alguns conteúdos ainda estão sendo finalizados e alguns cabelos serão substituídos temporariamente até que suas versões definitivas estejam prontas. Agradecemos a todos que participarem dos testes e enviarem feedback!§r
 
 
 
@@ -64,9 +64,21 @@ stat.stamina=Vigor
 dimension.minecraft:nether=Nether
 dimension.minecraft:overworld=Mundo Superior
 dimension.minecraft:the_end=O Fim
+dimension.dbe:namek=Planeta Namek
+dimension.dbe:kai=Planeta do Kaioh
+dimension.dbe:hell=Inferno
+dimension.dbe:space=Espaço
+dimension.dbe:vegeta=Planeta Vegeta
+dimension.dbe:frieza_planet=Planeta Freeza
+dimension.dbe:yardrat=Yardrat
+dimension.dbe:universe_6_arena=Arena do Universo 6
+dimension.dbe:other_world=Outro Mundo
+dimension.dbe:hyperbolic_time_chamber=Sala do Tempo
+dimension.dbe:future_trunks=Futuro de Trunks
+dimension.dbe:world_martial_arts_tournament=Torneio de Artes Marciais
 biome.minecraft:beach=Praia
 biome.dbe:dirtstone=Dirtstone
-biome.dbe:namek=Namekusei
+biome.dbe:namek=Planeta Namek
 
 
 
@@ -183,7 +195,7 @@ customization.tail_color=Cor do Rabo
 
 
 ## diversos
-dbe:itemGroup.name.items=Dragon Evolution
+dbe:itemGroup.name.items=Dragon Universe
 master.none=Sem mestre
 point.attribute_points=Pontos de Atributo
 point.attribute_points.abbreviation=AP
@@ -198,8 +210,8 @@ zeni=Zeni
 
 
 ## doar
-donate.title=Apoie o DBE
-donate.text=Ao apoiar nosso add-on com um valor mínimo de R$14,90 e comprovar seu apoio, você receberá um código PATREON com duração de 1 mês para resgatar em qualquer mundo com DBE, quantas vezes quiser (limitado a 1 resgate por mundo). Envie o comprovante no nosso servidor e geraremos o código para você! Para resgatar, use: /dbe:redeem "CÓDIGO". Para jogadores fora do Brasil, doações são apenas via PayPal; para brasileiros, PIX também será válido. Para obter a chave PIX ou mais informações, acesse o Discord. Ao resgatar, você ganhará os itens abaixo:
+donate.title=Apoie o Dragon Universe
+donate.text=Ao apoiar nosso add-on com um valor mínimo de R$14,90 e comprovar seu apoio, você receberá um código PATREON com duração de 1 mês para resgatar em qualquer mundo com Dragon Universe, quantas vezes quiser (limitado a 1 resgate por mundo). Envie o comprovante no nosso servidor e geraremos o código para você! Para resgatar, use: /dbe:redeem "CÓDIGO". Para jogadores fora do Brasil, doações são apenas via PayPal; para brasileiros, PIX também será válido. Para obter a chave PIX ou mais informações, acesse o Discord. Ao resgatar, você ganhará os itens abaixo:
 
 
 
@@ -429,7 +441,6 @@ item.dbe:medical_moss=Musgo Medicinal
 item.dbe:medical_moss_seeds=Sementes de Musgo Medicinal
 item.dbe:medicinal_soup=Sopa Medicinal
 item.dbe:menu=Menu
-item.dbe:music_disc_hero.desc=Flow - Hero
 item.dbe:nanochip=Nanochip
 item.dbe:piccolo_boots=Botas do Piccolo
 item.dbe:piccolo_cape=Capa do Piccolo
@@ -564,7 +575,7 @@ quest.objective.defeat_enemy_time=Derrote %s em
 quest.objective.defeat_enemy_location=Derrote %s no(a) %s
 quest.objective.defeat_enemy_location_time=Derrote %s no(a) %s em
 quest.objective.deliver_item=Leve %s até %s
-quest.objective.enter_biome=Vá até o bioma %s, na dimensão %s, nas coordenadas %s
+quest.objective.enter_biome=Vá até %s (%s), nas coordenadas %s
 quest.objective.enter_region=Vá até o(a) %s
 quest.objective.enter_structure=Vá até o(a) %s em %s
 quest.objective.ki_charge=Carregue seu ki
@@ -1129,8 +1140,8 @@ requirement.has_skill.with_level=Tenha a habilidade %s no nível %s %s
 requirement.has_quest=Aceite a missão %s
 requirement.has_quest.not_equal=Não aceite a missão %s
 requirement.has_level=Tenha nível %s %s
-requirement.in_biome=Esteja no bioma %s
-requirement.in_biome.not_equal=Não esteja no bioma %s
+requirement.in_biome=Esteja em %s
+requirement.in_biome.not_equal=Não esteja em %s
 requirement.is_alignment=Seja %s
 requirement.is_alignment.not_equal=Não seja %s
 requirement.is_race=Seja da raça %s
@@ -1151,8 +1162,8 @@ server.clear_lag.warn=§l§8[!] §r§eLimpeza do mundo em %s
 server.clear_lag.finish=§l§8[!] §r§q%s entidades foram removidas
 server.message.1=§6Quer se tornar Patreon? Use o cupom DBE10 e ganhe 10% de desconto no primeiro mês!
 server.message.2=§6Torne-se Patreon e tenha acesso a benefícios exclusivos para apoiadores!
-server.message.3=§6Quer apoiar o Dragon Evolution? Conheça o Patreon e faça parte do crescimento do projeto!
-server.message.4=§6Seu apoio ajuda o Dragon Evolution a continuar evoluindo! Torne-se Patreon hoje!
+server.message.3=§6Quer apoiar o Dragon Universe? Conheça o Patreon e faça parte do crescimento do projeto!
+server.message.4=§6Seu apoio ajuda o Dragon Universe a continuar evoluindo! Torne-se Patreon hoje!
 server.message.5=§6Quer benefícios exclusivos? Confira as vantagens de ser Patreon!
 server.message.6=§6Não sabe como se tornar Patreon? Entre no nosso Discord e saiba mais!
 server.message.7=§6Quer adquirir um Bundle? Entre no nosso Discord e confira os pacotes disponíveis!
@@ -1467,9 +1478,6 @@ dbe.space.home=§aVocê voltou para casa.
 dbe.space.orbit=§bEntrando em %s...
 dbe.space.error=§cNão foi possível viajar (a dimensão está disponível nesta versão do jogo?).
 dbe.space.fell=§eVocê se afastou demais e foi puxado de volta para a estação.
-item.dbe:space_helmet=Capacete Espacial
-dbe.space.oxygen=§bOxigênio: %s
-dbe.space.noair=§cSem ar! Use um Capacete Espacial.
 dbe.space.launch=§bVocê rompeu a atmosfera... rumo à Estação Orbital!
 entity.dbe:saiyan_villager.name=Aldeão Saiyajin
 entity.dbe:frieza_villager.name=Aldeão da Raça de Freeza

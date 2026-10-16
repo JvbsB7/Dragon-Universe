@@ -1616,22 +1616,23 @@
 			"loop": true,
 			"bones": {
 				"root": {
-					"rotation": ["q.target_x_rotation * 0.5", 0, 0]
+					"rotation": ["q.target_x_rotation * 0.5 + math.clamp(q.ground_speed * 2.5, 0, 25)", 0, 0],
+					"position": [0, "math.cos(q.life_time * 90) * 0.6 * (1 - math.clamp(q.ground_speed / 4, 0, 1))", 0]
 				},
 				"leftArm": {
-					"rotation": [0, 0, -15],
+					"rotation": ["math.clamp(q.ground_speed * 2, 0, 15)", 0, "-15 - math.cos(q.life_time * 90) * 4"],
 					"position": [0, 0, 1]
 				},
 				"rightArm": {
-					"rotation": [0, 0, 15],
+					"rotation": ["math.clamp(q.ground_speed * 2, 0, 15)", 0, "15 + math.cos(q.life_time * 90) * 4"],
 					"position": [0, 0, 1]
 				},
 				"leftLeg": {
-					"rotation": [15, 0, 0],
+					"rotation": ["15 + math.clamp(q.ground_speed * 3, 0, 20) + math.cos(q.life_time * 90) * 2", 0, -2],
 					"position": [0, 0, 1]
 				},
 				"rightLeg": {
-					"rotation": [15, 0, 0],
+					"rotation": ["15 + math.clamp(q.ground_speed * 3, 0, 20) - math.cos(q.life_time * 90) * 2", 0, 2],
 					"position": [0, 4, -4]
 				}
 			}

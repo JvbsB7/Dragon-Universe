@@ -5,7 +5,7 @@
             "identifier": "dbe:vegeta_soil",
             "menu_category": {
                 "category": "construction",
-                "group": "itemGroup.name.stone"
+                "group": "minecraft:itemGroup.name.stone"
             }
         },
         "components": {

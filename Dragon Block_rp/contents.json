@@ -535,9 +535,6 @@
          "path" : "attachables/armors/scouter.json"
       },
       {
-         "path" : "attachables/armors/space_helmet.json"
-      },
-      {
          "path" : "attachables/armors/tapion_clothes/tapion_boots.json"
       },
       {
@@ -1184,9 +1181,6 @@
       },
       {
          "path" : "models/entity/items/armors/scouter.geo.json"
-      },
-      {
-         "path" : "models/entity/items/armors/space_helmet.geo.json"
       },
       {
          "path" : "models/entity/items/armors/training_armor.geo.json"
@@ -2351,9 +2345,6 @@
       },
       {
          "path" : "sounds/music/christmas.ogg"
-      },
-      {
-         "path" : "sounds/music/game/records/hero.ogg"
       },
       {
          "path" : "sounds/music/hyperbolic_time_chamber_theme.ogg"
@@ -4945,9 +4936,6 @@
          "path" : "textures/items/milk_box.png"
       },
       {
-         "path" : "textures/items/music_disc_hero.png"
-      },
-      {
          "path" : "textures/items/namek_dragon_ball.png"
       },
       {
@@ -4982,9 +4970,6 @@
       },
       {
          "path" : "textures/items/senzu_bean.png"
-      },
-      {
-         "path" : "textures/items/space_helmet.png"
       },
       {
          "path" : "textures/items/space_pod.png"
@@ -5315,9 +5300,6 @@
       },
       {
          "path" : "textures/models/armors/scouter/scouter_red.png"
-      },
-      {
-         "path" : "textures/models/armors/space/space_helmet.png"
       },
       {
          "path" : "textures/models/armors/training_armor.png"

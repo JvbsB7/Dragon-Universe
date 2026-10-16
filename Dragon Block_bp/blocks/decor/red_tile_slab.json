@@ -107,6 +107,7 @@
             {
                 "condition": "q.block_state('dbe:double_bit')",
                 "components": {
+                    "minecraft:loot": "loot_tables/blocks/red_tile_slab_double.json",
                     "minecraft:geometry": {
                         "identifier": "minecraft:geometry.full_block"
                     }

@@ -1,8 +1,8 @@
 ## manifest
-pack.credits=DBE v1.5.0 by About04
+pack.credits=Dragon Universe v1.6.17 - based on Dragon Evolution by About04
 pack.description=Awaken your inner power, overcome incredible challenges, and face fearsome enemies from the Dragon Ball universe.
-pack.name=Dragon Block
-pack.news=§uHello, DBE fans! In the latest updates, our main focus has been optimizing the add-on to provide better performance on both servers and a wider range of devices. We've made numerous improvements and refactors, which is why we're releasing this beta version for testing. Please keep in mind that development is still ongoing. Some content is still being completed, and a few hairstyles have been temporarily replaced until their final versions are ready. Thank you to everyone who tests the update and shares feedback!§r
+pack.name=Dragon Universe
+pack.news=§uHello, Dragon Universe fans! In the latest updates, our main focus has been optimizing the add-on to provide better performance on both servers and a wider range of devices. We've made numerous improvements and refactors, which is why we're releasing this beta version for testing. Please keep in mind that development is still ongoing. Some content is still being completed, and a few hairstyles have been temporarily replaced until their final versions are ready. Thank you to everyone who tests the update and shares feedback!§r
 
 
 
@@ -64,9 +64,21 @@ stat.stamina=Stamina
 dimension.minecraft:nether=Nether
 dimension.minecraft:overworld=Overworld
 dimension.minecraft:the_end=The End
+dimension.dbe:namek=Planet Namek
+dimension.dbe:kai=Kai's Planet
+dimension.dbe:hell=Hell
+dimension.dbe:space=Space
+dimension.dbe:vegeta=Planet Vegeta
+dimension.dbe:frieza_planet=Planet Frieza
+dimension.dbe:yardrat=Yardrat
+dimension.dbe:universe_6_arena=Universe 6 Arena
+dimension.dbe:other_world=Other World
+dimension.dbe:hyperbolic_time_chamber=Hyperbolic Time Chamber
+dimension.dbe:future_trunks=Trunks' Future
+dimension.dbe:world_martial_arts_tournament=World Martial Arts Tournament
 biome.minecraft:beach=Beach
 biome.dbe:dirtstone=Dirtstone
-biome.dbe:namek=Namek
+biome.dbe:namek=Planet Namek
 
 
 
@@ -183,7 +195,7 @@ customization.tail_color=Tail Color
 
 
 ## diversos
-dbe:itemGroup.name.items=Dragon Evolution
+dbe:itemGroup.name.items=Dragon Universe
 master.none=No Master
 point.attribute_points=Attribute Points
 point.attribute_points.abbreviation=AP
@@ -198,8 +210,8 @@ zeni=Zeni
 
 
 ## doar
-donate.title=Support DBE
-donate.text=By supporting our add-on with a minimum of $5 and confirming your support, you will receive a PATREON code valid for 3 months that can be redeemed in any world with DBE, as many times as you want (limited to 1 redemption per world). Send the payment proof in our server and we'll generate the code for you! To redeem, use: /dbe:redeem "CODE". For players outside Brazil, donations are only accepted via PayPal; for Brazilian players, PIX is also valid. To get the PIX key or more information, join our Discord. Upon redeeming, you'll receive the items listed below:
+donate.title=Support Dragon Universe
+donate.text=By supporting our add-on with a minimum of $5 and confirming your support, you will receive a PATREON code valid for 3 months that can be redeemed in any world with Dragon Universe, as many times as you want (limited to 1 redemption per world). Send the payment proof in our server and we'll generate the code for you! To redeem, use: /dbe:redeem "CODE". For players outside Brazil, donations are only accepted via PayPal; for Brazilian players, PIX is also valid. To get the PIX key or more information, join our Discord. Upon redeeming, you'll receive the items listed below:
 
 
 
@@ -429,7 +441,6 @@ item.dbe:medical_moss=Medical Moss
 item.dbe:medical_moss_seeds=Medical Moss Seeds
 item.dbe:medicinal_soup=Medicinal Soup
 item.dbe:menu=Menu
-item.dbe:music_disc_hero.desc=Flow - Hero
 item.dbe:nanochip=Nanochip
 item.dbe:piccolo_boots=Piccolo's Boots
 item.dbe:piccolo_cape=Piccolo's Cape
@@ -564,7 +575,7 @@ quest.objective.defeat_enemy_time=Defeat %s in
 quest.objective.defeat_enemy_location=Defeat %s in the %s
 quest.objective.defeat_enemy_location_time=Defeat %s in the %s in
 quest.objective.deliver_item=Deliver %s to %s
-quest.objective.enter_biome=Find the %s biome in the %s dimension at coordinates %s
+quest.objective.enter_biome=Go to %s (%s) at coordinates %s
 quest.objective.enter_region=Go to %s
 quest.objective.enter_structure=Go to the %s in %s
 quest.objective.ki_charge=Charge your Ki
@@ -1129,8 +1140,8 @@ requirement.has_skill.with_level=Have the skill %s at level %s %s
 requirement.has_quest=Accept the quest %s
 requirement.has_quest.not_equal=Do not accept the quest %s
 requirement.has_level=Have level %s %s
-requirement.in_biome=Be in the %s biome
-requirement.in_biome.not_equal=Do not be in the %s biome
+requirement.in_biome=Be in %s
+requirement.in_biome.not_equal=Do not be in %s
 requirement.is_alignment=Be %s
 requirement.is_alignment.not_equal=Do not be %s
 requirement.is_race=Be of the %s race
@@ -1151,8 +1162,8 @@ server.clear_lag.warn=§l§8[!] §r§eWorld cleanup in %s
 server.clear_lag.finish=§l§8[!] §r§q%s entity(ies) were removed
 server.message.1=§6Want to become a Patreon? Use the coupon DBE10 and get 10% off your first month!
 server.message.2=§6Become a Patreon and get access to exclusive benefits for supporters!
-server.message.3=§6Want to support Dragon Evolution? Check out our Patreon and be part of the project's growth!
-server.message.4=§6Your support helps Dragon Evolution keep evolving! Become a Patreon today!
+server.message.3=§6Want to support Dragon Universe? Check out our Patreon and be part of the project's growth!
+server.message.4=§6Your support helps Dragon Universe keep evolving! Become a Patreon today!
 server.message.5=§6Want exclusive benefits? Check out the perks of becoming a Patreon!
 server.message.6=§6Don't know how to become a Patreon? Join our Discord and find out more!
 server.message.7=§6Want to purchase a Bundle? Join our Discord and check out the available bundles!
@@ -1463,9 +1474,6 @@ dbe.space.home=§aYou are back home.
 dbe.space.orbit=§bEntering %s...
 dbe.space.error=§cCould not travel (is the dimension available in this game version?).
 dbe.space.fell=§eYou drifted away and were pulled back to the station.
-item.dbe:space_helmet=Space Helmet
-dbe.space.oxygen=§bOxygen: %s
-dbe.space.noair=§cNo air! Wear a Space Helmet.
 dbe.space.launch=§bYou broke through the atmosphere... heading to the Orbital Station!
 entity.dbe:saiyan_villager.name=Saiyan Villager
 entity.dbe:frieza_villager.name=Frieza Race Villager

@@ -92,7 +92,7 @@ Verificação automática: `node tools/validate.mjs` (ver [README](../README.md#
 ### C25 🟡 Robustez dos scripts de dimensão — 🔧
 - `universe_6_dimension.js` (`stairPerm`): se `BlockPermutation.resolve` falhar (estado renomeado numa versão do jogo), a escada é colocada na direção padrão em vez de abortar a construção inteira da arena.
 - `planet_villages.js` (`siteFor`): não usa `env` antes de `initVillages()`; hoje funcionava só pela ordem dos imports no `index.js`.
-- Mapas por jogador (`inKai`, `oxygen`, `lastUse`…) **não** foram limpos na saída: os ids são estáveis entre sessões, então o crescimento é limitado ao número de jogadores únicos, e limpar alguns (ex.: oxigênio) mudaria o comportamento ao relogar.
+- Mapas por jogador (`inKai`, `lastUse`…) **não** foram limpos na saída: os ids são estáveis entre sessões, então o crescimento é limitado ao número de jogadores únicos, e limpar alguns (ex.: oxigênio) mudaria o comportamento ao relogar.
 
 ### C14 🔴 Provável bloqueio da campanha em `saga_frieza_1` — 🔧
 - **Onde:** `main_quests_data.js:421-422`.
@@ -166,6 +166,47 @@ Verificação automática: `node tools/validate.mjs` (ver [README](../README.md#
 - Rótulo do anunciador do torneio some após recarregar o mundo.
 - `processOnHitTriggers` não recalcula stats após maestria `on_hit`.
 - Erros de `trySetProperty` são engolidos (forma > 31, raça fora do enum ou `charging_attack` > 15 falham em silêncio).
+
+### C26 Resultados do primeiro teste no jogo (2026-10-15)
+
+Verificado pela equipe no Bedrock 26.52 (✅):
+- C14 — `saga_frieza_1` conclui ao chegar em Namek.
+- Sagas Future Trunks com `powerDefinition`: chefes com nível e força coerentes.
+- Textos da saga Future Trunks em inglês.
+- Musgo medicinal: planta com sementes e com o item colhido.
+- Blocos de luz não são destruídos por ataque de ki.
+- Piccolo ensina `makankosappo`.
+
+Corrigido após o teste (🔧, aguardando novo teste):
+- Laje vermelha dupla dropava 1 laje: o estado `dbe:double_bit` usa `loot_tables/blocks/red_tile_slab_double.json` (2 lajes). Receitas novas: 3 azulejos vermelhos → 6 lajes; cortador de pedra: 1 azulejo → 2 lajes.
+- Textos de Namek: o requisito `in_biome` passou a "Esteja em %s" / "Be in %s" / "Estar en %s" (o es_ES estava em português); o bioma `dbe:namek` passou a "Planeta Namek"; o objetivo `enter_biome` passou a "Vá até %s (%s), nas coordenadas %s"; adicionados os nomes das 12 dimensões customizadas (`dimension.dbe:*`), que apareciam como chave crua.
+- Saibaman e veado deixaram de nascer em Namek (entrada `namek` removida de `spawn_rules/saibaman.json` e `spawn_rules/deer.json`), a pedido da equipe.
+
+Em investigação:
+- 🔧 `dbe:music_disc_hero` (disco "Flow - Hero") ficava invisível após corrigir o `format_version`. **Removido a pedido da equipe:** item, textura, entrada no `item_texture.json`, evento `record.hero` e `sounds/music/game/records/hero.ogg`, catálogo, `contents.json` e textos.
+- 🔧 "Missing icon for data-driven item 'dbe:space_helmet'": **capacete e sistema de oxigênio do espaço removidos a pedido da equipe** — item, receita, attachable, modelo, texturas, textos, entradas no `contents.json`/`item_texture.json` e as entradas dos baús `vegeta_ruins` e `frieza_outpost` (o peso do capacete foi somado ao "vazio", mantendo as chances dos outros itens). Em `space_planets.js` saíram `handleOxygen`, `hasHelmet`, `inPressurisedZone` e a flag `airless`; respirar no espaço é livre. Jogadores que já tinham o capacete ficam com um item desconhecido no inventário.
+- Nome cru `tile.dbe:red_tile_slab.name`: atlas e chave de idioma estão corretos na branch; provável cópia antiga/duplicada do Resource Pack no jogo — retestar após recopiar os packs.
+- `saga_frieza_10` ("Soldados do Imperador"): ir às coordenadas do Dirtstone não conclui. O núcleo calcula as coordenadas com `calculateClosestBiomeFromSeed` a partir de y=0 e conclui comparando o bioma exato na posição do jogador; o Dirtstone substitui planícies por ruído (`replace_biomes`), então o ponto calculado pode não ser Dirtstone na superfície. Aguardando teste com `/locate biome dbe:dirtstone`. As sagas Saiyajin também usam `enter_biome` de Dirtstone e podem ter o mesmo problema.
+
+### C27 🟡 Estruturas repetidas no Mundo Superior e animação de voo — 🔧
+
+- **Comportamento:** Casa do Kame, Casa do Goku, Arena do Cell, West City, Nave do Babidi e as cidades eram geradas por `worldgen/structure_sets` (espaçamento de ~30 chunks), repetindo-se pelo mundo. O Bedrock não tem limite de quantidade por mundo para structure sets.
+- **Correção aplicada:** os 6 structure sets foram removidos (as estruturas e template pools continuam). O novo `scripts/world_structures.js` (importado na parte legível do topo do `index.js`) planeja os pontos perto do spawn pela semente (`calculateClosestBiomeFromSeed`) e coloca cada estrutura com `placeJigsawStructure` quando um jogador chega a 96 blocos: 1 Casa do Kame (oceano não frio), 1 Casa do Goku (Dirtstone), 1 Arena do Cell (Dirtstone Plains), 1 Nave do Babidi (deserto), 3 West City e 5 cidades, com no mínimo 400 blocos entre elas. O plano fica salvo no mundo (`dbe:world_structures`); `/scriptevent dbe:structures` lista os pontos. Testado com um mundo simulado em Node (12 pontos planejados, 12 colocadas, nenhuma duplicada) — **falta testar no jogo**.
+- **Limitações:** mundos antigos mantêm as cópias já geradas; se o bioma não for encontrado, o ponto de busca é usado (marcado como "biome not found" no comando).
+- **Animação de voo (RP):** `animation.player.fly.walking` passou a inclinar o corpo e as pernas conforme a velocidade horizontal (`q.ground_speed`) e a flutuar levemente quando parado; transições do controlador de voo de 0.2 → 0.35 s. A mecânica do voo (peso e tremor) continua no núcleo e não foi alterada.
+
+### C28 ⚪ Nome da addon — 🔧
+
+- `pack.name` (BP e RP, três idiomas) passou de "Dragon Block" para "Dragon Universe"; grupo de itens do inventário, notícias, textos de apoio e mensagens de servidor trocaram "DBE"/"Dragon Evolution" por "Dragon Universe". `pack.credits` passou a "Dragon Universe v1.6.17 - baseado no Dragon Evolution de About04" (crédito ao autor original mantido).
+- **Não alterado de propósito:** namespace `dbe:`, chaves de salvamento `dragon_evolution`, nomes das pastas dos packs e uma mensagem de depuração dentro do núcleo ofuscado ("entidades do DBE").
+- **Pendente:** o conteúdo de `pack.news`, `donate.*` e `server.message.*` ainda é o texto do autor original (notícias da versão beta, valores e canais de apoio do Patreon dele); deve ser reescrito com as informações da equipe junto com a troca do sistema Patreon.
+
+### C29 🟠 Erros do Content Log no Bedrock 26.52 (teste de 2026-10-16) — 🔧
+
+- **Blocos dos planetas não carregavam:** `blocks/planets/{vegeta,frieza,yardrat}_{soil,rock}.json` usavam `menu_category.group: "itemGroup.name.stone"`, sem namespace, e o 26.52 recusa a definição inteira. Em cadeia, os biomas `dbe:vegeta`, `dbe:frieza` e `dbe:yardrat` não carregavam e os planetas usavam blocos vanilla de reserva. Corrigido para `minecraft:itemGroup.name.stone`; o `validate-json` agora acusa grupo sem namespace.
+- **Receita duplicada:** `dbe:headband` (3 lãs vermelhas em linha) tinha os mesmos ingredientes da `minecraft:red_wool_slab`. Nova receita: lã vermelha + linha + lã vermelha; o `unlock` usava `minecraft:wool` (id antigo) e passou a `minecraft:red_wool`.
+- **`dbe:capsule_991` sem dados:** o núcleo avisava "Não foram encontradas informações para as seguintes entidades do DBE". Entrada mínima adicionada em `entities_data.js`, como os outros veículos.
+- **Avisos esperados (sem ação):** "Dimension definition ... registered via scripting was replaced by the definition from pack" — os scripts registram as dimensões como reserva e o jogo usa os JSON de `dimensions/`. "format_version: this member was found in the input, but is not present in the Schema" (aviso único, origem não identificada; as dimensões carregam normalmente).
 
 ## 2. Possíveis riscos (precisam de teste)
 

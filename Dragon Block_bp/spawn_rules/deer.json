@@ -49,26 +49,6 @@
             {
                 "minecraft:spawns_on_surface": {},
                 "minecraft:spawns_on_block_filter": [
-                    "dbe:namek_grass"
-                ],
-                "minecraft:weight": {
-                    "default": 4
-                },
-                "minecraft:density_limit": {
-                    "surface": 3
-                },
-                "minecraft:biome_filter": {
-                    "test": "has_biome_tag",
-                    "value": "namek"
-                },
-                "minecraft:herd": {
-                    "min_size": 2,
-                    "max_size": 3
-                }
-            },
-            {
-                "minecraft:spawns_on_surface": {},
-                "minecraft:spawns_on_block_filter": [
                     "dbe:vegeta_soil"
                 ],
                 "minecraft:weight": {

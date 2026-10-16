@@ -138,7 +138,7 @@ Detalhes, limites e cuidados (ex.: transformações novas devem ser acrescentada
 - **Não renomeie** o namespace `dbe:`, os ids existentes nem as chaves de salvamento — mundos existentes perderiam progresso.
 - **Não reordene** transformações nem tarefas de missão já publicadas: o progresso salvo usa a posição na lista.
 - **Não mova arquivos** dos packs sem atualizar referências, `contents.json` e manifests.
-- Os nomes exibidos dos packs ainda são "Dragon Block" (`pack.name` nos `.lang`).
+- O nome exibido no jogo é "Dragon Universe" (`pack.name` nos `.lang`). As pastas continuam `Dragon Block_bp`/`Dragon Block_rp` e os ids internos continuam `dbe:` e `dragon_evolution` (chaves de salvamento) — não renomear sem migração.
 
 ## 👥 Créditos
 

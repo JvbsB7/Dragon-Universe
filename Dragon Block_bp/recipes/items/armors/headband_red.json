@@ -7,16 +7,19 @@
         
         "tags": [ "crafting_table" ],
         "pattern": [
-            "AAA"
+            "ABA"
         ],
         "key": {
             "A": {
                 "item": "minecraft:red_wool"
+            },
+            "B": {
+                "item": "minecraft:string"
             }
         },
         "unlock": [
             {
-                "item": "minecraft:wool"
+                "item": "minecraft:red_wool"
             }
         ],
         "result": {

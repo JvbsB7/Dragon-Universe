@@ -569,19 +569,6 @@
                 }
             ]
         },
-        "record.hero": {
-            "__use_legacy_max_distance": "true",
-            "category": "record",
-            "max_distance": 64,
-            "sounds": [
-                {
-                    "load_on_low_memory": true,
-                    "name": "sounds/music/game/records/hero",
-                    "stream": true,
-                    "volume": 0.5
-                }
-            ]
-        },
         "skill.absorption.absorbing": {
             "sounds": [ "sounds/skill/absorbing" ]
         },

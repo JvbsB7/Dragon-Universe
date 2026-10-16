@@ -82,6 +82,20 @@ function checkFormatVersions(report) {
   }
 }
 
+/** menu_category.group sem namespace ("itemGroup.name.stone") faz o jogo recusar o bloco/item inteiro (Bedrock 26.x). */
+function checkMenuGroups(report) {
+  for (const sub of ["blocks", "items"]) {
+    for (const file of walk(path.join(BP, sub), (f) => f.endsWith(".json"))) {
+      const { data } = cachedJson(file);
+      const def = data?.["minecraft:block"] ?? data?.["minecraft:item"];
+      const group = def?.description?.menu_category?.group;
+      if (typeof group === "string" && !group.includes(":")) {
+        report.error("Grupo de menu sem namespace (definição não carrega)", `${rel(file)} — "${group}" → "minecraft:${group}"`);
+      }
+    }
+  }
+}
+
 function checkContents(report) {
   for (const { name, dir } of PACKS) {
     const file = path.join(dir, "contents.json");
@@ -118,6 +132,7 @@ export async function run() {
   const count = checkParse(report);
   checkExtensions(report);
   checkFormatVersions(report);
+  checkMenuGroups(report);
   checkContents(report);
   checkManifests(report);
   report.summary = `${count} arquivos JSON lidos`;
