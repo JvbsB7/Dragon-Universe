@@ -441,7 +441,7 @@ const main_quests_data = [
             spawnOnStart: true,
             entityDefinitions: {
               powerDefinition: {
-                level: 18,
+                level: 12,
                 focus: {
                   constitution: 1,
                   dexterity: 1,
@@ -469,7 +469,7 @@ const main_quests_data = [
             spawnOnStart: true,
             entityDefinitions: {
               powerDefinition: {
-                level: 18,
+                level: 12,
                 focus: {
                   constitution: 1,
                   dexterity: 1,
@@ -960,7 +960,7 @@ const main_quests_data = [
             spawnOnStart: true,
             entityDefinitions: {
               powerDefinition: {
-                level: 24,
+                level: 16,
                 focus: {
                   constitution: 1,
                   dexterity: 1,
@@ -988,7 +988,7 @@ const main_quests_data = [
             spawnOnStart: true,
             entityDefinitions: {
               powerDefinition: {
-                level: 24,
+                level: 16,
                 focus: {
                   constitution: 1,
                   dexterity: 1,
@@ -1016,7 +1016,7 @@ const main_quests_data = [
             spawnOnStart: true,
             entityDefinitions: {
               powerDefinition: {
-                level: 24,
+                level: 16,
                 focus: {
                   constitution: 1,
                   dexterity: 1,
@@ -1852,7 +1852,7 @@ const main_quests_data = [
             spawnOnStart: true,
             entityDefinitions: {
               powerDefinition: {
-                level: 30,
+                level: 20,
                 focus: {
                   constitution: 1,
                   dexterity: 1,
@@ -1875,7 +1875,7 @@ const main_quests_data = [
             spawnOnStart: true,
             entityDefinitions: {
               powerDefinition: {
-                level: 40,
+                level: 28,
                 focus: {
                   constitution: 1,
                   dexterity: 1,
