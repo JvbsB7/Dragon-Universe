@@ -12,23 +12,23 @@ const side_quests_data = [
             count: 1,
             deliverToNpc: "dbe:capsule_corp_engineer",
             item: "dbe:nanochip",
-            removeItemsOnComplete: true
+            removeItemsOnComplete: true,
           },
           {
             type: "collect_item",
             count: 2,
             deliverToNpc: "dbe:capsule_corp_engineer",
             item: "dbe:evolitium_crystal",
-            removeItemsOnComplete: true
+            removeItemsOnComplete: true,
           },
           {
             type: "collect_item",
             count: 3,
             deliverToNpc: "dbe:capsule_corp_engineer",
             item: "minecraft:iron_ingot",
-            removeItemsOnComplete: true
-          }
-        ]
+            removeItemsOnComplete: true,
+          },
+        ],
       },
       {
         isRestartable: false,
@@ -36,18 +36,18 @@ const side_quests_data = [
           {
             type: "interact_npc",
             entity: "dbe:capsule_corp_engineer",
-            dialogCount: 3
-          }
-        ]
-      }
+            dialogCount: 3,
+          },
+        ],
+      },
     ],
     // Recompensa { type: "race", race: "android" } removida até a raça existir em races_data.js (KNOWN_ISSUES C18).
     rewards: [
       {
         type: "zeni",
-        amount: 10
-      }
-    ]
+        amount: 10,
+      },
+    ],
   },
   {
     id: "bring_fish_for_karin",
@@ -62,9 +62,9 @@ const side_quests_data = [
             count: 5,
             deliverToNpc: "dbe:korin",
             item: "dbe:giant_fish",
-            removeItemsOnComplete: true
-          }
-        ]
+            removeItemsOnComplete: true,
+          },
+        ],
       },
       {
         isRestartable: false,
@@ -72,21 +72,21 @@ const side_quests_data = [
           {
             type: "interact_npc",
             entity: "dbe:korin",
-            dialogCount: 3
-          }
-        ]
-      }
+            dialogCount: 3,
+          },
+        ],
+      },
     ],
     rewards: [
       {
         type: "item",
-        item: "dbe:sacred_water_flask"
+        item: "dbe:sacred_water_flask",
       },
       {
         type: "zeni",
-        amount: 5
-      }
-    ]
+        amount: 5,
+      },
+    ],
   },
   {
     id: "fetch_bulma_outfit",
@@ -100,21 +100,22 @@ const side_quests_data = [
             type: "collect_item",
             deliverToNpc: "dbe:master_roshi",
             item: "dbe:bunny_costume_ears",
-            removeItemsOnComplete: true
-          }
-        ]
-      }
+            removeItemsOnComplete: true,
+          },
+        ],
+      },
     ],
     rewards: [
       {
         type: "item",
-        item: "dbe:power_pole"
+        item: "dbe:power_pole",
+        amount: 1,
       },
       {
         type: "zeni",
-        amount: 15
-      }
-    ]
+        amount: 15,
+      },
+    ],
   },
   {
     id: "pirate_robot_treasure",
@@ -127,60 +128,60 @@ const side_quests_data = [
           {
             type: "enter_biome",
             dimensionId: "minecraft:overworld",
-            biomeId: "minecraft:beach"
-          }
-        ]
+            biomeId: "minecraft:beach",
+          },
+        ],
       },
       {
         dialogs: {
-          on_finish: 3
+          on_finish: 3,
         },
         tasks: [
           {
             type: "defeat_enemy",
             entity: "dbe:pirate_robot",
-            spawnOnStart: true
-          }
-        ]
-      }
+            spawnOnStart: true,
+          },
+        ],
+      },
     ],
     rewards: [
       {
         type: "item",
-        item: "dbe:pirate_robot_head"
+        item: "dbe:pirate_robot_head",
       },
       {
         type: "item",
-        item: "dbe:katana"
+        item: "dbe:katana",
       },
       {
         type: "item",
         item: "dbe:nanochip",
-        amount: 2
+        amount: 2,
       },
       {
         type: "item",
         item: "dbe:evolitium_crystal",
-        amount: 6
+        amount: 6,
       },
       {
         type: "item",
         item: "minecraft:iron_ingot",
-        amount: 8
+        amount: 8,
       },
       {
         type: "z_points",
-        amountSource: "based_on_enemies"
+        amountSource: "based_on_enemies",
       },
       {
         type: "zeni",
-        amountSource: "based_on_enemies"
+        amountSource: "based_on_enemies",
       },
       {
         type: "zeni",
-        amount: 10
-      }
-    ]
+        amount: 10,
+      },
+    ],
   },
   {
     id: "whis_ramen_delivery",
@@ -195,9 +196,9 @@ const side_quests_data = [
             count: 2,
             deliverToNpc: "dbe:whis",
             item: "dbe:ramen",
-            removeItemsOnComplete: true
-          }
-        ]
+            removeItemsOnComplete: true,
+          },
+        ],
       },
       {
         isRestartable: false,
@@ -205,23 +206,21 @@ const side_quests_data = [
           {
             type: "interact_npc",
             entity: "dbe:whis",
-            dialogCount: 3
-          }
-        ]
-      }
+            dialogCount: 3,
+          },
+        ],
+      },
     ],
     rewards: [
       {
         type: "z_points",
-        amountSource: "based_on_enemies"
+        amountSource: "based_on_enemies",
       },
       {
         type: "zeni",
-        amount: 10
-      }
-    ]
-  }
+        amount: 10,
+      },
+    ],
+  },
 ];
-export {
-  side_quests_data
-};
+export { side_quests_data };

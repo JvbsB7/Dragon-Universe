@@ -16,11 +16,6 @@
                 "minecraft:variant": {
                     "value": 1
                 }
-            },
-            "dbe:variant_2": {
-                "minecraft:variant": {
-                    "value": 2
-                }
             }
         },
         "components": {
@@ -123,14 +118,6 @@
                         "add": {
                             "component_groups": [
                                 "dbe:variant_1"
-                            ]
-                        }
-                    },
-                    {
-                        "weight": 1,
-                        "add": {
-                            "component_groups": [
-                                "dbe:variant_2"
                             ]
                         }
                     }

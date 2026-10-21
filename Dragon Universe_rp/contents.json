@@ -4348,6 +4348,9 @@
          "path" : "textures/entity/villagers/saiyan_villager_1.png"
       },
       {
+         "path" : "textures/entity/villagers/saiyan_villager_tail.png"
+      },
+      {
          "path" : "textures/entity/villagers/saiyan_villager_2.png"
       },
       {

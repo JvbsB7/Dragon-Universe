@@ -31,13 +31,6 @@
                         0,
                         0
                     ]
-                },
-                "tail": {
-                    "rotation": [
-                        0,
-                        "math.cos(q.modified_distance_moved * 38.17) * 18 * q.modified_move_speed",
-                        0
-                    ]
                 }
             }
         },
@@ -68,13 +61,6 @@
                         0,
                         0,
                         "-1.2 - math.cos(q.life_time * 103.2) * 2.0"
-                    ]
-                },
-                "tail": {
-                    "rotation": [
-                        0,
-                        "math.sin(q.life_time * 90) * 10",
-                        0
                     ]
                 }
             }

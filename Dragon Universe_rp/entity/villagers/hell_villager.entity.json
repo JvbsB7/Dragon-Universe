@@ -8,8 +8,7 @@
             },
             "textures": {
                 "v0": "textures/entity/villagers/hell_villager_0",
-                "v1": "textures/entity/villagers/hell_villager_1",
-                "v2": "textures/entity/villagers/hell_villager_2"
+                "v1": "textures/entity/villagers/hell_villager_1"
             },
             "geometry": {
                 "default": "geometry.dbe_saiyan_villager"

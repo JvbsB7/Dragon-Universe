@@ -9,16 +9,18 @@
             "textures": {
                 "v0": "textures/entity/villagers/frieza_villager_0",
                 "v1": "textures/entity/villagers/frieza_villager_1",
-                "v2": "textures/entity/villagers/frieza_villager_2"
+                "frost_demon_tail": "textures/entity/races/frost_demon/first_form_2"
             },
             "geometry": {
-                "default": "geometry.dbe_frieza_villager"
+                "default": "geometry.dbe_frieza_villager",
+                "frost_demon_tail": "geometry.dbe_frieza_villager_tail"
             },
             "animations": {
                 "move": "animation.dbe_villager.move",
                 "look": "animation.dbe_villager.look",
                 "idle": "animation.dbe_villager.idle",
-                "attack": "animation.dbe_villager.attack"
+                "attack": "animation.dbe_villager.attack",
+                "tail_move": "animation.player.tail.move"
             },
             "scripts": {
                 "animate": [
@@ -29,11 +31,13 @@
                     "look",
                     {
                         "attack": "v.attack_time > 0"
-                    }
+                    },
+                    "tail_move"
                 ]
             },
             "render_controllers": [
-                "controller.render.dbe_villager"
+                "controller.render.dbe_villager",
+                "controller.render.dbe_villager.frost_demon_tail"
             ]
         }
     }

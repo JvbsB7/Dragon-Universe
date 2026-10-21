@@ -8,11 +8,11 @@
             },
             "textures": {
                 "v0": "textures/entity/villagers/yardrat_villager_0",
-                "v1": "textures/entity/villagers/yardrat_villager_1",
-                "v2": "textures/entity/villagers/yardrat_villager_2"
+                "v1": "textures/entity/villagers/yardrat_villager_1"
             },
             "geometry": {
-                "default": "geometry.dbe_yardrat_villager"
+                "v0": "geometry.dbe_yardrat_villager",
+                "v1": "geometry.dbe_yardrat_villager_v1"
             },
             "animations": {
                 "move": "animation.dbe_villager.move",
@@ -33,7 +33,7 @@
                 ]
             },
             "render_controllers": [
-                "controller.render.dbe_villager"
+                "controller.render.dbe_yardrat_villager"
             ]
         }
     }

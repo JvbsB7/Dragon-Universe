@@ -4,7 +4,7 @@ const dialogues_data = [
     npcId: "dbe:akira_toriyama",
     title: "ui.dbe.npc.akira_toriyama.title",
     addQuest: {
-      questId: "world_connections"
+      questId: "world_connections",
     },
     body: [
       {
@@ -12,29 +12,29 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.akira_toriyama.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.akira_toriyama.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
-    ]
+            value: "good",
+          },
+        ],
+      },
+    ],
   },
   {
     id: "babidi_main_menu",
@@ -46,28 +46,28 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.babidi.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.babidi.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
@@ -76,18 +76,18 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
-      }
+            value: "evil",
+          },
+        ],
+      },
     ],
     subMenus: [
       {
         id: "babidi_skills",
         backButtonDialogue: "babidi_main_menu",
-        type: "skills"
-      }
-    ]
+        type: "skills",
+      },
+    ],
   },
   {
     id: "beerus_main_menu",
@@ -99,52 +99,52 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.beerus.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.beerus.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
         buttonText: "ui.dbe.npc.beerus.main.button.skills",
-        nextDialogue: "beerus_skills"
-      }
+        nextDialogue: "beerus_skills",
+      },
     ],
     requirements: [
       {
         test: "completed_quest",
-        value: "saga_beerus_1"
+        value: "saga_beerus_1",
       },
       {
         test: "has_skill",
-        value: "divine_ki"
-      }
+        value: "divine_ki",
+      },
     ],
     subMenus: [
       {
         id: "beerus_skills",
         backButtonDialogue: "beerus_main_menu",
-        type: "skills"
-      }
-    ]
+        type: "skills",
+      },
+    ],
   },
   {
     id: "bulma_main_menu",
@@ -156,28 +156,28 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.bulma.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.bulma.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
@@ -187,18 +187,18 @@ const dialogues_data = [
           {
             test: "is_alignment",
             operator: "!=",
-            value: "evil"
-          }
-        ]
-      }
+            value: "evil",
+          },
+        ],
+      },
     ],
     subMenus: [
       {
         id: "bulma_shop",
         backButtonDialogue: "bulma_main_menu",
-        type: "shop"
-      }
-    ]
+        type: "shop",
+      },
+    ],
   },
   {
     id: "capsule_corp_engineer_main_menu",
@@ -210,43 +210,43 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.capsule_corp_engineer.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.capsule_corp_engineer.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     addQuest: {
       questId: "android_conversion",
       requirements: [
         {
           test: "is_race",
-          value: "earthling"
+          value: "earthling",
         },
         {
           test: "has_level",
           operator: ">=",
-          value: 10
-        }
-      ]
-    }
+          value: 10,
+        },
+      ],
+    },
   },
   {
     id: "cell_main_menu",
@@ -258,28 +258,28 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.cell.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.cell.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
@@ -288,18 +288,18 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
-      }
+            value: "evil",
+          },
+        ],
+      },
     ],
     subMenus: [
       {
         id: "cell_skills",
         backButtonDialogue: "cell_main_menu",
-        type: "skills"
-      }
-    ]
+        type: "skills",
+      },
+    ],
   },
   {
     id: "chi_chi_main_menu",
@@ -311,28 +311,28 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.chi_chi.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.chi_chi.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
@@ -342,18 +342,18 @@ const dialogues_data = [
           {
             test: "is_alignment",
             operator: "!=",
-            value: "evil"
-          }
-        ]
-      }
+            value: "evil",
+          },
+        ],
+      },
     ],
     subMenus: [
       {
         id: "chi_chi_shop",
         backButtonDialogue: "chi_chi_main_menu",
-        type: "shop"
-      }
-    ]
+        type: "shop",
+      },
+    ],
   },
   {
     id: "king_kai_main_menu",
@@ -365,28 +365,28 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.king_kai.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.king_kai.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
@@ -396,9 +396,9 @@ const dialogues_data = [
           {
             test: "is_alignment",
             operator: "!=",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         buttonText: "ui.dbe.npc.king_kai.main.button.skills",
@@ -407,10 +407,10 @@ const dialogues_data = [
           {
             test: "is_alignment",
             operator: "!=",
-            value: "evil"
-          }
-        ]
-      }
+            value: "evil",
+          },
+        ],
+      },
     ],
     subMenus: [
       {
@@ -424,23 +424,23 @@ const dialogues_data = [
             cooldown: {
               id: "training_weights",
               duration: 1200,
-              source: "absolute_time"
+              source: "absolute_time",
             },
             rewards: [
               {
                 type: "item",
-                item: "dbe:workout_weights"
-              }
-            ]
-          }
-        ]
+                item: "dbe:workout_weights",
+              },
+            ],
+          },
+        ],
       },
       {
         id: "king_kai_skills",
         backButtonDialogue: "king_kai_main_menu",
-        type: "skills"
-      }
-    ]
+        type: "skills",
+      },
+    ],
   },
   {
     id: "korin_main_menu",
@@ -452,37 +452,37 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.korin.main.text.fish",
         requirements: [
           {
             test: "has_quest",
-            value: "bring_fish_for_karin"
-          }
-        ]
+            value: "bring_fish_for_karin",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.korin.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.korin.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     addQuest: {
       questId: "bring_fish_for_karin",
@@ -490,9 +490,9 @@ const dialogues_data = [
         {
           test: "is_alignment",
           operator: "!=",
-          value: "evil"
-        }
-      ]
+          value: "evil",
+        },
+      ],
     },
     buttons: [
       {
@@ -500,82 +500,83 @@ const dialogues_data = [
         cooldown: {
           id: "senzu_bean_daily",
           duration: 24e3,
-          source: "absolute_time"
+          source: "absolute_time",
         },
         requirements: [
           {
             test: "completed_quest",
-            value: "bring_fish_for_karin"
+            value: "bring_fish_for_karin",
           },
           {
             test: "is_alignment",
             operator: "!=",
-            value: "evil"
-          }
+            value: "evil",
+          },
         ],
         rewards: [
           {
             type: "item",
-            item: "dbe:senzu_bean"
-          }
-        ]
+            item: "dbe:senzu_bean",
+            amount: 5,
+          },
+        ],
       },
       {
         buttonText: "ui.dbe.npc.korin.main.button.flying_nimbus",
         cooldown: {
           id: "flying_nimbus_daily",
           duration: 24e3,
-          source: "absolute_time"
+          source: "absolute_time",
         },
         requirements: [
           {
             test: "is_alignment",
             operator: "!=",
-            value: "evil"
+            value: "evil",
           },
           {
             test: "completed_quest",
-            value: "bring_fish_for_karin"
-          }
+            value: "bring_fish_for_karin",
+          },
         ],
         rewards: [
           {
             type: "item",
-            item: "dbe:flying_nimbus"
-          }
-        ]
+            item: "dbe:flying_nimbus",
+          },
+        ],
       },
       {
         buttonText: "ui.dbe.npc.korin.main.button.flying_nimbus",
         cooldown: {
           id: "flying_nimbus_daily",
           duration: 24e3,
-          source: "absolute_time"
+          source: "absolute_time",
         },
         requirements: [
           {
             test: "is_alignment",
             operator: "!=",
-            value: "neutral"
+            value: "neutral",
           },
           {
             test: "is_alignment",
             operator: "!=",
-            value: "good"
+            value: "good",
           },
           {
             test: "completed_quest",
-            value: "bring_fish_for_karin"
-          }
+            value: "bring_fish_for_karin",
+          },
         ],
         rewards: [
           {
             type: "item",
-            item: "dbe:black_flying_nimbus"
-          }
-        ]
-      }
-    ]
+            item: "dbe:black_flying_nimbus",
+          },
+        ],
+      },
+    ],
   },
   {
     id: "krillin_main_menu",
@@ -587,42 +588,42 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.krillin.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.krillin.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
         buttonText: "ui.dbe.npc.krillin.main.button.skills",
-        nextDialogue: "krillin_skills"
-      }
+        nextDialogue: "krillin_skills",
+      },
     ],
     subMenus: [
       {
         id: "krillin_skills",
         backButtonDialogue: "krillin_main_menu",
-        type: "skills"
-      }
-    ]
+        type: "skills",
+      },
+    ],
   },
   {
     id: "master_roshi_main_menu",
@@ -634,28 +635,28 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.master_roshi.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.master_roshi.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     addQuest: {
       questId: "fetch_bulma_outfit",
@@ -663,9 +664,9 @@ const dialogues_data = [
         {
           test: "is_alignment",
           operator: "!=",
-          value: "evil"
-        }
-      ]
+          value: "evil",
+        },
+      ],
     },
     buttons: [
       {
@@ -674,14 +675,14 @@ const dialogues_data = [
         requirements: [
           {
             test: "completed_quest",
-            value: "fetch_bulma_outfit"
+            value: "fetch_bulma_outfit",
           },
           {
             test: "is_alignment",
             operator: "!=",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         buttonText: "ui.dbe.npc.master_roshi.main.button.skills",
@@ -689,15 +690,15 @@ const dialogues_data = [
         requirements: [
           {
             test: "completed_quest",
-            value: "fetch_bulma_outfit"
+            value: "fetch_bulma_outfit",
           },
           {
             test: "is_alignment",
             operator: "!=",
-            value: "evil"
-          }
-        ]
-      }
+            value: "evil",
+          },
+        ],
+      },
     ],
     subMenus: [
       {
@@ -711,23 +712,23 @@ const dialogues_data = [
             cooldown: {
               id: "training_weights",
               duration: 1200,
-              source: "absolute_time"
+              source: "absolute_time",
             },
             rewards: [
               {
                 type: "item",
-                item: "dbe:turtle_shell"
-              }
-            ]
-          }
-        ]
+                item: "dbe:turtle_shell",
+              },
+            ],
+          },
+        ],
       },
       {
         id: "master_roshi_skills",
         backButtonDialogue: "master_roshi_main_menu",
-        type: "skills"
-      }
-    ]
+        type: "skills",
+      },
+    ],
   },
   {
     id: "merchant_main_menu",
@@ -739,42 +740,42 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.merchant.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.merchant.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
         buttonText: "ui.dbe.npc.merchant.main.button.clothing_shop",
-        nextDialogue: "clothing_shop"
-      }
+        nextDialogue: "clothing_shop",
+      },
     ],
     subMenus: [
       {
         id: "clothing_shop",
         backButtonDialogue: "merchant_main_menu",
-        type: "shop"
-      }
-    ]
+        type: "shop",
+      },
+    ],
   },
   {
     id: "mr_popo_main_menu",
@@ -786,28 +787,28 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.mr_popo.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.mr_popo.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
@@ -817,18 +818,18 @@ const dialogues_data = [
           {
             test: "is_alignment",
             operator: "!=",
-            value: "evil"
-          }
-        ]
-      }
+            value: "evil",
+          },
+        ],
+      },
     ],
     subMenus: [
       {
         id: "mr_popo_skills",
         backButtonDialogue: "mr_popo_main_menu",
-        type: "skills"
-      }
-    ]
+        type: "skills",
+      },
+    ],
   },
   {
     id: "piccolo_main_menu",
@@ -840,38 +841,38 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.piccolo.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.piccolo.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
         buttonText: "ui.dbe.npc.piccolo.main.button.weight",
-        nextDialogue: "weight"
+        nextDialogue: "weight",
       },
       {
         buttonText: "ui.dbe.npc.piccolo.main.button.skills",
-        nextDialogue: "piccolo_skills"
-      }
+        nextDialogue: "piccolo_skills",
+      },
     ],
     subMenus: [
       {
@@ -885,23 +886,23 @@ const dialogues_data = [
             cooldown: {
               id: "training_weights",
               duration: 1200,
-              source: "absolute_time"
+              source: "absolute_time",
             },
             rewards: [
               {
                 type: "item",
-                item: "dbe:piccolo_cape"
-              }
-            ]
-          }
-        ]
+                item: "dbe:piccolo_cape",
+              },
+            ],
+          },
+        ],
       },
       {
         id: "piccolo_skills",
         backButtonDialogue: "piccolo_main_menu",
-        type: "skills"
-      }
-    ]
+        type: "skills",
+      },
+    ],
   },
   {
     id: "vegeta_main_menu",
@@ -913,42 +914,42 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.vegeta.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.vegeta.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     buttons: [
       {
         buttonText: "ui.dbe.npc.vegeta.main.button.skills",
-        nextDialogue: "vegeta_skills"
-      }
+        nextDialogue: "vegeta_skills",
+      },
     ],
     subMenus: [
       {
         id: "vegeta_skills",
         backButtonDialogue: "vegeta_main_menu",
-        type: "skills"
-      }
-    ]
+        type: "skills",
+      },
+    ],
   },
   {
     id: "unigame_main_menu",
@@ -960,9 +961,9 @@ const dialogues_data = [
         {
           test: "is_alignment",
           operator: "!=",
-          value: "evil"
-        }
-      ]
+          value: "evil",
+        },
+      ],
     },
     body: [
       {
@@ -970,29 +971,29 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.unigame.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.unigame.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
-    ]
+            value: "good",
+          },
+        ],
+      },
+    ],
   },
   {
     id: "whis_main_menu",
@@ -1004,31 +1005,31 @@ const dialogues_data = [
         requirements: [
           {
             test: "is_alignment",
-            value: "evil"
-          }
-        ]
+            value: "evil",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.whis.main.text.neutral",
         requirements: [
           {
             test: "is_alignment",
-            value: "neutral"
-          }
-        ]
+            value: "neutral",
+          },
+        ],
       },
       {
         text: "ui.dbe.npc.whis.main.text.good",
         requirements: [
           {
             test: "is_alignment",
-            value: "good"
-          }
-        ]
-      }
+            value: "good",
+          },
+        ],
+      },
     ],
     addQuest: {
-      questId: "whis_ramen_delivery"
+      questId: "whis_ramen_delivery",
     },
     buttons: [
       {
@@ -1037,9 +1038,9 @@ const dialogues_data = [
         requirements: [
           {
             test: "completed_quest",
-            value: "whis_ramen_delivery"
-          }
-        ]
+            value: "whis_ramen_delivery",
+          },
+        ],
       },
       {
         buttonText: "ui.dbe.npc.whis.main.button.skills",
@@ -1047,20 +1048,20 @@ const dialogues_data = [
         requirements: [
           {
             test: "completed_quest",
-            value: "whis_ramen_delivery"
-          }
-        ]
-      }
+            value: "whis_ramen_delivery",
+          },
+        ],
+      },
     ],
     requirements: [
       {
         test: "completed_quest",
-        value: "saga_beerus_1"
+        value: "saga_beerus_1",
       },
       {
         test: "has_skill",
-        value: "divine_ki"
-      }
+        value: "divine_ki",
+      },
     ],
     subMenus: [
       {
@@ -1074,25 +1075,23 @@ const dialogues_data = [
             cooldown: {
               id: "training_weights",
               duration: 1200,
-              source: "absolute_time"
+              source: "absolute_time",
             },
             rewards: [
               {
                 type: "item",
-                item: "dbe:training_armor"
-              }
-            ]
-          }
-        ]
+                item: "dbe:training_armor",
+              },
+            ],
+          },
+        ],
       },
       {
         id: "whis_skills",
         backButtonDialogue: "whis_main_menu",
-        type: "skills"
-      }
-    ]
-  }
+        type: "skills",
+      },
+    ],
+  },
 ];
-export {
-  dialogues_data
-};
+export { dialogues_data };

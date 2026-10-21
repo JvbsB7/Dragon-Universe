@@ -6,12 +6,111 @@
                 "textures": {
                     "Array.skins": [
                         "Texture.v0",
-                        "Texture.v1",
-                        "Texture.v2"
+                        "Texture.v1"
                     ]
                 }
             },
             "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "textures": [
+                "Array.skins[query.variant]"
+            ]
+        },
+        "controller.render.dbe_villager_2skins": {
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "textures": [
+                "Texture.default"
+            ]
+        },
+        "controller.render.dbe_villager.saiyan": {
+            "arrays": {
+                "textures": {
+                    "Array.skins": [
+                        "Texture.v0",
+                        "Texture.v1"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "textures": [
+                "Array.skins[query.variant]"
+            ],
+            "part_visibility": [
+                {
+                    "*": true
+                },
+                {
+                    "hair_spikes": "q.variant != 1"
+                },
+                {
+                    "body_layer": "q.variant == 1"
+                },
+                {
+                    "right_arm_layer": "q.variant == 1"
+                },
+                {
+                    "left_arm_layer": "q.variant == 1"
+                },
+                {
+                    "right_leg_layer": "q.variant == 1"
+                },
+                {
+                    "left_leg_layer": "q.variant == 1"
+                }
+            ]
+        },
+        "controller.render.dbe_villager.saiyan_tail": {
+            "geometry": "Geometry.saiyan_tail",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "textures": [
+                "Texture.saiyan_tail"
+            ]
+        },
+        "controller.render.dbe_villager.frost_demon_tail": {
+            "geometry": "Geometry.frost_demon_tail",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "textures": [
+                "Texture.frost_demon_tail"
+            ]
+        },
+        "controller.render.dbe_yardrat_villager": {
+            "arrays": {
+                "textures": {
+                    "Array.skins": [
+                        "Texture.v0",
+                        "Texture.v1"
+                    ]
+                },
+                "geometries": {
+                    "Array.geos": [
+                        "Geometry.v0",
+                        "Geometry.v1"
+                    ]
+                }
+            },
+            "geometry": "Array.geos[query.variant]",
             "materials": [
                 {
                     "*": "Material.default"

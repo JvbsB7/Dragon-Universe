@@ -9,14 +9,14 @@ const entity_data = [
           dexterity: 1,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
-      }
-    }
+          willpower: 1,
+        },
+      },
+    },
   },
   {
     id: "dbe:akira_toriyama",
-    race: "earthling"
+    race: "earthling",
   },
   {
     id: "dbe:android_17",
@@ -24,12 +24,8 @@ const entity_data = [
     race: "earthling",
     entityDefinitions: {
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:android_18",
@@ -37,12 +33,8 @@ const entity_data = [
     race: "earthling",
     entityDefinitions: {
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:android_19",
@@ -51,12 +43,8 @@ const entity_data = [
     scale: 1.1,
     entityDefinitions: {
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:android_20",
@@ -64,21 +52,17 @@ const entity_data = [
     race: "earthling",
     entityDefinitions: {
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
-    id: "dbe:angel_staff_entity"
+    id: "dbe:angel_staff_entity",
   },
   {
-    id: "dbe:announcer"
+    id: "dbe:announcer",
   },
   {
-    id: "dbe:babidi"
+    id: "dbe:babidi",
   },
   {
     id: "dbe:battle_jacket",
@@ -90,70 +74,56 @@ const entity_data = [
           dexterity: 1,
           spirit: 1,
           strength: 1,
-          willpower: 0
-        }
-      }
-    }
+          willpower: 0,
+        },
+      },
+    },
   },
   {
-    id: "dbe:bear_thief"
+    id: "dbe:bear_thief",
   },
   {
-    id: "dbe:beerus"
+    id: "dbe:beerus",
   },
   {
     id: "dbe:beerus_enemy",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "hakai",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "hakai", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:bulma",
-    race: "earthling"
+    race: "earthling",
   },
   {
     id: "dbe:burter",
     entityDefinitions: {
       kiColor: "red",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:botamo",
     entityDefinitions: {
       kiColor: "green",
-      skills: [
-        "aura_boost"
-      ]
-    }
+      skills: ["aura_boost"],
+    },
   },
   {
     id: "dbe:cabba",
     race: "saiyan",
     scale: 0.85,
     entityDefinitions: {
-      skills: [
-        "aura_boost",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "rapid_movement"],
+    },
   },
   {
-    id: "dbe:capsule_991"
+    id: "dbe:capsule_991",
   },
   {
     id: "dbe:capsule_corp_engineer",
-    race: "earthling"
+    race: "earthling",
   },
   {
     id: "dbe:cell",
@@ -164,92 +134,72 @@ const entity_data = [
         "final_flash",
         "kamehameha",
         "ki_blast",
-        "rapid_movement"
-      ]
-    }
+        "rapid_movement",
+      ],
+    },
   },
   {
     id: "dbe:cell_junior",
     race: "bio_android",
     scale: 0.9,
     entityDefinitions: {
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:cell_npc",
-    race: "bio_android"
+    race: "bio_android",
   },
   {
     id: "dbe:chi_chi",
-    race: "earthling"
+    race: "earthling",
   },
   {
     id: "dbe:corrupted_fused_zamasu",
     race: "glind",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:cui",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:dabura",
     entityDefinitions: {
       kiColor: "red",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
-    id: "dbe:damage_indicator"
+    id: "dbe:damage_indicator",
   },
   {
-    id: "dbe:deer"
+    id: "dbe:deer",
   },
   {
-    id: "dbe:dinosaur"
+    id: "dbe:dinosaur",
   },
   {
     id: "dbe:dodoria",
     entityDefinitions: {
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
-    id: "dbe:drive_test_car"
+    id: "dbe:drive_test_car",
   },
   {
-    id: "dbe:earth"
+    id: "dbe:earth",
   },
   {
-    id: "dbe:enma_daioh"
+    id: "dbe:enma_daioh",
   },
   {
     id: "dbe:fat_buu",
@@ -257,15 +207,11 @@ const entity_data = [
     scale: 1.3,
     entityDefinitions: {
       kiColor: "pink",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
-    id: "dbe:flying_nimbus"
+    id: "dbe:flying_nimbus",
   },
   {
     id: "dbe:frieza",
@@ -279,160 +225,128 @@ const entity_data = [
           dexterity: 1,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
+          willpower: 1,
+        },
       },
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
     },
     transformations: [
       {
-        id: "mecha_frieza"
-      }
-    ]
+        id: "mecha_frieza",
+      },
+    ],
   },
   {
-    id: "dbe:frieza_pod"
+    id: "dbe:frieza_pod",
   },
   {
-    id: "dbe:space_pod"
+    id: "dbe:space_pod",
   },
   {
-    id: "dbe:saiyan_pod"
+    id: "dbe:saiyan_pod",
   },
   {
     id: "dbe:frieza_soldier",
     entityDefinitions: {
+      powerDefinition: {
+        level: 14,
+        focus: {
+          constitution: 0.89,
+          dexterity: 1.2,
+          spirit: 1,
+          strength: 1,
+          willpower: 1,
+        },
+      },
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:frost",
     race: "frost_demon",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:future_trunks_enemy",
     race: "saiyan",
     entityDefinitions: {
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:fused_zamasu",
     race: "glind",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:general_black",
-    race: "earthling"
+    race: "earthling",
   },
   {
-    id: "dbe:giant_fish"
+    id: "dbe:giant_fish",
   },
   {
     id: "dbe:ginyu",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:goku",
-    race: "saiyan"
+    race: "saiyan",
   },
   {
     id: "dbe:goku_black",
     race: "saiyan",
     entityDefinitions: {
       kiColor: "pink",
-      skills: [
-        "aura_boost",
-        "kamehameha",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "kamehameha", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:goku_enemy",
     race: "saiyan",
     entityDefinitions: {
-      skills: [
-        "aura_boost",
-        "kamehameha",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "kamehameha", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:grand_elder_guru",
-    race: "namekian"
+    race: "namekian",
   },
   {
     id: "dbe:guldo",
-    scale: 0.9
+    scale: 0.9,
   },
   {
     id: "dbe:hitto",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:jeice",
     entityDefinitions: {
       kiColor: "red",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:kami_sama",
-    race: "namekian"
+    race: "namekian",
   },
   {
-    id: "dbe:ki_attack"
+    id: "dbe:ki_attack",
   },
   {
     id: "dbe:kid_buu",
@@ -440,12 +354,8 @@ const entity_data = [
     scale: 0.7,
     entityDefinitions: {
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:king_cold",
@@ -460,33 +370,29 @@ const entity_data = [
           dexterity: 1,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
+          willpower: 1,
+        },
       },
       kiColor: "red",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
-    id: "dbe:king_kai"
+    id: "dbe:king_kai",
   },
   {
     id: "dbe:korin",
-    race: "earthling"
+    race: "earthling",
   },
   {
     id: "dbe:krillin",
-    race: "earthling"
+    race: "earthling",
   },
   {
-    id: "dbe:location"
+    id: "dbe:location",
   },
   {
-    id: "dbe:magetta"
+    id: "dbe:magetta",
   },
   {
     id: "dbe:majin_vegeta",
@@ -499,23 +405,23 @@ const entity_data = [
         "final_flash",
         "galick_gun",
         "ki_blast",
-        "rapid_movement"
-      ]
-    }
+        "rapid_movement",
+      ],
+    },
   },
   {
     id: "dbe:master_roshi",
-    race: "earthling"
+    race: "earthling",
   },
   {
     id: "dbe:merchant",
-    race: "earthling"
+    race: "earthling",
   },
   {
-    id: "dbe:missile"
+    id: "dbe:missile",
   },
   {
-    id: "dbe:mr_popo"
+    id: "dbe:mr_popo",
   },
   {
     id: "dbe:namekian",
@@ -529,19 +435,14 @@ const entity_data = [
           dexterity: 1,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
+          willpower: 1,
+        },
       },
-      skills: [
-        "aura_boost",
-        "gigantification",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "gigantification", "ki_blast", "rapid_movement"],
+    },
   },
   {
-    id: "dbe:namekian_frog"
+    id: "dbe:namekian_frog",
   },
   {
     id: "dbe:nappa",
@@ -555,20 +456,16 @@ const entity_data = [
           dexterity: 1,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
+          willpower: 1,
+        },
       },
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:piccolo",
-    race: "namekian"
+    race: "namekian",
   },
   {
     id: "dbe:piccolo_enemy",
@@ -580,9 +477,9 @@ const entity_data = [
         "gigantification",
         "ki_blast",
         "makankosappo",
-        "rapid_movement"
-      ]
-    }
+        "rapid_movement",
+      ],
+    },
   },
   {
     id: "dbe:pirate_robot",
@@ -594,36 +491,30 @@ const entity_data = [
           dexterity: 2,
           spirit: 1,
           strength: 1,
-          willpower: 0
-        }
+          willpower: 0,
+        },
       },
-      skills: [
-        "aura_boost"
-      ]
-    }
+      skills: ["aura_boost"],
+    },
   },
   {
-    id: "dbe:pirate_robot_bullet"
+    id: "dbe:pirate_robot_bullet",
   },
   {
-    id: "dbe:player_fly"
+    id: "dbe:player_fly",
   },
   {
-    id: "dbe:porunga"
+    id: "dbe:porunga",
   },
   {
     id: "dbe:puipui",
     entityDefinitions: {
       kiColor: "green",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
-    id: "dbe:pterosaur"
+    id: "dbe:pterosaur",
   },
   {
     id: "dbe:raditz",
@@ -631,22 +522,14 @@ const entity_data = [
     scale: 1.1,
     entityDefinitions: {
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:recoome",
     entityDefinitions: {
       kiColor: "pink",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
     },
     transformations: [
       {
@@ -656,13 +539,13 @@ const entity_data = [
           ki_consume: 1,
           size: 1.05,
           strength: 1.5,
-          willpower: 1
-        }
-      }
-    ]
+          willpower: 1,
+        },
+      },
+    ],
   },
   {
-    id: "dbe:saber_tooth_tiger"
+    id: "dbe:saber_tooth_tiger",
   },
   {
     id: "dbe:saiyan_villager",
@@ -674,10 +557,10 @@ const entity_data = [
           dexterity: 1.1,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
-      }
-    }
+          willpower: 1,
+        },
+      },
+    },
   },
 
   {
@@ -692,10 +575,10 @@ const entity_data = [
           dexterity: 1.2,
           spirit: 1,
           strength: 1.2,
-          willpower: 1.2
-        }
-      }
-    }
+          willpower: 1.2,
+        },
+      },
+    },
   },
 
   {
@@ -708,10 +591,10 @@ const entity_data = [
           dexterity: 1.1,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
-      }
-    }
+          willpower: 1,
+        },
+      },
+    },
   },
 
   {
@@ -724,10 +607,10 @@ const entity_data = [
           dexterity: 1.2,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
-      }
-    }
+          willpower: 1,
+        },
+      },
+    },
   },
 
   {
@@ -740,10 +623,10 @@ const entity_data = [
           dexterity: 1,
           spirit: 1,
           strength: 1.1,
-          willpower: 1
-        }
-      }
-    }
+          willpower: 1,
+        },
+      },
+    },
   },
 
   {
@@ -757,15 +640,12 @@ const entity_data = [
           dexterity: 1.2,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
+          willpower: 1,
+        },
       },
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast"],
+    },
   },
   {
     id: "dbe:saibabrute",
@@ -778,16 +658,12 @@ const entity_data = [
           dexterity: 1.25,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
+          willpower: 1,
+        },
       },
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:shadow_dummy",
@@ -799,37 +675,28 @@ const entity_data = [
           dexterity: 1,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
+          willpower: 1,
+        },
       },
-      friendlyDamage: true
-    }
+      friendlyDamage: true,
+    },
   },
   {
-    id: "dbe:shenron"
+    id: "dbe:shenron",
   },
   {
     id: "dbe:shisami",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:super_buu",
     race: "majin",
     entityDefinitions: {
       kiColor: "yellow",
-      skills: [
-        "absorption",
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
+      skills: ["absorption", "aura_boost", "ki_blast", "rapid_movement"],
     },
     transformations: [
       {
@@ -838,8 +705,8 @@ const entity_data = [
           dexterity: 2.1,
           ki_consume: 2,
           strength: 2.1,
-          willpower: 2.1
-        }
+          willpower: 2.1,
+        },
       },
       {
         id: "super_buu_gotenks",
@@ -847,33 +714,29 @@ const entity_data = [
           dexterity: 2.7,
           ki_consume: 2,
           strength: 2.7,
-          willpower: 2.7
-        }
-      }
-    ]
+          willpower: 2.7,
+        },
+      },
+    ],
   },
   {
     id: "dbe:tagoma",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
-    id: "dbe:test_enemy"
+    id: "dbe:test_enemy",
   },
   {
-    id: "dbe:time_machine"
+    id: "dbe:time_machine",
   },
   {
-    id: "dbe:training_orb"
+    id: "dbe:training_orb",
   },
   {
-    id: "dbe:unigame"
+    id: "dbe:unigame",
   },
   {
     id: "dbe:vegeta",
@@ -888,8 +751,8 @@ const entity_data = [
           dexterity: 1,
           spirit: 1,
           strength: 1,
-          willpower: 1
-        }
+          willpower: 1,
+        },
       },
       kiColor: "purple",
       skills: [
@@ -897,34 +760,26 @@ const entity_data = [
         "final_flash",
         "galick_gun",
         "ki_blast",
-        "rapid_movement"
-      ]
-    }
+        "rapid_movement",
+      ],
+    },
   },
   {
     id: "dbe:vegeta_npc",
-    race: "saiyan"
+    race: "saiyan",
   },
   {
     id: "dbe:yakon",
     entityDefinitions: {
       kiColor: "yellow",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
   },
   {
     id: "dbe:zarbon",
     entityDefinitions: {
       kiColor: "red",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
     },
     transformations: [
       {
@@ -933,27 +788,21 @@ const entity_data = [
           dexterity: 1.4,
           ki_consume: 2,
           strength: 1.4,
-          willpower: 1.4
-        }
-      }
-    ]
+          willpower: 1.4,
+        },
+      },
+    ],
   },
   {
-    id: "dbe:whis"
+    id: "dbe:whis",
   },
   {
     id: "dbe:zamasu",
     race: "glind",
     entityDefinitions: {
       kiColor: "purple",
-      skills: [
-        "aura_boost",
-        "ki_blast",
-        "rapid_movement"
-      ]
-    }
-  }
+      skills: ["aura_boost", "ki_blast", "rapid_movement"],
+    },
+  },
 ];
-export {
-  entity_data
-};
+export { entity_data };

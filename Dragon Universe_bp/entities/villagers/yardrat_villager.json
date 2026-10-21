@@ -6,7 +6,7 @@
             "is_spawnable": false,
             "is_summonable": true
         },
-        "component_groups": {
+         "component_groups": {
             "dbe:variant_0": {
                 "minecraft:variant": {
                     "value": 0
@@ -15,11 +15,6 @@
             "dbe:variant_1": {
                 "minecraft:variant": {
                     "value": 1
-                }
-            },
-            "dbe:variant_2": {
-                "minecraft:variant": {
-                    "value": 2
                 }
             }
         },
@@ -132,14 +127,6 @@
                         "add": {
                             "component_groups": [
                                 "dbe:variant_1"
-                            ]
-                        }
-                    },
-                    {
-                        "weight": 1,
-                        "add": {
-                            "component_groups": [
-                                "dbe:variant_2"
                             ]
                         }
                     }

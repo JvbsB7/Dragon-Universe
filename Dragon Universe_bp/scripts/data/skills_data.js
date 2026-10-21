@@ -288,23 +288,11 @@ const skills_data = [
     type: "toggle",
     id: "healing_power",
     isPassive: true,
-    functionSlot: 17,
     price: 4,
-    availableTrainers: ["dbe:king_kai"],
-    tiers: [
-      {
-        upgradeCost: 1,
-        healing: 1,
-      },
-      {
-        upgradeCost: 2,
-        healing: 2,
-      },
-      {
-        upgradeCost: 3,
-        healing: 3,
-      },
+    availableTrainers: [
+      // "dbe:king_kai"
     ],
+    tiers: [],
   },
   {
     type: "toggle",
@@ -390,7 +378,7 @@ const skills_data = [
     },
     tiers: [
       {
-        healthDrain: 2,
+        healthDrain: 1,
         upgradeCost: 1,
         multipliers: {
           dexterity: 1.1,
@@ -398,7 +386,7 @@ const skills_data = [
         },
       },
       {
-        healthDrain: 3,
+        healthDrain: 2,
         upgradeCost: 2,
         multipliers: {
           dexterity: 1.15,
@@ -406,7 +394,7 @@ const skills_data = [
         },
       },
       {
-        healthDrain: 4,
+        healthDrain: 3,
         upgradeCost: 3,
         multipliers: {
           dexterity: 1.2,
@@ -414,7 +402,7 @@ const skills_data = [
         },
       },
       {
-        healthDrain: 10,
+        healthDrain: 8,
         upgradeCost: 4,
         multipliers: {
           dexterity: 1.5,
@@ -422,7 +410,7 @@ const skills_data = [
         },
       },
       {
-        healthDrain: 20,
+        healthDrain: 16,
         upgradeCost: 5,
         multipliers: {
           dexterity: 2,
@@ -430,10 +418,10 @@ const skills_data = [
         },
       },
       {
-        healthDrain: 100,
+        healthDrain: 26,
         multipliers: {
-          dexterity: 10,
-          strength: 10,
+          dexterity: 3,
+          strength: 3,
         },
       },
     ],
@@ -805,7 +793,9 @@ const skills_data = [
     chargeKiDrain: 25,
     offset: [2.5, 1, -0.375],
     price: 6,
-    availableTrainers: ["dbe:piccolo"],
+    availableTrainers: [
+     // "dbe:piccolo"
+    ],
     propertyIndex: 5,
     shootSound: "skill.makankosappo.launch",
     startChargeSound: "skill.makankosappo",
