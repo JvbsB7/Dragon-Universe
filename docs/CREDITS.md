@@ -25,5 +25,5 @@ Dragon Ball é marca registrada de seus respectivos detentores. Este projeto é 
 ## Equipe Dragon Universe
 
 - Repositório: https://github.com/JvbsB7/Dragon-Universe
-- Membros: **[João Vitor , Ricardo Vinicius , Rian Franco]**
-- Contato: **[Discord: @jvbs / @rvmm / poll00000]**
+- Membros: **[João Vitor , Ricardo Vinicius , Luan Dias]**
+- Contato: **[Discord: @jvbs / @rvmm / @luan_dias]**
