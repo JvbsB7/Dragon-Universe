@@ -1,0 +1,65 @@
+{
+    "format_version": "1.26.4",
+    "minecraft:biome": {
+        "description": {
+            "identifier": "dbe:namek"
+        },
+
+        "components": {
+            "minecraft:climate": {
+                "downfall": 0,
+                "snow_accumulation": [ 0, 0.125 ],
+                "temperature": 1
+            },
+            "minecraft:creature_spawn_probability": {
+                "probability": 0
+            },
+            "minecraft:overworld_height": {
+                "noise_type": "mountains"
+            },
+            "minecraft:surface_builder": {
+                "builder": {
+                    "type": "minecraft:overworld",
+                    "sea_floor_depth": 7,
+                    "sea_floor_material": "dbe:namek_stone",
+                    "foundation_material": "dbe:namek_stone",
+                    "mid_material": "dbe:namek_stone",
+                    "top_material": "dbe:namek_grass",
+                    "sea_material": "minecraft:water"
+                }
+            },
+            // "minecraft:subsurface_builder": {
+            //     "builder": {
+            //         "type": "minecraft:noise_gradient",
+            //         "non_replaceable_blocks": [ "minecraft:bedrock" ],
+            //         "noise_descriptor": {
+            //             "name": "dbe:namek_cave_gradient",
+            //             "first_octave": -5,
+            //             "amplitudes": [ 1, 0, 1 ]
+            //         },
+            //         "noise_block_specifiers": [
+            //             {
+            //                 "block": "dbe:namek_stone",
+            //                 "range": {
+            //                     "min": -1,
+            //                     "max": 0
+            //                 }
+            //             },
+            //             {
+            //                 "block": "minecraft:sulfur",
+            //                 "range": {
+            //                     "min": 0,
+            //                     "max": 1
+            //                 }
+            //             }
+            //         ]
+            //     }
+            // },
+            "minecraft:tags": {
+                "tags": [
+                    "namek"
+                ]
+            }
+        }
+    }
+}

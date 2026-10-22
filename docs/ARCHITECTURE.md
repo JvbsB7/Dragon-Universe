@@ -8,22 +8,23 @@ A addon é composta por dois packs que dependem um do outro:
 
 | Pack | Pasta | UUID do header | Função |
 |---|---|---|---|
-| Behavior Pack | `Dragon Block_bp/` | `30f1e0c0-ded2-4f7d-b101-6863a4d94abe` | Lógica: scripts, entidades, itens, blocos, dimensões, receitas, loot, worldgen |
-| Resource Pack | `Dragon Block_rp/` | `23e2b6e9-db10-4e77-995a-1a1ce5bcd96c` | Visual e áudio: modelos, texturas, animações, partículas, sons, UI, textos |
+| Behavior Pack | `Dragon Universe_bp/` | `30f1e0c0-ded2-4f7d-b101-6863a4d94abe` | Lógica: scripts, entidades, itens, blocos, dimensões, receitas, loot, worldgen |
+| Resource Pack | `Dragon Universe_rp/` | `23e2b6e9-db10-4e77-995a-1a1ce5bcd96c` | Visual e áudio: modelos, texturas, animações, partículas, sons, UI, textos |
 
-- Versão dos packs: `1.6.17`. `min_engine_version`: `[1, 26, 40]`.
+- Versão dos packs: `1.7.1` (era `1.6.17` na base original; subir a versão a cada pacote distribuído, senão o Minecraft mantém o pack antigo instalado). `min_engine_version`: `[1, 26, 40]`.
 - Script API: `@minecraft/server` **`beta`** e `@minecraft/server-ui` **`beta`** (exige o experimento *Beta APIs*; APIs beta podem mudar a cada atualização do jogo).
 - Namespace de todo o conteúdo: `dbe:` (de *Dragon Block Evolution*). **Não renomear** — ids salvos em mundos existentes dependem dele.
 - Versão-alvo do jogo definida pela equipe: **Bedrock 26.52**.
 
-## 2. O núcleo ofuscado (`scripts/index.js`)
+## 2. O núcleo (`scripts/index.js`)
 
-`Dragon Block_bp/scripts/index.js` tem ~1,39 MB. As linhas 1–3 são imports legíveis; a linha 4 contém **todo o núcleo** em uma única linha, passado por um *bundler* e depois por um ofuscador (tabela de strings embaralhada, nomes de variáveis sem significado como `i3`, `hO`, `bF`). As linhas 6–19 são um patch legível adicionado depois (Maçã Demoníaca).
+O núcleo veio do autor original passado por um *bundler* e por um ofuscador: ~1,39 MB numa única linha, com todos os textos numa tabela embaralhada. Na Fase 3 (passo 1) ele foi convertido por `tools/deobfuscate-core.mjs` numa versão **legível e equivalente** (~19.600 linhas, ~790 KB): textos decodificados, `obj["x"]` → `obj.x`, números em decimal, tabela e decodificador (código morto) removidos e formatação com o Prettier. A versão ofuscada continua no histórico do Git (commit `2d4f628`).
 
-Consequências práticas:
+O que continua difícil:
 
+- Os **nomes de variáveis** curtos (`sG`, `i3`, `hO`, `bF`...) vieram do ofuscador e não podem ser recuperados; serão renomeados aos poucos (Fase 3, passo 2).
 - Quase toda a lógica de jogo vive nesse arquivo: combate, atributos, raças, transformações, skills, voo, treino, missões, NPCs, lojas, Esferas do Dragão, desejos, comandos, HUD e persistência.
-- Não é possível editar esse código com segurança sem antes torná-lo legível (ver `ROADMAP.md`, Fase 3).
+- Toda mudança que não deve alterar a lógica (renomear, extrair módulos) deve passar por `node tools/compare-scripts.mjs`, que carrega a versão anterior e a atual com um `@minecraft/server` falso e compara todas as chamadas feitas ao jogo.
 - Já existem patches inseridos diretamente no bundle (Maçã Demoníaca, recompensa de raça, multiplicador Demon ×2.25, bônus Glind ×1.1, XP por dimensão, zeni por abate). Eles dependem de nomes internos ofuscados (ex.: `i3.getDBEEntity`) e quebram se o bundle for regenerado.
 
 Os nomes "descritivos" usados abaixo foram dados durante a auditoria; o código não usa esses nomes.
@@ -31,7 +32,7 @@ Os nomes "descritivos" usados abaixo foram dados durante a auditoria; o código 
 ## 3. Mapa dos sistemas
 
 ```
-index.js (núcleo ofuscado)
+index.js (núcleo, legível desde a Fase 3)
  ├─ importa config/config.js e data/*.js (dados legíveis)
  ├─ importa os módulos de dimensão legíveis:
  │    kai_dimension.js ──► space_planets.js ──► planet_villages.js
@@ -59,10 +60,10 @@ index.js (núcleo ofuscado)
 
 | Canal | Como funciona | Onde |
 |---|---|---|
-| **Propriedades de entidade** `dbe:*` (`client_sync`) | O script grava; animações e render controllers do RP leem. Ex.: `dbe:race`, `dbe:transformation` (0–31), `dbe:fly_mode`, `dbe:charging_attack` (-1–15), `dbe:aura_type`, `dbe:kaioken`, cores e customizações | `Dragon Block_bp/entities/player.json` |
-| **HUD por title/subtitle** | O script envia `title` com pares `chave:valor` (ex.: `ki_bar_frame:32`, `technique_slot_1:kamehameha`) e `subtitle` com um valor numérico por vez. A JSON UI testa se o texto contém cada token e mostra a imagem correspondente | `Dragon Block_rp/ui/hud_screen.json`, `ui/custom_hud_screen.json`, `ui/hud_screen/*`, `ui/common/*` |
-| **Roteamento de formulários** | O título do `ActionFormData` é uma chave de idioma `ui.dbe.*`; `server_form.json` compara o título e troca o layout vanilla pelo layout customizado | `Dragon Block_rp/ui/server_form.json`, `ui/menus/*` |
-| **Animation controllers do BP** | `climb_korin_tower` (levitação em coordenadas fixas) e `stop_aura_sound` | `Dragon Block_bp/animation_controllers/player_dbe.animation_controllers.json` |
+| **Propriedades de entidade** `dbe:*` (`client_sync`) | O script grava; animações e render controllers do RP leem. Ex.: `dbe:race`, `dbe:transformation` (0–31), `dbe:fly_mode`, `dbe:charging_attack` (-1–15), `dbe:aura_type`, `dbe:kaioken`, cores e customizações | `Dragon Universe_bp/entities/player.json` |
+| **HUD por title/subtitle** | O script envia `title` com pares `chave:valor` (ex.: `ki_bar_frame:32`, `technique_slot_1:kamehameha`) e `subtitle` com um valor numérico por vez. A JSON UI testa se o texto contém cada token e mostra a imagem correspondente | `Dragon Universe_rp/ui/hud_screen.json`, `ui/custom_hud_screen.json`, `ui/hud_screen/*`, `ui/common/*` |
+| **Roteamento de formulários** | O título do `ActionFormData` é uma chave de idioma `ui.dbe.*`; `server_form.json` compara o título e troca o layout vanilla pelo layout customizado | `Dragon Universe_rp/ui/server_form.json`, `ui/menus/*` |
+| **Animation controllers do BP** | `climb_korin_tower` (levitação em coordenadas fixas) e `stop_aura_sound` | `Dragon Universe_bp/animation_controllers/player_dbe.animation_controllers.json` |
 
 Limitação do HUD: qualquer `/title` disparado por outro sistema apaga o estado do HUD até a próxima atualização.
 
@@ -110,9 +111,9 @@ Qualquer mecânica nova baseada em Shift (ex.: treino de flexões) precisa consi
 
 ## 4. Módulos legíveis
 
-### 4.1 Dados (`Dragon Block_bp/scripts/data/`)
+### 4.1 Dados (`Dragon Universe_bp/scripts/data/`)
 
-Consumidos pelo núcleo. É a **principal via de extensão sem tocar no código ofuscado**.
+Consumidos pelo núcleo. É a **principal via de extensão sem tocar no núcleo**.
 
 | Arquivo | Export | Conteúdo |
 |---|---|---|
@@ -146,7 +147,7 @@ Objeto `CONFIG` com limites de atributo, custo de atributo, itens banidos em con
 
 ### 4.3 Dimensões (`scripts/*.js`)
 
-Todas as 8 dimensões JSON (`Dragon Block_bp/dimensions/`) são `void`; **o terreno é gerado 100% por script**, chunk a chunk, à medida que jogadores se aproximam. Bedrock em y=-64 serve de marcador de "chunk gerado/decorado".
+Todas as 8 dimensões JSON (`Dragon Universe_bp/dimensions/`) são `void`; **o terreno é gerado 100% por script**, chunk a chunk, à medida que jogadores se aproximam. Bedrock em y=-64 serve de marcador de "chunk gerado/decorado".
 
 | Arquivo | Dimensão | Responsabilidade |
 |---|---|---|
@@ -154,8 +155,9 @@ Todas as 8 dimensões JSON (`Dragon Block_bp/dimensions/`) são `void`; **o terr
 | `other_world_kai.js` | (Other World) | Esfera de acesso ao Kai no Outro Mundo; retorno ao subir a y≥300 |
 | `hell_dimension.js` + `hell_terrain.js` | `dbe:hell` | Inferno, Portão do Inferno, vilas; acesso caindo abaixo de y-48 no Other World ou por scriptevent |
 | `namek_dimension.js` | `dbe:namek` | Terreno, mar, vilas por estrutura, Esferas de Namek, moradores; acesso pelo `dbe:namek_space_pod` |
-| `space_planets.js` | `dbe:space`, `dbe:vegeta`, `dbe:frieza_planet`, `dbe:yardrat` | Estação orbital, oxigênio, capacete, Space/Saiyan Pod, menu Star Navigator, planetas |
+| `space_planets.js` | `dbe:space`, `dbe:vegeta`, `dbe:frieza_planet`, `dbe:yardrat` | Estação orbital, Space/Saiyan Pod, menu Star Navigator, planetas |
 | `planet_villages.js` | (Vegeta, Freeza, Yardrat, Hell) | Vilas determinísticas, aldeões, golem demoníaco |
+| `world_structures.js` | `minecraft:overworld` | Estruturas únicas/limitadas (Casa do Kame, Casa do Goku, Arena do Cell, Nave do Babidi, 3 West City, 5 cidades), planejadas pela semente e colocadas por script; `/scriptevent dbe:structures` |
 | `universe_6_dimension.js` | `dbe:universe_6_arena` | Arena do Torneio dos Destruidores; acesso pelo `dbe:tournament_invitation` |
 
 O núcleo registra ainda, sem JSON próprio: `dbe:other_world`, `dbe:hyperbolic_time_chamber`, `dbe:future_trunks`, `dbe:world_martial_arts_tournament` e `dbe:angel_staff_dimension_0..49`.
@@ -179,8 +181,8 @@ Há grande duplicação entre esses arquivos (ruído, geração de chunk, viagem
 | Novo conjunto de Esferas | Quase | `dragon_balls_data.js` + bloco com componente `dbe:dragon_ball`; posicionamento especial é hardcoded |
 | Conquista | Sim | `achievements_data.js` |
 | Nova dimensão/planeta | Não | JSON em `dimensions/`, bioma BP/RP, script gerador (ver padrões existentes), destino no Star Navigator |
-| Textos | Sim | `Dragon Block_rp/texts/{en_US,es_ES,pt_BR}.lang` — manter as três línguas sincronizadas |
-| Regras de dano, voo, entradas, fórmulas | **Não** | Núcleo ofuscado — aguardar Fase 3 |
+| Textos | Sim | `Dragon Universe_rp/texts/{en_US,es_ES,pt_BR}.lang` — manter as três línguas sincronizadas |
+| Regras de dano, voo, entradas, fórmulas | **Não** | `scripts/index.js` (legível; nomes de variáveis ainda curtos) |
 
 Existem scriptevents de registro em tempo de execução (`dbe:quest_registry`, `dbe:dialogue_registry`, `dbe:entity_registry`, `dbe:modifier_registry`, `dbe:shop_registry`) que aceitam JSON; eles não validam a origem nem tratam JSON inválido.
 
@@ -191,4 +193,4 @@ Existem scriptevents de registro em tempo de execução (`dbe:quest_registry`, `
 | 2026-10-14 | Versão-alvo: Bedrock 26.52 | Definido pela equipe |
 | 2026-10-14 | Não renomear namespace `dbe:` nem chaves de persistência sem migração | Compatibilidade com mundos existentes |
 | 2026-10-14 | Sistema Patreon do autor original será substituído por um sistema próprio da equipe | Definido pela equipe |
-| pendente | Estratégia para o núcleo ofuscado (recomendado: tornar legível progressivamente) | Aguardando aprovação |
+| 2026-10-16 | Núcleo convertido para versão legível equivalente (Prettier como ferramenta de desenvolvimento em `tools/`); renomeação de símbolos aos poucos | Aprovado pela equipe; equivalência verificada com `tools/compare-scripts.mjs` |

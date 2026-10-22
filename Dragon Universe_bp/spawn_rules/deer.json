@@ -1,0 +1,141 @@
+{
+    "format_version": "1.8.0",
+    "minecraft:spawn_rules": {
+        "description": {
+            "identifier": "dbe:deer",
+            "population_control": "animal"
+        },
+        "conditions": [
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_on_block_filter": [
+                    "minecraft:grass",
+                    "dbe:dirtstone_grass"
+                ],
+                "minecraft:brightness_filter": {
+                    "min": 7,
+                    "max": 15,
+                    "adjust_for_weather": false
+                },
+                "minecraft:weight": {
+                    "default": 12
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "west_forest"
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_on_block_filter": [
+                    "dbe:yardrat_soil"
+                ],
+                "minecraft:weight": {
+                    "default": 2
+                },
+                "minecraft:density_limit": {
+                    "surface": 2
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "yardrat"
+                },
+                "minecraft:brightness_filter": {
+                    "min": 7,
+                    "max": 15,
+                    "adjust_for_weather": false
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_on_block_filter": [
+                    "dbe:vegeta_soil"
+                ],
+                "minecraft:weight": {
+                    "default": 4
+                },
+                "minecraft:density_limit": {
+                    "surface": 3
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "vegeta"
+                },
+                "minecraft:herd": {
+                    "min_size": 2,
+                    "max_size": 3
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:spawns_on_block_filter": [
+                    "dbe:frieza_soil"
+                ],
+                "minecraft:weight": {
+                    "default": 4
+                },
+                "minecraft:density_limit": {
+                    "surface": 3
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "value": "frieza_planet"
+                },
+                "minecraft:herd": {
+                    "min_size": 2,
+                    "max_size": 3
+                }
+            },
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:brightness_filter": {
+                    "min": 7,
+                    "max": 15,
+                    "adjust_for_weather": false
+                },
+                "minecraft:weight": {
+                    "default": 6
+                },
+                "minecraft:density_limit": {
+                    "surface": 3
+                },
+                "minecraft:biome_filter": {
+                    "all_of": [
+                        {
+                            "test": "has_biome_tag",
+                            "value": "animal"
+                        },
+                        {
+                            "none_of": [
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "namek"
+                                },
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "yardrat"
+                                },
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "dirtstone"
+                                },
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "west_forest"
+                                },
+                                {
+                                    "test": "has_biome_tag",
+                                    "value": "diablo_desert"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "minecraft:herd": {
+                    "min_size": 2,
+                    "max_size": 3
+                }
+            }
+        ]
+    }
+}

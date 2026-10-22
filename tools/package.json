@@ -1,0 +1,9 @@
+{
+  "name": "dragon-universe-tools",
+  "private": true,
+  "description": "Ferramentas de desenvolvimento do Dragon Universe (não fazem parte dos packs).",
+  "type": "module",
+  "devDependencies": {
+    "prettier": "3.3.3"
+  }
+}

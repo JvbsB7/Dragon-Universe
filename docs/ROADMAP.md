@@ -5,7 +5,7 @@
 ## Princípios
 
 1. Estabilidade antes de conteúdo: corrigir perda de save, exploits e bloqueios de campanha primeiro.
-2. Nada de novos sistemas em cima do núcleo ofuscado sem antes torná-lo legível.
+2. Mudanças no núcleo (`scripts/index.js`) passam por `node tools/compare-scripts.mjs` quando não devem alterar a lógica.
 3. Compatibilidade de save: não renomear namespace `dbe:`, chaves de persistência nem reordenar listas posicionais (transformações, tarefas de missão) sem migração.
 4. Toda mudança passa pela validação automática (Fase 2a) e por um checklist de regressão no jogo, executado pela equipe.
 5. Versão-alvo: **Bedrock 26.52**.
@@ -19,19 +19,32 @@
 - [ ] Equipe preencher nome, membros e contato (`README.md`, avisos nos packs)
 
 ### Fase 2a — Ferramentas de validação (sem dependências externas)
-Scripts Node em `tools/`:
-- validação de todos os JSON (aceitando comentários);
-- referências cruzadas (entidades BP↔RP, texturas, geometrias, sons, ids usados nos dados);
-- `node --check` nos scripts;
-- integridade dos dados (`races_data`, `skills_data`, missões, chaves de idioma nas três línguas).
+Scripts Node em `tools/` (uso no [README](../README.md#-validação-automática-tools)), executados com `node tools/validate.mjs`:
+- [x] validação de todos os JSON (aceitando comentários) — `validate-json.mjs`;
+- [x] referências cruzadas (entidades BP↔RP, texturas, geometrias, sons, ids usados nos dados) — `check-refs.mjs`;
+- [x] `node --check` nos scripts — `check-syntax.mjs`;
+- [x] integridade dos dados (`races_data`, `skills_data`, missões, chaves de idioma nas três línguas) — `check-data.mjs`.
 
 ### Fase 2b — Correções críticas
 Prioridade: C1 (perda de save), C5 (`/dbe:pay`), C6 (backdoor), C3/C4 (Esferas e desejos), C14 (bloqueio da saga Freeza), C2 (cooldowns), C19 (capsule_991), C15 (som), C17/C18 (arquivos e dados).
 Correções no núcleo dependem da decisão sobre a Fase 3; as que estão em arquivos legíveis (dados, dimensões, JSON, UI) podem ser feitas antes.
 
+Arquivos legíveis (corrigidos no código em 2026-10-15, **aguardando teste no jogo** — detalhes em [KNOWN_ISSUES](KNOWN_ISSUES.md)):
+- [ ] C14 — `saga_frieza_1` procura o bioma de Namek na dimensão certa
+- [ ] C15 — `/stopsound @s`
+- [ ] C16 — painel vermelho da barra de ki
+- [ ] C17 — laje vermelha ativada, `contents.json`, musgo medicinal com `block_placer`, chave do en_US, traduções da saga Future Trunks, cabelos duplicados, disco `music_disc_hero`
+- [ ] C18 — desejo "glind" e recompensa de raça android desativados (aprovado até a Fase 5); Future Trunks com `powerDefinition`; Piccolo ensina `makankosappo`; blocos de luz no `INDESTRUCTIBLE_BLOCKS`
+- [ ] C24 — sons da Final Flash; chaves da `saga_universe_6_1`
+- [ ] C10/C11/C12/C25 — Kai no espaço e regra de altitude; origem de retorno; ticking areas; escadas do U6; `env` das vilas
+- [ ] C27 — estruturas únicas/limitadas por script; animação de voo
+- [ ] C26 — correções do primeiro teste no jogo: laje dupla e receitas, textos de Namek e dimensões, spawn em Namek (itens ✅ e pendências em KNOWN_ISSUES)
+
+Pendentes de decisão/arte: botão de ajuda (textura `help_button`), imagens do Patreon (Fase 3), raça glind dos Zamasu (Fase 5), diálogos da Bulma em `saga_future_trunks_3`, chaves `battle_jacket_return`.
+
 ### Fase 3 — Núcleo legível e organização
-Estratégia recomendada (aguardando aprovação):
-1. Substituir `index.js` por uma versão com as strings decodificadas e formatada (mesmo comportamento) e validar no jogo.
+Estratégia aprovada em 2026-10-16:
+1. [x] Substituir `index.js` por uma versão com as strings decodificadas e formatada (mesmo comportamento) — feito com `tools/deobfuscate-core.mjs`; equivalência verificada com `tools/compare-scripts.mjs`. **Falta o teste completo no jogo.**
 2. Renomear símbolos e extrair módulos por domínio, um de cada vez, testando a cada passo: `core/` (db, entidades, eventos) → `combat/` → `races/` → `skills/` → `flight/` → `training/` → `quests/` → `ui/` → `world/`.
 3. Extrair o código duplicado das dimensões para `scripts/shared/` (ruído, geração de chunk, viagem/origem) e unificar os scanners em um único agendador.
 4. Substituir o sistema Patreon do autor original pelo sistema próprio da equipe e remover o backdoor.
@@ -53,7 +66,7 @@ Estratégia recomendada (aguardando aprovação):
 8. Novas Esferas (Super, Daima, Cereal) — **somente após corrigir C3/C4**.
 
 ### Fase 6 — Otimização contínua
-- Voo: reescrever só depois do núcleo legível (o mecanismo está todo no código ofuscado).
+- Voo: corrigir peso e tremor no núcleo, agora legível (após o teste do passo 1 da Fase 3).
 - Quantidade de aldeões nas vilas e entidades por tick.
 - Intervalos e consultas por tick.
 

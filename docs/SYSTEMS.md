@@ -130,7 +130,7 @@ Desejos: 8 de troca de raça, 11 de item, 2 de skill (`divine_ki`, `potential_un
 | Planeta Freeza | Implementado | Space Pod / Star Navigator | Postos e vilas hostis |
 | Hell | Implementado | Cair abaixo de y-48 no Other World; scriptevent | Portão do Inferno, vilas, golem demoníaco |
 | Kai (Kaioshin) | Parcial — com bugs | Esfera no Other World | Terreno completo; integração com o espaço quebrada |
-| Space | Implementado | Pods; subir a y≥500 em planetas | Estação orbital, oxigênio, asteroides |
+| Space | Implementado | Pods; subir a y≥500 em planetas | Estação orbital, asteroides (sem sistema de oxigênio desde 2026-10-16) |
 | Universo 6 | Parcial | Convite do torneio | Só a arena dos Destruidores |
 | Yardrat | Implementado | Space Pod / Star Navigator | Vilas pacíficas |
 | Planeta do Bills | Não existe | — | — |

@@ -1,0 +1,5945 @@
+{
+   "content" : [
+      {
+         "path" : ".png"
+      },
+      {
+         "path" : "README.md"
+      },
+      {
+         "path" : "animation_controllers/absorption_cocoon_entity.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/animals/deer.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/animals/dinosaur.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/animals/giant_fish.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/animals/pterosaur.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/animals/saber_tooth_tiger.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/flying_nimbus.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/items/sword.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/ki_attack.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/ki_attacks/final_flash.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/ki_attacks/galick_gun.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/ki_attacks/genki_dama.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/ki_attacks/kamehameha.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/ki_attacks/ki_blast.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/ki_attacks/kienzan.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/ki_attacks/makankosappo.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/missile.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/npcs/npc.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/opponents/battle_jacket.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/opponents/bear_thief.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/opponents/common_enemy.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/opponents/pirate_robot.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/opponents/saibaman.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/player/player.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/player/player.dbe.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/player/weapons.animation_controllers.json"
+      },
+      {
+         "path" : "animation_controllers/variables.animation_controllers.json"
+      },
+      {
+         "path" : "animations/absorption_cocoon.animation.json"
+      },
+      {
+         "path" : "animations/angel_staff_entity.animation.json"
+      },
+      {
+         "path" : "animations/animals/deer.animation.json"
+      },
+      {
+         "path" : "animations/animals/dinosaur.animation.json"
+      },
+      {
+         "path" : "animations/animals/giant_fish.animation.json"
+      },
+      {
+         "path" : "animations/animals/pterosaur.animation.json"
+      },
+      {
+         "path" : "animations/animals/saber_tooth_tiger.animation.json"
+      },
+      {
+         "path" : "animations/attack_poses.animation.json"
+      },
+      {
+         "path" : "animations/aura.animation.json"
+      },
+      {
+         "path" : "animations/humanoid.animation.json"
+      },
+      {
+         "path" : "animations/items/dragon_radar.animation.json"
+      },
+      {
+         "path" : "animations/items/milk_box.animation.json"
+      },
+      {
+         "path" : "animations/items/sword.animation.json"
+      },
+      {
+         "path" : "animations/items/weapon.animation.json"
+      },
+      {
+         "path" : "animations/npcs/akira_toriyama.animation.json"
+      },
+      {
+         "path" : "animations/npcs/announcer.animation.json"
+      },
+      {
+         "path" : "animations/npcs/babidi.animation.json"
+      },
+      {
+         "path" : "animations/npcs/bulma.animation.json"
+      },
+      {
+         "path" : "animations/npcs/capsule_corp_engineer.animation.json"
+      },
+      {
+         "path" : "animations/npcs/enma_daioh.animation.json"
+      },
+      {
+         "path" : "animations/npcs/grand_elder_guru.animation.json"
+      },
+      {
+         "path" : "animations/npcs/kami_sama.animation.json"
+      },
+      {
+         "path" : "animations/npcs/king_kai.animation.json"
+      },
+      {
+         "path" : "animations/npcs/korin.animation.json"
+      },
+      {
+         "path" : "animations/npcs/master_roshi.animation.json"
+      },
+      {
+         "path" : "animations/npcs/piccolo.animation.json"
+      },
+      {
+         "path" : "animations/npcs/porunga.animation.json"
+      },
+      {
+         "path" : "animations/npcs/shenron.animation.json"
+      },
+      {
+         "path" : "animations/npcs/unigame.animation.json"
+      },
+      {
+         "path" : "animations/npcs/whis.animation.json"
+      },
+      {
+         "path" : "animations/oozaru.animation.json"
+      },
+      {
+         "path" : "animations/oponents/battle_jacket.animation.json"
+      },
+      {
+         "path" : "animations/oponents/bear_thief.animation.json"
+      },
+      {
+         "path" : "animations/oponents/dabura.animation.json"
+      },
+      {
+         "path" : "animations/oponents/pirate_robot.animation.json"
+      },
+      {
+         "path" : "animations/oponents/saibaman.animation.json"
+      },
+      {
+         "path" : "animations/planet.animation.json"
+      },
+      {
+         "path" : "animations/player/combat.animation.json"
+      },
+      {
+         "path" : "animations/player/dodge.json"
+      },
+      {
+         "path" : "animations/player/player.dbe.animation.json"
+      },
+      {
+         "path" : "animations/projectiles/ki_attack.animation.json"
+      },
+      {
+         "path" : "animations/projectiles/missile.animation.json"
+      },
+      {
+         "path" : "animations/vehicles/capsule_991.animation.json"
+      },
+      {
+         "path" : "animations/vehicles/car.animation.json"
+      },
+      {
+         "path" : "animations/vehicles/flying_nimbus.animation.json"
+      },
+      {
+         "path" : "animations/villagers/dbe_villager.animation.json"
+      },
+      {
+         "path" : "animations/villagers/demonic_iron_golem.animation.json"
+      },
+      {
+         "path" : "attachables/armors/android_13_clothes/android_13_boots.json"
+      },
+      {
+         "path" : "attachables/armors/android_13_clothes/android_13_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/android_13_clothes/android_13_hat.json"
+      },
+      {
+         "path" : "attachables/armors/android_13_clothes/android_13_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/android_16_armor/android_16_boots.json"
+      },
+      {
+         "path" : "attachables/armors/android_16_armor/android_16_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/android_16_armor/android_16_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/android_17_clothes/android_17_boots.json"
+      },
+      {
+         "path" : "attachables/armors/android_17_clothes/android_17_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/android_17_clothes/android_17_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/android_18_clothes/android_18_boots.json"
+      },
+      {
+         "path" : "attachables/armors/android_18_clothes/android_18_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/android_18_clothes/android_18_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/android_21_majin_clothes/android_21_majin_boots.json"
+      },
+      {
+         "path" : "attachables/armors/android_21_majin_clothes/android_21_majin_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/android_21_majin_clothes/android_21_majin_shirt.json"
+      },
+      {
+         "path" : "attachables/armors/baby_armor/baby_armor_boots.json"
+      },
+      {
+         "path" : "attachables/armors/baby_armor/broly_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/baby_armor/broly_pendant.json"
+      },
+      {
+         "path" : "attachables/armors/bardock_battle_armor/bardock_battle_boots.json"
+      },
+      {
+         "path" : "attachables/armors/bardock_battle_armor/bardock_battle_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/bardock_battle_armor/bardock_battle_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/battle_armor/battle_boots.json"
+      },
+      {
+         "path" : "attachables/armors/battle_armor/battle_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/battle_armor/battle_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/beat_clothes/beat_boots.json"
+      },
+      {
+         "path" : "attachables/armors/beat_clothes/beat_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/beat_clothes/beat_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/broly_battle_armor/broly_battle_boots.json"
+      },
+      {
+         "path" : "attachables/armors/broly_battle_armor/broly_battle_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/broly_battle_armor/broly_battle_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/broly_clothes/broly_boots.json"
+      },
+      {
+         "path" : "attachables/armors/broly_clothes/broly_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/broly_clothes/broly_pendant.json"
+      },
+      {
+         "path" : "attachables/armors/bunny_costume/bunny_costume_boots.json"
+      },
+      {
+         "path" : "attachables/armors/bunny_costume/bunny_costume_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/bunny_costume/bunny_costume_ears.json"
+      },
+      {
+         "path" : "attachables/armors/bunny_costume/bunny_costume_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/chi_chi_clothes/chi_chi_boots.json"
+      },
+      {
+         "path" : "attachables/armors/chi_chi_clothes/chi_chi_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/chi_chi_clothes/chi_chi_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/christmas_costume.json"
+      },
+      {
+         "path" : "attachables/armors/divine_halo.json"
+      },
+      {
+         "path" : "attachables/armors/elegant_suit/elegant_suit_boots.json"
+      },
+      {
+         "path" : "attachables/armors/elegant_suit/elegant_suit_hat.json"
+      },
+      {
+         "path" : "attachables/armors/elegant_suit/elegant_suit_jacket.json"
+      },
+      {
+         "path" : "attachables/armors/elegant_suit/elegant_suit_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/full_scouter.json"
+      },
+      {
+         "path" : "attachables/armors/fused_zamasu_clothes/fused_fused_zamasu_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/fused_zamasu_clothes/fused_zamasu_boots.json"
+      },
+      {
+         "path" : "attachables/armors/fused_zamasu_clothes/fused_zamasu_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/glasses.json"
+      },
+      {
+         "path" : "attachables/armors/goku_af_clothes/goku_af_boots.json"
+      },
+      {
+         "path" : "attachables/armors/goku_af_clothes/goku_af_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/goku_af_clothes/goku_af_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/goku_black_clothes/goku_black_boots.json"
+      },
+      {
+         "path" : "attachables/armors/goku_black_clothes/goku_black_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/goku_black_clothes/goku_black_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/goku_casual_clothes/goku_casual_boots.json"
+      },
+      {
+         "path" : "attachables/armors/goku_casual_clothes/goku_casual_jacket.json"
+      },
+      {
+         "path" : "attachables/armors/goku_casual_clothes/goku_casual_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/goku_clothes/goku_boots.json"
+      },
+      {
+         "path" : "attachables/armors/goku_clothes/goku_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/goku_clothes/goku_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/goku_gt_clothes/goku_gt_boots.json"
+      },
+      {
+         "path" : "attachables/armors/goku_gt_clothes/goku_gt_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/goku_gt_clothes/goku_gt_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/grandpa_gohan_mask.json"
+      },
+      {
+         "path" : "attachables/armors/hakaishin_clothes/hakaishin_boots.json"
+      },
+      {
+         "path" : "attachables/armors/hakaishin_clothes/hakaishin_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/hakaishin_clothes/hakaishin_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/halo.json"
+      },
+      {
+         "path" : "attachables/armors/headband.json"
+      },
+      {
+         "path" : "attachables/armors/kaioshin_clothes/kaioshin_boots.json"
+      },
+      {
+         "path" : "attachables/armors/kaioshin_clothes/kaioshin_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/kaioshin_clothes/kaioshin_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/maid_costume/maid_costume_boots.json"
+      },
+      {
+         "path" : "attachables/armors/maid_costume/maid_costume_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/maid_costume/maid_costume_hat.json"
+      },
+      {
+         "path" : "attachables/armors/maid_costume/maid_costume_skirt.json"
+      },
+      {
+         "path" : "attachables/armors/majin_buu_clothes/majin_buu_boots.json"
+      },
+      {
+         "path" : "attachables/armors/majin_buu_clothes/majin_buu_bracers.json"
+      },
+      {
+         "path" : "attachables/armors/majin_buu_clothes/majin_buu_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/majin_vegeta_clothes/majin_vegeta_boots.json"
+      },
+      {
+         "path" : "attachables/armors/majin_vegeta_clothes/majin_vegeta_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/majin_vegeta_clothes/majin_vegeta_shirt.json"
+      },
+      {
+         "path" : "attachables/armors/piccolo_clothes/piccolo_boots.json"
+      },
+      {
+         "path" : "attachables/armors/piccolo_clothes/piccolo_cape.json"
+      },
+      {
+         "path" : "attachables/armors/piccolo_clothes/piccolo_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/piccolo_clothes/piccolo_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/piccolo_clothes/piccolo_turban.json"
+      },
+      {
+         "path" : "attachables/armors/pirate_robot_head.json"
+      },
+      {
+         "path" : "attachables/armors/potara_earring.json"
+      },
+      {
+         "path" : "attachables/armors/potara_earrings.json"
+      },
+      {
+         "path" : "attachables/armors/pride_troopers_clothes/pride_troopers_boots.json"
+      },
+      {
+         "path" : "attachables/armors/pride_troopers_clothes/pride_troopers_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/pride_troopers_clothes/pride_troopers_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/saiyaman_clothes/saiyaman_boots.json"
+      },
+      {
+         "path" : "attachables/armors/saiyaman_clothes/saiyaman_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/saiyaman_clothes/saiyaman_helmet.json"
+      },
+      {
+         "path" : "attachables/armors/saiyaman_clothes/saiyaman_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/scouter.json"
+      },
+      {
+         "path" : "attachables/armors/tapion_clothes/tapion_boots.json"
+      },
+      {
+         "path" : "attachables/armors/tapion_clothes/tapion_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/tapion_clothes/tapion_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/thunks_clothes/trunks_boots.json"
+      },
+      {
+         "path" : "attachables/armors/thunks_clothes/trunks_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/thunks_clothes/trunks_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/tien_clothes/tien_boots.json"
+      },
+      {
+         "path" : "attachables/armors/tien_clothes/tien_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/tien_clothes/tien_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/training_armor.json"
+      },
+      {
+         "path" : "attachables/armors/training_shirt.json"
+      },
+      {
+         "path" : "attachables/armors/turtle_shell.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_battle_armor/vegeta_battle_boots.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_battle_armor/vegeta_battle_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_battle_armor/vegeta_battle_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_cell_battle_armor/vegeta_cell_battle_boots.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_cell_battle_armor/vegeta_cell_battle_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_cell_battle_armor/vegeta_cell_battle_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_gt_clothes/vegeta_gt_boots.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_gt_clothes/vegeta_gt_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_gt_clothes/vegeta_gt_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_super_battle_armor/vegeta_super_battle_boots.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_super_battle_armor/vegeta_super_battle_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/vegeta_super_battle_armor/vegeta_super_battle_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/workout_weights.json"
+      },
+      {
+         "path" : "attachables/armors/xeno_goku_black_clothes/xeno_goku_black_boots.json"
+      },
+      {
+         "path" : "attachables/armors/xeno_goku_black_clothes/xeno_goku_black_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/xeno_goku_black_clothes/xeno_goku_black_mask.json"
+      },
+      {
+         "path" : "attachables/armors/xeno_goku_black_clothes/xeno_goku_black_shirt.json"
+      },
+      {
+         "path" : "attachables/armors/xeno_goku_clothes/xeno_goku_boots.json"
+      },
+      {
+         "path" : "attachables/armors/xeno_goku_clothes/xeno_goku_leggings.json"
+      },
+      {
+         "path" : "attachables/armors/xeno_goku_clothes/xeno_goku_shirt.json"
+      },
+      {
+         "path" : "attachables/armors/zamasu_clothes/zamasu_boots.json"
+      },
+      {
+         "path" : "attachables/armors/zamasu_clothes/zamasu_chestplate.json"
+      },
+      {
+         "path" : "attachables/armors/zamasu_clothes/zamasu_leggings.json"
+      },
+      {
+         "path" : "attachables/items/angel_staff.attachable.json"
+      },
+      {
+         "path" : "attachables/items/bansho_fan.attachable.json"
+      },
+      {
+         "path" : "attachables/items/brave_sword.attachable.json"
+      },
+      {
+         "path" : "attachables/items/dragon_radar.attachable.json"
+      },
+      {
+         "path" : "attachables/items/functions.attachable.json"
+      },
+      {
+         "path" : "attachables/items/katana.attachable.json"
+      },
+      {
+         "path" : "attachables/items/menu.attachable.json"
+      },
+      {
+         "path" : "attachables/items/milk_box.attachable.json"
+      },
+      {
+         "path" : "attachables/items/power_pole.attachable.json"
+      },
+      {
+         "path" : "attachables/items/techniques.attachable.json"
+      },
+      {
+         "path" : "attachables/items/z_sword.attachable.json"
+      },
+      {
+         "path" : "biomes/diablo_desert.client_biome.json"
+      },
+      {
+         "path" : "biomes/dirtstone.client_biome.json"
+      },
+      {
+         "path" : "biomes/dirtstone_river.client_biome.json"
+      },
+      {
+         "path" : "biomes/frieza.client_biome.json"
+      },
+      {
+         "path" : "biomes/hell.client_biome.json"
+      },
+      {
+         "path" : "biomes/kai.client_biome.json"
+      },
+      {
+         "path" : "biomes/namek.client_biome.json"
+      },
+      {
+         "path" : "biomes/space.client_biome.json"
+      },
+      {
+         "path" : "biomes/universe_6_arena.client_biome.json"
+      },
+      {
+         "path" : "biomes/vegeta.client_biome.json"
+      },
+      {
+         "path" : "biomes/west_forest.client_biome.json"
+      },
+      {
+         "path" : "biomes/yardrat.client_biome.json"
+      },
+      {
+         "path" : "block_culling/leaves.json"
+      },
+      {
+         "path" : "blocks.json"
+      },
+      {
+         "path" : "contents.json"
+      },
+      {
+         "path" : "entity/absorption_cocoon_entity.entity.json"
+      },
+      {
+         "path" : "entity/animals/deer.entity.json"
+      },
+      {
+         "path" : "entity/animals/dinosaur.entity.json"
+      },
+      {
+         "path" : "entity/animals/giant_fish.entity.json"
+      },
+      {
+         "path" : "entity/animals/namekian_frog.entity.json"
+      },
+      {
+         "path" : "entity/animals/pterosaur.entity.json"
+      },
+      {
+         "path" : "entity/animals/saber_tooth_tiger.entity.json"
+      },
+      {
+         "path" : "entity/damage_indicator.entity.json"
+      },
+      {
+         "path" : "entity/npcs/akira_toriyama.entity.json"
+      },
+      {
+         "path" : "entity/npcs/announcer.entity.json"
+      },
+      {
+         "path" : "entity/npcs/babidi.entity.json"
+      },
+      {
+         "path" : "entity/npcs/beerus.entity.json"
+      },
+      {
+         "path" : "entity/npcs/bulma.entity.json"
+      },
+      {
+         "path" : "entity/npcs/capsule_corp_engineer.entity.json"
+      },
+      {
+         "path" : "entity/npcs/cell_npc.entity.json"
+      },
+      {
+         "path" : "entity/npcs/chi_chi.entity.json"
+      },
+      {
+         "path" : "entity/npcs/enma_daioh.entity.json"
+      },
+      {
+         "path" : "entity/npcs/goku.entity.json"
+      },
+      {
+         "path" : "entity/npcs/grand_elder_guru.entity.json"
+      },
+      {
+         "path" : "entity/npcs/kami_sama.entity.json"
+      },
+      {
+         "path" : "entity/npcs/king_kai.entity.json"
+      },
+      {
+         "path" : "entity/npcs/korin.entity.json"
+      },
+      {
+         "path" : "entity/npcs/krillin.entity.json"
+      },
+      {
+         "path" : "entity/npcs/master_roshi.entity.json"
+      },
+      {
+         "path" : "entity/npcs/merchant.entity.json"
+      },
+      {
+         "path" : "entity/npcs/mr_popo.entity.json"
+      },
+      {
+         "path" : "entity/npcs/piccolo.entity.json"
+      },
+      {
+         "path" : "entity/npcs/porunga.entity.json"
+      },
+      {
+         "path" : "entity/npcs/shenron.entity.json"
+      },
+      {
+         "path" : "entity/npcs/unigame.entity.json"
+      },
+      {
+         "path" : "entity/npcs/vegeta_npc.entity.json"
+      },
+      {
+         "path" : "entity/npcs/whis.entity.json"
+      },
+      {
+         "path" : "entity/opponents/advanced_enemies/battle_jacket.entity.json"
+      },
+      {
+         "path" : "entity/opponents/advanced_enemies/bear_thief.entity.json"
+      },
+      {
+         "path" : "entity/opponents/advanced_enemies/pirate_robot.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/android_17.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/android_18.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/android_19.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/android_20.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/beerus_enemy.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/botamo.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/burter.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/cabba.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/cell.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/cell_junior.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/corrupted_fused_zamasu.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/cui.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/dabura.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/dodoria.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/fat_buu.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/frieza.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/frieza_soldier.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/frost.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/fused_zamasu.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/general_black.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/ginyu.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/goku_black.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/guldo.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/hitto.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/jeice.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/kid_buu.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/king_cold.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/magetta.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/majin_vegeta.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/nappa.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/puipui.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/raditz.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/recoome.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/saibabrute.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/saibaman.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/shisami.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/super_buu.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/tagoma.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/vegeta.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/yakon.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/zamasu.entity.json"
+      },
+      {
+         "path" : "entity/opponents/common_enemies/zarbon.entity.json"
+      },
+      {
+         "path" : "entity/opponents/future_trunks_enemy.entity.json"
+      },
+      {
+         "path" : "entity/opponents/goku_enemy.entity.json"
+      },
+      {
+         "path" : "entity/opponents/namekian.entity.json"
+      },
+      {
+         "path" : "entity/opponents/piccolo_enemy.entity.json"
+      },
+      {
+         "path" : "entity/opponents/shadow_dummy.entity.json"
+      },
+      {
+         "path" : "entity/player.entity.json"
+      },
+      {
+         "path" : "entity/projectiles/ki_attack.entity.json"
+      },
+      {
+         "path" : "entity/projectiles/missile.entity.json"
+      },
+      {
+         "path" : "entity/projectiles/pirate_robot_bullet.entity.json"
+      },
+      {
+         "path" : "entity/props/angel_staff_entity.entity.json"
+      },
+      {
+         "path" : "entity/props/earth.entity.json"
+      },
+      {
+         "path" : "entity/props/time_machine.entity.json"
+      },
+      {
+         "path" : "entity/training_orb.entity.json"
+      },
+      {
+         "path" : "entity/vehicles/capsule_991.entity.json"
+      },
+      {
+         "path" : "entity/vehicles/drive_test_car.entity.json"
+      },
+      {
+         "path" : "entity/vehicles/flying_nimbus.entity.json"
+      },
+      {
+         "path" : "entity/vehicles/frieza_pod.entity.json"
+      },
+      {
+         "path" : "entity/vehicles/saiyan_pod.entity.json"
+      },
+      {
+         "path" : "entity/vehicles/space_pod.entity.json"
+      },
+      {
+         "path" : "entity/villagers/demonic_iron_golem.entity.json"
+      },
+      {
+         "path" : "entity/villagers/frieza_villager.entity.json"
+      },
+      {
+         "path" : "entity/villagers/hell_villager.entity.json"
+      },
+      {
+         "path" : "entity/villagers/saiyan_villager.entity.json"
+      },
+      {
+         "path" : "entity/villagers/yardrat_villager.entity.json"
+      },
+      {
+         "path" : "fogs/angel_staff_dimension_fog_setting.json"
+      },
+      {
+         "path" : "fogs/diablo_desert_fog_setting.json"
+      },
+      {
+         "path" : "fogs/dirtstone_fog_setting.json"
+      },
+      {
+         "path" : "fogs/frieza_fog_setting.json"
+      },
+      {
+         "path" : "fogs/future_trunks_fog_setting.json"
+      },
+      {
+         "path" : "fogs/hell_fog_setting.json"
+      },
+      {
+         "path" : "fogs/hyperbolic_time_chamber_fog_setting.json"
+      },
+      {
+         "path" : "fogs/kai_fog_setting.json"
+      },
+      {
+         "path" : "fogs/namek_fog_setting.json"
+      },
+      {
+         "path" : "fogs/other_world_fog_setting.json"
+      },
+      {
+         "path" : "fogs/space_fog_setting.json"
+      },
+      {
+         "path" : "fogs/universe_6_fog_setting.json"
+      },
+      {
+         "path" : "fogs/vegeta_fog_setting.json"
+      },
+      {
+         "path" : "fogs/world_martial_arts_tournament_fog_setting.json"
+      },
+      {
+         "path" : "fogs/yardrat_fog_setting.json"
+      },
+      {
+         "path" : "manifest.json"
+      },
+      {
+         "path" : "materials/entity.material"
+      },
+      {
+         "path" : "models/blocks/block.geo.json"
+      },
+      {
+         "path" : "models/blocks/crop.geo.json"
+      },
+      {
+         "path" : "models/blocks/dirtstone_rubble.geo.json"
+      },
+      {
+         "path" : "models/blocks/door.geo.json"
+      },
+      {
+         "path" : "models/blocks/dragon_ball.geo.json"
+      },
+      {
+         "path" : "models/blocks/hyperbolic_time_chamber_door.geo.json"
+      },
+      {
+         "path" : "models/blocks/kame_house_sign.geo.json"
+      },
+      {
+         "path" : "models/blocks/mafuba_pot.geo.json"
+      },
+      {
+         "path" : "models/blocks/namek_dragon_ball.geo.json"
+      },
+      {
+         "path" : "models/blocks/namek_mushroom.geo.json"
+      },
+      {
+         "path" : "models/blocks/pirate_robot_head_block.geo.json"
+      },
+      {
+         "path" : "models/blocks/potted_cross.geo.json"
+      },
+      {
+         "path" : "models/blocks/slab.geo.json"
+      },
+      {
+         "path" : "models/blocks/stairs.geo.json"
+      },
+      {
+         "path" : "models/blocks/trapdoor.geo.json"
+      },
+      {
+         "path" : "models/entity/animals/deer.geo.json"
+      },
+      {
+         "path" : "models/entity/animals/dinosaur.geo.json"
+      },
+      {
+         "path" : "models/entity/animals/giant_fish.geo.json"
+      },
+      {
+         "path" : "models/entity/animals/namekian_frog.geo.json"
+      },
+      {
+         "path" : "models/entity/animals/pterosaur.geo.json"
+      },
+      {
+         "path" : "models/entity/animals/saber_tooth_tiger.geo.json"
+      },
+      {
+         "path" : "models/entity/aura.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/armors.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/battle_armor.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/bunny_costume.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/cap.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/christmas_costume.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/clothes.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/earrings.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/elegant_suit.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/great_saiyaman_clothes.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/headband.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/maid_costume.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/majin_buu_clothes.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/oozaru_clothes.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/piccolo_cape.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/scouter.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/training_armor.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/training_shirt.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/turtle_shell.geo.json"
+      },
+      {
+         "path" : "models/entity/items/armors/workout_weights.geo.json"
+      },
+      {
+         "path" : "models/entity/items/brave_sword_sheath.geo.json"
+      },
+      {
+         "path" : "models/entity/items/divine_halo.geo.json"
+      },
+      {
+         "path" : "models/entity/items/dragon_radar.geo.json"
+      },
+      {
+         "path" : "models/entity/items/grandpa_gohan_mask.geo.json"
+      },
+      {
+         "path" : "models/entity/items/halo.geo.json"
+      },
+      {
+         "path" : "models/entity/items/milk_box.geo.json"
+      },
+      {
+         "path" : "models/entity/items/pirate_robot_head.geo.json"
+      },
+      {
+         "path" : "models/entity/items/power_pole_sheath.geo.json"
+      },
+      {
+         "path" : "models/entity/items/weapons/angel_staff.geo.json"
+      },
+      {
+         "path" : "models/entity/items/weapons/bansho_fan.geo.json"
+      },
+      {
+         "path" : "models/entity/items/weapons/brave_sword.geo.json"
+      },
+      {
+         "path" : "models/entity/items/weapons/katana.geo.json"
+      },
+      {
+         "path" : "models/entity/items/weapons/power_pole.geo.json"
+      },
+      {
+         "path" : "models/entity/items/weapons/z_sword.geo.json"
+      },
+      {
+         "path" : "models/entity/ki_manipulation.geo.json"
+      },
+      {
+         "path" : "models/entity/ki_manipulation_outline.geo.json"
+      },
+      {
+         "path" : "models/entity/ki_scythe.geo.json"
+      },
+      {
+         "path" : "models/entity/ki_scythe_outline.geo.json"
+      },
+      {
+         "path" : "models/entity/locators.geo.json"
+      },
+      {
+         "path" : "models/entity/none.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/akira_toriyama.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/announcer.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/babidi.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/bulma.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/capsule_corp_engineer.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/chi_chi.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/enma_daioh.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/grand_elder_guru.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/kami_sama.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/king_kai.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/korin.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/krillin.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/master_roshi.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/merchant.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/mr_popo.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/porunga.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/shenron.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/unigame.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/whis.geo.json"
+      },
+      {
+         "path" : "models/entity/npcs/zeno_sama.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/android_17.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/android_18.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/android_19.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/android_20.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/battle_jacket.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/bear_thief.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/beerus.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/botamo.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/burter.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/cell_junior.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/corrupted_fused_zamasu.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/cui.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/dabura.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/dodoria.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/dr_wheelo.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/fat_buu.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/frieza_soldier_2.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/frieza_soldier_3.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/ginyu.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/guldo.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/hitto.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/jeice.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/magetta.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/moro.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/nappa.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/pikkon.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/pirate_robot.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/puipui.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/recoome.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/saibabrute.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/saibaman.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/shisami.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/super_buu.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/tagoma.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/yakon.geo.json"
+      },
+      {
+         "path" : "models/entity/opponents/zarbon.geo.json"
+      },
+      {
+         "path" : "models/entity/projectiles/ki_attack.geo.json"
+      },
+      {
+         "path" : "models/entity/projectiles/ki_attack_outline.geo.json"
+      },
+      {
+         "path" : "models/entity/projectiles/ki_beam.geo.json"
+      },
+      {
+         "path" : "models/entity/projectiles/ki_beam_outline.geo.json"
+      },
+      {
+         "path" : "models/entity/projectiles/missile.geo.json"
+      },
+      {
+         "path" : "models/entity/projectiles/pirate_robot_bullet.geo.json"
+      },
+      {
+         "path" : "models/entity/props/earth.geo.json"
+      },
+      {
+         "path" : "models/entity/props/time_machine.geo.json"
+      },
+      {
+         "path" : "models/entity/races/beard.geo.json"
+      },
+      {
+         "path" : "models/entity/races/bio_android.geo.json"
+      },
+      {
+         "path" : "models/entity/races/demon.geo.json"
+      },
+      {
+         "path" : "models/entity/races/earthling.geo.json"
+      },
+      {
+         "path" : "models/entity/races/eyes.geo.json"
+      },
+      {
+         "path" : "models/entity/races/frost_demon/frost_demon.geo.json"
+      },
+      {
+         "path" : "models/entity/races/frost_demon/frost_demon_chilled_horns.geo.json"
+      },
+      {
+         "path" : "models/entity/races/frost_demon/frost_demon_horns.geo.json"
+      },
+      {
+         "path" : "models/entity/races/glind.geo.json"
+      },
+      {
+         "path" : "models/entity/races/god_stigma.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/hair_base.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/kale_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/trunks_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/android_18_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/android_18_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/android_18_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/android_18_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/android_18_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/android_18_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_z_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_z_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_z_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_z_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_z_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/broly_z_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/cabba_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/cabba_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/cabba_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/cabba_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/caulifla_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/caulifla_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/caulifla_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/caulifla_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/caulifla_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/caulifla_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/chi_chi_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/chi_chi_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/chi_chi_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/chi_chi_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/chi_chi_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/chi_chi_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/fused_zamasu_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/futtrunks_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/futtrunks_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/futtrunks_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/futtrunks_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/futtrunks_ssjg_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/future_pan_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/future_pan_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/future_pan_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/future_pan_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/future_pan_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/future_pan_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gine_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gine_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gine_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gine_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gine_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gogeta_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gogeta_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gohan_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gohan_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gohan_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/gohan_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/goku_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/goku_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/goku_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/goku_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/goku_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/goku_ssj5_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/goku_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/kale_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/kale_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/kale_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/kale_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/kale_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/raditz_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/trunks_long_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/trunks_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/trunks_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/trunks_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/trunks_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/vegeta_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/vegeta_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/vegeta_ssj3_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/vegeta_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/vegeta_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/videl_short_beast_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/videl_short_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/videl_short_ssj2_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/videl_short_ssj4_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/videl_short_ssj_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/legacy_hairs/zamasu_hair.geo.json"
+      },
+      {
+         "path" : "models/entity/races/majin/absorption_cocoon_entity.geo.json"
+      },
+      {
+         "path" : "models/entity/races/majin/majin.geo.json"
+      },
+      {
+         "path" : "models/entity/races/majin/majin_antenna.json"
+      },
+      {
+         "path" : "models/entity/races/majin/majin_big_antenna.geo.json"
+      },
+      {
+         "path" : "models/entity/races/majin/majin_hair.json"
+      },
+      {
+         "path" : "models/entity/races/majin/majin_long_hair.json"
+      },
+      {
+         "path" : "models/entity/races/majin_mark.geo.json"
+      },
+      {
+         "path" : "models/entity/races/namekian.geo.json"
+      },
+      {
+         "path" : "models/entity/races/saiyan/oozaru.geo.json"
+      },
+      {
+         "path" : "models/entity/races/saiyan/saiyan_tail.geo.json"
+      },
+      {
+         "path" : "models/entity/vehicles/capsule_991.geo.json"
+      },
+      {
+         "path" : "models/entity/vehicles/drive_test_car.geo.json"
+      },
+      {
+         "path" : "models/entity/vehicles/frieza_pod.geo.json"
+      },
+      {
+         "path" : "models/entity/vehicles/saiyan_pod.geo.json"
+      },
+      {
+         "path" : "models/entity/villagers/demonic_iron_golem.geo.json"
+      },
+      {
+         "path" : "models/entity/villagers/frieza_villager.geo.json"
+      },
+      {
+         "path" : "models/entity/villagers/saiyan_villager.geo.json"
+      },
+      {
+         "path" : "models/entity/villagers/yardrat_villager.geo.json"
+      },
+      {
+         "path" : "pack_icon.png"
+      },
+      {
+         "path" : "particles/aura_god.particle.json"
+      },
+      {
+         "path" : "particles/aura_spark.particle.particle.json"
+      },
+      {
+         "path" : "particles/blocks/claimed_delimitation.particle.json"
+      },
+      {
+         "path" : "particles/blocks/dragon_ball_warn.particle.json"
+      },
+      {
+         "path" : "particles/blocks/gravity_machine_delimitation.particle.json"
+      },
+      {
+         "path" : "particles/blocks/yellow_cloud_dust.particle.json"
+      },
+      {
+         "path" : "particles/butterfly.particle.json"
+      },
+      {
+         "path" : "particles/capsule_991_engine.particle.json"
+      },
+      {
+         "path" : "particles/concentration_orb.particle.json"
+      },
+      {
+         "path" : "particles/explode_beam.particle.json"
+      },
+      {
+         "path" : "particles/explode_disc.particle.json"
+      },
+      {
+         "path" : "particles/explode_smoke.particle.json"
+      },
+      {
+         "path" : "particles/explode_sphere.particle.json"
+      },
+      {
+         "path" : "particles/flying_nimbus/black_flying_nimbus_fx_1.particle.json"
+      },
+      {
+         "path" : "particles/flying_nimbus/black_flying_nimbus_fx_2.particle.json"
+      },
+      {
+         "path" : "particles/flying_nimbus/black_flying_nimbus_fx_3.particle.json"
+      },
+      {
+         "path" : "particles/flying_nimbus/black_flying_nimbus_fx_4.particle.json"
+      },
+      {
+         "path" : "particles/flying_nimbus/flying_nimbus_fx_1.particle.json"
+      },
+      {
+         "path" : "particles/flying_nimbus/flying_nimbus_fx_2.particle.json"
+      },
+      {
+         "path" : "particles/flying_nimbus/flying_nimbus_fx_3.particle.json"
+      },
+      {
+         "path" : "particles/flying_nimbus/flying_nimbus_fx_4.particle.json"
+      },
+      {
+         "path" : "particles/genki.particle.json"
+      },
+      {
+         "path" : "particles/hoi_poi_capsule_spawn.particle.json"
+      },
+      {
+         "path" : "particles/kaioken/kaioken_aura.particle.json"
+      },
+      {
+         "path" : "particles/kaioken/kaioken_sphere.particle.json"
+      },
+      {
+         "path" : "particles/ki_attack/beam.particle.json"
+      },
+      {
+         "path" : "particles/ki_attack/lightning.particle.json"
+      },
+      {
+         "path" : "particles/missile_flame.particle.json"
+      },
+      {
+         "path" : "particles/pirate_robot_shoot.particle.json"
+      },
+      {
+         "path" : "particles/potara_sphere.particle.json"
+      },
+      {
+         "path" : "particles/sword/sword_impact.particle.json"
+      },
+      {
+         "path" : "particles/sword/sword_impact_circle.particle.json"
+      },
+      {
+         "path" : "particles/sword/sword_slash_1.particle.json"
+      },
+      {
+         "path" : "particles/sword/sword_slash_2.particle.json"
+      },
+      {
+         "path" : "particles/task_warn.particle.json"
+      },
+      {
+         "path" : "particles/teleport.particle.json"
+      },
+      {
+         "path" : "particles/ultra_instinct_aura.particle.json"
+      },
+      {
+         "path" : "render_controllers/absorption_cocoon.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/animals/dinosaur.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/animals/giant_fish.render_controllers copy.json"
+      },
+      {
+         "path" : "render_controllers/animals/namekian_frog.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/animals/pterosaur.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/animals/saber_tooth_tiger.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/earth.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/entity.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/god_stigma.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/items/armor.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/items/clothes.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/items/dragon_radar.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/items/potara_earring.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/items/scouter.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/ki_attack.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/ki_manipulation.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/locators.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/majin_mark.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/npcs/bulma.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/npcs/capsule_corp_engineer.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/npcs/chi_chi.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/npcs/kami_sama.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/npcs/merchant.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/npcs/piccolo.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/npcs/shenron.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/android_20.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/cell.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/frieza.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/frieza_soldier.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/frost.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/frost_demon.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/glind.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/majin_buu.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/namekian.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/recoome.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/saiyan.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/opponents/zarbon.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/aura.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/fusion.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/halo.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/ki_scythe.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/player.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/races/android.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/races/bio_android.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/races/demon.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/races/earthling.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/races/frost_demon.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/races/glind.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/races/majin.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/races/namekian.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/player/races/saiyan.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/villagers/dbe_villager.render_controllers.json"
+      },
+      {
+         "path" : "render_controllers/villagers/demonic_iron_golem.render_controllers.json"
+      },
+      {
+         "path" : "sounds.json"
+      },
+      {
+         "path" : "sounds/block/dragon_ball/glowing.ogg"
+      },
+      {
+         "path" : "sounds/block/gravity_machine/ambient.ogg"
+      },
+      {
+         "path" : "sounds/common/bukujyutsu_down.ogg"
+      },
+      {
+         "path" : "sounds/common/bukujyutsu_end.ogg"
+      },
+      {
+         "path" : "sounds/common/bukujyutsu_move.ogg"
+      },
+      {
+         "path" : "sounds/common/bukujyutsu_up.ogg"
+      },
+      {
+         "path" : "sounds/common/charge_god_loop.ogg"
+      },
+      {
+         "path" : "sounds/common/charge_loop.ogg"
+      },
+      {
+         "path" : "sounds/common/dodge1.ogg"
+      },
+      {
+         "path" : "sounds/common/dodge2.ogg"
+      },
+      {
+         "path" : "sounds/common/dodge3.ogg"
+      },
+      {
+         "path" : "sounds/common/explode.ogg"
+      },
+      {
+         "path" : "sounds/common/force.ogg"
+      },
+      {
+         "path" : "sounds/common/fusion_potara.ogg"
+      },
+      {
+         "path" : "sounds/common/guard1.ogg"
+      },
+      {
+         "path" : "sounds/common/guard2.ogg"
+      },
+      {
+         "path" : "sounds/common/guard_brake.ogg"
+      },
+      {
+         "path" : "sounds/common/hit_large1.ogg"
+      },
+      {
+         "path" : "sounds/common/hit_middle1.ogg"
+      },
+      {
+         "path" : "sounds/common/hit_small1.ogg"
+      },
+      {
+         "path" : "sounds/common/hit_small2.ogg"
+      },
+      {
+         "path" : "sounds/common/hit_xlarge1.ogg"
+      },
+      {
+         "path" : "sounds/common/jump.ogg"
+      },
+      {
+         "path" : "sounds/common/ki_blast.ogg"
+      },
+      {
+         "path" : "sounds/common/ki_sense.ogg"
+      },
+      {
+         "path" : "sounds/common/looking_full_moon.ogg"
+      },
+      {
+         "path" : "sounds/common/power_down.ogg"
+      },
+      {
+         "path" : "sounds/common/slash1.ogg"
+      },
+      {
+         "path" : "sounds/common/slash2.ogg"
+      },
+      {
+         "path" : "sounds/common/slash3.ogg"
+      },
+      {
+         "path" : "sounds/common/slash4.ogg"
+      },
+      {
+         "path" : "sounds/common/spark1.ogg"
+      },
+      {
+         "path" : "sounds/common/spark2.ogg"
+      },
+      {
+         "path" : "sounds/common/swing1.ogg"
+      },
+      {
+         "path" : "sounds/common/swing2.ogg"
+      },
+      {
+         "path" : "sounds/common/swing3.ogg"
+      },
+      {
+         "path" : "sounds/common/teleport1.ogg"
+      },
+      {
+         "path" : "sounds/common/teleport2.ogg"
+      },
+      {
+         "path" : "sounds/common/transform.ogg"
+      },
+      {
+         "path" : "sounds/item/dragon_radar_beep.ogg"
+      },
+      {
+         "path" : "sounds/item/scouter_warn.ogg"
+      },
+      {
+         "path" : "sounds/item/senzu_bean_use.ogg"
+      },
+      {
+         "path" : "sounds/metamoran/finish.ogg"
+      },
+      {
+         "path" : "sounds/metamoran/foot.ogg"
+      },
+      {
+         "path" : "sounds/mob/battle_jacket/step.ogg"
+      },
+      {
+         "path" : "sounds/mob/car/drifting1.ogg"
+      },
+      {
+         "path" : "sounds/mob/car/motor_idle1.ogg"
+      },
+      {
+         "path" : "sounds/mob/car/motor_idle2.ogg"
+      },
+      {
+         "path" : "sounds/mob/car/motor_idle3.ogg"
+      },
+      {
+         "path" : "sounds/mob/cell/step.ogg"
+      },
+      {
+         "path" : "sounds/mob/deer/ambient1.ogg"
+      },
+      {
+         "path" : "sounds/mob/deer/ambient2.ogg"
+      },
+      {
+         "path" : "sounds/mob/deer/ambient3.ogg"
+      },
+      {
+         "path" : "sounds/mob/deer/hurt1.ogg"
+      },
+      {
+         "path" : "sounds/mob/deer/hurt2.ogg"
+      },
+      {
+         "path" : "sounds/mob/dinosaur/ambient1.ogg"
+      },
+      {
+         "path" : "sounds/mob/dinosaur/ambient2.ogg"
+      },
+      {
+         "path" : "sounds/mob/dinosaur/ambient3.ogg"
+      },
+      {
+         "path" : "sounds/mob/dinosaur/death.ogg"
+      },
+      {
+         "path" : "sounds/mob/dinosaur/hurt.ogg"
+      },
+      {
+         "path" : "sounds/mob/dinosaur/step1.ogg"
+      },
+      {
+         "path" : "sounds/mob/dinosaur/step2.ogg"
+      },
+      {
+         "path" : "sounds/mob/dinosaur/step3.ogg"
+      },
+      {
+         "path" : "sounds/mob/flying_nimbus/ambient.ogg"
+      },
+      {
+         "path" : "sounds/mob/frieza/step.ogg"
+      },
+      {
+         "path" : "sounds/mob/pirate_robot/shoot1.ogg"
+      },
+      {
+         "path" : "sounds/mob/pirate_robot/step.ogg"
+      },
+      {
+         "path" : "sounds/mob/pirate_robot/sword_swing1.ogg"
+      },
+      {
+         "path" : "sounds/mob/pirate_robot/sword_swing2.ogg"
+      },
+      {
+         "path" : "sounds/mob/pirate_robot/sword_swing_end1.ogg"
+      },
+      {
+         "path" : "sounds/mob/pirate_robot/sword_swing_start1.ogg"
+      },
+      {
+         "path" : "sounds/mob/porunga/dialogue.ogg"
+      },
+      {
+         "path" : "sounds/mob/saber_tooth_tiger/ambient1.ogg"
+      },
+      {
+         "path" : "sounds/mob/saber_tooth_tiger/ambient2.ogg"
+      },
+      {
+         "path" : "sounds/mob/saber_tooth_tiger/ambient3.ogg"
+      },
+      {
+         "path" : "sounds/mob/saber_tooth_tiger/attack1.ogg"
+      },
+      {
+         "path" : "sounds/mob/saber_tooth_tiger/attack2.ogg"
+      },
+      {
+         "path" : "sounds/mob/saber_tooth_tiger/hurt.ogg"
+      },
+      {
+         "path" : "sounds/mob/saibaman/ambient1.ogg"
+      },
+      {
+         "path" : "sounds/mob/saibaman/ambient2.ogg"
+      },
+      {
+         "path" : "sounds/mob/saibaman/ambient3.ogg"
+      },
+      {
+         "path" : "sounds/mob/saibaman/attack1.ogg"
+      },
+      {
+         "path" : "sounds/mob/saibaman/death1.ogg"
+      },
+      {
+         "path" : "sounds/mob/saibaman/hurt1.ogg"
+      },
+      {
+         "path" : "sounds/mob/saibaman/hurt2.ogg"
+      },
+      {
+         "path" : "sounds/mob/saibaman/hurt3.ogg"
+      },
+      {
+         "path" : "sounds/mob/shenron/appear.ogg"
+      },
+      {
+         "path" : "sounds/mob/shenron/flying.ogg"
+      },
+      {
+         "path" : "sounds/music/cha-la_head-cha-la.ogg"
+      },
+      {
+         "path" : "sounds/music/christmas.ogg"
+      },
+      {
+         "path" : "sounds/music/hyperbolic_time_chamber_theme.ogg"
+      },
+      {
+         "path" : "sounds/music/king_kai_planet_theme.ogg"
+      },
+      {
+         "path" : "sounds/music/lookout_theme.ogg"
+      },
+      {
+         "path" : "sounds/music/other_world_theme.ogg"
+      },
+      {
+         "path" : "sounds/music/porunga_theme.ogg"
+      },
+      {
+         "path" : "sounds/music/quest_completed.ogg"
+      },
+      {
+         "path" : "sounds/music/shenron_theme.ogg"
+      },
+      {
+         "path" : "sounds/music/ultra_instinct_opening_theme.ogg"
+      },
+      {
+         "path" : "sounds/music/world_martial_arts_tournament_intro.ogg"
+      },
+      {
+         "path" : "sounds/music/world_martial_arts_tournament_theme_1.ogg"
+      },
+      {
+         "path" : "sounds/skill/absorbing.ogg"
+      },
+      {
+         "path" : "sounds/skill/galick_gun.ogg"
+      },
+      {
+         "path" : "sounds/skill/galick_gun_launch.ogg"
+      },
+      {
+         "path" : "sounds/skill/kamehameha.ogg"
+      },
+      {
+         "path" : "sounds/skill/kamehameha_launch.ogg"
+      },
+      {
+         "path" : "sounds/skill/kienzan_loop.ogg"
+      },
+      {
+         "path" : "sounds/skill/makankosappo.ogg"
+      },
+      {
+         "path" : "sounds/skill/makankosappo_launch.ogg"
+      },
+      {
+         "path" : "sounds/sound_definitions.json"
+      },
+      {
+         "path" : "sounds/ui/arrow.ogg"
+      },
+      {
+         "path" : "sounds/ui/challenge_complete.ogg"
+      },
+      {
+         "path" : "sounds/ui/exit.ogg"
+      },
+      {
+         "path" : "sounds/ui/kaioken.ogg"
+      },
+      {
+         "path" : "sounds/ui/level_up.ogg"
+      },
+      {
+         "path" : "sounds/ui/menu_click.ogg"
+      },
+      {
+         "path" : "sounds/ui/sair.ogg"
+      },
+      {
+         "path" : "sounds/ui/upgrade.ogg"
+      },
+      {
+         "path" : "texts/en_US.lang"
+      },
+      {
+         "path" : "texts/es_ES.lang"
+      },
+      {
+         "path" : "texts/languages.json"
+      },
+      {
+         "path" : "texts/pt_BR.lang"
+      },
+      {
+         "path" : "textures/blocks/ajisa_door_lower.png"
+      },
+      {
+         "path" : "textures/blocks/ajisa_door_upper.png"
+      },
+      {
+         "path" : "textures/blocks/ajisa_leaves.png"
+      },
+      {
+         "path" : "textures/blocks/ajisa_leaves_flowers.png"
+      },
+      {
+         "path" : "textures/blocks/ajisa_log_side.png"
+      },
+      {
+         "path" : "textures/blocks/ajisa_log_top.png"
+      },
+      {
+         "path" : "textures/blocks/ajisa_planks.png"
+      },
+      {
+         "path" : "textures/blocks/ajisa_sapling.png"
+      },
+      {
+         "path" : "textures/blocks/ajisa_trapdoor.png"
+      },
+      {
+         "path" : "textures/blocks/decor/black_tile.png"
+      },
+      {
+         "path" : "textures/blocks/decor/blue_tile.png"
+      },
+      {
+         "path" : "textures/blocks/decor/blue_tile.texture_set.json"
+      },
+      {
+         "path" : "textures/blocks/decor/kame_house_sign.png"
+      },
+      {
+         "path" : "textures/blocks/decor/lime_tile.png"
+      },
+      {
+         "path" : "textures/blocks/decor/mafuba_pot.png"
+      },
+      {
+         "path" : "textures/blocks/decor/orange_tile.png"
+      },
+      {
+         "path" : "textures/blocks/decor/pink_tile.png"
+      },
+      {
+         "path" : "textures/blocks/decor/purple_tile.png"
+      },
+      {
+         "path" : "textures/blocks/decor/purple_tile.texture_set.json"
+      },
+      {
+         "path" : "textures/blocks/decor/red_tile.png"
+      },
+      {
+         "path" : "textures/blocks/decor/red_tile.texture_set.json"
+      },
+      {
+         "path" : "textures/blocks/decor/tile_height.png"
+      },
+      {
+         "path" : "textures/blocks/decor/tile_mer.png"
+      },
+      {
+         "path" : "textures/blocks/decor/white_tile.png"
+      },
+      {
+         "path" : "textures/blocks/decor/white_tile.texture_set.json"
+      },
+      {
+         "path" : "textures/blocks/decor/yellow_cloud_block.png"
+      },
+      {
+         "path" : "textures/blocks/decor/yellow_tile.png"
+      },
+      {
+         "path" : "textures/blocks/decor/yellow_tile.texture_set.json"
+      },
+      {
+         "path" : "textures/blocks/deepslate_evolitium_ore.png"
+      },
+      {
+         "path" : "textures/blocks/dirtstone.png"
+      },
+      {
+         "path" : "textures/blocks/dirtstone_2.png"
+      },
+      {
+         "path" : "textures/blocks/dirtstone_3.png"
+      },
+      {
+         "path" : "textures/blocks/dirtstone_evolitium_ore.png"
+      },
+      {
+         "path" : "textures/blocks/dirtstone_grass_side.png"
+      },
+      {
+         "path" : "textures/blocks/dirtstone_grass_top.png"
+      },
+      {
+         "path" : "textures/blocks/dirtstone_rubble.png"
+      },
+      {
+         "path" : "textures/blocks/dirtstone_tall_grass.png"
+      },
+      {
+         "path" : "textures/blocks/dragon_ball.png"
+      },
+      {
+         "path" : "textures/blocks/dragon_ball_activated.png"
+      },
+      {
+         "path" : "textures/blocks/dry_soil.png"
+      },
+      {
+         "path" : "textures/blocks/evolitium_cluster.png"
+      },
+      {
+         "path" : "textures/blocks/evolitium_ore.png"
+      },
+      {
+         "path" : "textures/blocks/frieza_rock.png"
+      },
+      {
+         "path" : "textures/blocks/frieza_soil.png"
+      },
+      {
+         "path" : "textures/blocks/gravity_machine_activated_top.png"
+      },
+      {
+         "path" : "textures/blocks/gravity_machine_bottom.png"
+      },
+      {
+         "path" : "textures/blocks/gravity_machine_side.png"
+      },
+      {
+         "path" : "textures/blocks/gravity_machine_top.png"
+      },
+      {
+         "path" : "textures/blocks/hyperbolic_time_chamber_door.png"
+      },
+      {
+         "path" : "textures/blocks/hyperbolic_time_chamber_door_lock_block.png"
+      },
+      {
+         "path" : "textures/blocks/katchin_block.png"
+      },
+      {
+         "path" : "textures/blocks/medical_moss_stage_0.png"
+      },
+      {
+         "path" : "textures/blocks/medical_moss_stage_1.png"
+      },
+      {
+         "path" : "textures/blocks/medical_moss_stage_2.png"
+      },
+      {
+         "path" : "textures/blocks/medical_moss_stage_3.png"
+      },
+      {
+         "path" : "textures/blocks/namek_dragon_ball.png"
+      },
+      {
+         "path" : "textures/blocks/namek_dragon_ball_activated.png"
+      },
+      {
+         "path" : "textures/blocks/namek_grass_side.png"
+      },
+      {
+         "path" : "textures/blocks/namek_grass_top.png"
+      },
+      {
+         "path" : "textures/blocks/namek_mushroom.png"
+      },
+      {
+         "path" : "textures/blocks/namek_stone.png"
+      },
+      {
+         "path" : "textures/blocks/namek_stone_evolitium_ore.png"
+      },
+      {
+         "path" : "textures/blocks/namek_stone_rubble.png"
+      },
+      {
+         "path" : "textures/blocks/namek_tall_grass.png"
+      },
+      {
+         "path" : "textures/blocks/packed_sand.png"
+      },
+      {
+         "path" : "textures/blocks/petrified_dragon_ball.png"
+      },
+      {
+         "path" : "textures/blocks/petrified_namek_dragon_ball.png"
+      },
+      {
+         "path" : "textures/blocks/potted_namek_mushroom.png"
+      },
+      {
+         "path" : "textures/blocks/senzu_beans_stage_0.png"
+      },
+      {
+         "path" : "textures/blocks/senzu_beans_stage_1.png"
+      },
+      {
+         "path" : "textures/blocks/senzu_beans_stage_2.png"
+      },
+      {
+         "path" : "textures/blocks/senzu_beans_stage_3.png"
+      },
+      {
+         "path" : "textures/blocks/vegeta_rock.png"
+      },
+      {
+         "path" : "textures/blocks/vegeta_soil.png"
+      },
+      {
+         "path" : "textures/blocks/yardrat_rock.png"
+      },
+      {
+         "path" : "textures/blocks/yardrat_soil.png"
+      },
+      {
+         "path" : "textures/empty.json"
+      },
+      {
+         "path" : "textures/empty.png"
+      },
+      {
+         "path" : "textures/entity/angel_staff.png"
+      },
+      {
+         "path" : "textures/entity/animals/deer.png"
+      },
+      {
+         "path" : "textures/entity/animals/dinosaur/dinosaur_alien_blue.png"
+      },
+      {
+         "path" : "textures/entity/animals/dinosaur/dinosaur_alien_red.png"
+      },
+      {
+         "path" : "textures/entity/animals/dinosaur/dinosaur_brown.png"
+      },
+      {
+         "path" : "textures/entity/animals/dinosaur/dinosaur_gray.png"
+      },
+      {
+         "path" : "textures/entity/animals/dinosaur/dinosaur_green.png"
+      },
+      {
+         "path" : "textures/entity/animals/dinosaur/dinosaur_orange.png"
+      },
+      {
+         "path" : "textures/entity/animals/dinosaur/dinosaur_purple.png"
+      },
+      {
+         "path" : "textures/entity/animals/dinosaur/dinosaur_yellow.png"
+      },
+      {
+         "path" : "textures/entity/animals/dinosaur/saddle.png"
+      },
+      {
+         "path" : "textures/entity/animals/giant_fish/giant_fish_blue.png"
+      },
+      {
+         "path" : "textures/entity/animals/giant_fish/giant_fish_green.png"
+      },
+      {
+         "path" : "textures/entity/animals/giant_fish/giant_fish_red.png"
+      },
+      {
+         "path" : "textures/entity/animals/giant_fish/giant_fish_yellow.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_blue.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_brown.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_gambunta.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_ginyu_wife.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_green.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_gronkel.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_light_fury.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_pink.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_porunga.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_purple.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_red.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_toothless.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_white.png"
+      },
+      {
+         "path" : "textures/entity/animals/namekian_frog/namekian_frog_yellow.png"
+      },
+      {
+         "path" : "textures/entity/animals/pterosaur/pterosaur_blue.png"
+      },
+      {
+         "path" : "textures/entity/animals/pterosaur/pterosaur_green.png"
+      },
+      {
+         "path" : "textures/entity/animals/pterosaur/pterosaur_purple.png"
+      },
+      {
+         "path" : "textures/entity/animals/pterosaur/pterosaur_red.png"
+      },
+      {
+         "path" : "textures/entity/animals/pterosaur/saddle.png"
+      },
+      {
+         "path" : "textures/entity/animals/saber_tooth_tiger/saber_tooth_tiger_black.png"
+      },
+      {
+         "path" : "textures/entity/animals/saber_tooth_tiger/saber_tooth_tiger_orange.png"
+      },
+      {
+         "path" : "textures/entity/animals/saber_tooth_tiger/saber_tooth_tiger_white.png"
+      },
+      {
+         "path" : "textures/entity/bansho_fan.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/beards/beard_1_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/beards/beard_2_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/beards/beard_3_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/beards/beard_4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/beards/beard_5_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/beards/beard_6_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/eyes/female_1_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/eyes/female_2_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/eyes/female_3_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/eyes/male_1_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/eyes/male_2_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/eyes/male_3_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/adult_gohan_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/grayscale/adult_gohan_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/grayscale/adult_gohan_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/adult_gohan/grayscale/adult_gohan_ultimate_form_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/cabba/cabba_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/cabba/cabba_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/cabba/grayscale/cabba_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ultra_instict.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/caulifla_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/grayscale/caulifla_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/grayscale/caulifla_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/caulifla/grayscale/caulifla_ultimate_form_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/grayscale/gogeta_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/grayscale/gogeta_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gogeta/grayscale/gogeta_ultimate_form_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/gohan_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/grayscale/gohan_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/grayscale/gohan_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/gohan/grayscale/gohan_ultimate_form_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssjr3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/goku_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/grayscale/goku_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/grayscale/goku_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/grayscale/goku_ultimate_form_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/goku/grayscale/goku_ultra_instinct_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/kale_hair/grayscale/kale_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/kale_hair/kale_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/kale_hair/kale_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/kale_hair/kale_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/grayscale/raditz_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/grayscale/raditz_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/grayscale/raditz_ultimate_form_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/raditz/raditz_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/supreme_kai/grayscale/supreme_kai_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/supreme_kai/supreme_kai_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/grayscale/trunks_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/grayscale/trunks_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/grayscale/trunks_ultimate_form_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_base_npc.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/trunks/trunks_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/uub/grayscale/uub_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/uub/uub_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/uub/uub_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/grayscale/vegeta_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/grayscale/vegeta_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/grayscale/vegeta_ultimate_form_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/vegeta/vegeta_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/zamasu/fused_zamasu_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/zamasu/grayscale/fused_zamasu_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/zamasu/grayscale/zamasu_base_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/zamasu/zamasu_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_1.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_10.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_6.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_7.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_8.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/female_base_9.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_1.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_10.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_6.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_7.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_8.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/skins/male_base_9.png"
+      },
+      {
+         "path" : "textures/entity/brave_sword.png"
+      },
+      {
+         "path" : "textures/entity/katana.png"
+      },
+      {
+         "path" : "textures/entity/ki_attack.png"
+      },
+      {
+         "path" : "textures/entity/ki_attack.texture_set.json"
+      },
+      {
+         "path" : "textures/entity/ki_attack_mer.png"
+      },
+      {
+         "path" : "textures/entity/ki_beam.png"
+      },
+      {
+         "path" : "textures/entity/ki_scythe.png"
+      },
+      {
+         "path" : "textures/entity/milk_box.png"
+      },
+      {
+         "path" : "textures/entity/missile.png"
+      },
+      {
+         "path" : "textures/entity/npcs/akira_toriyama.png"
+      },
+      {
+         "path" : "textures/entity/npcs/announcer/announcer.png"
+      },
+      {
+         "path" : "textures/entity/npcs/announcer/announcer_speaking.png"
+      },
+      {
+         "path" : "textures/entity/npcs/babidi.png"
+      },
+      {
+         "path" : "textures/entity/npcs/bulma/bulma_android_saga.png"
+      },
+      {
+         "path" : "textures/entity/npcs/bulma/bulma_classic.png"
+      },
+      {
+         "path" : "textures/entity/npcs/bulma/bulma_oolong_saga.png"
+      },
+      {
+         "path" : "textures/entity/npcs/bulma/bulma_pre_namek.png"
+      },
+      {
+         "path" : "textures/entity/npcs/capsule_corp_engineer/engineer_0.png"
+      },
+      {
+         "path" : "textures/entity/npcs/capsule_corp_engineer/engineer_1.png"
+      },
+      {
+         "path" : "textures/entity/npcs/capsule_corp_engineer/engineer_2.png"
+      },
+      {
+         "path" : "textures/entity/npcs/chi_chi/angry_chi_chi.png"
+      },
+      {
+         "path" : "textures/entity/npcs/chi_chi/chi_chi.png"
+      },
+      {
+         "path" : "textures/entity/npcs/daima_porunga.png"
+      },
+      {
+         "path" : "textures/entity/npcs/enma_daioh.png"
+      },
+      {
+         "path" : "textures/entity/npcs/grand_elder_guru.png"
+      },
+      {
+         "path" : "textures/entity/npcs/kami_sama.png"
+      },
+      {
+         "path" : "textures/entity/npcs/king_kai.png"
+      },
+      {
+         "path" : "textures/entity/npcs/korin.png"
+      },
+      {
+         "path" : "textures/entity/npcs/krillin/krillin_kame.png"
+      },
+      {
+         "path" : "textures/entity/npcs/krillin/krillin_namek.png"
+      },
+      {
+         "path" : "textures/entity/npcs/master_roshi.png"
+      },
+      {
+         "path" : "textures/entity/npcs/merchant/merchant_1.png"
+      },
+      {
+         "path" : "textures/entity/npcs/merchant/merchant_2.png"
+      },
+      {
+         "path" : "textures/entity/npcs/merchant/merchant_3.png"
+      },
+      {
+         "path" : "textures/entity/npcs/mr_popo.png"
+      },
+      {
+         "path" : "textures/entity/npcs/porunga.png"
+      },
+      {
+         "path" : "textures/entity/npcs/shenron.png"
+      },
+      {
+         "path" : "textures/entity/npcs/unigame.png"
+      },
+      {
+         "path" : "textures/entity/npcs/whis.png"
+      },
+      {
+         "path" : "textures/entity/npcs/zenoh.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_17/android_17.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_17/android_17_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_18/android_18.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_18/android_18_damaged.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_18/android_18_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_19/android_19.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_19/android_19_damaged.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_19/android_19_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_20/android_20.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_20/android_20_damaged.png"
+      },
+      {
+         "path" : "textures/entity/opponents/android_20/android_20_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/battle_jacket.png"
+      },
+      {
+         "path" : "textures/entity/opponents/bear_thief.png"
+      },
+      {
+         "path" : "textures/entity/opponents/beerus.png"
+      },
+      {
+         "path" : "textures/entity/opponents/botamo.png"
+      },
+      {
+         "path" : "textures/entity/opponents/burter.png"
+      },
+      {
+         "path" : "textures/entity/opponents/buu/fat_buu.png"
+      },
+      {
+         "path" : "textures/entity/opponents/buu/kid_buu.png"
+      },
+      {
+         "path" : "textures/entity/opponents/buu/kid_buu_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/buu/super_buu.png"
+      },
+      {
+         "path" : "textures/entity/opponents/buu/super_buu_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/cabba/cabba.png"
+      },
+      {
+         "path" : "textures/entity/opponents/cabba/cabba_eyes_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/opponents/cell_junior.png"
+      },
+      {
+         "path" : "textures/entity/opponents/cui/cui.png"
+      },
+      {
+         "path" : "textures/entity/opponents/cui/cui_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/dabura.png"
+      },
+      {
+         "path" : "textures/entity/opponents/dodoria/dodoria.png"
+      },
+      {
+         "path" : "textures/entity/opponents/dodoria/dodoria_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/dr_wheelo.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza/mecha_frieza.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza/mecha_frieza_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_1.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_1_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_2.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_2_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_3_1.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_3_2.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_3_3.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_3_4.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_3_5.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_3_6.png"
+      },
+      {
+         "path" : "textures/entity/opponents/frieza_soldier/frieza_soldier_3_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/fused_zamasu/corrupted_fused_zamasu.png"
+      },
+      {
+         "path" : "textures/entity/opponents/general_black/general_black.png"
+      },
+      {
+         "path" : "textures/entity/opponents/general_black/general_black_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/ginyu/ginyu.png"
+      },
+      {
+         "path" : "textures/entity/opponents/ginyu/ginyu_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/guldo.png"
+      },
+      {
+         "path" : "textures/entity/opponents/hitto/hitto.png"
+      },
+      {
+         "path" : "textures/entity/opponents/hitto/hitto_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/jeice/jeice.png"
+      },
+      {
+         "path" : "textures/entity/opponents/jeice/jeice_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/king_cold.png"
+      },
+      {
+         "path" : "textures/entity/opponents/magetta.png"
+      },
+      {
+         "path" : "textures/entity/opponents/moro.png"
+      },
+      {
+         "path" : "textures/entity/opponents/nappa.png"
+      },
+      {
+         "path" : "textures/entity/opponents/pikkon.png"
+      },
+      {
+         "path" : "textures/entity/opponents/pirate_robot.png"
+      },
+      {
+         "path" : "textures/entity/opponents/puipui/puipui.png"
+      },
+      {
+         "path" : "textures/entity/opponents/puipui/puipui_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/recoome/recoome.png"
+      },
+      {
+         "path" : "textures/entity/opponents/recoome/recoome_damaged.png"
+      },
+      {
+         "path" : "textures/entity/opponents/saibaman/saibabrute.png"
+      },
+      {
+         "path" : "textures/entity/opponents/saibaman/saibaman.png"
+      },
+      {
+         "path" : "textures/entity/opponents/shadow_dummy.png"
+      },
+      {
+         "path" : "textures/entity/opponents/shisami.png"
+      },
+      {
+         "path" : "textures/entity/opponents/tagoma.png"
+      },
+      {
+         "path" : "textures/entity/opponents/yakon.png"
+      },
+      {
+         "path" : "textures/entity/opponents/zarbon/zarbon.png"
+      },
+      {
+         "path" : "textures/entity/opponents/zarbon/zarbon_eyes.png"
+      },
+      {
+         "path" : "textures/entity/opponents/zarbon/zarbon_final_form.png"
+      },
+      {
+         "path" : "textures/entity/pirate_robot_bullet.png"
+      },
+      {
+         "path" : "textures/entity/power_pole.png"
+      },
+      {
+         "path" : "textures/entity/props/earth.png"
+      },
+      {
+         "path" : "textures/entity/props/time_machine.png"
+      },
+      {
+         "path" : "textures/entity/races/android/majin_female.png"
+      },
+      {
+         "path" : "textures/entity/races/android/majin_male.png"
+      },
+      {
+         "path" : "textures/entity/races/android/majin_tail.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/beast_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/beast_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/beast_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/beast_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/beast_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/beast_form_6.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/eyes/beast_form.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/eyes/imperfect_form.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/eyes/imperfect_form_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/eyes/perfect_form.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/eyes/semi_perfect_form.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/eyes/ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/eyes/ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/imperfect_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/imperfect_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/imperfect_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/imperfect_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/imperfect_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/imperfect_form_6.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/perfect_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/perfect_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/perfect_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/perfect_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/perfect_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/perfect_form_6.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/semi_perfect_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/semi_perfect_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/semi_perfect_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/semi_perfect_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/semi_perfect_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/bio_android/semi_perfect_form_6.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/female_base_1.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/female_base_2.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/female_base_3.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/female_base_4.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/chilled_0.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/chilled_1.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/chilled_2.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/chilled_3.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/chilled_4.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/chilled_5.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/oni.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/std_0.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/std_1.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/std_2.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/std_3.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/std_4.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/horns/std_5.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/male_base_1.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/male_base_2.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/male_base_3.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/male_base_4.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/eyes_female_1.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/eyes_female_2.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/eyes_male_1.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/eyes_male_2.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/female_base_1.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/female_base_2.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/female_base_3.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/female_base_4.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/male_base_1.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/male_base_2.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/male_base_3.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/male_base_4.png"
+      },
+      {
+         "path" : "textures/entity/races/demon/oni/tail.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/black_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/black_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/black_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/black_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/black_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/eyes/beast_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/eyes/black_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/eyes/fifth_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/eyes/first_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/eyes/fourth_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/eyes/golden_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/eyes/ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/eyes/ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fifth_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fifth_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fifth_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fifth_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fifth_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/first_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/first_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/first_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/first_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/first_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fourth_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fourth_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fourth_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fourth_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/fourth_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/golden_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/golden_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/golden_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/golden_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/golden_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/chilled_first_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/chilled_second_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/chilled_third_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/chilled_third_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/fifth_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/fifth_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/fifth_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/fifth_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/first_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/third_form.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/horns/third_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/third_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/third_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/third_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/third_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/frost_demon/third_form_5.png"
+      },
+      {
+         "path" : "textures/entity/races/glind/female_base_1.png"
+      },
+      {
+         "path" : "textures/entity/races/glind/female_base_2.png"
+      },
+      {
+         "path" : "textures/entity/races/glind/female_base_3.png"
+      },
+      {
+         "path" : "textures/entity/races/glind/female_base_4.png"
+      },
+      {
+         "path" : "textures/entity/races/glind/male_base_1.png"
+      },
+      {
+         "path" : "textures/entity/races/glind/male_base_2.png"
+      },
+      {
+         "path" : "textures/entity/races/glind/male_base_3.png"
+      },
+      {
+         "path" : "textures/entity/races/glind/male_base_4.png"
+      },
+      {
+         "path" : "textures/entity/races/god_stigma.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_1.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_2.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_3.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_4.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_5.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_6.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_7.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_8.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/absorption_cocoon/absorption_cocoon_9.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/eyes/female_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/eyes/male_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_base_1.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_base_2.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_base_3.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_base_4.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_base_5.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_base_6.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_base_7.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_base_8.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_base_9.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/female_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_base_1.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_base_2.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_base_3.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_base_4.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_base_5.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_base_6.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_base_7.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_base_8.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_base_9.png"
+      },
+      {
+         "path" : "textures/entity/races/majin/male_ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/races/majin_mark.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/details/skin_details_1.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/details/skin_details_2.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/eyes/beast_form.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/eyes/namekian_base.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/eyes/namekian_orange_form.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/eyes/namekian_potential_unleashed.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/eyes/ultimate_form.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/eyes/ultra_instinct.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/faces/skin_face_1.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/faces/skin_face_2.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_base_1.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_base_2.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_base_3.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_base_4.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_beast_form_1.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_beast_form_2.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_beast_form_3.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_beast_form_4.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_orange_form.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_potential_unleashed.png"
+      },
+      {
+         "path" : "textures/entity/races/namekian/namekian_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/eyes/female_ssj4_1_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/eyes/female_ssj4_2_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/eyes/male_ssj4_1_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/eyes/male_ssj4_2_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/hairs/hair_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/hairs/vegeta_hair_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/oozaru/golden_oozaru.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/oozaru/legendary_oozaru.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/oozaru/oozaru.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/oozaru/ultra_instinct_oozaru.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/ssj4/female_metamoran_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/ssj4/female_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/ssj4/female_ultra_instinct_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/ssj4/male_metamoran_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/ssj4/male_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/ssj4/male_ultra_instinct_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/tails/ssj5_tail.png"
+      },
+      {
+         "path" : "textures/entity/races/saiyan/tails/tail_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/vehicles/capsule_991/capsule_991.png"
+      },
+      {
+         "path" : "textures/entity/vehicles/drive_test_car/red_drive_test_car.png"
+      },
+      {
+         "path" : "textures/entity/vehicles/drive_test_car/yellow_drive_test_car.png"
+      },
+      {
+         "path" : "textures/entity/vehicles/frieza_pod.png"
+      },
+      {
+         "path" : "textures/entity/vehicles/saiyan_pod.png"
+      },
+      {
+         "path" : "textures/entity/vehicles/space_pod.png"
+      },
+      {
+         "path" : "textures/entity/villagers/demonic_iron_golem.png"
+      },
+      {
+         "path" : "textures/entity/villagers/frieza_villager_0.png"
+      },
+      {
+         "path" : "textures/entity/villagers/frieza_villager_1.png"
+      },
+      {
+         "path" : "textures/entity/villagers/frieza_villager_2.png"
+      },
+      {
+         "path" : "textures/entity/villagers/hell_villager_0.png"
+      },
+      {
+         "path" : "textures/entity/villagers/hell_villager_1.png"
+      },
+      {
+         "path" : "textures/entity/villagers/hell_villager_2.png"
+      },
+      {
+         "path" : "textures/entity/villagers/saiyan_villager_0.png"
+      },
+      {
+         "path" : "textures/entity/villagers/saiyan_villager_1.png"
+      },
+      {
+         "path" : "textures/entity/villagers/saiyan_villager_tail.png"
+      },
+      {
+         "path" : "textures/entity/villagers/saiyan_villager_2.png"
+      },
+      {
+         "path" : "textures/entity/villagers/yardrat_villager_0.png"
+      },
+      {
+         "path" : "textures/entity/villagers/yardrat_villager_1.png"
+      },
+      {
+         "path" : "textures/entity/villagers/yardrat_villager_2.png"
+      },
+      {
+         "path" : "textures/entity/z_sword.png"
+      },
+      {
+         "path" : "textures/flipbook_textures.json"
+      },
+      {
+         "path" : "textures/item_texture.json"
+      },
+      {
+         "path" : "textures/items/ajisa_door.png"
+      },
+      {
+         "path" : "textures/items/ajisa_orange.png"
+      },
+      {
+         "path" : "textures/items/angel_staff.png"
+      },
+      {
+         "path" : "textures/items/armors/android_13_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/android_13_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/android_13_hat.png"
+      },
+      {
+         "path" : "textures/items/armors/android_13_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/android_16_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/android_16_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/android_16_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/android_17_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/android_17_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/android_17_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/android_18_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/android_18_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/android_18_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/android_21_majin_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/android_21_majin_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/android_21_majin_shirt.png"
+      },
+      {
+         "path" : "textures/items/armors/baby_armor_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/baby_armor_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/baby_armor_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/bardock_battle_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/bardock_battle_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/bardock_battle_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/battle_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/battle_boots_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/battle_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/battle_chestplate_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/battle_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/battle_leggings_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/beat_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/beat_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/beat_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/black_maid_costume_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/black_maid_costume_skirt.png"
+      },
+      {
+         "path" : "textures/items/armors/blue_pride_troopers_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/broly_battle_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/broly_battle_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/broly_battle_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/broly_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/broly_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/broly_pendant.png"
+      },
+      {
+         "path" : "textures/items/armors/bunny_costume_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/bunny_costume_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/bunny_costume_ears.png"
+      },
+      {
+         "path" : "textures/items/armors/bunny_costume_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/chi_chi_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/chi_chi_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/chi_chi_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/christmas_costume.png"
+      },
+      {
+         "path" : "textures/items/armors/divine_halo.png"
+      },
+      {
+         "path" : "textures/items/armors/elegant_suit_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/elegant_suit_hat.png"
+      },
+      {
+         "path" : "textures/items/armors/elegant_suit_jacket.png"
+      },
+      {
+         "path" : "textures/items/armors/elegant_suit_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/full_scouter.png"
+      },
+      {
+         "path" : "textures/items/armors/full_scouter_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/fused_zamasu_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/fused_zamasu_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/fused_zamasu_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/glasses.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_af_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_af_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_af_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_black_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_black_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_black_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_casual_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_casual_jacket.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_casual_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_gt_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_gt_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_gt_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/goku_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/grandpa_gohan_mask.png"
+      },
+      {
+         "path" : "textures/items/armors/hakaishin_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/hakaishin_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/hakaishin_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/halo.png"
+      },
+      {
+         "path" : "textures/items/armors/headband.png"
+      },
+      {
+         "path" : "textures/items/armors/headband_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/kaioshin_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/kaioshin_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/kaioshin_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/maid_costume_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/maid_costume_boots_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/maid_costume_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/maid_costume_chestplate_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/maid_costume_hat.png"
+      },
+      {
+         "path" : "textures/items/armors/maid_costume_hat_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/maid_costume_skirt.png"
+      },
+      {
+         "path" : "textures/items/armors/maid_costume_skirt_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/majin_buu_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/majin_buu_bracers.png"
+      },
+      {
+         "path" : "textures/items/armors/majin_buu_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/majin_vegeta_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/majin_vegeta_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/majin_vegeta_shirt.png"
+      },
+      {
+         "path" : "textures/items/armors/piccolo_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/piccolo_cape.png"
+      },
+      {
+         "path" : "textures/items/armors/piccolo_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/piccolo_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/piccolo_turban.png"
+      },
+      {
+         "path" : "textures/items/armors/potara_earring.png"
+      },
+      {
+         "path" : "textures/items/armors/potara_earrings.png"
+      },
+      {
+         "path" : "textures/items/armors/pride_troopers_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/pride_troopers_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/pride_troopers_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/saiyaman_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/saiyaman_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/saiyaman_helmet.png"
+      },
+      {
+         "path" : "textures/items/armors/saiyaman_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/scouter.png"
+      },
+      {
+         "path" : "textures/items/armors/scouter_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/tapion_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/tapion_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/tapion_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/tien_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/tien_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/tien_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/training_armor.png"
+      },
+      {
+         "path" : "textures/items/armors/training_shirt.png"
+      },
+      {
+         "path" : "textures/items/armors/trunks_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/trunks_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/trunks_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/turtle_shell.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_battle_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_battle_boots_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_battle_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_battle_chestplate_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_battle_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_battle_leggings_gray.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_cell_battle_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_cell_battle_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_cell_battle_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_gt_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_gt_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_gt_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_super_battle_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_super_battle_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/vegeta_super_battle_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/workout_weights.png"
+      },
+      {
+         "path" : "textures/items/armors/xeno_goku_black_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/xeno_goku_black_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/xeno_goku_black_mask.png"
+      },
+      {
+         "path" : "textures/items/armors/xeno_goku_black_shirt.png"
+      },
+      {
+         "path" : "textures/items/armors/xeno_goku_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/xeno_goku_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/xeno_goku_shirt.png"
+      },
+      {
+         "path" : "textures/items/armors/yardrat_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/yardrat_leggings.png"
+      },
+      {
+         "path" : "textures/items/armors/zamasu_boots.png"
+      },
+      {
+         "path" : "textures/items/armors/zamasu_chestplate.png"
+      },
+      {
+         "path" : "textures/items/armors/zamasu_leggings.png"
+      },
+      {
+         "path" : "textures/items/bansho_fan.png"
+      },
+      {
+         "path" : "textures/items/black_flying_nimbus.png"
+      },
+      {
+         "path" : "textures/items/brave_sword.png"
+      },
+      {
+         "path" : "textures/items/bucket_medical_liquid.png"
+      },
+      {
+         "path" : "textures/items/cooked_dinosaur_meat.png"
+      },
+      {
+         "path" : "textures/items/cooked_giant_fish.png"
+      },
+      {
+         "path" : "textures/items/demonic_apple.png"
+      },
+      {
+         "path" : "textures/items/dragon_ball.png"
+      },
+      {
+         "path" : "textures/items/dragon_radar.png"
+      },
+      {
+         "path" : "textures/items/evolitium_axe.png"
+      },
+      {
+         "path" : "textures/items/evolitium_crystal.png"
+      },
+      {
+         "path" : "textures/items/evolitium_hoe.png"
+      },
+      {
+         "path" : "textures/items/evolitium_pickaxe.png"
+      },
+      {
+         "path" : "textures/items/evolitium_shovel.png"
+      },
+      {
+         "path" : "textures/items/evolitium_sword.png"
+      },
+      {
+         "path" : "textures/items/flying_nimbus.png"
+      },
+      {
+         "path" : "textures/items/frieza_pod.png"
+      },
+      {
+         "path" : "textures/items/giant_fish.png"
+      },
+      {
+         "path" : "textures/items/hoi_poi_capsule/blue_hoi_poi_capsule.png"
+      },
+      {
+         "path" : "textures/items/hoi_poi_capsule/green_hoi_poi_capsule.png"
+      },
+      {
+         "path" : "textures/items/hoi_poi_capsule/purple_hoi_poi_capsule.png"
+      },
+      {
+         "path" : "textures/items/hoi_poi_capsule/red_hoi_poi_capsule.png"
+      },
+      {
+         "path" : "textures/items/hoi_poi_capsule/yellow_hoi_poi_capsule.png"
+      },
+      {
+         "path" : "textures/items/katana.png"
+      },
+      {
+         "path" : "textures/items/katchin_shard.png"
+      },
+      {
+         "path" : "textures/items/legacy/angel_staff_x32.png"
+      },
+      {
+         "path" : "textures/items/legacy/dragon_ball.png"
+      },
+      {
+         "path" : "textures/items/mafuba_pot.png"
+      },
+      {
+         "path" : "textures/items/medical_moss.png"
+      },
+      {
+         "path" : "textures/items/medical_moss_seeds.png"
+      },
+      {
+         "path" : "textures/items/medicinal_soup.png"
+      },
+      {
+         "path" : "textures/items/milk_box.png"
+      },
+      {
+         "path" : "textures/items/namek_dragon_ball.png"
+      },
+      {
+         "path" : "textures/items/namek_space_pod.png"
+      },
+      {
+         "path" : "textures/items/nanochip.png"
+      },
+      {
+         "path" : "textures/items/power_fruit.png"
+      },
+      {
+         "path" : "textures/items/power_pole.png"
+      },
+      {
+         "path" : "textures/items/ramen.png"
+      },
+      {
+         "path" : "textures/items/raw_dinosaur_meat.png"
+      },
+      {
+         "path" : "textures/items/saber_tooth_tiger_hide.png"
+      },
+      {
+         "path" : "textures/items/sacred_water_flask.png"
+      },
+      {
+         "path" : "textures/items/saibaman_seed.png"
+      },
+      {
+         "path" : "textures/items/saiyan_pod.png"
+      },
+      {
+         "path" : "textures/items/senzu_bean.png"
+      },
+      {
+         "path" : "textures/items/space_pod.png"
+      },
+      {
+         "path" : "textures/items/spawn_egg_deer.png"
+      },
+      {
+         "path" : "textures/items/spawn_egg_dinosaur.png"
+      },
+      {
+         "path" : "textures/items/spawn_egg_giant_fish.png"
+      },
+      {
+         "path" : "textures/items/spawn_egg_namekian_frog.png"
+      },
+      {
+         "path" : "textures/items/spawn_egg_pterosaur.png"
+      },
+      {
+         "path" : "textures/items/spawn_egg_saber_tooth_tiger.png"
+      },
+      {
+         "path" : "textures/items/star_navigator.png"
+      },
+      {
+         "path" : "textures/items/system/change_hair.png"
+      },
+      {
+         "path" : "textures/items/system/functions.png"
+      },
+      {
+         "path" : "textures/items/system/menu.png"
+      },
+      {
+         "path" : "textures/items/system/techniques.png"
+      },
+      {
+         "path" : "textures/items/time_machine.png"
+      },
+      {
+         "path" : "textures/items/tournament_invitation.png"
+      },
+      {
+         "path" : "textures/items/z_sword.png"
+      },
+      {
+         "path" : "textures/models/armors/android_13_hat.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/android_16_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/baby_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/bardock_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/battle_armor_grayscale.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/cabba_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/frieza_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/king_cold_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/vegeta_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/vegeta_battle_armor_grayscale.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/vegeta_cell_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/battle_armor/vegeta_super_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/bunny_costume.png"
+      },
+      {
+         "path" : "textures/models/armors/christmas_costume/christmas_costume_1.png"
+      },
+      {
+         "path" : "textures/models/armors/christmas_costume/christmas_costume_2.png"
+      },
+      {
+         "path" : "textures/models/armors/christmas_costume/christmas_costume_3.png"
+      },
+      {
+         "path" : "textures/models/armors/christmas_costume/christmas_costume_4.png"
+      },
+      {
+         "path" : "textures/models/armors/christmas_costume/christmas_costume_5.png"
+      },
+      {
+         "path" : "textures/models/armors/christmas_costume/christmas_costume_6.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/android_13_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/android_17_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/android_18_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/android_21_majin_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/beat_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/blue_pride_troopers_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/broly_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/broly_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/chi_chi_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/female_kakunsa_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/female_metamoran_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/fused_zamasu_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/glasses.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/goku_af_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/goku_black_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/goku_casual_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/goku_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/goku_gt_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/hakaishin_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/kaioshin_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/kakunza_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/kefla_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/majin_buu_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/majin_vegeta_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/metamoran_clothes_1.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/metamoran_clothes_2.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/metamoran_clothes_3.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/namekian_clothes_1.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/namekian_clothes_2.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/piccolo_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/piccolo_postboy_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/pride_troopers_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/tapion_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/tien_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/trunks_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/vegeta_gt_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/vegetto_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/xeno_goku_black_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/xeno_goku_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/yardrat_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/clothes/zamasu_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/divine_halo.png"
+      },
+      {
+         "path" : "textures/models/armors/elegant_suit/elegant_suit.png"
+      },
+      {
+         "path" : "textures/models/armors/elegant_suit/elegant_suit_grayscale.png"
+      },
+      {
+         "path" : "textures/models/armors/elegant_suit/general_black_elegant_suit.png"
+      },
+      {
+         "path" : "textures/models/armors/grandpa_gohan_mask.png"
+      },
+      {
+         "path" : "textures/models/armors/great_saiyaman/female_great_saiyaman.png"
+      },
+      {
+         "path" : "textures/models/armors/great_saiyaman/great_saiyaman.png"
+      },
+      {
+         "path" : "textures/models/armors/halo.png"
+      },
+      {
+         "path" : "textures/models/armors/headband/headband.png"
+      },
+      {
+         "path" : "textures/models/armors/headband/headband_grayscale.tga"
+      },
+      {
+         "path" : "textures/models/armors/maid_costume/black_maid_costume.png"
+      },
+      {
+         "path" : "textures/models/armors/maid_costume/maid_costume.png"
+      },
+      {
+         "path" : "textures/models/armors/maid_costume/maid_costume_grayscale.png"
+      },
+      {
+         "path" : "textures/models/armors/majin_buu_clothes/fat_buu_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/majin_buu_clothes/majin_buu_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/majin_buu_clothes/super_buu_gohan_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/majin_buu_clothes/super_buu_gotenks_clothes.png"
+      },
+      {
+         "path" : "textures/models/armors/oozaru_clothes/oozaru_baby_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/oozaru_clothes/oozaru_bardock_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/oozaru_clothes/oozaru_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/oozaru_clothes/oozaru_battle_armor_grayscale.png"
+      },
+      {
+         "path" : "textures/models/armors/oozaru_clothes/oozaru_broly_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/oozaru_clothes/oozaru_vegeta_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/oozaru_clothes/oozaru_vegeta_battle_armor_grayscale.png"
+      },
+      {
+         "path" : "textures/models/armors/oozaru_clothes/oozaru_vegeta_cell_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/oozaru_clothes/oozaru_vegeta_super_battle_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/piccolo_cape.png"
+      },
+      {
+         "path" : "textures/models/armors/pirate_robot_head.png"
+      },
+      {
+         "path" : "textures/models/armors/potara_earrings.png"
+      },
+      {
+         "path" : "textures/models/armors/scouter/scouter_blue.png"
+      },
+      {
+         "path" : "textures/models/armors/scouter/scouter_grayscale.tga"
+      },
+      {
+         "path" : "textures/models/armors/scouter/scouter_green.png"
+      },
+      {
+         "path" : "textures/models/armors/scouter/scouter_purple.png"
+      },
+      {
+         "path" : "textures/models/armors/scouter/scouter_red.png"
+      },
+      {
+         "path" : "textures/models/armors/training_armor.png"
+      },
+      {
+         "path" : "textures/models/armors/training_shirt.png"
+      },
+      {
+         "path" : "textures/models/armors/turtle_shell.png"
+      },
+      {
+         "path" : "textures/models/armors/workout_weights.png"
+      },
+      {
+         "path" : "textures/models/aura/aura.png"
+      },
+      {
+         "path" : "textures/models/aura/aura.texture_set.json"
+      },
+      {
+         "path" : "textures/models/aura/aura_low.png"
+      },
+      {
+         "path" : "textures/models/aura/aura_low.texture_set.json"
+      },
+      {
+         "path" : "textures/models/aura/aura_mer.png"
+      },
+      {
+         "path" : "textures/models/aura_new/kaioken_aura.png"
+      },
+      {
+         "path" : "textures/models/aura_new/ssj_aura.png"
+      },
+      {
+         "path" : "textures/models/brave_sword_sheath.png"
+      },
+      {
+         "path" : "textures/models/dragon_radar/dragon_radar_0.png"
+      },
+      {
+         "path" : "textures/models/dragon_radar/dragon_radar_1.png"
+      },
+      {
+         "path" : "textures/models/dragon_radar/dragon_radar_2.png"
+      },
+      {
+         "path" : "textures/models/dragon_radar/dragon_radar_3.png"
+      },
+      {
+         "path" : "textures/models/power_pole_sheath.png"
+      },
+      {
+         "path" : "textures/particle/aura_god.png"
+      },
+      {
+         "path" : "textures/particle/beam.png"
+      },
+      {
+         "path" : "textures/particle/blur.png"
+      },
+      {
+         "path" : "textures/particle/butterfly.png"
+      },
+      {
+         "path" : "textures/particle/concentration_orb.png"
+      },
+      {
+         "path" : "textures/particle/critical_hit.png"
+      },
+      {
+         "path" : "textures/particle/critical_hit_line.png"
+      },
+      {
+         "path" : "textures/particle/dragon_ball_warn.png"
+      },
+      {
+         "path" : "textures/particle/explode_disc.png"
+      },
+      {
+         "path" : "textures/particle/explode_sphere.png"
+      },
+      {
+         "path" : "textures/particle/flying_nimbus/circle_32x.png"
+      },
+      {
+         "path" : "textures/particle/flying_nimbus/cube_16x.png"
+      },
+      {
+         "path" : "textures/particle/flying_nimbus/flying_nimbus_old.png"
+      },
+      {
+         "path" : "textures/particle/flying_nimbus/mid_triangle_32x.png"
+      },
+      {
+         "path" : "textures/particle/flying_nimbus/smoke_16x.png"
+      },
+      {
+         "path" : "textures/particle/gravity_machine_delimitation.png"
+      },
+      {
+         "path" : "textures/particle/lightning.png"
+      },
+      {
+         "path" : "textures/particle/sword/impact.png"
+      },
+      {
+         "path" : "textures/particle/sword/impact_circle.png"
+      },
+      {
+         "path" : "textures/particle/sword/slash.png"
+      },
+      {
+         "path" : "textures/particle/ultra_instinct_aura.png"
+      },
+      {
+         "path" : "textures/particle/ultra_instinct_aura_mer.png"
+      },
+      {
+         "path" : "textures/particle/ultra_instinct_aura_mer.texture_set.json"
+      },
+      {
+         "path" : "textures/particle/white.png"
+      },
+      {
+         "path" : "textures/particle/yellow_cloud_dust.png"
+      },
+      {
+         "path" : "textures/terrain_texture.json"
+      },
+      {
+         "path" : "textures/ui/backgrounds/black_background.json"
+      },
+      {
+         "path" : "textures/ui/backgrounds/black_background.png"
+      },
+      {
+         "path" : "textures/ui/backgrounds/chat_background.json"
+      },
+      {
+         "path" : "textures/ui/backgrounds/chat_background.png"
+      },
+      {
+         "path" : "textures/ui/backgrounds/gravity_machine_background.json"
+      },
+      {
+         "path" : "textures/ui/backgrounds/gravity_machine_background.png"
+      },
+      {
+         "path" : "textures/ui/backgrounds/menu_background.json"
+      },
+      {
+         "path" : "textures/ui/backgrounds/menu_background.png"
+      },
+      {
+         "path" : "textures/ui/backgrounds/shop_background.json"
+      },
+      {
+         "path" : "textures/ui/backgrounds/shop_background.png"
+      },
+      {
+         "path" : "textures/ui/backgrounds/shop_item_background.json"
+      },
+      {
+         "path" : "textures/ui/backgrounds/shop_item_background.png"
+      },
+      {
+         "path" : "textures/ui/buttons/achievements_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/achievements_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/achievements_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/achievements_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/back_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/back_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/back_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/back_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/big_next_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/big_next_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/big_next_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/big_next_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/big_previous_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/big_previous_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/big_previous_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/big_previous_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/function_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/function_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/function_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/function_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/gravity_machine_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/gravity_machine_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/gravity_machine_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/gravity_machine_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/menu_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/menu_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/menu_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/menu_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/news_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/news_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/news_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/news_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/next_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/next_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/next_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/next_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/previous_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/previous_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/previous_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/previous_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/quest_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/quest_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/quest_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/quest_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/quests_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/quests_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/quests_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/quests_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/shop_item_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/shop_item_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/shop_item_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/shop_item_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/skills_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/skills_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/skills_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/skills_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/statistics_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/statistics_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/statistics_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/statistics_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/training_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/training_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/training_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/training_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/buttons/up_button.json"
+      },
+      {
+         "path" : "textures/ui/buttons/up_button.png"
+      },
+      {
+         "path" : "textures/ui/buttons/up_button_hover.json"
+      },
+      {
+         "path" : "textures/ui/buttons/up_button_hover.png"
+      },
+      {
+         "path" : "textures/ui/charge_bar.png"
+      },
+      {
+         "path" : "textures/ui/charge_bar_background.png"
+      },
+      {
+         "path" : "textures/ui/concentration_bar.png"
+      },
+      {
+         "path" : "textures/ui/concentration_bar_background.png"
+      },
+      {
+         "path" : "textures/ui/health_bar.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_0.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_1.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_2.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_3.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_4.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_5.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_6.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_7.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_8.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_end_cap.png"
+      },
+      {
+         "path" : "textures/ui/hotbar_start_cap.png"
+      },
+      {
+         "path" : "textures/ui/images/christmas.png"
+      },
+      {
+         "path" : "textures/ui/images/patron_chat.png"
+      },
+      {
+         "path" : "textures/ui/images/patron_items.png"
+      },
+      {
+         "path" : "textures/ui/ki_bars/blue_ki_bar.png"
+      },
+      {
+         "path" : "textures/ui/ki_bars/green_ki_bar.png"
+      },
+      {
+         "path" : "textures/ui/ki_bars/pink_ki_bar.png"
+      },
+      {
+         "path" : "textures/ui/ki_bars/purple_ki_bar.png"
+      },
+      {
+         "path" : "textures/ui/ki_bars/red_ki_bar.png"
+      },
+      {
+         "path" : "textures/ui/ki_bars/white_ki_bar.png"
+      },
+      {
+         "path" : "textures/ui/ki_bars/yellow_ki_bar.png"
+      },
+      {
+         "path" : "textures/ui/region_icons/lookout.png"
+      },
+      {
+         "path" : "textures/ui/selected_hotbar_slot.png"
+      },
+      {
+         "path" : "textures/ui/selected_technique_slot.png"
+      },
+      {
+         "path" : "textures/ui/stamina_bar.png"
+      },
+      {
+         "path" : "textures/ui/stats_bar.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/divine_ki.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/friendly_fist.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/hakai.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/kaioken.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/legendary.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/majin_mark.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/metamoran_dance.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/metamoran_fusion.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/moon.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/orange_form.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/potara_fusion.png"
+      },
+      {
+         "path" : "textures/ui/status_icons/ultra_instinct.png"
+      },
+      {
+         "path" : "textures/ui/status_slot.png"
+      },
+      {
+         "path" : "textures/ui/technique_icons/absorption.png"
+      },
+      {
+         "path" : "textures/ui/technique_icons/final_flash.png"
+      },
+      {
+         "path" : "textures/ui/technique_icons/galick_gun.png"
+      },
+      {
+         "path" : "textures/ui/technique_icons/genki_dama.png"
+      },
+      {
+         "path" : "textures/ui/technique_icons/kamehameha.png"
+      },
+      {
+         "path" : "textures/ui/technique_icons/ki_blast.png"
+      },
+      {
+         "path" : "textures/ui/technique_icons/kienzan.png"
+      },
+      {
+         "path" : "textures/ui/technique_icons/makankosappo.png"
+      },
+      {
+         "path" : "textures/ui/technique_icons/masenko.png"
+      },
+      {
+         "path" : "textures/ui/technique_slot.png"
+      },
+      {
+         "path" : "textures/ui/title.png"
+      },
+      {
+         "path" : "textures/ui/zeni.png"
+      },
+      {
+         "path" : "ui/_ui_defs.json"
+      },
+      {
+         "path" : "ui/common/common_bar.json"
+      },
+      {
+         "path" : "ui/common/templates.json"
+      },
+      {
+         "path" : "ui/custom_hud_screen.json"
+      },
+      {
+         "path" : "ui/custom_server_form.json"
+      },
+      {
+         "path" : "ui/debug_screen.json"
+      },
+      {
+         "path" : "ui/hud_screen.json"
+      },
+      {
+         "path" : "ui/hud_screen/charge_bar.json"
+      },
+      {
+         "path" : "ui/hud_screen/stats_bar.json"
+      },
+      {
+         "path" : "ui/hud_screen/status_indicator.json"
+      },
+      {
+         "path" : "ui/hud_screen/techniques_sidebar.json"
+      },
+      {
+         "path" : "ui/hud_screen/zeni_indicator.json"
+      },
+      {
+         "path" : "ui/menus/achievement_list_form.json"
+      },
+      {
+         "path" : "ui/menus/alignment_question_form.json"
+      },
+      {
+         "path" : "ui/menus/christmas_form.json"
+      },
+      {
+         "path" : "ui/menus/customization_form.json"
+      },
+      {
+         "path" : "ui/menus/functions_form.json"
+      },
+      {
+         "path" : "ui/menus/gravity_machine_form.json"
+      },
+      {
+         "path" : "ui/menus/menu_form.json"
+      },
+      {
+         "path" : "ui/menus/news_form.json"
+      },
+      {
+         "path" : "ui/menus/npcs/npc_dialog_form.json"
+      },
+      {
+         "path" : "ui/menus/npcs/npc_skills_form.json"
+      },
+      {
+         "path" : "ui/menus/npcs/shenron_form.json"
+      },
+      {
+         "path" : "ui/menus/quest_form.json"
+      },
+      {
+         "path" : "ui/menus/quest_list_form.json"
+      },
+      {
+         "path" : "ui/menus/select_hair_form.json"
+      },
+      {
+         "path" : "ui/menus/select_race_form.json"
+      },
+      {
+         "path" : "ui/menus/shop_form.json"
+      },
+      {
+         "path" : "ui/menus/skills_form.json"
+      },
+      {
+         "path" : "ui/menus/statistics_form.json"
+      },
+      {
+         "path" : "ui/menus/training_form.json"
+      },
+      {
+         "path" : "ui/menus/transformations_form.json"
+      },
+      {
+         "path" : "ui/server_form.json"
+      }
+   ],
+   "version" : 1
+}
