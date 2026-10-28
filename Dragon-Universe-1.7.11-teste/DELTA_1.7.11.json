@@ -1,0 +1,144 @@
+{
+  "baseline": "Dragon-Universe-1.7.10.mcaddon",
+  "baselineSHA256": "aa07e76d8b70a6cf845a81295138ab1aa1c7d1e95af71582c61d7c67e074aea5",
+  "version": "1.7.11",
+  "changed": 19,
+  "added": 0,
+  "removed": 0,
+  "unchanged": 2693,
+  "files": [
+    {
+      "path": "Dragon Universe_bp/dimensions/frieza_planet.json",
+      "beforeBytes": 251,
+      "beforeSHA256": "4d4a7620f8e47a297c4161edfe7a013f9b6b3fb3d3c32edad39fae4a071e7a5d",
+      "afterBytes": 278,
+      "afterSHA256": "69e26ba26bf766980c0392875e728cbe410bdd2bf2e51d583a0dd86391aca71a"
+    },
+    {
+      "path": "Dragon Universe_bp/dimensions/hell.json",
+      "beforeBytes": 240,
+      "beforeSHA256": "a5e0aa57edbfd97b0179b299347ebf90b1683aebdcf059025f071f2c4a78c40d",
+      "afterBytes": 267,
+      "afterSHA256": "f3ce165810913a733c2444a2a062158c3c924def69cc3b7f380076e3a85307cf"
+    },
+    {
+      "path": "Dragon Universe_bp/dimensions/kaioshin.json",
+      "beforeBytes": 238,
+      "beforeSHA256": "800c8e02a3bb6ac1f35bfd23e27ac033677e348ab41285eaf85571f46025aace",
+      "afterBytes": 265,
+      "afterSHA256": "9dba355e72886f5d4f169d5d36b20f352bb308c1b73cacddea46d201995155c5"
+    },
+    {
+      "path": "Dragon Universe_bp/dimensions/namek.json",
+      "beforeBytes": 242,
+      "beforeSHA256": "4742bc9caf5ab88700737112e1c81a65bbd3fe3c87857bb88cd9e358363c1f81",
+      "afterBytes": 269,
+      "afterSHA256": "f1e41e0a745f95b149bd4ddd5999dad22ef00e9c8a2010e823c507b71d0bba33"
+    },
+    {
+      "path": "Dragon Universe_bp/dimensions/space.json",
+      "beforeBytes": 242,
+      "beforeSHA256": "d36f748f8604d62d6830d8396641be28c06c71aa0c5856d1b50354bc71ee52ae",
+      "afterBytes": 269,
+      "afterSHA256": "3f5085d2b6fb2ea74b9fcb8043870a8cefb6b1a7ff470eaefc0e83a4f5240064"
+    },
+    {
+      "path": "Dragon Universe_bp/dimensions/universe_6_arena.json",
+      "beforeBytes": 264,
+      "beforeSHA256": "250ded0f580192d895c82ca3b98f7d6e52d56c1f9f24d478553803419915635c",
+      "afterBytes": 291,
+      "afterSHA256": "dfac59bfdfb5d4fb2c4110c068e6ca2a67e54a3d5a1dde9743506d40bb6490ee"
+    },
+    {
+      "path": "Dragon Universe_bp/dimensions/vegeta.json",
+      "beforeBytes": 244,
+      "beforeSHA256": "c9f74109c2d3dd40ca888ea1f62299a07b06f75cf389fdc6e9705d70a9d9b965",
+      "afterBytes": 271,
+      "afterSHA256": "4021e51b3da2fd3eea024dbdb6a92d0f9c2086aa96b6415472d7aaec1bb08f75"
+    },
+    {
+      "path": "Dragon Universe_bp/dimensions/yardrat.json",
+      "beforeBytes": 246,
+      "beforeSHA256": "641443a17aee55c206eb0ad57b0aecf755e82400de18e22ce53e0bfd9cc22aeb",
+      "afterBytes": 273,
+      "afterSHA256": "c91631b4a3923f630c941347203808105e9350c58c2f83a8a634ff4f15366e42"
+    },
+    {
+      "path": "Dragon Universe_bp/manifest.json",
+      "beforeBytes": 769,
+      "beforeSHA256": "d85212f6b1a62d6276dba7e114a8891ea6e1321986816f142b475b0766454b79",
+      "afterBytes": 770,
+      "afterSHA256": "db9396a72fa1e224d9b1d67dfec0ac0a2d9551eb0616c1d383eaa212d1a064f5"
+    },
+    {
+      "path": "Dragon Universe_bp/scripts/hell_dimension.js",
+      "beforeBytes": 21205,
+      "beforeSHA256": "c78a61da45a3e4f5d6ca8e2080b073a44e27372eaaef106e16e2f07cf12fa687",
+      "afterBytes": 21385,
+      "afterSHA256": "3557569326ff5cf8a385f0729ae3ca525447c2f897d0db926dfd42ad8437576f"
+    },
+    {
+      "path": "Dragon Universe_bp/scripts/kaioshin_dimension.js",
+      "beforeBytes": 34740,
+      "beforeSHA256": "ec840116d5c41280c07754474ec8aa1fbeab7970990d8b797f03b4048b4f9c21",
+      "afterBytes": 34768,
+      "afterSHA256": "32f66318e6c58b8cac015325784c2bc4cff5c40f7d6add9e21022c618d3b59df"
+    },
+    {
+      "path": "Dragon Universe_bp/scripts/namek_dimension.js",
+      "beforeBytes": 26156,
+      "beforeSHA256": "73fe6e912ecba9f36569c9271e0c183f8f121abb68b064522f497fed58171104",
+      "afterBytes": 26299,
+      "afterSHA256": "9576cbde89081d60ff48a85c9e5cd86617ba660c490bf469d13797c37991dcda"
+    },
+    {
+      "path": "Dragon Universe_bp/scripts/space_planets.js",
+      "beforeBytes": 82608,
+      "beforeSHA256": "de503fa65508be7c0a0ed19abdd0d55a6cf8bfa6f62c166170347bcaa97ba5f2",
+      "afterBytes": 82614,
+      "afterSHA256": "b85889951ea2e331b1217dae10a1675e899b9b7ec0724b8822747f81463c0488"
+    },
+    {
+      "path": "Dragon Universe_bp/scripts/travel_safety.js",
+      "beforeBytes": 15625,
+      "beforeSHA256": "a609bb9f0a78476016e3a48599605cf4f7f827c270f1f722616bbdcb16714e75",
+      "afterBytes": 16674,
+      "afterSHA256": "d4de7912dc8290e0ca6dc252cc40bee7b482d25f418a091862371467a19e5094"
+    },
+    {
+      "path": "Dragon Universe_bp/scripts/universe_6_dimension.js",
+      "beforeBytes": 20960,
+      "beforeSHA256": "271552310408a0cd4922c6f75c857e0aba9661c21b49041c8aecdfb8480ed5ae",
+      "afterBytes": 21119,
+      "afterSHA256": "faa84adc3753abe5a229d8a96e6d17956642d7df9e331c4fc8656c5bfc45f63f"
+    },
+    {
+      "path": "Dragon Universe_rp/manifest.json",
+      "beforeBytes": 531,
+      "beforeSHA256": "8a18f5f188f89fc84c28962759fbc0dd6b654ffeef18180633dcac202f65cad5",
+      "afterBytes": 532,
+      "afterSHA256": "5692ebb359b2255ef8cdadee77f01c0589ad93ca9b7663f69c9c5a05cbadf1ad"
+    },
+    {
+      "path": "Dragon Universe_rp/texts/en_US.lang",
+      "beforeBytes": 91909,
+      "beforeSHA256": "b033606e2026c68ad96c7377bb353704888eafda76b67d74751a5eca575f7fc7",
+      "afterBytes": 92416,
+      "afterSHA256": "b340d857030f80cd38c1891da12974c599bde113ec3a960dd2907c8616f4f8fa"
+    },
+    {
+      "path": "Dragon Universe_rp/texts/es_ES.lang",
+      "beforeBytes": 97170,
+      "beforeSHA256": "c06f25978f5463bab00954f9927ad0adb617ed9c12ac4a98c67eb172ed6160c3",
+      "afterBytes": 97655,
+      "afterSHA256": "89151e717070ddc1baafff0d860370f11e5c8b46a0493405d6c5037ee8b0f8b3"
+    },
+    {
+      "path": "Dragon Universe_rp/texts/pt_BR.lang",
+      "beforeBytes": 95966,
+      "beforeSHA256": "8b4bca56418417582a2e2befab3e13c3f51b3e148b09414dca7f410d9b94ee74",
+      "afterBytes": 96482,
+      "afterSHA256": "e1a5f49f4046d415d01908f44406ab7b62995e5868c7ccf6f1081038305feec5"
+    }
+  ]
+}

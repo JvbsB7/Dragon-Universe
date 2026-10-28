@@ -1,0 +1,84 @@
+{
+  "version": "1.7.11",
+  "generatedAtUTC": "2026-10-27T18:43:36.013803+00:00",
+  "targetMinecraft": "26.52 / Windows Appx 1.26.5203.0",
+  "minecraftTestExecuted": false,
+  "toolchain": {
+    "node": "v24.22.0",
+    "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "sourceBaseHead": "0b5740e582cc1af574d04b14611156953d182490",
+  "sourceQADecision": "See included independent source QA; native validation pending, inherited historical conflicts explicit",
+  "sourceQAReportSHA256": "db2ea0d2e4bb643ecc59b258ac4c7d0037cb3ed3476f6b998a13d798d21ee985",
+  "sourceQACases": {
+    "distinct": 284,
+    "passed": 276,
+    "failed": 8,
+    "EPERM": 5,
+    "historicalContractConflicts": 3,
+    "globalGateApproved": false
+  },
+  "finalIndependentArtifactAudit": "PENDING: external final audit will attest these immutable artifact hashes",
+  "sourceLedger": {
+    "path": "docs/PACK_SOURCE_LEDGER_1.7.11.json",
+    "sha256": "74b24199a1797f8a5fb527f9a056fb11637b7e4e96c941bdf4bf71673edc9b1f",
+    "files": 2712
+  },
+  "delta": {
+    "changed": 19,
+    "added": 0,
+    "removed": 0,
+    "unchanged": 2693
+  },
+  "packages": [
+    {
+      "path": "dist/Dragon-Universe-1.7.11.mcaddon",
+      "bytes": 20823397,
+      "sha256": "e25fa839a7ecb842b9899072e20094301e2674d5ef733e97d3a26e61a83687fd",
+      "fileEntries": 2712,
+      "allCRCAndSourceBytesVerified": true
+    },
+    {
+      "path": "dist/Dragon-Universe-1.7.11-teste/Dragon-Universe-1.7.11-behavior_packs.zip",
+      "bytes": 1211292,
+      "sha256": "efbc8fe7963ca046edd006bee287878bffb69c5cebac0280be2158c3834ab946",
+      "fileEntries": 749,
+      "allCRCAndSourceBytesVerified": true
+    },
+    {
+      "path": "dist/Dragon-Universe-1.7.11-teste/Dragon-Universe-1.7.11-resource_packs.zip",
+      "bytes": 20126106,
+      "sha256": "6113733a6cb434d37fd7805c49d3a66b58c02aded61f4bb3e0924fe968d0b868",
+      "fileEntries": 1989,
+      "allCRCAndSourceBytesVerified": true
+    }
+  ],
+  "documents": {
+    "README.md": "c406157ae861da73a6c1096074f2910552a4109680f4b809aa21eb93a6a0e634",
+    "TESTES.md": "720d03918c438830f3795acd9807f42e9f601240897b1587c291aa2181d3ab79",
+    "RELATORIO.md": "f160ab5b3f61e14c91fce3582ec53667781b8a28d00de38498755e8c366fe25c",
+    "CHANGELOG.md": "1be8b28fef59a7cebecb2bbd6ba3a2747e9543ab704ce7235b5e05d6e3f146c9",
+    "DELTA_1.7.11.json": "5147fd62b582352c7e495c7f66b6fad38f02e114227ce9a4225ca81a16070479",
+    "PACK_SOURCE_LEDGER_1.7.11.json": "74b24199a1797f8a5fb527f9a056fb11637b7e4e96c941bdf4bf71673edc9b1f",
+    "QA_DIMENSIONS_1.7.11.md": "db2ea0d2e4bb643ecc59b258ac4c7d0037cb3ed3476f6b998a13d798d21ee985",
+    "README_QA_1.7.11.md": "6031781e60122965203f33bf5721032a9235ad47ab95e32e66af20359fe69bcb",
+    "WORLD_DIMENSIONS_1.7.11.md": "ffd5e7a6375463a53d4e745a711ff91d37d073c46d8fdd3a6fa3dc156e954369",
+    "SYSTEMS_DIMENSIONS_1.7.11.md": "04bc96e7f153ff120514d975bdc690af8a659f4b5c70b029c4241431bfaccf74",
+    "SYSTEMS_DIMENSIONS_1.7.11_ORIGIN_READ.md": "982a2e8a718535bf152096d1d489ef69eab4e64549ad988528a0efc9e0cb633d",
+    "CONTENT_DIMENSIONS_1.7.11.md": "036be8d3463816fbe79d106fd37a1e2622a62a815bcb0bd65d29b71489170bb9",
+    "VISUAL_DIMENSIONS_1.7.11.md": "3b22135fa561381c2dfb1115b8fb98a90ee6024b37b79e51c5c51e1d68db54b9"
+  },
+  "startupFromRealBPZip": {
+    "ok": true,
+    "entries": [
+      "scripts/index.js"
+    ],
+    "modules": 33,
+    "errors": []
+  },
+  "preservedArchives": {
+    "1.7.9": "443bec7d89726629b895741d1e389615a2eccfa74c3f07871e678a94b3973edd",
+    "1.7.10": "aa07e76d8b70a6cf845a81295138ab1aa1c7d1e95af71582c61d7c67e074aea5"
+  },
+  "packaging": "Original Node package-addon.mjs; separate ZIPs via Python stdlib, direct original startup checker, no spawn interception"
+}
