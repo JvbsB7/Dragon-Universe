@@ -453,6 +453,8 @@ try {
   console.warn("[Future city] operator command registration failed: " + (error?.stack ?? error));
 }
 
+function clearCityRun() { cityPromise = undefined; cityPreparing = false; cityProgress = undefined; cityActivity = undefined; }
+
 export function prepareFutureCity(dimension, placeCity) {
   try { return startCity(dimension, placeCity); }
   catch (error) { return rejectedCity(error); }
@@ -554,7 +556,11 @@ function startCity(dimension, placeCity) {
       if (area) releaseLoadedArea(area);
       if (ownsBusy) { busy = false; busyActivity = undefined; }
     }
-  })().finally(() => { cityPromise = undefined; cityPreparing = false; cityProgress = undefined; cityActivity = undefined; });
+  })().then(
+    // Not .finally(): on rejection it creates an internal promise that is rejected before its handler is attached,
+    // which the game reports as an unhandled rejection even though every caller handles cityPromise.
+    (value) => { clearCityRun(); return value; },
+    (error) => { clearCityRun(); throw error; });
   cityPromise.then(() => {
     outcome.settled = true;
     for (const wake of [...outcome.waiters]) wake();
