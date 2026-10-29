@@ -1448,14 +1448,14 @@ ui.dbe.mentor.invite.button.confirm=Sim
 
 quest.saga_future_trunks_1.title=O Aviso
 quest.saga_future_trunks_1.text=Trunks do Futuro retorna gravemente ferido e traz uma notícia assustadora: um guerreiro chamado Goku Black está destruindo sua linha do tempo e exterminando toda a humanidade. Sem tempo a perder, vá até Bulma e ajude a consertar a Máquina do Tempo para salvar o futuro.
-quest.saga_future_trunks_2.title=Goku Black Surge
+quest.saga_future_trunks_2.title=Goku Black Aparece
 quest.saga_future_trunks_2.text=O impossível aconteceu... Goku Black apareceu nesta linha do tempo! Seu poder é assustador e sua presença ameaça o planeta inteiro. Enfrente-o antes que consiga escapar novamente para o futuro.
 quest.saga_future_trunks_3.title=Indo para o Futuro
 quest.saga_future_trunks_3.text=A Máquina do Tempo finalmente foi consertada. Entre nela e viaje para o futuro devastado de Trunks. Ajude os sobreviventes e lute ao lado de Trunks para acabar com o caos causado por Goku Black.
 
-quest.saga_future_trunks_3.objective_1.task_1.dialog_1=""
-quest.saga_future_trunks_3.objective_1.task_1.dialog_2=""
-quest.saga_future_trunks_3.objective_1.task_1.dialog_3=""
+quest.saga_future_trunks_3.objective_1.task_1.dialog_1=Consegui! A Máquina do Tempo está consertada, mas o combustível só dá para uma viagem de ida e volta.
+quest.saga_future_trunks_3.objective_1.task_1.dialog_2=Trunks está esperando por você. No futuro dele, Goku Black destruiu quase tudo e os sobreviventes vivem escondidos.
+quest.saga_future_trunks_3.objective_1.task_1.dialog_3=Entre e segure firme! Assim que eu ligar a máquina, você vai direto para o futuro. Cuidado: Black pode estar ainda mais forte. Boa sorte!
 
 quest.saga_future_trunks_3.objective_2.on_start.dialog_1=Goku Black: Humanos não passam de escória e devem ser eliminados.
 quest.saga_future_trunks_3.objective_2.on_start.dialog_2=Goku Black: Eu posso ver muito além de você, guerreiro... acima deste mundo, acima deste universo...

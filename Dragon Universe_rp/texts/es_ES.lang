@@ -1449,9 +1449,9 @@ quest.saga_future_trunks_2.text=Lo imposible ha ocurrido... ¡Goku Black apareci
 quest.saga_future_trunks_3.title=Rumbo al Futuro
 quest.saga_future_trunks_3.text=La Máquina del Tiempo por fin ha sido reparada. Súbete y viaja al futuro devastado de Trunks. Ayuda a los sobrevivientes y lucha junto a Trunks para acabar con el caos causado por Goku Black.
 
-quest.saga_future_trunks_3.objective_1.task_1.dialog_1=""
-quest.saga_future_trunks_3.objective_1.task_1.dialog_2=""
-quest.saga_future_trunks_3.objective_1.task_1.dialog_3=""
+quest.saga_future_trunks_3.objective_1.task_1.dialog_1=¡Lo logré! La Máquina del Tiempo está reparada, pero el combustible solo alcanza para un viaje de ida y vuelta.
+quest.saga_future_trunks_3.objective_1.task_1.dialog_2=Trunks te está esperando. En su futuro, Goku Black destruyó casi todo y los sobrevivientes viven escondidos.
+quest.saga_future_trunks_3.objective_1.task_1.dialog_3=¡Sube y agárrate fuerte! En cuanto encienda la máquina, irás directo al futuro. Cuidado: Black puede ser aún más fuerte ahora. ¡Buena suerte!
 
 quest.saga_future_trunks_3.objective_2.on_start.dialog_1=Goku Black: Los humanos no son más que escoria y deben ser eliminados.
 quest.saga_future_trunks_3.objective_2.on_start.dialog_2=Goku Black: Puedo ver mucho más allá que tú, guerrero... por encima de este mundo, por encima de este universo...

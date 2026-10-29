@@ -1449,9 +1449,9 @@ quest.saga_future_trunks_2.text=The impossible has happened... Goku Black has ap
 quest.saga_future_trunks_3.title=Into the Future
 quest.saga_future_trunks_3.text=The Time Machine has finally been repaired. Get in and travel to Trunks' devastated future. Help the survivors and fight alongside Trunks to end the chaos caused by Goku Black.
 
-quest.saga_future_trunks_3.objective_1.task_1.dialog_1=""
-quest.saga_future_trunks_3.objective_1.task_1.dialog_2=""
-quest.saga_future_trunks_3.objective_1.task_1.dialog_3=""
+quest.saga_future_trunks_3.objective_1.task_1.dialog_1=I did it! The Time Machine is repaired, but there's only enough fuel for one round trip.
+quest.saga_future_trunks_3.objective_1.task_1.dialog_2=Trunks is waiting for you. In his future, Goku Black has destroyed almost everything and the survivors are in hiding.
+quest.saga_future_trunks_3.objective_1.task_1.dialog_3=Get in and hold on tight! As soon as I start the machine, you'll go straight to the future. Careful: Black may be even stronger now. Good luck!
 
 quest.saga_future_trunks_3.objective_2.on_start.dialog_1=Goku Black: Humans are nothing but filth and must be eliminated.
 quest.saga_future_trunks_3.objective_2.on_start.dialog_2=Goku Black: I can see far beyond you, warrior... above this world, above this universe...
