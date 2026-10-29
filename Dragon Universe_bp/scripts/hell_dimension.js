@@ -492,7 +492,8 @@ async function sendToHell(player, fall = false) {
     }
     areaId = await prepareArea(dim, chunkOf(SPAWN.x), chunkOf(SPAWN.z));
     phase = "teleport";
-    await safeTeleport(player, fall ? { x: SPAWN.x, y: FALL_START_Y, z: SPAWN.z } : SPAWN, { origin, requireGround: !fall, dimension: dim, rotation: { x: fall ? 90 : 0, y: 180 } });
+    // A faller keeps drifting while Hell is prepared; only leaving the Other World cancels the fall.
+    await safeTeleport(player, fall ? { x: SPAWN.x, y: FALL_START_Y, z: SPAWN.z } : SPAWN, { origin, requireGround: !fall, dimension: dim, rotation: { x: fall ? 90 : 0, y: 180 }, ...(fall ? { maxDrift: Infinity } : {}) });
     if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
     reportTravelFailure(player, "Hell", e, DIM_ID, phase);

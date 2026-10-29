@@ -12,6 +12,10 @@ const unavailable = (error) => /unloaded|not.*loaded|not.*ticking|LocationInUnlo
 export const isTravelPending = (entity) => pending.has(entity.id);
 export const travelOrigin = (entity) => ({ dimension: entity.dimension.id, ...entity.location });
 export const physicalDestinationId = (id) => id === "dbe:kaioshin" ? "dbe:kai" : id;
+// Walking away cancels a pending trip; falling or flying vertically while the destination is prepared does not.
+export const TRAVEL_DRIFT_LIMIT = 32;
+export const movedFromOrigin = (entity, origin, limit = TRAVEL_DRIFT_LIMIT) => entity.dimension.id !== origin.dimension ||
+  Math.hypot(entity.location.x - origin.x, entity.location.z - origin.z) > limit;
 
 export class TravelError extends Error {
   constructor(stage, message, cause) {
@@ -252,7 +256,7 @@ export async function safeReturnToEarth(entity, options = {}) {
 async function teleportWithLease(entity, location, options) {
   let id, destinationId, afterTeleport = false;
   try {
-    const { label = "travel", origin = travelOrigin(entity), requireGround: requestedGround = false, ...teleportOptions } = options;
+    const { label = "travel", origin = travelOrigin(entity), requireGround: requestedGround = false, maxDrift = TRAVEL_DRIFT_LIMIT, ...teleportOptions } = options;
     const dimension = teleportOptions.dimension ?? entity.dimension;
     destinationId = dimension.id;
     let point = { x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z) };
@@ -286,8 +290,7 @@ async function teleportWithLease(entity, location, options) {
       teleportOptions.checkForBlocks = true;
     }
     if (!entity.isValid) throw new TravelError("interrupted", label + ": entity left during travel");
-    const now = entity.location;
-    if (entity.dimension.id !== origin.dimension || Math.hypot(now.x - origin.x, now.y - origin.y, now.z - origin.z) > 16) {
+    if (movedFromOrigin(entity, origin, maxDrift)) {
       throw new TravelError("interrupted", label + ": travel interrupted; retry from your current location");
     }
     try {

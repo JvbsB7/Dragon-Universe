@@ -1,5 +1,5 @@
 import { world, system, BlockVolume, CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus } from "@minecraft/server";
-import { acquireLoadedArea, releaseLoadedArea, registerTravelPreparation } from "./travel_safety.js";
+import { acquireLoadedArea, releaseLoadedArea, registerTravelPreparation, movedFromOrigin } from "./travel_safety.js";
 import { fillAirColumn, runTerrainJob, emptyChunk, findUnexpectedBlock, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 
 const DIMENSION = "dbe:future_trunks";
@@ -239,7 +239,7 @@ async function waitForCity(entity) {
   const outcome = activity.outcome;
   const origin = entity ? { dimension: entity.dimension.id, ...entity.location } : undefined;
   const checkOrigin = () => {
-    if (entity && (!entity.isValid || entity.dimension.id !== origin.dimension || Math.hypot(entity.location.x - origin.x, entity.location.y - origin.y, entity.location.z - origin.z) > 16)) {
+    if (entity && (!entity.isValid || movedFromOrigin(entity, origin))) {
       const error = new Error("Future travel interrupted while waiting; the shared city preparation continues");
       error.playerMessage = { translate: "dbe.future.wait_cancelled" };
       throw error;
