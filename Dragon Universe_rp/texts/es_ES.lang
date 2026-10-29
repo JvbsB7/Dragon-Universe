@@ -149,6 +149,7 @@ tile.dbe:yellow_tile.name=Azulejo Amarillo
 ## comandos
 command.pay.insufficient_balance=§cNo tienes suficientes zenis
 command.pay.success=§aHas transferido %s zenis a %s
+command.pay.invalid_amount=§cCantidad no válida. Indica un número entero de zenis mayor que cero
 
 
 
@@ -539,6 +540,8 @@ message.safeRegion.noPermission.owner=§c¡No tienes permiso para romper o coloc
 message.shadowDummy.cooldownWarning=§cEspera %s para invocar otra sombra de entrenamiento
 message.shenron.summoned=§6Las %s Bolas de Dragón han sido reunidas. ¡%s ha invocado a %s!
 message.shenron.wishGranted=§eTu deseo ha sido concedido, ¡hasta luego!
+message.shenron.busy=§eEl dragón ya está concediendo los deseos de otro jugador. ¡Espera tu turno!
+message.shenron.noWishes=§eNo hay deseos disponibles para ti en este momento.
 message.summon.obstructedArea=§cNo puedes invocar aquí. ¡El área está obstruida!
 message.unlockedTransformation=§a¡Nueva transformación alcanzada: %s!
 ## conquistas

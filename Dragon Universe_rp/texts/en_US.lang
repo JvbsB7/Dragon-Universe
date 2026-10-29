@@ -149,6 +149,7 @@ tile.dbe:yellow_tile.name=Yellow Tile
 ## comandos
 command.pay.insufficient_balance=§cYou do not have enough zenis
 command.pay.success=§aYou transferred %s zenis to %s
+command.pay.invalid_amount=§cInvalid amount. Enter a whole number of zenis greater than zero
 
 
 
@@ -539,6 +540,8 @@ message.safeRegion.noPermission.owner=§cYou don't have permission to break or p
 message.shadowDummy.cooldownWarning=§cWait %s before summoning another training shadow
 message.shenron.summoned=§6The %s Dragon Balls have been gathered. %s has summoned %s!
 message.shenron.wishGranted=§eYour wish has been granted. See you soon!
+message.shenron.busy=§eThe dragon is already granting another player's wishes. Please wait your turn!
+message.shenron.noWishes=§eThere are no wishes available for you right now.
 message.summon.obstructedArea=§cYou can't summon here. The area is obstructed!
 message.unlockedTransformation=§aNew form unlocked: %s!
 ## conquistas
