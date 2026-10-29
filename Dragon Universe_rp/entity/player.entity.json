@@ -226,6 +226,10 @@
 				"zamasu_hair_grayscale": "textures/entity/basic_customizations/hairs/zamasu/grayscale/zamasu_base_grayscale",
 				"fused_zamasu_hair": "textures/entity/basic_customizations/hairs/zamasu/fused_zamasu_base",
 				"fused_zamasu_hair_grayscale": "textures/entity/basic_customizations/hairs/zamasu/grayscale/fused_zamasu_base_grayscale",
+				// du_spiky_a (piloto D1, estilo original da equipe)
+				"du_spiky_a_hair": "textures/entity/basic_customizations/hairs/du_spiky_a/du_spiky_a_base",
+				"du_spiky_a_hair_grayscale": "textures/entity/basic_customizations/hairs/du_spiky_a/du_spiky_a_grayscale",
+				"du_spiky_a_ascended_hair": "textures/entity/basic_customizations/hairs/du_spiky_a/du_spiky_a_ascended",
 				// namekian
 				"namekian_eyes": "textures/entity/races/namekian/eyes/namekian_base",
 				"namekian_eyes_potential_unleashed": "textures/entity/races/namekian/eyes/namekian_potential_unleashed",
@@ -421,6 +425,8 @@
 				"glind": "geometry.glind",
 				"god_stigma": "geometry.god_stigma",
 				"hair_base": "geometry.hair_base",
+				"du_spiky_a": "geometry.du_spiky_a",
+				"du_spiky_a_ascended": "geometry.du_spiky_a_ascended",
 				"halo": "geometry.halo",
 				"ki_manipulation": "geometry.ki_manipulation",
 				"ki_manipulation_outline": "geometry.ki_manipulation_outline",
