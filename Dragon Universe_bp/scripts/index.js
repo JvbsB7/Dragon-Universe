@@ -12313,10 +12313,17 @@ var gQ = class extends gN {
       this.setValue(this._value - sG);
     }
     setValue(sG) {
+      if (!Number.isFinite(sG)) {
+        console.warn("[Dragon Universe] Valor de zeni inválido ignorado: " + sG);
+        return;
+      }
       sG !== this._value && ((this._value = sG), this.dbePlayer.data.set("zeni", sG), this.updateIcon());
     }
     transferValue(sG, sH) {
       try {
+        // valor negativo invertia a transferência (creditava o autor e debitava o alvo)
+        if (!Number.isSafeInteger(sG) || sG <= 0) return "InvalidAmount";
+        if (sH === this) return "InvalidTarget";
         return this.value < sG ? "InsufficientBalance" : (this.removeValue(sG), sH.addValue(sG), "Success");
       } catch (sI) {
         return console.warn("Falha ao transferir:", sI), "Error";
@@ -17683,6 +17690,10 @@ var nM = {
             sM = hO(sG).zeni.transferValue(sH, sL);
           if (sM === "InsufficientBalance") {
             sG.sendMessage({ translate: "command.pay.insufficient_balance" });
+            break;
+          }
+          if (sM === "InvalidAmount") {
+            sG.sendMessage({ translate: "command.pay.invalid_amount" });
             break;
           }
           sM === "Success" && sG.sendMessage({ translate: "command.pay.success", with: ["" + sH, sK.name] });
