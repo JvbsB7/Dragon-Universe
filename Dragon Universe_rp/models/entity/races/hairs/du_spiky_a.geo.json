@@ -124,7 +124,27 @@
 									]
 								}
 							}
-						},
+						}
+					]
+				},
+				{
+					"name": "hair",
+					"pivot": [
+						0,
+						24,
+						0
+					],
+					"parent": "head"
+				},
+				{
+					"name": "part1",
+					"pivot": [
+						0,
+						27,
+						1
+					],
+					"parent": "hair",
+					"cubes": [
 						{
 							"origin": [
 								4.0,
@@ -292,27 +312,7 @@
 									]
 								}
 							}
-						}
-					]
-				},
-				{
-					"name": "hair",
-					"pivot": [
-						0,
-						24,
-						0
-					],
-					"parent": "head"
-				},
-				{
-					"name": "part1",
-					"pivot": [
-						0,
-						27,
-						1
-					],
-					"parent": "hair",
-					"cubes": [
+						},
 						{
 							"origin": [
 								1.5,
