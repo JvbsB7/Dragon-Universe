@@ -1867,9 +1867,44 @@ async function openMenu(player) {
 
 // ---------------------------------------------------------------- setup
 
+// Physical IDs defined only by BP dimensions/*.json (no script fallback since 1.7.10). Diagnostic only:
+// a missing one is named in the Content Log instead of surfacing later as a generic travel lookup failure.
+const BP_DIMENSIONS = [
+  ["dbe:vegeta", "Vegeta"], ["dbe:frieza_planet", "Frieza"], ["dbe:yardrat", "Yardrat"], ["dbe:kai", "Kaioshin"],
+  ["dbe:universe_6_arena", "Universe 6 arena"], ["dbe:hell", "Hell"], ["dbe:space", "Space"], ["dbe:namek", "Namek"],
+];
+function auditBpDimensions() {
+  const loaded = [];
+  for (const [id, label] of BP_DIMENSIONS) {
+    let dim, failure;
+    try {
+      dim = world.getDimension(id);
+    } catch (e) {
+      failure = e;
+    }
+    if (!dim) {
+      console.error("[World] BP dimension " + id + " (" + label + ") is NOT loaded; check dimensions/*.json, format_version and world experiments: " + (failure ?? "getDimension returned nothing"));
+      continue;
+    }
+    let height = "?";
+    try {
+      height = dim.heightRange ? dim.heightRange.min + ".." + dim.heightRange.max : "?";
+    } catch (e) {
+      /* diagnostic only */
+    }
+    loaded.push(id + "[" + height + "]");
+  }
+  console.warn("[World] BP dimensions loaded " + loaded.length + "/" + BP_DIMENSIONS.length + ": " + loaded.join(", "));
+}
+
 try {
   // The four BP dimension definitions are authoritative; do not register a second definition.
   world.afterEvents.worldLoad.subscribe(() => {
+    try {
+      auditBpDimensions();
+    } catch (e) {
+      console.warn("[World] BP dimension audit failed: " + e);
+    }
     world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
       if (initialSpawn || !player.hasTag(DEAD_TAG)) return;
       rescueUntil.set(player.id, system.currentTick + 600);
