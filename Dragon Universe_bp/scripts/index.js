@@ -15306,6 +15306,7 @@ var jw = class extends jj {
     }
   },
   jA = new Map(),
+  jA2 = new Map(), // sessão de desejos ativa: id do dragão -> id do jogador
   jB = class {
     wishes = [];
     constructor() {
@@ -15336,14 +15337,26 @@ var jw = class extends jj {
     }
     async handleWishSession(sG, sH) {
       let sI = iH.getDragonBallBySourceTypeId(sH.typeId);
-      if (sI) {
-        for (; !(this.getWishesMade(sH) >= sI.maxWishes); )
-          await this.showWishSelectionMenu(sG, sH),
-            sG.camera.fade({
-              fadeColor: { red: 1, green: 1, blue: 1 },
-              fadeTime: { fadeInTime: 1, fadeOutTime: 1, holdTime: 0.1 },
-            });
-        this.finalizeWishes(sG, sH);
+      if (!sI) return;
+      // um jogador por dragão; a trava de quem saiu do mundo não vale mais
+      let sK = jA2.get(sH.id);
+      if (sK && sK !== sG.id && jb.getAllPlayers().some((sM) => sM.id === sK)) {
+        sG.sendMessage({ translate: "message.shenron.busy" });
+        return;
+      }
+      jA2.set(sH.id, sG.id);
+      try {
+        for (; sG.isValid && sH.isValid && this.getWishesMade(sH) < sI.maxWishes; ) {
+          // fechar o menu encerra só a sessão: o dragão fica com os desejos restantes
+          if ((await this.showWishSelectionMenu(sG, sH)) !== "granted") return;
+          sG.camera.fade({
+            fadeColor: { red: 1, green: 1, blue: 1 },
+            fadeTime: { fadeInTime: 1, fadeOutTime: 1, holdTime: 0.1 },
+          });
+        }
+        sG.isValid && sH.isValid && this.getWishesMade(sH) >= sI.maxWishes && this.finalizeWishes(sG, sH);
+      } finally {
+        jA2.get(sH.id) === sG.id && jA2.delete(sH.id);
       }
     }
     spawnShenronFromDragonBall(sG, sH, sI, sK) {
@@ -15377,6 +15390,7 @@ var jw = class extends jj {
       for (let sQ of sI.getPlayers({ location: sK, maxDistance: 128 })) this.playAnimation(sQ, sL, sH);
     }
     finalizeWishes(sG, sH) {
+      if (!sH.isValid) return;
       let { dimension: sI, location: sK } = sH;
       sG.sendMessage({ translate: "message.shenron.wishGranted" }),
         sI.playSound("mob.shenron.flying", sK),
@@ -15412,26 +15426,43 @@ var jw = class extends jj {
       let sH = jA.get(sG.id);
       sH && (jb.setTimeOfDay(sH), jA.delete(sG.id));
     }
+    // sempre resolve: "granted" | "closed" | "empty" | "invalid" | "error"
     async showWishSelectionMenu(sG, sH) {
-      return new Promise((sI) => {
-        let sK = hO(sG),
-          sL = this.getEligibleWishes(sK, sH.typeId),
-          sM = new jf();
+      let sK = hO(sG);
+      for (let sT = 0; sT < 10; sT++) {
+        if (!sG.isValid || !sH.isValid || !sK) return "invalid";
+        let sL = this.getEligibleWishes(sK, sH.typeId);
+        if (!sL.length) return sG.sendMessage({ translate: "message.shenron.noWishes" }), "empty";
+        let sM = new jf();
         sM.title("ui.dbe.wishes.title"), sM.body("");
         for (let sN of sL) sM.button(sN.getTranslationKey());
-        j8.run(() => {
-          sM.show(sG).then((sO) => {
-            if (sO.canceled) return;
-            let sP = sO.selection;
-            if (typeof sP == "number" && sH.isValid) {
-              let sQ = i3.getDBEEntity(sH),
-                sR = (sQ?.data.get("wishes_made") ?? 0) + 1,
-                sS = sL[sP];
-              sS.grantWish(sG, sH), sQ?.data.set("wishes_made", sR), this.markWishAsGranted(sK, sS), sI();
-            }
-          });
-        });
-      });
+        let sO;
+        try {
+          sO = await sM.show(sG);
+        } catch (sU) {
+          return console.warn("[Dragon Universe] Falha no menu de desejos: " + (sU?.stack ?? sU)), "error";
+        }
+        if (sO.canceled) {
+          // jogador com outra interface aberta: tenta de novo em 1 s
+          if (sO.cancelationReason === "UserBusy") {
+            await j8.waitTicks(20);
+            continue;
+          }
+          return "closed";
+        }
+        let sP = sO.selection,
+          sS = typeof sP == "number" ? sL[sP] : void 0;
+        if (!sS || !sG.isValid || !sH.isValid) return "invalid";
+        // revalida no envio: limite e elegibilidade podem ter mudado com o menu aberto
+        let sQ = i3.getDBEEntity(sH),
+          sR = sQ?.data.get("wishes_made") ?? 0,
+          sV = iH.getDragonBallBySourceTypeId(sH.typeId);
+        if (!sV || sR >= sV.maxWishes) return "invalid";
+        if (!this.getEligibleWishes(sK, sH.typeId).includes(sS)) continue;
+        sS.grantWish(sG, sH), sQ?.data.set("wishes_made", sR + 1), this.markWishAsGranted(sK, sS);
+        return "granted";
+      }
+      return "closed";
     }
   },
   jC = new jB(),
