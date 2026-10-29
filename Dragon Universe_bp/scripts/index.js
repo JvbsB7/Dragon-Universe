@@ -1,4 +1,4 @@
-// Núcleo do Dragon Evolution (About04), base do Dragon Universe.
+// Núcleo do Dragon Universe.
 // Gerado por tools/deobfuscate-core.mjs a partir da versão ofuscada (commit 2d4f628): textos decodificados e
 // código formatado, sem mudança de lógica. Os nomes curtos de variáveis vêm do ofuscador e não puderam ser recuperados.
 import "./kaioshin_dimension.js";
@@ -4051,6 +4051,8 @@ var bD = class {
     data;
     dirty = !1;
     isSaving = !1;
+    corruptRaw; // texto original inválido ainda não copiado para <id>__corrupt
+    saveFailures = 0;
     static cleanup() {
       for (let sG of [...this.instances.values()])
         for (let sH of [...sG.values()]) sH.isProviderValid() || this.deleteInstance(sH);
@@ -4070,7 +4072,13 @@ var bD = class {
       return sL || ((sL = new sV(sG, sH)), sK.set(sH, sL)), sL;
     }
     static saveAllInstances() {
-      for (let sG of [...this.instances.values()]) for (let sH of [...sG.values()]) sH.save();
+      for (let sG of [...this.instances.values()])
+        for (let sH of [...sG.values()])
+          try {
+            sH.save();
+          } catch (sI) {
+            console.error("[Dragon Universe] Falha ao salvar '" + sH.dataId + "' no encerramento: " + sI);
+          }
     }
     get id() {
       return this.dataId;
@@ -4103,25 +4111,76 @@ var bD = class {
       (this.data[sG] = sH), (this.dirty = !0), this.scheduleSave();
     }
     save() {
-      !this.dirty ||
-        !this.isProviderValid() ||
-        (this.provider.setDynamicProperty(this.dataId, JSON.stringify(this.data)), (this.dirty = !1));
+      if (!this.dirty || !this.isProviderValid()) return;
+      // nunca sobrescreve um original inválido antes de copiá-lo para <id>__corrupt
+      if (this.corruptRaw !== void 0 && !this.preserveCorrupt()) return;
+      let sG;
+      try {
+        (sG = JSON.stringify(this.data)), this.provider.setDynamicProperty(this.dataId, sG), (this.dirty = !1);
+        this.saveFailures && console.warn("[Dragon Universe] '" + this.dataId + "' voltou a ser salvo.");
+        this.saveFailures = 0;
+      } catch (sH) {
+        // dirty continua true: o próximo set() ou o encerramento tentam de novo
+        this.reportSaveFailure("Falha ao salvar (" + (sG?.length ?? "?") + " caracteres)", sH);
+      }
+    }
+    reportSaveFailure(sG, sH) {
+      ++this.saveFailures,
+        (this.saveFailures === 1 || this.saveFailures % 20 === 0) &&
+          console.error(
+            "[Dragon Universe] " + sG + " '" + this.dataId + "' (" + this.providerLabel() + ", tentativa " +
+              this.saveFailures + "): " + sH,
+          );
+    }
+    preserveCorrupt() {
+      let sG = this.dataId + "__corrupt";
+      try {
+        this.provider.getDynamicProperty(sG) !== void 0 && (sG += "_" + Date.now());
+        this.provider.setDynamicProperty(sG, this.corruptRaw);
+      } catch (sH) {
+        return this.reportSaveFailure("Original inválido não pôde ser preservado; nada foi gravado em", sH), !1;
+      }
+      return (
+        console.warn("[Dragon Universe] Original inválido de '" + this.dataId + "' preservado em '" + sG + "'."),
+        (this.corruptRaw = void 0),
+        !0
+      );
+    }
+    providerLabel() {
+      try {
+        return this.provider instanceof aA ? "world" : this.provider.typeId + " " + this.provider.id;
+      } catch {
+        return "?";
+      }
     }
     toString() {
       return JSON.stringify(this.data);
     }
     parseData(sG) {
+      let sH;
       try {
-        return JSON.parse(sG);
-      } catch {
-        return {};
+        sH = JSON.parse(sG);
+      } catch (sI) {
+        sH = sI;
       }
+      if (sH && typeof sH == "object" && !Array.isArray(sH) && !(sH instanceof Error)) return sH;
+      // começa vazio, mas guarda o texto original: save() só grava depois de copiá-lo para <id>__corrupt
+      this.corruptRaw = sG;
+      console.error(
+        "[Dragon Universe] Dados inválidos em '" + this.dataId + "' (" + this.providerLabel() + ", " + sG.length +
+          " caracteres): " + (sH instanceof Error ? sH.message : "não é um objeto") + ". O original será preservado.",
+      );
+      return {};
     }
     scheduleSave() {
       this.isSaving ||
         ((this.isSaving = !0),
         az.runTimeout(() => {
-          this.save(), (this.isSaving = !1);
+          try {
+            this.save();
+          } finally {
+            this.isSaving = !1;
+          }
         }, 20));
     }
   };
@@ -10539,7 +10598,7 @@ var fB = class {
           sH = [];
         for (let sI of sG) fy.some(({ id: sK }) => sK === sI.id) || sH.push(sI.id);
         sH.length > 0 &&
-          console.warn("Não foram encontradas informações para as seguintes entidades do DBE:\n- " + sH.join("\n- "));
+          console.warn("Não foram encontradas informações para as seguintes entidades do Dragon Universe:\n- " + sH.join("\n- "));
       });
     }
     getDBEEntityDataByTypeId(sG) {
@@ -11719,7 +11778,7 @@ var gw = class {
         (this.dbePlayer.updateNameTag(),
         sH.onActivate(this.dbePlayer),
         this.giveExclusiveItemsOnce(this.dbePlayer, sH.codeId, sH.items ?? {}),
-        this.claimedCodes.push(sG),
+        this.claimedCodes.includes(sG) || this.claimedCodes.push(sG),
         this.saveClaimedCodes());
     }
     hasCode(sG) {
@@ -11753,13 +11812,16 @@ var gw = class {
     }
     validateCode(sG) {
       let { playerId: sH, codeId: sI, expiry: sK } = gv(sG);
-      return sH.length && sH !== this.dbePlayer.player.name
-        ? { valid: !1, reason: "NotForPlayer", rewardId: sI }
-        : this.claimedCodes.includes(sI)
-          ? { valid: !1, reason: "AlreadyClaimed", rewardId: sI }
-          : Date.now() > sK || gx.isCodeUsed(sG)
-            ? { valid: !1, reason: "Expired", rewardId: sI }
-            : { valid: !0, reason: "Success", rewardId: sI };
+      // codeId desconhecido ou validade ilegível: falha sem marcar o código como usado
+      return !gx.get(sI) || !Number.isFinite(sK)
+        ? { valid: !1, reason: "Invalid", rewardId: sI }
+        : sH.length && sH !== this.dbePlayer.player.name
+          ? { valid: !1, reason: "NotForPlayer", rewardId: sI }
+          : this.claimedCodes.includes(sI)
+            ? { valid: !1, reason: "AlreadyClaimed", rewardId: sI }
+            : Date.now() > sK || gx.isCodeUsed(sG)
+              ? { valid: !1, reason: "Expired", rewardId: sI }
+              : { valid: !0, reason: "Success", rewardId: sI };
     }
   },
   gx = class {
@@ -12254,10 +12316,17 @@ var gQ = class extends gN {
       this.setValue(this._value - sG);
     }
     setValue(sG) {
+      if (!Number.isFinite(sG)) {
+        console.warn("[Dragon Universe] Valor de zeni inválido ignorado: " + sG);
+        return;
+      }
       sG !== this._value && ((this._value = sG), this.dbePlayer.data.set("zeni", sG), this.updateIcon());
     }
     transferValue(sG, sH) {
       try {
+        // valor negativo invertia a transferência (creditava o autor e debitava o alvo)
+        if (!Number.isSafeInteger(sG) || sG <= 0) return "InvalidAmount";
+        if (sH === this) return "InvalidTarget";
         return this.value < sG ? "InsufficientBalance" : (this.removeValue(sG), sH.addValue(sG), "Success");
       } catch (sI) {
         return console.warn("Falha ao transferir:", sI), "Error";
@@ -14028,7 +14097,6 @@ var hJ = 1,
             (this.skillsContainer.updateSideBar(),
             this.updateNameTag(),
             this.isKnockedOut && this.setKnockoutState(!1),
-            this.player.name === "About04" && this.redeem.activateRedeem("creator"),
             gI.isBanned(this.player.name) && gI.showBanForm(this.player));
         }, 100);
       if (this.data.get("afterlife_return")) bX.runTimeout(() => {
@@ -15238,6 +15306,7 @@ var jw = class extends jj {
     }
   },
   jA = new Map(),
+  jA2 = new Map(), // sessão de desejos ativa: id do dragão -> id do jogador
   jB = class {
     wishes = [];
     constructor() {
@@ -15268,14 +15337,26 @@ var jw = class extends jj {
     }
     async handleWishSession(sG, sH) {
       let sI = iH.getDragonBallBySourceTypeId(sH.typeId);
-      if (sI) {
-        for (; !(this.getWishesMade(sH) >= sI.maxWishes); )
-          await this.showWishSelectionMenu(sG, sH),
-            sG.camera.fade({
-              fadeColor: { red: 1, green: 1, blue: 1 },
-              fadeTime: { fadeInTime: 1, fadeOutTime: 1, holdTime: 0.1 },
-            });
-        this.finalizeWishes(sG, sH);
+      if (!sI) return;
+      // um jogador por dragão; a trava de quem saiu do mundo não vale mais
+      let sK = jA2.get(sH.id);
+      if (sK && sK !== sG.id && jb.getAllPlayers().some((sM) => sM.id === sK)) {
+        sG.sendMessage({ translate: "message.shenron.busy" });
+        return;
+      }
+      jA2.set(sH.id, sG.id);
+      try {
+        for (; sG.isValid && sH.isValid && this.getWishesMade(sH) < sI.maxWishes; ) {
+          // fechar o menu encerra só a sessão: o dragão fica com os desejos restantes
+          if ((await this.showWishSelectionMenu(sG, sH)) !== "granted") return;
+          sG.camera.fade({
+            fadeColor: { red: 1, green: 1, blue: 1 },
+            fadeTime: { fadeInTime: 1, fadeOutTime: 1, holdTime: 0.1 },
+          });
+        }
+        sG.isValid && sH.isValid && this.getWishesMade(sH) >= sI.maxWishes && this.finalizeWishes(sG, sH);
+      } finally {
+        jA2.get(sH.id) === sG.id && jA2.delete(sH.id);
       }
     }
     spawnShenronFromDragonBall(sG, sH, sI, sK) {
@@ -15309,6 +15390,7 @@ var jw = class extends jj {
       for (let sQ of sI.getPlayers({ location: sK, maxDistance: 128 })) this.playAnimation(sQ, sL, sH);
     }
     finalizeWishes(sG, sH) {
+      if (!sH.isValid) return;
       let { dimension: sI, location: sK } = sH;
       sG.sendMessage({ translate: "message.shenron.wishGranted" }),
         sI.playSound("mob.shenron.flying", sK),
@@ -15344,26 +15426,43 @@ var jw = class extends jj {
       let sH = jA.get(sG.id);
       sH && (jb.setTimeOfDay(sH), jA.delete(sG.id));
     }
+    // sempre resolve: "granted" | "closed" | "empty" | "invalid" | "error"
     async showWishSelectionMenu(sG, sH) {
-      return new Promise((sI) => {
-        let sK = hO(sG),
-          sL = this.getEligibleWishes(sK, sH.typeId),
-          sM = new jf();
+      let sK = hO(sG);
+      for (let sT = 0; sT < 10; sT++) {
+        if (!sG.isValid || !sH.isValid || !sK) return "invalid";
+        let sL = this.getEligibleWishes(sK, sH.typeId);
+        if (!sL.length) return sG.sendMessage({ translate: "message.shenron.noWishes" }), "empty";
+        let sM = new jf();
         sM.title("ui.dbe.wishes.title"), sM.body("");
         for (let sN of sL) sM.button(sN.getTranslationKey());
-        j8.run(() => {
-          sM.show(sG).then((sO) => {
-            if (sO.canceled) return;
-            let sP = sO.selection;
-            if (typeof sP == "number" && sH.isValid) {
-              let sQ = i3.getDBEEntity(sH),
-                sR = (sQ?.data.get("wishes_made") ?? 0) + 1,
-                sS = sL[sP];
-              sS.grantWish(sG, sH), sQ?.data.set("wishes_made", sR), this.markWishAsGranted(sK, sS), sI();
-            }
-          });
-        });
-      });
+        let sO;
+        try {
+          sO = await sM.show(sG);
+        } catch (sU) {
+          return console.warn("[Dragon Universe] Falha no menu de desejos: " + (sU?.stack ?? sU)), "error";
+        }
+        if (sO.canceled) {
+          // jogador com outra interface aberta: tenta de novo em 1 s
+          if (sO.cancelationReason === "UserBusy") {
+            await j8.waitTicks(20);
+            continue;
+          }
+          return "closed";
+        }
+        let sP = sO.selection,
+          sS = typeof sP == "number" ? sL[sP] : void 0;
+        if (!sS || !sG.isValid || !sH.isValid) return "invalid";
+        // revalida no envio: limite e elegibilidade podem ter mudado com o menu aberto
+        let sQ = i3.getDBEEntity(sH),
+          sR = sQ?.data.get("wishes_made") ?? 0,
+          sV = iH.getDragonBallBySourceTypeId(sH.typeId);
+        if (!sV || sR >= sV.maxWishes) return "invalid";
+        if (!this.getEligibleWishes(sK, sH.typeId).includes(sS)) continue;
+        sS.grantWish(sG, sH), sQ?.data.set("wishes_made", sR + 1), this.markWishAsGranted(sK, sS);
+        return "granted";
+      }
+      return "closed";
     }
   },
   jC = new jB(),
@@ -16485,11 +16584,6 @@ var kq = class t8 extends jY {
         this.setBody({
           rawtext: [
             { translate: "pack.news" },
-            { text: "\n\n\n" },
-            { translate: "donate.title" },
-            { text: ":\n" },
-            { translate: "donate.text" },
-            { text: "\n\n" },
           ],
         });
     }
@@ -17626,6 +17720,10 @@ var nM = {
             sG.sendMessage({ translate: "command.pay.insufficient_balance" });
             break;
           }
+          if (sM === "InvalidAmount") {
+            sG.sendMessage({ translate: "command.pay.invalid_amount" });
+            break;
+          }
           sM === "Success" && sG.sendMessage({ translate: "command.pay.success", with: ["" + sH, sK.name] });
         }
     }),
@@ -17996,7 +18094,8 @@ var p8 = {
     name: "dbe:redeem",
     cheatsRequired: !1,
     description: "Resgata códigos especiais.",
-    permissionLevel: p3.Any,
+    // o formato do código não tem segredo (qualquer um pode gerá-lo), então só operadores resgatam
+    permissionLevel: p3.GameDirectors,
     mandatoryParameters: [{ name: "code", type: p4.String }],
   },
   callback: ({ sourceEntity: sG }, sH) => (
@@ -18308,6 +18407,11 @@ var pH = class {
     }
     async assignDimension(sG) {
       if (!this.getDimensionDataByOwner(sG)) {
+        // só angel_staff_dimension_0..49 são registradas (init)
+        if (this.lastGrantedDimensionIndex >= 49) {
+          console.warn("[Dragon Universe] Sem dimensões Angel Staff livres para " + sG);
+          return;
+        }
         let sH = pK + "_" + ++this.lastGrantedDimensionIndex,
           sI = pE.getDimension(sH);
         await this.setup(sI),
@@ -19938,7 +20042,7 @@ dC.register({
     { id: "member", priority: 0, displayTag: { colorPrefix: "§7", name: "Membro" } },
     { id: "patreon", priority: 10, displayTag: { colorPrefix: "§q", name: "Patreon" }, permissions: ["race.glind"] },
     { id: "early", priority: 20, displayTag: { colorPrefix: "§w", name: "Early" } },
-    { id: "creator", priority: 100, displayTag: { colorPrefix: "§u", name: "Creator" } },
+    { id: "creator", priority: 100, displayTag: { colorPrefix: "§u", name: "Equipe Dragon Universe" } },
   ]);
 import { shop_data as rI } from "./data/shop_data.js";
 import { system as rJ } from "@minecraft/server";

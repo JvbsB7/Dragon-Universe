@@ -194,7 +194,7 @@ if (leftover === 0) {
 const out = await prettier.__debug.formatAST(ast, { parser: "babel", originalText: text, printWidth: 120 });
 const formatted = typeof out === "string" ? out : out.formatted;
 const header =
-  "// Núcleo do Dragon Evolution (About04), base do Dragon Universe.\n" +
+  "// Núcleo do Dragon Universe.\n" +
   "// Gerado por tools/deobfuscate-core.mjs a partir da versão ofuscada (commit 2d4f628): textos decodificados e\n" +
   "// código formatado, sem mudança de lógica. Os nomes curtos de variáveis vêm do ofuscador e não puderam ser recuperados.\n";
 fs.writeFileSync(output, header + formatted);
