@@ -1,4 +1,4 @@
-// Núcleo do Dragon Evolution (About04), base do Dragon Universe.
+// Núcleo do Dragon Universe.
 // Gerado por tools/deobfuscate-core.mjs a partir da versão ofuscada (commit 2d4f628): textos decodificados e
 // código formatado, sem mudança de lógica. Os nomes curtos de variáveis vêm do ofuscador e não puderam ser recuperados.
 import "./kaioshin_dimension.js";
@@ -10598,7 +10598,7 @@ var fB = class {
           sH = [];
         for (let sI of sG) fy.some(({ id: sK }) => sK === sI.id) || sH.push(sI.id);
         sH.length > 0 &&
-          console.warn("Não foram encontradas informações para as seguintes entidades do DBE:\n- " + sH.join("\n- "));
+          console.warn("Não foram encontradas informações para as seguintes entidades do Dragon Universe:\n- " + sH.join("\n- "));
       });
     }
     getDBEEntityDataByTypeId(sG) {
@@ -16584,11 +16584,6 @@ var kq = class t8 extends jY {
         this.setBody({
           rawtext: [
             { translate: "pack.news" },
-            { text: "\n\n\n" },
-            { translate: "donate.title" },
-            { text: ":\n" },
-            { translate: "donate.text" },
-            { text: "\n\n" },
           ],
         });
     }
@@ -20047,7 +20042,7 @@ dC.register({
     { id: "member", priority: 0, displayTag: { colorPrefix: "§7", name: "Membro" } },
     { id: "patreon", priority: 10, displayTag: { colorPrefix: "§q", name: "Patreon" }, permissions: ["race.glind"] },
     { id: "early", priority: 20, displayTag: { colorPrefix: "§w", name: "Early" } },
-    { id: "creator", priority: 100, displayTag: { colorPrefix: "§u", name: "Creator" } },
+    { id: "creator", priority: 100, displayTag: { colorPrefix: "§u", name: "Equipe Dragon Universe" } },
   ]);
 import { shop_data as rI } from "./data/shop_data.js";
 import { system as rJ } from "@minecraft/server";
