@@ -11778,7 +11778,7 @@ var gw = class {
         (this.dbePlayer.updateNameTag(),
         sH.onActivate(this.dbePlayer),
         this.giveExclusiveItemsOnce(this.dbePlayer, sH.codeId, sH.items ?? {}),
-        this.claimedCodes.push(sG),
+        this.claimedCodes.includes(sG) || this.claimedCodes.push(sG),
         this.saveClaimedCodes());
     }
     hasCode(sG) {
@@ -14094,7 +14094,6 @@ var hJ = 1,
             (this.skillsContainer.updateSideBar(),
             this.updateNameTag(),
             this.isKnockedOut && this.setKnockoutState(!1),
-            this.player.name === "About04" && this.redeem.activateRedeem("creator"),
             gI.isBanned(this.player.name) && gI.showBanForm(this.player));
         }, 100);
       if (this.data.get("afterlife_return")) bX.runTimeout(() => {
