@@ -1,4 +1,4 @@
-import { world, system, BlockVolume } from "@minecraft/server";
+import { world, system, BlockVolume, CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus } from "@minecraft/server";
 import { acquireLoadedArea, releaseLoadedArea, registerTravelPreparation } from "./travel_safety.js";
 import { fillAirColumn, runTerrainJob, emptyChunk, findUnexpectedBlock, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 
@@ -19,11 +19,31 @@ const wait = (ticks = 1) => new Promise((resolve) => system.runTimeout(resolve, 
 const key = (cx, cz) => "dbe:future_terrain_v2:" + cx + "," + cz;
 const inBounds = (x, z) => x >= BOUNDS.x1 && x <= BOUNDS.x2 && z >= BOUNDS.z1 && z <= BOUNDS.z2;
 
+// Transient envelope loading failures are retried after this many ticks; a hard capacity limit waits for the next session.
+const CITY_RETRY_TICKS = 6000;
+const cityPreviews = new Map();
+let cityPreviewSerial = 0;
+
 class FutureCityPreservationError extends Error {
   constructor(message) { super(message); this.name = "FutureCityPreservationError"; }
 }
-function reportCityDeferral(entity) {
-  try { entity?.sendMessage({ translate: "dbe.future.deferred" }); } catch {}
+// A deferral lets travel continue to the terrain without the city. retryAfter: tick after which a new city attempt may start.
+function deferCity(message, messageKey = "dbe.future.deferred", retryAfter = Infinity, cause) {
+  const error = new FutureCityPreservationError(message);
+  error.deferralKey = messageKey;
+  error.retryAfter = retryAfter;
+  if (cause !== undefined) error.cause = cause;
+  return error;
+}
+const cityRetryDue = () => !!cityDeferred && system.currentTick >= (cityDeferred.retryAfter ?? Infinity);
+const cityLocked = () => !world.getDynamicProperty("futureTrunksCityLoaded") && !!world.getDynamicProperty("futureTrunksCityStarted");
+function reportCityDeferral(entity, error = cityDeferred) {
+  try { entity?.sendMessage({ translate: error?.deferralKey ?? "dbe.future.deferred" }); } catch {}
+}
+function cityChunks() {
+  const chunks = [];
+  for (let cx = Math.floor(FUTURE_CITY_PLAN.x1 / 16); cx <= Math.floor(FUTURE_CITY_PLAN.x2 / 16); cx++) for (let cz = Math.floor(FUTURE_CITY_PLAN.z1 / 16); cz <= Math.floor(FUTURE_CITY_PLAN.z2 / 16); cz++) chunks.push([cx, cz]);
+  return chunks;
 }
 function recordWork(activity, operation, coordinates, completeChunk = false) {
   if (!activity) return;
@@ -244,19 +264,26 @@ async function waitForCity(entity) {
   checkOrigin();
   if (outcome.failed) {
     if (!(outcome.error instanceof FutureCityPreservationError)) throw outcome.error;
-    reportCityDeferral(entity);
+    reportCityDeferral(entity, outcome.error);
   }
 }
 
 async function prepareDestination(dimension, location, entity) {
   const x = Math.floor(location.x), z = Math.floor(location.z), cx = Math.floor(x / 16), cz = Math.floor(z / 16);
   if (!inBounds(x, z)) throw new Error("Future destination is outside the configured terrain region (-256..256)");
-  if (!cityPromise && !world.getDynamicProperty("futureTrunksCityLoaded") && world.getDynamicProperty("futureTrunksCityStarted")) throw new Error("Future city placement was interrupted; inspect the world copy before any city retry");
-  if (!cityPromise && cityDeferred) reportCityDeferral(entity);
-  if (!cityPromise && cityPlacement && !cityDeferred && !world.getDynamicProperty("futureTrunksCityLoaded")) {
+  // An interrupted city must not lock the dimension: travel continues to the terrain without the city.
+  if (!cityPromise && cityLocked() && !(cityDeferred?.deferralKey === "dbe.future.deferred_locked")) {
+    cityDeferred = deferCity("Future city placement was interrupted; travel continues without the city. Operators: /dbe:future_city preview", "dbe.future.deferred_locked");
+    console.warn("[Future city] " + cityDeferred.message);
+  }
+  if (!cityPromise && cityDeferred && !cityRetryDue()) reportCityDeferral(entity);
+  if (!cityPromise && cityPlacement && (!cityDeferred || cityRetryDue()) && !world.getDynamicProperty("futureTrunksCityLoaded")) {
     const restarted = prepareFutureCity(dimension, cityPlacement);
     restarted.catch(() => {}); // The shared city promise below retains the original failure for this traveler.
-    if (!cityPromise) await restarted;
+    if (!cityPromise) await restarted.catch((error) => {
+      if (!(error instanceof FutureCityPreservationError)) throw error;
+      reportCityDeferral(entity, error);
+    });
   }
   await waitForCity(entity);
   if (repairing) throw new Error("Future terrain repair is active; retry travel after it finishes");
@@ -320,6 +347,109 @@ function* verifyCityChunk(dimension, cx, cz, state, activity) {
   recordWork(activity, "profile_chunk_verified", { cx, cz }, true);
 }
 
+// Every city chunk must still be owned "complete" terrain with the exact generated profile (no city block anywhere).
+function* verifyCityEnvelope(dimension, chunks, activity) {
+  for (const [cx, cz] of chunks) {
+    if (world.getDynamicProperty(key(cx, cz)) !== "complete") throw new FutureCityPreservationError("Future city chunk " + cx + "," + cz + " is not owned complete terrain");
+    yield* verifyCityChunk(dimension, cx, cz, "complete", activity);
+  }
+}
+
+// Insufficient ticking capacity defers the city instead of failing travel.
+async function loadCityEnvelope(dimension, needed) {
+  const manager = world.tickingAreaManager;
+  if (manager && Number.isFinite(manager.maxChunkCount) && manager.maxChunkCount < needed) {
+    throw deferCity("Future city deferred: ticking area capacity " + manager.maxChunkCount + " < " + needed + " chunks; retried in a later session", "dbe.future.deferred_capacity");
+  }
+  try {
+    return await acquireLoadedArea(dimension,
+      { x: FUTURE_CITY_PLAN.x1, y: MIN_Y, z: FUTURE_CITY_PLAN.z1 },
+      { x: FUTURE_CITY_PLAN.x2, y: MIN_Y, z: FUTURE_CITY_PLAN.z2 }, "Future city full terrain envelope");
+  } catch (error) {
+    if (error?.stage !== "loading") throw error;
+    throw deferCity("Future city deferred: envelope could not be loaded now (" + (error?.message ?? error) + "); retry after " + CITY_RETRY_TICKS + " ticks",
+      "dbe.future.deferred_capacity", system.currentTick + CITY_RETRY_TICKS, error);
+  }
+}
+
+// Operator verification of the city envelope. Holds the generation queue like the city itself.
+async function operatorVerifyCity(dimension) {
+  if (busy || repairing || cityPreparing || cityPromise) {
+    const error = new Error("Future generation, city preparation or repair is active");
+    error.busy = true;
+    throw error;
+  }
+  busy = true;
+  const activity = busyActivity = { serial: 0, lastTick: system.currentTick, lastChunk: "—", operation: "operator_city_verification", coordinates: {} };
+  let area;
+  try {
+    const chunks = cityChunks();
+    area = await loadCityEnvelope(dimension, chunks.length);
+    await runTerrainJob(verifyCityEnvelope(dimension, chunks, activity), { inactivityTicks: 2400, activity: () => activity.serial, label: "Future city operator verification" });
+  } finally {
+    if (area) releaseLoadedArea(area);
+    busy = false;
+    busyActivity = undefined;
+  }
+}
+
+async function futureCityCommand(player, action, token) {
+  const say = (translate, ...values) => { try { player?.sendMessage(values.length ? { translate, with: values.map(String) } : { translate }); } catch {} };
+  if (player && !(player.commandPermissionLevel >= 1)) return say("dbe.world.operator_only");
+  const owner = player?.id ?? "server";
+  if (action === "status") {
+    if (world.getDynamicProperty("futureTrunksCityLoaded")) return say("dbe.future_city.status.loaded");
+    if (cityLocked()) return say("dbe.future_city.status.locked");
+    if (cityDeferred) return say("dbe.future_city.status.deferred", cityDeferred.message);
+    return say("dbe.future_city.status.pending");
+  }
+  if (action !== "preview" && action !== "apply") return say("dbe.future_city.usage");
+  if (action === "apply") {
+    const expected = cityPreviews.get(owner);
+    cityPreviews.delete(owner);
+    if (!token || expected !== token) return say("dbe.future_city.no_preview");
+  }
+  if (!cityLocked()) return say("dbe.future_city.not_locked");
+  say("dbe.future_city.checking", cityChunks().length);
+  try {
+    await operatorVerifyCity(world.getDimension(DIMENSION));
+  } catch (error) {
+    if (error?.busy) return say("dbe.future_city.busy");
+    console.warn("[Future city] operator " + action + " kept the lock: " + (error?.message ?? error));
+    return say(error instanceof FutureCityPreservationError && !error.deferralKey ? "dbe.future_city.changed" : "dbe.future_city.failed", error?.message ?? error);
+  }
+  if (!cityLocked()) return say("dbe.future_city.not_locked");
+  if (action === "preview") {
+    const issued = (++cityPreviewSerial).toString(36) + "-" + system.currentTick;
+    cityPreviews.set(owner, issued);
+    return say("dbe.future_city.intact", issued);
+  }
+  // apply: the envelope was verified again just now; only then is the lock removed.
+  world.setDynamicProperty("futureTrunksCityStarted", undefined);
+  cityDeferred = undefined;
+  console.warn("[Future city] lock cleared by operator " + (player?.name ?? "server") + " after envelope re-verification; the city is prepared on the next Future visit");
+  say("dbe.future_city.unlocked");
+}
+
+try {
+  system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
+    customCommandRegistry.registerEnum("dbe:future_city_action", ["status", "preview", "apply"]);
+    customCommandRegistry.registerCommand({
+      name: "dbe:future_city",
+      description: "Future city lock: status, preview or apply <token> (operators)",
+      permissionLevel: CommandPermissionLevel.GameDirectors,
+      mandatoryParameters: [{ name: "dbe:future_city_action", type: CustomCommandParamType.Enum }],
+      optionalParameters: [{ name: "token", type: CustomCommandParamType.String }],
+    }, (origin, action, token) => {
+      // Command callbacks run in restricted execution; world changes happen on the next tick.
+      system.run(() => futureCityCommand(origin?.sourceEntity, action, token).catch((error) => console.warn("[Future city] command failed: " + (error?.stack ?? error))));
+      return { status: CustomCommandStatus.Success };
+    });
+  });
+} catch (error) {
+  console.warn("[Future city] operator command registration failed: " + (error?.stack ?? error));
+}
+
 export function prepareFutureCity(dimension, placeCity) {
   try { return startCity(dimension, placeCity); }
   catch (error) { return rejectedCity(error); }
@@ -331,7 +461,10 @@ function startCity(dimension, placeCity) {
   cityPlacement ??= placeCity;
   if (cityPromise) return cityPromise;
   if (world.getDynamicProperty("futureTrunksCityLoaded")) { cityDeferred = undefined; return Promise.resolve(); }
-  if (world.getDynamicProperty("futureTrunksCityStarted")) return rejectedCity(new Error("Future city placement was interrupted; inspect the world copy before any city retry"));
+  if (world.getDynamicProperty("futureTrunksCityStarted")) {
+    cityDeferred = deferCity("Future city placement was interrupted; travel continues without the city. Operators: /dbe:future_city preview", "dbe.future.deferred_locked");
+    return rejectedCity(cityDeferred);
+  }
   if (repairing) return rejectedCity(new Error("Future terrain repair is active; retry city preparation later"));
   cityDeferred = undefined;
   cityPreparing = true;
@@ -360,12 +493,9 @@ function startCity(dimension, placeCity) {
       busyActivity = activity;
       ownsBusy = true;
       pendingWork(activity, "loading_city_envelope", FUTURE_CITY_PLAN);
-      area = await acquireLoadedArea(dimension,
-        { x: FUTURE_CITY_PLAN.x1, y: MIN_Y, z: FUTURE_CITY_PLAN.z1 },
-        { x: FUTURE_CITY_PLAN.x2, y: MIN_Y, z: FUTURE_CITY_PLAN.z2 }, "Future city full terrain envelope");
+      const chunks = cityChunks();
+      area = await loadCityEnvelope(dimension, chunks.length);
       recordWork(activity, "loaded_envelope_verified", { x1: FUTURE_CITY_PLAN.x1, z1: FUTURE_CITY_PLAN.z1, x2: FUTURE_CITY_PLAN.x2, z2: FUTURE_CITY_PLAN.z2 });
-      const chunks = [];
-      for (let cx = Math.floor(FUTURE_CITY_PLAN.x1 / 16); cx <= Math.floor(FUTURE_CITY_PLAN.x2 / 16); cx++) for (let cz = Math.floor(FUTURE_CITY_PLAN.z1 / 16); cz <= Math.floor(FUTURE_CITY_PLAN.z2 / 16); cz++) chunks.push([cx, cz]);
       // Capacity and every chunk's provenance are checked before the first terrain write.
       await job((function* () {
         cityProgress = { stage: "preflight", done: 0, total: chunks.length };
@@ -392,9 +522,25 @@ function startCity(dimension, placeCity) {
       world.setDynamicProperty("futureTrunksCityStarted", true);
       cityProgress = { stage: "placement", done: chunks.length, total: chunks.length };
       pendingWork(activity, "native_city_placement", FUTURE_CITY_PLAN);
-      const placed = await placeCity();
+      let placed;
+      try { placed = await placeCity(); }
+      catch (nativeError) {
+        // The native call returned control with an error. Clear the lock only if the whole envelope is provably untouched.
+        let intact = false;
+        try {
+          await job(verifyCityEnvelope(dimension, chunks, activity), "Future city post-failure verification");
+          intact = true;
+        } catch (verifyError) {
+          console.warn("[Future city] envelope changed or could not be verified after the native failure; lock kept: " + (verifyError?.message ?? verifyError));
+        }
+        if (intact) world.setDynamicProperty("futureTrunksCityStarted", undefined);
+        throw deferCity("Future city native placement failed (" + (nativeError?.name ?? "Error") + ": " + (nativeError?.message ?? nativeError) + "); " +
+          (intact ? "envelope verified intact and lock cleared; the city is retried in a later session" : "lock kept for operator review (/dbe:future_city preview)"),
+          intact ? "dbe.future.deferred" : "dbe.future.deferred_locked", Infinity, nativeError);
+      }
       if (!placed?.min || !placed?.max || ![placed.min.x, placed.min.y, placed.min.z, placed.max.x, placed.max.y, placed.max.z].every(Number.isFinite) || placed.min.x < FUTURE_CITY_PLAN.x1 || placed.min.z < FUTURE_CITY_PLAN.z1 || placed.max.x > FUTURE_CITY_PLAN.x2 || placed.max.z > FUTURE_CITY_PLAN.z2) {
-        throw new Error("Future city returned invalid or out-of-envelope bounds; inspect this world copy before retrying");
+        // Blocks may exist outside the reviewed envelope: keep the lock, but do not block travel.
+        throw deferCity("Future city returned invalid or out-of-envelope bounds; lock kept, inspect this world copy before retrying", "dbe.future.deferred_locked");
       }
       world.setDynamicProperty("futureTrunksCityLoaded", true);
     } catch (error) {
