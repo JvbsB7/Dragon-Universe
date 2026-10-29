@@ -1,5 +1,5 @@
 import { world, system, BlockVolume, CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus } from "@minecraft/server";
-import { acquireLoadedArea, releaseLoadedArea, registerTravelPreparation, movedFromOrigin } from "./travel_safety.js";
+import { acquireLoadedArea, releaseLoadedArea, registerTravelPreparation, movedFromOrigin, isSafeStanding } from "./travel_safety.js";
 import { fillAirColumn, runTerrainJob, emptyChunk, findUnexpectedBlock, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 
 const DIMENSION = "dbe:future_trunks";
@@ -292,12 +292,15 @@ async function prepareDestination(dimension, location, entity) {
     if (nx * 16 > BOUNDS.x2 || nx * 16 + 15 < BOUNDS.x1 || nz * 16 > BOUNDS.z2 || nz * 16 + 15 < BOUNDS.z1) continue;
     await ensureChunk(dimension, nx, nz, entity, true);
   }
-  if (safeStanding(dimension, x, Math.floor(location.y), z)) return location;
+  // Same predicate as the arrival check in travel_safety.js. Centring keeps the player's footprint inside this
+  // column (integer region spawns otherwise straddle four columns) without changing the requested column.
+  const center = { x: x + 0.5, z: z + 0.5 };
+  if (isSafeStanding(dimension, { ...center, y: Math.floor(location.y) })) return { ...center, y: Math.floor(location.y) };
   const start = topAt(x, z) + 1;
   for (let distance = 0; distance <= 32; distance++) {
     for (const y of distance ? [start + distance, start - distance] : [start]) {
-      if (y <= MIN_Y || y >= MAX_Y || !safeStanding(dimension, x, y, z)) continue;
-      return { x: location.x, y, z: location.z };
+      if (y <= MIN_Y || y >= MAX_Y || !isSafeStanding(dimension, { ...center, y })) continue;
+      return { ...center, y };
     }
   }
   throw new Error("Future arrival has no solid floor and clear headroom. The player was not moved; preview the affected terrain with dbe:future_repair on a world copy");
