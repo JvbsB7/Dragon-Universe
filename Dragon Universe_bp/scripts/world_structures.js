@@ -13,6 +13,7 @@
  * Worlds created before this change keep the copies they already generated; only new chunks stop getting more.
  *
  * Operators: /scriptevent dbe:structures -> lists every planned spot and whether it was already placed.
+ *            /dbe:structures_retry <spot> -> unlocks an interrupted or abandoned spot (inspect a world copy first).
  */
 import * as mc from "@minecraft/server";
 import { acquireLoadedArea, releaseLoadedArea } from "./travel_safety.js";
@@ -21,7 +22,7 @@ const { world, system } = mc;
 
 const OVERWORLD = "minecraft:overworld";
 const MIN_Y = -64;
-const PLAN_PROP = "dbe:world_structures"; // JSON { v, spots: { key: { x, z, placed, tries, fallback } } }
+const PLAN_PROP = "dbe:world_structures"; // JSON { v, spots: { key: { x, z, placed, tries, fallback, started?, lastError?, bounds? } } }
 const PLAN_VERSION = 1;
 const SCAN_TICKS = 40;
 const PLACE_DISTANCE = 96; // a player this close (horizontally) to a planned spot triggers the placement
@@ -109,9 +110,20 @@ async function placeStructure(dim, spec, spot, plan) {
     spot.started = true;
     savePlan(plan);
     // y is ignored: the structure's own start height (heightmap projection) puts it on the surface
-    world.structureManager.placeJigsawStructure(spec.structure, dim, center);
+    let box;
+    try {
+      box = world.structureManager.placeJigsawStructure(spec.structure, dim, center);
+    } catch (nativeError) {
+      // Synchronous rejection (PlaceJigsawError): control returned in the same tick, so this is a failed
+      // attempt, not an interruption. MAX_TRIES bounds the retries.
+      delete spot.started;
+      spot.lastError = String(nativeError?.name ?? "Error") + ": " + String(nativeError?.message ?? nativeError).slice(0, 120);
+      throw nativeError;
+    }
     spot.placed = true;
     delete spot.started;
+    delete spot.lastError;
+    if (box?.min && box?.max) spot.bounds = { min: box.min, max: box.max };
     console.log("[Structures] placed " + spec.key + " at " + spot.x + ", " + spot.z);
   } catch (e) {
     if (e.stage !== "loading") spot.tries = (spot.tries ?? 0) + 1;
@@ -164,8 +176,51 @@ function report(player) {
     else if ((s.tries ?? 0) >= MAX_TRIES) state = "§cgave up after " + s.tries + " attempts";
     else state = "§6waiting for a player nearby";
     const where = s && !s.none ? " §fX: " + s.x + " Z: " + s.z + (s.fallback ? " §7(biome not found)" : "") : "";
-    player.sendMessage(" §b" + spec.key + where + " " + state);
+    const last = s && !s.placed && s.lastError ? " §7(last error: " + s.lastError + ")" : "";
+    player.sendMessage(" §b" + spec.key + where + " " + state + last);
   }
+}
+
+/** Operator unlock: an interrupted (started) or abandoned (MAX_TRIES) spot becomes eligible again. */
+function retrySpot(player, target) {
+  const say = (translate, ...values) => { try { player?.sendMessage(values.length ? { translate, with: values.map(String) } : { translate }); } catch {} };
+  if (player && !(player.commandPermissionLevel >= 1)) return say("dbe.world.operator_only");
+  if (!target) return say("dbe.structures.retry.usage");
+  if (busy) return say("dbe.structures.retry.busy");
+  const plan = loadPlan();
+  const spot = plan.spots[target];
+  if (!SPECS.some((s) => s.key === target) || !spot || spot.none || spot.placed || !(spot.started || (spot.tries ?? 0) >= MAX_TRIES)) {
+    return say("dbe.structures.retry.invalid", target);
+  }
+  delete spot.started;
+  spot.tries = 0;
+  savePlan(plan);
+  console.warn("[Structures] " + target + " unlocked by operator " + (player?.name ?? "server") + (spot.lastError ? " (last error: " + spot.lastError + ")" : ""));
+  say("dbe.structures.retry.done", target, PLACE_DISTANCE);
+}
+
+try {
+  system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
+    customCommandRegistry.registerEnum("dbe:structure_spot", SPECS.map((s) => s.key));
+    customCommandRegistry.registerCommand({
+      name: "dbe:structures_retry",
+      description: "Unlock an interrupted or abandoned planned structure (operators)",
+      permissionLevel: mc.CommandPermissionLevel.GameDirectors,
+      mandatoryParameters: [{ name: "dbe:structure_spot", type: mc.CustomCommandParamType.Enum }],
+    }, (origin, target) => {
+      // Command callbacks run in restricted execution; the plan is changed on the next tick.
+      system.run(() => {
+        try {
+          retrySpot(origin?.sourceEntity, target);
+        } catch (e) {
+          console.warn("[Structures] retry command failed: " + e);
+        }
+      });
+      return { status: mc.CustomCommandStatus.Success };
+    });
+  });
+} catch (e) {
+  console.warn("[Structures] retry command registration failed: " + e);
 }
 
 world.afterEvents.worldLoad.subscribe(() => {
