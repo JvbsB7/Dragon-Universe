@@ -1480,6 +1480,12 @@
          "path" : "models/entity/races/hairs/beast_hair.geo.json"
       },
       {
+         "path" : "models/entity/races/hairs/du_spiky_a.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_spiky_a_ascended.geo.json"
+      },
+      {
          "path" : "models/entity/races/hairs/hair_base.geo.json"
       },
       {
@@ -2936,6 +2942,15 @@
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/caulifla/grayscale/caulifla_ultimate_form_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_spiky_a/du_spiky_a_ascended.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_spiky_a/du_spiky_a_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_spiky_a/du_spiky_a_grayscale.png"
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/gogeta/gogeta_base.png"
