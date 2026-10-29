@@ -11812,13 +11812,16 @@ var gw = class {
     }
     validateCode(sG) {
       let { playerId: sH, codeId: sI, expiry: sK } = gv(sG);
-      return sH.length && sH !== this.dbePlayer.player.name
-        ? { valid: !1, reason: "NotForPlayer", rewardId: sI }
-        : this.claimedCodes.includes(sI)
-          ? { valid: !1, reason: "AlreadyClaimed", rewardId: sI }
-          : Date.now() > sK || gx.isCodeUsed(sG)
-            ? { valid: !1, reason: "Expired", rewardId: sI }
-            : { valid: !0, reason: "Success", rewardId: sI };
+      // codeId desconhecido ou validade ilegível: falha sem marcar o código como usado
+      return !gx.get(sI) || !Number.isFinite(sK)
+        ? { valid: !1, reason: "Invalid", rewardId: sI }
+        : sH.length && sH !== this.dbePlayer.player.name
+          ? { valid: !1, reason: "NotForPlayer", rewardId: sI }
+          : this.claimedCodes.includes(sI)
+            ? { valid: !1, reason: "AlreadyClaimed", rewardId: sI }
+            : Date.now() > sK || gx.isCodeUsed(sG)
+              ? { valid: !1, reason: "Expired", rewardId: sI }
+              : { valid: !0, reason: "Success", rewardId: sI };
     }
   },
   gx = class {
@@ -18065,7 +18068,8 @@ var p8 = {
     name: "dbe:redeem",
     cheatsRequired: !1,
     description: "Resgata códigos especiais.",
-    permissionLevel: p3.Any,
+    // o formato do código não tem segredo (qualquer um pode gerá-lo), então só operadores resgatam
+    permissionLevel: p3.GameDirectors,
     mandatoryParameters: [{ name: "code", type: p4.String }],
   },
   callback: ({ sourceEntity: sG }, sH) => (
@@ -18377,6 +18381,11 @@ var pH = class {
     }
     async assignDimension(sG) {
       if (!this.getDimensionDataByOwner(sG)) {
+        // só angel_staff_dimension_0..49 são registradas (init)
+        if (this.lastGrantedDimensionIndex >= 49) {
+          console.warn("[Dragon Universe] Sem dimensões Angel Staff livres para " + sG);
+          return;
+        }
         let sH = pK + "_" + ++this.lastGrantedDimensionIndex,
           sI = pE.getDimension(sH);
         await this.setup(sI),
