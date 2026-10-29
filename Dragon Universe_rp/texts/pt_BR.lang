@@ -1,8 +1,8 @@
 ## manifest
-pack.credits=Dragon Universe v1.7.1 - baseado no Dragon Evolution de About04
+pack.credits=Dragon Universe - Equipe Dragon Universe
 pack.description=Desperte o seu poder interior, supere desafios incríveis e enfrente inimigos temíveis do universo de Dragon Ball.
 pack.name=Dragon Universe
-pack.news=§uOlá, fãs do Dragon Universe! Nas últimas atualizações, nosso foco foi otimizar o desempenho do add-on para que ele funcione melhor em servidores e em uma maior variedade de dispositivos. Diversas melhorias e refatorações foram realizadas, e por isso estamos lançando esta versão em beta para testes. Lembrem-se de que o desenvolvimento ainda está em andamento. Alguns conteúdos ainda estão sendo finalizados e alguns cabelos serão substituídos temporariamente até que suas versões definitivas estejam prontas. Agradecemos a todos que participarem dos testes e enviarem feedback!§r
+pack.news=§uBem-vindo ao Dragon Universe! Escolha sua raça, treine com os mestres, complete as sagas e reúna as Esferas do Dragão para fazer seus desejos. Bom jogo! - Equipe Dragon Universe§r
 
 
 
@@ -149,6 +149,7 @@ tile.dbe:yellow_tile.name=Azulejo Amarelo
 ## comandos
 command.pay.insufficient_balance=§cVocê não possui zenis suficientes
 command.pay.success=§aVocê transferiu %s zenis para %s
+command.pay.invalid_amount=§cValor inválido. Informe uma quantidade inteira de zenis maior que zero
 
 
 
@@ -218,7 +219,7 @@ zeni=Zeni
 
 ## doar
 donate.title=Apoie o Dragon Universe
-donate.text=Ao apoiar nosso add-on com um valor mínimo de R$14,90 e comprovar seu apoio, você receberá um código PATREON com duração de 1 mês para resgatar em qualquer mundo com Dragon Universe, quantas vezes quiser (limitado a 1 resgate por mundo). Envie o comprovante no nosso servidor e geraremos o código para você! Para resgatar, use: /dbe:redeem "CÓDIGO". Para jogadores fora do Brasil, doações são apenas via PayPal; para brasileiros, PIX também será válido. Para obter a chave PIX ou mais informações, acesse o Discord. Ao resgatar, você ganhará os itens abaixo:
+donate.text=Em breve, novidades sobre como apoiar o Dragon Universe. Obrigado por jogar! - Equipe Dragon Universe
 
 
 
@@ -539,6 +540,8 @@ message.safeRegion.noPermission.owner=§cVocê não tem permissão para quebrar 
 message.shadowDummy.cooldownWarning=§cAguarde %s para invocar outra sombra de treino
 message.shenron.summoned=§6As %s Esferas do Dragão foram reunidas. %s invocou %s!
 message.shenron.wishGranted=§eSeu desejo foi concedido, até logo!
+message.shenron.busy=§eO dragão já está realizando os desejos de outro jogador. Aguarde a sua vez!
+message.shenron.noWishes=§eNão há desejos disponíveis para você no momento.
 message.summon.obstructedArea=§cVocê não pode invocar aqui. A área está obstruída!
 message.unlockedTransformation=§aNova forma alcançada: %s!
 ## conquistas
@@ -1176,16 +1179,16 @@ requirement.time_of_day.not_equal=Indisponível de %s
 ## servidor
 server.clear_lag.warn=§l§8[!] §r§eLimpeza do mundo em %s
 server.clear_lag.finish=§l§8[!] §r§q%s entidades foram removidas
-server.message.1=§6Quer se tornar Patreon? Use o cupom DBE10 e ganhe 10% de desconto no primeiro mês!
-server.message.2=§6Torne-se Patreon e tenha acesso a benefícios exclusivos para apoiadores!
-server.message.3=§6Quer apoiar o Dragon Universe? Conheça o Patreon e faça parte do crescimento do projeto!
-server.message.4=§6Seu apoio ajuda o Dragon Universe a continuar evoluindo! Torne-se Patreon hoje!
-server.message.5=§6Quer benefícios exclusivos? Confira as vantagens de ser Patreon!
-server.message.6=§6Não sabe como se tornar Patreon? Entre no nosso Discord e saiba mais!
-server.message.7=§6Quer adquirir um Bundle? Entre no nosso Discord e confira os pacotes disponíveis!
-server.message.8=§6Confira nossos Bundles exclusivos no Discord e escolha o que mais combina com você!
-server.message.9=§6Já viu nossos Bundles? Confira o Capsule Corp. Bundle e o Legendary Bundle no Discord!
-server.message.10=§6Quer itens exclusivos para sua aventura? Confira nossos Bundles disponíveis no Discord!
+server.message.1=§6Obrigado por jogar Dragon Universe!
+server.message.2=§6Dragon Universe - Equipe Dragon Universe
+server.message.3=§6Explore o mundo do Dragon Universe e fique mais forte!
+server.message.4=§6Treine, transforme-se e complete as sagas do Dragon Universe!
+server.message.5=§6Reúna as Esferas do Dragão e faça seus desejos no Dragon Universe!
+server.message.6=§6Visite os mestres para aprender novas técnicas no Dragon Universe!
+server.message.7=§6Complete missões para ganhar zeni e pontos no Dragon Universe!
+server.message.8=§6Dragon Universe - bom jogo!
+server.message.9=§6Desafie chefes poderosos e libere novas transformações no Dragon Universe!
+server.message.10=§6Boa aventura no Dragon Universe! - Equipe Dragon Universe
 ## grupos
 player_group.already_in_group=§l§8[!] §r§cVocê já faz parte de um grupo. Saia do atual para entrar em outro
 player_group.base.not_in_claim=§l§8[!] §r§cA base do grupo só pode ser definida dentro de um território do seu grupo.
@@ -1448,14 +1451,14 @@ ui.dbe.mentor.invite.button.confirm=Sim
 
 quest.saga_future_trunks_1.title=O Aviso
 quest.saga_future_trunks_1.text=Trunks do Futuro retorna gravemente ferido e traz uma notícia assustadora: um guerreiro chamado Goku Black está destruindo sua linha do tempo e exterminando toda a humanidade. Sem tempo a perder, vá até Bulma e ajude a consertar a Máquina do Tempo para salvar o futuro.
-quest.saga_future_trunks_2.title=Goku Black Surge
+quest.saga_future_trunks_2.title=Goku Black Aparece
 quest.saga_future_trunks_2.text=O impossível aconteceu... Goku Black apareceu nesta linha do tempo! Seu poder é assustador e sua presença ameaça o planeta inteiro. Enfrente-o antes que consiga escapar novamente para o futuro.
 quest.saga_future_trunks_3.title=Indo para o Futuro
 quest.saga_future_trunks_3.text=A Máquina do Tempo finalmente foi consertada. Entre nela e viaje para o futuro devastado de Trunks. Ajude os sobreviventes e lute ao lado de Trunks para acabar com o caos causado por Goku Black.
 
-quest.saga_future_trunks_3.objective_1.task_1.dialog_1=""
-quest.saga_future_trunks_3.objective_1.task_1.dialog_2=""
-quest.saga_future_trunks_3.objective_1.task_1.dialog_3=""
+quest.saga_future_trunks_3.objective_1.task_1.dialog_1=Consegui! A Máquina do Tempo está consertada, mas o combustível só dá para uma viagem de ida e volta.
+quest.saga_future_trunks_3.objective_1.task_1.dialog_2=Trunks está esperando por você. No futuro dele, Goku Black destruiu quase tudo e os sobreviventes vivem escondidos.
+quest.saga_future_trunks_3.objective_1.task_1.dialog_3=Entre e segure firme! Assim que eu ligar a máquina, você vai direto para o futuro. Cuidado: Black pode estar ainda mais forte. Boa sorte!
 
 quest.saga_future_trunks_3.objective_2.on_start.dialog_1=Goku Black: Humanos não passam de escória e devem ser eliminados.
 quest.saga_future_trunks_3.objective_2.on_start.dialog_2=Goku Black: Eu posso ver muito além de você, guerreiro... acima deste mundo, acima deste universo...
@@ -1543,3 +1546,23 @@ dbe.quest.staff.failed=§cNão foi possível confirmar a entrega do Bastão Mág
 dbe.travel.failed.lookup=§cO destino %s não está disponível. Peça ao responsável pelo mundo para verificar o carregamento da dimensão no Content Log antes de usar esse destino.
 dbe.travel.failed.preparation=§cNão foi possível iniciar a viagem ou preparar/validar a chegada em %s. Consulte o Content Log com o responsável pelo mundo.
 dbe.travel.failed.teleport=§cNão foi possível concluir ou confirmar a viagem para %s. Procure um local seguro e consulte o Content Log com o responsável pelo mundo.
+dbe.future.deferred_capacity=§eA cidade do Futuro foi adiada: o mundo não tem capacidade de carregamento suficiente agora. A viagem continua sem a cidade; ela será tentada novamente mais tarde.
+dbe.future.deferred_locked=§eA cidade do Futuro está pendente após uma colocação interrompida. A viagem continua sem a cidade; um operador pode verificá-la com /dbe:future_city status.
+dbe.world.operator_only=§cApenas operadores podem usar este comando.
+dbe.future_city.usage=§eUse: /dbe:future_city status | preview | apply <código>
+dbe.future_city.status.loaded=§aCidade do Futuro: colocada.
+dbe.future_city.status.pending=§eCidade do Futuro: ainda não colocada; será preparada na próxima visita ao Futuro.
+dbe.future_city.status.locked=§cCidade do Futuro: colocação interrompida (trava ativa). Use /dbe:future_city preview para verificar o terreno.
+dbe.future_city.status.deferred=§eCidade do Futuro: adiada nesta sessão. Motivo técnico: %s
+dbe.future_city.busy=§cHá uma preparação, verificação ou reparo do Futuro em andamento. Tente novamente depois.
+dbe.future_city.not_locked=§eNão há trava da cidade do Futuro para liberar.
+dbe.future_city.checking=§eVerificando %s áreas da cidade do Futuro. Aguarde.
+dbe.future_city.intact=§aO terreno da cidade do Futuro está intacto. Para liberar uma nova tentativa: /dbe:future_city apply %s
+dbe.future_city.changed=§cO terreno da cidade do Futuro foi alterado; a trava foi mantida. Detalhe técnico: %s
+dbe.future_city.no_preview=§cNenhuma verificação correspondente. Execute preview novamente.
+dbe.future_city.unlocked=§aTrava da cidade do Futuro liberada. A cidade será preparada na próxima visita ao Futuro.
+dbe.future_city.failed=§cA verificação da cidade do Futuro parou. Detalhe técnico: %s
+dbe.structures.retry.usage=§eUse: /dbe:structures_retry <estrutura>
+dbe.structures.retry.busy=§cUma estrutura está sendo colocada agora. Tente novamente depois.
+dbe.structures.retry.invalid=§cNão há nada para tentar novamente em %s.
+dbe.structures.retry.done=§a%s liberada. Ela será colocada quando um jogador chegar a %s blocos do local.

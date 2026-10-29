@@ -1,6 +1,6 @@
 # 🐉 Dragon Universe
 
-**Dragon Universe** é um projeto de reformulação e expansão de uma addon de Dragon Ball para Minecraft Bedrock, baseada no **Dragon Evolution** de About04 (ver [créditos](docs/CREDITS.md)). O objetivo é transformar a base herdada em um projeto organizado, estável e expansível, com novas mecânicas, transformações, habilidades e sistemas de progressão inspirados no anime e no mangá.
+**Dragon Universe** é um projeto de reformulação e expansão de um add-on de Dragon Ball para Minecraft Bedrock, mantido pela Equipe Dragon Universe (ver [créditos](docs/CREDITS.md)). O objetivo é transformar a base herdada em um projeto organizado, estável e expansível, com novas mecânicas, transformações, habilidades e sistemas de progressão inspirados no anime e no mangá.
 
 ## 🎯 Objetivos
 - Adicionar transformações e habilidades inspiradas no universo e no mangá de Dragon Ball.
@@ -91,7 +91,7 @@ Dragon Universe/
 │  ├─ SYSTEMS.md              ← inventário de raças, skills, missões, NPCs, planetas
 │  ├─ KNOWN_ISSUES.md         ← bugs confirmados e riscos
 │  ├─ ROADMAP.md              ← fases, prioridades e checklist de testes
-│  └─ CREDITS.md              ← autor original e equipe
+│  └─ CREDITS.md              ← Equipe Dragon Universe
 ├─ tools/                     ← validação automática (Node, sem dependências)
 ├─ Dragon Universe_bp/           ← Behavior Pack (lógica)
 └─ Dragon Universe_rp/           ← Resource Pack (visual, som, UI, textos)
@@ -145,6 +145,5 @@ Detalhes, limites e cuidados (ex.: transformações novas devem ser acrescentada
 
 ## 👥 Créditos
 
-- Projeto original: **Dragon Evolution**, por **About04** — ver [docs/CREDITS.md](docs/CREDITS.md).
-- Dragon Universe: equipe **[preencher]**.
+- Dragon Universe: **Equipe Dragon Universe** — ver [docs/CREDITS.md](docs/CREDITS.md).
 - Dragon Ball é marca registrada de seus criadores; este é um projeto de fãs, sem ligação oficial.
