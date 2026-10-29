@@ -19594,8 +19594,9 @@ var rk = {
             await this.loadAsync(id, placement);
             this.queueSet.delete(id);
           } catch (error) {
-            console.warn("[Structures] " + id + ": " + (error.stack ?? error));
-            if (error.stage !== "loading") this.queueSet.delete(id);
+            // Bedrock stacks carry only the frames, so log the message too.
+            console.warn("[Structures] " + id + ": " + String(error) + (error?.stack ? "\n" + error.stack : ""));
+            if (error?.stage !== "loading") this.queueSet.delete(id);
           }
         }
       } finally {
@@ -19616,24 +19617,34 @@ var rk = {
         this.clearedLegacyAreas.add(sG);
       }
       if (this.hasLoaded(sG)) return;
-      if (this.placingStructureIds.includes(sG))
-        throw new Error("Structure placement was interrupted: " + sG + "; inspect a world copy before retrying. Existing blocks were preserved");
+      // Still marked as placing: the world closed before markLoaded. A fixed .mcstructure places the same blocks
+      // again, so the placement is resumed instead of leaving a permanent hole.
+      const resumed = this.placingStructureIds.includes(sG);
+      if (resumed) console.warn("[Structures] " + sG + ": placement was interrupted in a previous session; placing it again");
       const { dimension, location, structureId } = sH, size = rk[structureId];
       if (!size || ![location.x, location.y, location.z].every(Number.isInteger))
         throw new Error("Unknown structure bounds or invalid origin: " + structureId);
       const end = { x: location.x + size.x - 1, y: location.y + size.y - 1, z: location.z + size.z - 1 };
       const area = await duAcquireLoadedArea(dimension, location, end, "structure " + sG);
       try {
-        const placing = [...this.placingStructureIds, sG];
-        bG(rj, "structures").set("placing", placing);
-        this.placingStructureIds = placing;
-        if (structureId === "dbe:lookout" && !rj.getDynamicProperty("lookoutLoaded")) {
-          dimension.fillBlocks(new ry(
-            { x: rx.lookoutLocation.x, y: -64, z: rx.lookoutLocation.z },
-            { x: rx.lookoutLocation.x, y: 218, z: rx.lookoutLocation.z }), "minecraft:smooth_quartz");
-          rj.setDynamicProperty("lookoutLoaded", !0);
+        if (!resumed) {
+          const placing = [...this.placingStructureIds, sG];
+          bG(rj, "structures").set("placing", placing);
+          this.placingStructureIds = placing;
         }
-        rj.structureManager.place(structureId, dimension, location);
+        try {
+          if (structureId === "dbe:lookout" && !rj.getDynamicProperty("lookoutLoaded")) {
+            dimension.fillBlocks(new ry(
+              { x: rx.lookoutLocation.x, y: -64, z: rx.lookoutLocation.z },
+              { x: rx.lookoutLocation.x, y: 218, z: rx.lookoutLocation.z }), "minecraft:smooth_quartz");
+            rj.setDynamicProperty("lookoutLoaded", !0);
+          }
+          rj.structureManager.place(structureId, dimension, location);
+        } catch (error) {
+          // An exception ends the attempt: leave placing so the next region load can try again.
+          this.clearPlacing(sG);
+          throw error;
+        }
         await rf.waitTicks(20);
         this.markLoaded(sG);
       } finally {
@@ -19644,8 +19655,11 @@ var rk = {
       const saved = bG(rj, "structures"), loaded = [...this.loadedStructureIds, sG];
       saved.set("loaded", loaded);
       this.loadedStructureIds = loaded;
+      this.clearPlacing(sG);
+    }
+    clearPlacing(sG) {
       const placing = this.placingStructureIds.filter(id => id !== sG);
-      saved.set("placing", placing);
+      bG(rj, "structures").set("placing", placing);
       this.placingStructureIds = placing;
     }
   },
