@@ -1,3 +1,4 @@
+import { acquireLoadedArea, releaseLoadedArea, safeTeleport, travelOrigin, safeReturnToEarth, reportTravelFailure, physicalDestinationId } from "./travel_safety.js";
 /**
  * Hell dimension (dbe:hell)
  *
@@ -278,8 +279,15 @@ function runJobAsync(gen) {
   });
 }
 
-async function runExclusive(gen, key) {
-  while (busy) await waitTicks(2);
+async function runExclusive(gen, key, strict = false) {
+  const deadline = system.currentTick + 600;
+  while (busy) {
+    if (system.currentTick >= deadline) {
+      if (strict) throw new Error("Terrain preparation queue timed out");
+      return;
+    }
+    await waitTicks(2);
+  }
   busy = true;
   try {
     await runJobAsync(gen);
@@ -287,6 +295,7 @@ async function runExclusive(gen, key) {
   } catch (e) {
     retryAt.set(key, system.currentTick + 100);
     console.warn("[Hell] chunk " + key + " failed: " + e);
+    if (strict) throw e;
   } finally {
     busy = false;
     // keep generating straight away so fast travellers do not outrun the terrain
@@ -401,10 +410,10 @@ function scan() {
 
 // ---------------------------------------------------------------- travel
 
-function escapeToOtherWorld(player) {
+async function escapeToOtherWorld(player) {
   try {
     const r = OTHER_WORLD.returnTo;
-    player.teleport({ x: r.x, y: r.y, z: r.z }, { dimension: world.getDimension(OTHER_WORLD.dim), rotation: { x: 0, y: 0 } });
+    await safeTeleport(player, { x: r.x, y: r.y, z: r.z }, { dimension: world.getDimension(OTHER_WORLD.dim), rotation: { x: 0, y: 0 } });
     try {
       player.removeEffect("slow_falling");
     } catch (e) {
@@ -419,38 +428,26 @@ function escapeToOtherWorld(player) {
 
 /** Removes a temporary ticking area; never throws (the area may already be gone). */
 function removeArea(id) {
-  try {
-    world.tickingAreaManager.removeTickingArea(id);
-  } catch (e) {
-    /* already gone */
-  }
+  releaseLoadedArea(id);
 }
 
 async function prepareArea(dim, cx, cz) {
-  const id = "dbe:hell_travel_" + system.currentTick + "_" + Math.floor(Math.random() * 1e6);
-  let area = false;
-  try {
-    await world.tickingAreaManager.createTickingArea(id, {
-      dimension: dim,
-      from: { x: (cx - TERRAIN_RADIUS) * 16, y: MIN_Y, z: (cz - TERRAIN_RADIUS) * 16 },
-      to: { x: (cx + TERRAIN_RADIUS + 1) * 16 - 1, y: MIN_Y, z: (cz + TERRAIN_RADIUS + 1) * 16 - 1 },
-    });
-    area = true;
-  } catch (e) {
-    console.warn("[Hell] could not create ticking area: " + e);
-  }
+  const id = await acquireLoadedArea(dim,
+    { x: (cx - TERRAIN_RADIUS) * 16, y: MIN_Y, z: (cz - TERRAIN_RADIUS) * 16 },
+    { x: (cx + TERRAIN_RADIUS + 1) * 16 - 1, y: MIN_Y, z: (cz + TERRAIN_RADIUS + 1) * 16 - 1 },
+    "hell_dimension.js: destination preparation");
   try {
     for (const [dx, dz] of OFFSETS_TERRAIN) {
-      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainJob(dim, cx + dx, cz + dz), "t" + dx + "," + dz);
+      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 0) yield* terrainJob(dim, cx + dx, cz + dz); })(), "t" + dx + "," + dz, true);
     }
     for (const [dx, dz] of OFFSETS_DECOR) {
-      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(dim, cx + dx, cz + dz), "d" + dx + "," + dz);
+      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 1) yield* decorateJob(dim, cx + dx, cz + dz); })(), "d" + dx + "," + dz, true);
     }
   } catch (e) {
-    if (area) removeArea(id);
+    releaseLoadedArea(id);
     throw e;
   }
-  return area ? id : null;
+  return id;
 }
 
 const travelling = new Set(); // player ids currently being sent to Hell
@@ -469,11 +466,16 @@ function rememberOrigin(player) {
 }
 
 async function sendToHell(player, fall = false) {
-  if (travelling.has(player.id) || player.dimension.id === DIM_ID) return;
+  if (travelling.has(player.id)) return;
   travelling.add(player.id);
   let areaId = null;
+  let phase = "origin";
   try {
+    if (player.dimension.id === DIM_ID) return;
+    phase = "lookup";
     const dim = world.getDimension(DIM_ID);
+    phase = "generation";
+    const origin = travelOrigin(player);
     if (fall) {
       // slow falling first, so the player survives the drop while the chunks below are built; the way back
       // is the Other World arrival point, not the spot in the void they fell from
@@ -489,58 +491,50 @@ async function sendToHell(player, fall = false) {
       player.sendMessage("§4Descending into Hell...");
     }
     areaId = await prepareArea(dim, chunkOf(SPAWN.x), chunkOf(SPAWN.z));
-    player.teleport(fall ? { x: SPAWN.x, y: FALL_START_Y, z: SPAWN.z } : SPAWN, { dimension: dim, rotation: { x: fall ? 90 : 0, y: 180 } });
+    phase = "teleport";
+    await safeTeleport(player, fall ? { x: SPAWN.x, y: FALL_START_Y, z: SPAWN.z } : SPAWN, { origin, requireGround: !fall, dimension: dim, rotation: { x: fall ? 90 : 0, y: 180 } });
     if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
-    console.warn("[Hell] travel failed: " + e);
-    try {
-      player.sendMessage("§cCould not travel to Hell (is the dimension available in this game version?).");
-    } catch (e2) {
-      /* ignore */
-    }
+    reportTravelFailure(player, "Hell", e, DIM_ID, phase);
   } finally {
     if (areaId) removeArea(areaId);
     travelling.delete(player.id);
   }
 }
 
-function sendHome(player) {
+async function sendHome(player) {
+  if (travelling.has(player.id)) return;
+  travelling.add(player.id);
+  let destinationId = "minecraft:overworld", phase = "origin";
   try {
     const raw = player.getDynamicProperty(ORIGIN_PROP);
-    const o = typeof raw === "string" ? JSON.parse(raw) : null;
-    if (o && typeof o.x === "number" && typeof o.y === "number" && typeof o.z === "number" && o.d !== DIM_ID) {
-      player.teleport({ x: o.x, y: o.y, z: o.z }, { dimension: world.getDimension(o.d), rotation: { x: o.rx ?? 0, y: o.ry ?? 0 } });
-      player.setDynamicProperty(ORIGIN_PROP, undefined);
-      player.sendMessage("§aYou escaped from Hell.");
-      return;
-    }
-  } catch (e) {
-    console.warn("[Hell] could not use saved origin: " + e);
-  }
-  try {
-    const sp = player.getSpawnPoint();
-    if (sp) {
-      player.teleport({ x: sp.x + 0.5, y: sp.y, z: sp.z + 0.5 }, { dimension: sp.dimension });
+    let savedOrigin;
+    try { savedOrigin = typeof raw === "string" ? JSON.parse(raw) : undefined; } catch {}
+    if (savedOrigin && [savedOrigin.x, savedOrigin.y, savedOrigin.z].every(Number.isFinite) && typeof savedOrigin.d === "string" && savedOrigin.d !== "minecraft:overworld" && physicalDestinationId(savedOrigin.d) !== DIM_ID) {
+      destinationId = physicalDestinationId(savedOrigin.d);
+      phase = "lookup";
+      const dimension = world.getDimension(destinationId);
+      phase = "teleport";
+      await safeTeleport(player, { x: savedOrigin.x, y: savedOrigin.y, z: savedOrigin.z }, {
+        dimension, requireGround: true,
+        rotation: Number.isFinite(savedOrigin.rx) && Number.isFinite(savedOrigin.ry) ? { x: savedOrigin.rx, y: savedOrigin.ry } : undefined,
+        label: "Hell saved return",
+      });
     } else {
-      player.teleport(world.getDefaultSpawnLocation(), { dimension: world.getDimension("minecraft:overworld") });
+      await safeReturnToEarth(player, { savedOrigin, label: "Hell return to Earth" });
     }
-  } catch (e) {
-    console.warn("[Hell] return failed: " + e);
-  }
+    phase = "teleport";
+    if (raw !== undefined) player.setDynamicProperty(ORIGIN_PROP, undefined);
+    player.sendMessage("\u00a7aYou escaped from Hell.");
+  } catch (error) {
+    reportTravelFailure(player, "Hell return", error, destinationId, phase);
+  } finally { travelling.delete(player.id); }
 }
 
 // ---------------------------------------------------------------- setup
 
 try {
-  // If dimensions/hell.json was loaded this throws "already registered" and is ignored. Otherwise Hell is
-  // registered here as a plain void dimension (same fallback as Namek).
-  system.beforeEvents.startup.subscribe(({ dimensionRegistry }) => {
-    try {
-      dimensionRegistry.registerCustomDimension(DIM_ID);
-    } catch (e) {
-      /* already registered */
-    }
-  });
+  // dimensions/hell.json owns the native dimension definition and its biome/height settings.
 
   world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(() => {

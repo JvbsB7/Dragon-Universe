@@ -591,6 +591,8 @@
 					// dragon evolution
 					"v.isLive = !v.is_paperdoll;",
 					"v.isLive ? { v.race = q.property('dbe:race'); };",
+					// Keep the inherited Demon model/transformations for the renamed Glind race.
+					"v.race = v.race == 'glind' ? 'demon' : v.race;",
 					"v.transformation = !v.isLive ? v.transformation : q.property('dbe:transformation');",
 					"v.ultra_instinct = !v.isLive ? v.ultra_instinct : q.property('dbe:ultra_instinct');",
 					"v.fusion_type = !v.isLive ? v.fusion_type : q.property('dbe:fusion_type');",

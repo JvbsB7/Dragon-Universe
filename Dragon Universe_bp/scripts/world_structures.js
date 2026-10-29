@@ -15,6 +15,7 @@
  * Operators: /scriptevent dbe:structures -> lists every planned spot and whether it was already placed.
  */
 import * as mc from "@minecraft/server";
+import { acquireLoadedArea, releaseLoadedArea } from "./travel_safety.js";
 
 const { world, system } = mc;
 
@@ -45,7 +46,6 @@ const SPECS = [
   ...[20, 92, 164, 236, 308].map((angle, i) => ({ key: "city_" + (i + 1), structure: "dbe:city", biomes: CITY_BIOMES, angle, dist: 2000, area: 64 })),
 ];
 
-const waitTicks = (n) => new Promise((resolve) => system.runTimeout(resolve, n));
 
 function loadPlan() {
   try {
@@ -99,41 +99,28 @@ let busy = false;
 
 async function placeStructure(dim, spec, spot, plan) {
   busy = true;
-  const areaId = "dbe:structure_" + spec.key + "_" + system.currentTick;
-  let area = false;
+  let area;
   try {
-    try {
-      await world.tickingAreaManager.createTickingArea(areaId, {
-        dimension: dim,
-        from: { x: spot.x - spec.area, y: MIN_Y, z: spot.z - spec.area },
-        to: { x: spot.x + spec.area, y: MIN_Y, z: spot.z + spec.area },
-      });
-      area = true;
-    } catch (e) {
-      console.warn("[Structures] could not create ticking area for " + spec.key + ": " + e);
-    }
+    if (spot.started) throw new Error("Interrupted placement requires inspection of a world copy: " + spec.key);
+    area = await acquireLoadedArea(dim,
+      { x: spot.x - spec.area, y: MIN_Y, z: spot.z - spec.area },
+      { x: spot.x + spec.area, y: MIN_Y, z: spot.z + spec.area }, "structure " + spec.key);
     const center = { x: spot.x, y: 0, z: spot.z };
-    for (let i = 0; i < 60 && !dim.isChunkLoaded(center); i++) await waitTicks(5);
+    spot.started = true;
+    savePlan(plan);
     // y is ignored: the structure's own start height (heightmap projection) puts it on the surface
     world.structureManager.placeJigsawStructure(spec.structure, dim, center);
     spot.placed = true;
+    delete spot.started;
     console.log("[Structures] placed " + spec.key + " at " + spot.x + ", " + spot.z);
   } catch (e) {
-    spot.tries = (spot.tries ?? 0) + 1;
+    if (e.stage !== "loading") spot.tries = (spot.tries ?? 0) + 1;
     console.warn("[Structures] could not place " + spec.key + " (attempt " + spot.tries + "): " + e);
   } finally {
     try {
       savePlan(plan);
-    } catch (e) {
-      /* ignore */
-    }
-    if (area) {
-      try {
-        world.tickingAreaManager.removeTickingArea(areaId);
-      } catch (e) {
-        /* already gone */
-      }
-    }
+    } catch (e) { console.warn("[Structures] could not save placement state: " + e); }
+    if (area) releaseLoadedArea(area);
     busy = false;
   }
 }
@@ -156,7 +143,7 @@ function scan() {
   if (!players.length) return;
   for (const spec of SPECS) {
     const spot = plan.spots[spec.key];
-    if (!spot || spot.none || spot.placed || (spot.tries ?? 0) >= MAX_TRIES) continue;
+    if (!spot || spot.none || spot.placed || spot.started || (spot.tries ?? 0) >= MAX_TRIES) continue;
     if (players.some((p) => Math.hypot(p.location.x - spot.x, p.location.z - spot.z) < PLACE_DISTANCE)) {
       placeStructure(dim, spec, spot, plan);
       return;
@@ -173,6 +160,7 @@ function report(player) {
     if (!s) state = "§7not planned yet";
     else if (s.none) state = "§cno spot found";
     else if (s.placed) state = "§aplaced";
+    else if (s.started) state = "§cinterrupted placement; inspect a world copy before retrying";
     else if ((s.tries ?? 0) >= MAX_TRIES) state = "§cgave up after " + s.tries + " attempts";
     else state = "§6waiting for a player nearby";
     const where = s && !s.none ? " §fX: " + s.x + " Z: " + s.z + (s.fallback ? " §7(biome not found)" : "") : "";

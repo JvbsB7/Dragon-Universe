@@ -1,5 +1,7 @@
+import { acquireLoadedArea, releaseLoadedArea, safeTeleport, safeReturnToEarth, travelOrigin, reportTravelFailure, physicalDestinationId } from "./travel_safety.js";
+import { fillAirColumn, emptyChunk, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 /**
- * Kai dimension (dbe:kai)  -  the lush Kai planet from Dragon Ball Z
+ * Kaioshin dimension (dbe:kai)  -  the lush Kaioshin planet from Dragon Ball Z
  *
  * Bright green terraces, tall grass-capped rock pillars with striped brown cliffs, wide blue rivers that
  * tumble down the terrace steps as waterfalls, round broadleaf trees, giant lily-pad platforms with pink bulbs,
@@ -11,30 +13,30 @@
  * twice and player builds are never overwritten.
  *
  * Only vanilla blocks are used; the colours (grass, leaves, water, sky, fog) come from the client biome in the
- * resource pack (biomes/kai.client_biome.json + fogs/kai_fog_setting.json).
+ * resource pack (biomes/kaioshin.client_biome.json + fogs/kaioshin_fog_setting.json).
  *
- * Kai is also a planet in space: a green-and-pink sphere orbits the Orbital Station (space_planets.js). Fly into it,
- * pick "Planet Kai" in the Star Navigator or use /scriptevent dbe:space kai. Fly up to y >= 500 on Kai to go back to
- * the Orbital Station; "dbe:kai_return" takes you home (the spot you left Earth from).
+ * Kaioshin is also a planet in space: a green-and-pink sphere orbits the Orbital Station (space_planets.js). Fly into it,
+ * pick "Planet Kaioshin" in the Star Navigator or use /scriptevent dbe:space kaioshin. Fly up to y >= 500 on Kaioshin to go back to
+ * the Orbital Station; "dbe:kaioshin_return" takes you home (the spot you left Earth from).
  *
  * Travel (operators / cheats enabled):
- *   /scriptevent dbe:kai          -> go to Kai (remembers where you left from)
- *   /scriptevent dbe:kai_return   -> go back to that spot (or your spawn point)
- *   /scriptevent dbe:kai_sky      -> rebuild the sky bubbles
+ *   /scriptevent dbe:kaioshin          -> go to Kaioshin (remembers where you left from)
+ *   /scriptevent dbe:kaioshin_return   -> go back to that spot (or your spawn point)
+ *   /scriptevent dbe:kaioshin_sky      -> rebuild the sky bubbles
  */
 import * as mc from "@minecraft/server";
-import { isSpaceDimension } from "./space_planets.js"; // loads the space system too (Kai is a planet in orbit around the Orbital Station)
+import { isSpaceDimension } from "./space_planets.js"; // loads the space system too (Kaioshin is a planet in orbit around the Orbital Station)
 
 const { world, system, BlockVolume } = mc;
 
-const DIM_ID = "dbe:kai";
+const DIM_ID = "dbe:kai"; // Physical saved-world ID; changing it would create another dimension.
 const MIN_Y = -64;
 const TERRAIN_RADIUS = 3; // chunks generated around each player
 const DECOR_RADIUS = 2; // chunks decorated around each player (needs generated neighbours)
 const SCAN_TICKS = 4;
 const SEED = 0x4b4149;
-const CORE_SLAB = 8; // layers per fillBlocks call when building the stone core of a chunk
 
+// These persisted fog/property IDs remain stable for existing worlds and players.
 const FOG_PUSH = "fog @s push dbe:fog_kai dbe_kai";
 const FOG_POP = "fog @s remove dbe_kai";
 const ORIGIN_PROP = "dbe:kai_origin";
@@ -52,10 +54,10 @@ const AIR = "minecraft:air";
 const ROCK = [
   "minecraft:brown_terracotta",
   "minecraft:packed_mud",
-  "minecraft:terracotta",
+  "minecraft:hardened_clay",
   "minecraft:packed_mud",
   "minecraft:brown_terracotta",
-  "minecraft:terracotta",
+  "minecraft:hardened_clay",
 ];
 const ROCK_PINK = ["minecraft:pink_terracotta", "minecraft:magenta_terracotta", "minecraft:purple_terracotta", "minecraft:pink_terracotta"];
 
@@ -241,17 +243,30 @@ const nearSpawn = (x, z) => {
 // ---------------------------------------------------------------- block helpers
 
 function set(dim, x, y, z, block) {
-  try {
-    dim.setBlockType({ x, y, z }, block);
-  } catch (e) {
-    /* unloaded chunk or unknown block in this game version: skip */
-  }
+  if (!decorationWritable(dim, x, z)) return;
+  setTerrain(dim, x, y, z, block);
+}
+
+// In an interrupted, unmarked chunk only fill air. Never replace an existing player's blocks.
+function setTerrain(dim, x, y, z, block) {
+  checkWritable(x, z);
+  const existing = dim.getBlock({ x, y, z });
+  if (!existing) throw new Error("Kaioshin terrain chunk is unavailable");
+  if (existing.typeId === AIR) dim.setBlockType({ x, y, z }, block);
+}
+
+function fillTerrainColumn(dim, x, z, y1, y2, block) {
+  if (y2 < y1) return;
+  checkWritable(x, z);
+  fillAirColumn(dim, x, z, y1, y2, block);
 }
 
 /** Vertical fill in one column (ignored when empty). */
 function fillCol(dim, x, z, y1, y2, block) {
   if (y2 < y1) return;
-  dim.fillBlocks(new BlockVolume({ x, y: y1, z }, { x, y: y2, z }), block);
+  if (!decorationWritable(dim, x, z)) return;
+  checkWritable(x, z);
+  fillAirColumn(dim, x, z, y1, y2, block);
 }
 
 /** fillBlocks that normalises corners and splits big volumes (one huge call is rejected). */
@@ -259,12 +274,16 @@ function fill(dim, x1, y1, z1, x2, y2, z2, block) {
   const ax = Math.min(x1, x2), bx = Math.max(x1, x2);
   const ay = Math.min(y1, y2), by = Math.max(y1, y2);
   const az = Math.min(z1, z2), bz = Math.max(z1, z2);
-  const STEP = 24;
-  for (let x = ax; x <= bx; x += STEP) {
-    for (let z = az; z <= bz; z += STEP) {
-      dim.fillBlocks(new BlockVolume({ x, y: ay, z }, { x: Math.min(x + STEP - 1, bx), y: by, z: Math.min(z + STEP - 1, bz) }), block);
-    }
-  }
+  for (let x = ax; x <= bx; x++) for (let z = az; z <= bz; z++) { checkWritable(x, z); fillAirColumn(dim, x, z, ay, by, block); }
+}
+
+function checkWritable(x, z) {
+  if (world.getDynamicProperty?.(terrainOwnership(chunkOf(x), chunkOf(z))) === "protected") throw new Error("Kaioshin terrain is protected after a player edit; use reviewed terrain repair");
+}
+
+function decorationWritable(dim, x, z) {
+  const cx = chunkOf(x), cz = chunkOf(z);
+  return world.getDynamicProperty?.(terrainOwnership(cx, cz)) === "complete" && chunkState(dim, cx, cz) === 1;
 }
 
 // ---------------------------------------------------------------- chunk generation
@@ -297,26 +316,29 @@ function* terrainJob(dim, cx, cz) {
   }
   const coreTop = minH - 8;
 
-  // Solid core of the whole chunk, in thin slabs (one huge fillBlocks call is rejected by the game).
-  for (let y = MIN_Y + 1; y <= coreTop; y += CORE_SLAB) {
-    const top = Math.min(y + CORE_SLAB - 1, coreTop);
-    dim.fillBlocks(new BlockVolume({ x: x0, y, z: z0 }, { x: x0 + 15, y: top, z: z0 + 15 }), STONE);
-    if (((y - MIN_Y) / CORE_SLAB) % 6 === 5) yield;
+  // Read before each unfiltered column fill so retries preserve existing blocks even in empty subchunks.
+  for (let i = 0; i < 16; i++) {
+    for (let j = 0; j < 16; j++) {
+      if (world.getDynamicProperty?.(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin generation stopped after a player edit; use reviewed terrain repair");
+      fillTerrainColumn(dim, x0 + i, z0 + j, MIN_Y + 1, coreTop, STONE);
+    }
+    yield;
   }
   yield;
 
   const tops = new Array(256); // y of the highest solid / water block of each column (for the safety net)
   for (let i = 0; i < 16; i++) {
     for (let j = 0; j < 16; j++) {
+      if (world.getDynamicProperty?.(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin generation stopped after a player edit; use reviewed terrain repair");
       const x = x0 + i;
       const z = z0 + j;
       const h = H[(i + 1) * 18 + (j + 1)];
       if (isRiver(x, z)) {
         // river: sand bed 4 below the bank, water up to 1 below the bank; on terrace steps this makes waterfalls
         const bed = h - 4;
-        fillCol(dim, x, z, coreTop + 1, bed - 1, STONE);
-        set(dim, x, bed, z, SAND);
-        fillCol(dim, x, z, bed + 1, h - 1, WATER);
+        fillTerrainColumn(dim, x, z, coreTop + 1, bed - 1, STONE);
+        setTerrain(dim, x, bed, z, SAND);
+        fillTerrainColumn(dim, x, z, bed + 1, h - 1, WATER);
         tops[i * 16 + j] = h - 1;
         continue;
       }
@@ -328,13 +350,13 @@ function* terrainJob(dim, cx, cz) {
       const hi = Math.max(n1, n2, n3, n4);
       const face = hi - h >= 2; // standing below a higher neighbour: a cliff face, bare rock
       const rockFrom = lo - 1; // striped rock down to just below the lowest neighbour (visible wall)
-      fillCol(dim, x, z, coreTop + 1, rockFrom - 1, STONE);
+      fillTerrainColumn(dim, x, z, coreTop + 1, rockFrom - 1, STONE);
       if (face) {
-        fillCol(dim, x, z, Math.max(rockFrom, coreTop + 1), h, rockAt(x, z));
+        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h, rockAt(x, z));
       } else {
-        fillCol(dim, x, z, Math.max(rockFrom, coreTop + 1), h - 2, rockAt(x, z));
-        set(dim, x, h - 1, z, DIRT);
-        set(dim, x, h, z, GRASS);
+        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h - 2, rockAt(x, z));
+        setTerrain(dim, x, h - 1, z, DIRT);
+        setTerrain(dim, x, h, z, GRASS);
       }
       tops[i * 16 + j] = h;
     }
@@ -343,16 +365,42 @@ function* terrainJob(dim, cx, cz) {
 
   // Safety net: make sure the terrain really is there before the chunk is marked as done. If it is not
   // (chunk unloaded mid-job, engine refused a fill...) throw, so the chunk is retried instead of being a hole.
-  for (const [i, j] of [[0, 0], [15, 0], [0, 15], [15, 15], [8, 8], [3, 12]]) {
-    const b = dim.getBlock({ x: x0 + i, y: tops[i * 16 + j], z: z0 + j });
-    const core = dim.getBlock({ x: x0 + i, y: MIN_Y + 1, z: z0 + j });
-    if (!b || b.typeId === AIR || !core || core.typeId !== STONE) {
-      throw new Error("terrain verification failed in chunk " + cx + "," + cz);
+  for (let column = 0; column < 256; column++) {
+    const i = Math.floor(column / 16), j = column % 16;
+    const x = x0 + i, z = z0 + j, top = tops[column];
+    for (const span of repairColumn(x, z)) for (let y = span.from; y <= span.to; y++) {
+      const block = dim.getBlock({ x, y, z }), waterLayer = span.type === WATER;
+      if (!block || block.typeId === AIR || (waterLayer ? !block.isSolid && !block.isLiquid : !block.isSolid || block.isLiquid)) {
+        throw new Error("Kaioshin terrain verification failed at " + x + "," + y + "," + z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type + (waterLayer ? " water layer or existing solid block" : " solid non-liquid foundation") + ", observed " + (block?.typeId ?? "unavailable") + " (solid=" + block?.isSolid + ", liquid=" + block?.isLiquid + "); core=" + (MIN_Y + 1) + ".." + top);
+      }
     }
+    if (column % 16 === 15) yield;
   }
-  // markers (written last): bedrock floor = terrain done; x0+1 is stone until decorated
-  dim.fillBlocks(new BlockVolume({ x: x0, y: MIN_Y, z: z0 }, { x: x0 + 15, y: MIN_Y, z: z0 + 15 }), "minecraft:bedrock");
+  // Keep the terrain sentinel (x0,z0) untouched until every other marker write succeeds.
+  // Filling the entire floor with bedrock first could incorrectly commit decoration on interruption.
+  if (world.getDynamicProperty?.(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin generation stopped after a player edit");
+  dim.fillBlocks(new BlockVolume({ x: x0 + 2, y: MIN_Y, z: z0 }, { x: x0 + 15, y: MIN_Y, z: z0 }), "minecraft:bedrock");
+  dim.fillBlocks(new BlockVolume({ x: x0, y: MIN_Y, z: z0 + 1 }, { x: x0 + 15, y: MIN_Y, z: z0 + 15 }), "minecraft:bedrock");
   dim.setBlockType({ x: x0 + 1, y: MIN_Y, z: z0 }, STONE);
+  dim.setBlockType({ x: x0, y: MIN_Y, z: z0 }, "minecraft:bedrock");
+}
+
+const terrainOwnership = (cx, cz) => "dbe:kai_terrain_v2:" + cx + "," + cz;
+function* ownedTerrainJob(dim, cx, cz) {
+  const state = world.getDynamicProperty(terrainOwnership(cx, cz));
+  if (["legacy", "complete", "protected"].includes(state)) return;
+  if (state !== "building") {
+    world.setDynamicProperty(terrainOwnership(cx, cz), "inspecting");
+    if (!(yield* emptyChunk(dim, cx, cz, MIN_Y, 319))) {
+      if (world.getDynamicProperty(terrainOwnership(cx, cz)) !== "protected") world.setDynamicProperty(terrainOwnership(cx, cz), "legacy");
+      console.warn("[Kaioshin] Unowned nonempty chunk " + cx + "," + cz + " preserved; use a reviewed dbe:kaioshin_repair preview on a world copy");
+      return;
+    }
+    if (world.getDynamicProperty(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin ownership inspection interrupted by a player edit");
+    world.setDynamicProperty(terrainOwnership(cx, cz), "building");
+  }
+  yield* terrainJob(dim, cx, cz);
+  world.setDynamicProperty(terrainOwnership(cx, cz), "complete");
 }
 
 // ---------------------------------------------------------------- decoration
@@ -462,38 +510,45 @@ function* decorateJob(dim, cx, cz) {
   }
   yield;
 
+  checkWritable(x0, z0);
   dim.setBlockType({ x: x0 + 1, y: MIN_Y, z: z0 }, "minecraft:bedrock");
 }
 
 // ---------------------------------------------------------------- job runner (one chunk job at a time)
 
 let busy = false;
+let repairing = false;
 const retryAt = new Map();
 
 function runJobAsync(gen) {
-  return new Promise((resolve, reject) => {
-    system.runJob(
-      (function* () {
-        try {
-          yield* gen;
-          resolve();
-        } catch (e) {
-          reject(e);
-        }
-      })()
-    );
-  });
+  return runTerrainJob(gen, { label: "Kaioshin preparation" });
 }
 
-async function runExclusive(gen, key) {
-  while (busy) await waitTicks(2);
+async function runExclusive(gen, key, strict = false) {
+  if (repairing) {
+    if (strict) throw new Error("Kaioshin terrain repair is active; retry after it finishes");
+    return;
+  }
+  const deadline = system.currentTick + 600;
+  while (busy) {
+    if (system.currentTick >= deadline) {
+      if (strict) throw new Error("Terrain preparation queue timed out");
+      return;
+    }
+    await waitTicks(2);
+  }
+  if (repairing) {
+    if (strict) throw new Error("Kaioshin terrain repair is active; retry after it finishes");
+    return;
+  }
   busy = true;
   try {
     await runJobAsync(gen);
     retryAt.delete(key);
   } catch (e) {
     retryAt.set(key, system.currentTick + 100);
-    console.warn("[Kai] chunk " + key + " failed: " + e);
+    console.warn("[Kaioshin] chunk " + key + " failed: " + e);
+    if (strict) throw e;
   } finally {
     busy = false;
     // keep generating straight away so fast travellers do not outrun the terrain
@@ -514,7 +569,7 @@ function canRetry(key) {
 
 // ---------------------------------------------------------------- per-player scan
 
-const inKai = new Map(); // player id -> was in Kai at last scan
+const inKaioshin = new Map(); // player id -> was in Kaioshin at last scan
 
 function scan() {
   const players = world.getPlayers();
@@ -522,8 +577,8 @@ function scan() {
   // fog on enter / leave
   for (const p of players) {
     const now = p.dimension.id === DIM_ID;
-    if (now !== (inKai.get(p.id) || false)) {
-      inKai.set(p.id, now);
+    if (now !== (inKaioshin.get(p.id) || false)) {
+      inKaioshin.set(p.id, now);
       try {
         p.runCommand(now ? FOG_PUSH : FOG_POP);
       } catch (e) {
@@ -532,7 +587,7 @@ function scan() {
     }
   }
 
-  if (busy) return;
+  if (busy || repairing) return;
   let dim;
   try {
     dim = world.getDimension(DIM_ID);
@@ -561,8 +616,9 @@ function scan() {
       const cz = pcz + dz;
       const k = cx + "," + cz;
       if (!canRetry(k)) continue;
+      if (["legacy", "protected"].includes(world.getDynamicProperty(terrainOwnership(cx, cz)))) continue;
       if (chunkState(dim, cx, cz) === 0) {
-        runExclusive(terrainJob(dim, cx, cz), k);
+        runExclusive(ownedTerrainJob(dim, cx, cz), k);
         return;
       }
     }
@@ -572,6 +628,7 @@ function scan() {
       const k = cx + "," + cz;
       if (!canRetry(k)) continue;
       if (chunkState(dim, cx, cz) !== 1) continue;
+      if (world.getDynamicProperty(terrainOwnership(cx, cz)) !== "complete") continue;
       if (NEIGHBOURS.every(([nx, nz]) => chunkState(dim, cx + nx, cz + nz) >= 1)) {
         runExclusive(decorateJob(dim, cx, cz), "d" + k);
         return;
@@ -607,31 +664,11 @@ function* bubble(dim, cx, cy, cz, r, block) {
 }
 
 async function withArea(dim, id, x1, z1, x2, z2, y, work) {
-  let created = false;
+  const area = await acquireLoadedArea(dim, { x: x1, y: y, z: z1 }, { x: x2, y: y, z: z2 }, id);
   try {
-    await world.tickingAreaManager.createTickingArea(id, {
-      dimension: dim,
-      from: { x: x1, y, z: z1 },
-      to: { x: x2, y, z: z2 },
-    });
-    created = true;
-  } catch (e) {
-    console.warn("[Kai] could not create ticking area: " + e);
-  }
-  try {
-    for (let i = 0; i < 60; i++) {
-      if (dim.getBlock({ x: x1, y, z: z1 }) && dim.getBlock({ x: x2, y, z: z2 })) break;
-      await waitTicks(5);
-    }
     await work();
   } finally {
-    if (created) {
-      try {
-        world.tickingAreaManager.removeTickingArea(id);
-      } catch (e) {
-        /* already gone */
-      }
-    }
+    releaseLoadedArea(area);
   }
 }
 
@@ -648,13 +685,13 @@ function ensureSky(force = false) {
         const cx = s.x + b.dx;
         const cz = s.z + b.dz;
         const pad = 8;
-        await withArea(dim, "dbe:kai_sky_" + system.currentTick, cx - b.r - pad, cz - b.r - pad, cx + b.r + pad, cz + b.r + pad, b.y, async () => {
+        await withArea(dim, "dbe:kaioshin_sky_" + system.currentTick, cx - b.r - pad, cz - b.r - pad, cx + b.r + pad, cz + b.r + pad, b.y, async () => {
           await runJobAsync(bubble(dim, cx, b.y, cz, b.r, b.glass));
         });
       }
       world.setDynamicProperty(PROP_SKY, SKY_VERSION);
     } catch (e) {
-      console.warn("[Kai] sky bubbles failed (will retry on the next visit): " + e);
+      console.warn("[Kaioshin] sky bubbles failed (will retry on the next visit): " + e);
     } finally {
       skyBuild = null;
     }
@@ -666,44 +703,37 @@ function ensureSky(force = false) {
 
 /** Removes a temporary ticking area; never throws (the area may already be gone). */
 function removeArea(id) {
-  try {
-    world.tickingAreaManager.removeTickingArea(id);
-  } catch (e) {
-    /* already gone */
-  }
+  releaseLoadedArea(id);
 }
 
 async function prepareArea(dim, cx, cz) {
-  const id = "dbe:kai_travel_" + system.currentTick + "_" + Math.floor(Math.random() * 1e6);
-  let area = false;
-  try {
-    await world.tickingAreaManager.createTickingArea(id, {
-      dimension: dim,
-      from: { x: (cx - TERRAIN_RADIUS) * 16, y: MIN_Y, z: (cz - TERRAIN_RADIUS) * 16 },
-      to: { x: (cx + TERRAIN_RADIUS + 1) * 16 - 1, y: MIN_Y, z: (cz + TERRAIN_RADIUS + 1) * 16 - 1 },
-    });
-    area = true;
-  } catch (e) {
-    console.warn("[Kai] could not create ticking area: " + e);
-  }
+  if (repairing) throw new Error("Kaioshin terrain repair is active; retry after it finishes");
+  const radius = Math.min(TERRAIN_RADIUS, 1);
+  const id = await acquireLoadedArea(dim,
+    { x: (cx - radius) * 16, y: MIN_Y, z: (cz - radius) * 16 },
+    { x: (cx + radius + 1) * 16 - 1, y: MIN_Y, z: (cz + radius + 1) * 16 - 1 },
+    "Kaioshin destination preparation");
   try {
     for (const [dx, dz] of OFFSETS_TERRAIN) {
-      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainJob(dim, cx + dx, cz + dz), "t" + dx + "," + dz);
+      if (Math.abs(dx) > radius || Math.abs(dz) > radius) continue;
+      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 0) yield* ownedTerrainJob(dim, cx + dx, cz + dz); })(), "t" + dx + "," + dz, true);
     }
     for (const [dx, dz] of OFFSETS_DECOR) {
-      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(dim, cx + dx, cz + dz), "d" + dx + "," + dz);
+      if (Math.abs(dx) > radius || Math.abs(dz) > radius) continue;
+      if (world.getDynamicProperty(terrainOwnership(cx + dx, cz + dz)) !== "complete") continue;
+      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 1) yield* decorateJob(dim, cx + dx, cz + dz); })(), "d" + dx + "," + dz, true);
     }
   } catch (e) {
-    if (area) removeArea(id);
+    releaseLoadedArea(id);
     throw e;
   }
-  return area ? id : null;
+  return id;
 }
 
 const travelling = new Set();
 const lastUse = new Map();
 
-/** Remembers where (dimension, exact position, facing) the player left for Kai. Saved with the player. */
+/** Remembers where (dimension, exact position, facing) the player left for Kaioshin. Saved with the player. */
 const SPACE_ORIGIN_PROP = "dbe:namek_origin"; // "where you left Earth from", kept by the space system
 
 function rememberOrigin(player) {
@@ -722,105 +752,139 @@ function rememberOrigin(player) {
     const r = player.getRotation();
     player.setDynamicProperty(ORIGIN_PROP, JSON.stringify({ d: player.dimension.id, x, y, z, rx: r.x, ry: r.y }));
   } catch (e) {
-    console.warn("[Kai] could not remember origin: " + e);
+    console.warn("[Kaioshin] could not remember origin: " + e);
   }
 }
 
-async function sendToKai(player) {
+async function sendToKaioshin(player) {
   if (travelling.has(player.id)) return;
   if (system.currentTick - (lastUse.get(player.id) ?? -1000) < 100) return;
   lastUse.set(player.id, system.currentTick);
   travelling.add(player.id);
   let areaId = null;
+  let phase = "lookup";
   try {
     const dim = world.getDimension(DIM_ID);
+    phase = "generation";
+    const origin = travelOrigin(player);
     const s = findSpawn();
     rememberOrigin(player);
-    player.sendMessage("§dTravelling to Kai's planet...");
+    player.sendMessage("§dTravelling to Kaioshin Planet...");
     areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z));
-    player.teleport({ x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { dimension: dim, rotation: { x: 5, y: 180 } });
+    phase = "teleport";
+    await safeTeleport(player, { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { origin, requireGround: true, dimension: dim, rotation: { x: 5, y: 180 } });
     ensureSky();
     if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
-    console.warn("[Kai] travel failed: " + e);
-    try {
-      player.sendMessage("§cCould not travel to Kai (is the dimension available in this game version?).");
-    } catch (e2) {
-      /* ignore */
-    }
+    lastUse.delete(player.id);
+    reportTravelFailure(player, "Kaioshin", e, DIM_ID, phase);
   } finally {
     if (areaId) removeArea(areaId);
     travelling.delete(player.id);
   }
 }
 
-function sendHome(player) {
+async function sendHome(player) {
+  if (travelling.has(player.id)) return;
+  travelling.add(player.id);
+  let destinationId = "minecraft:overworld", phase = "origin";
   try {
     const raw = player.getDynamicProperty(ORIGIN_PROP);
-    const o = typeof raw === "string" ? JSON.parse(raw) : null;
-    if (o && typeof o.x === "number" && typeof o.y === "number" && typeof o.z === "number" && o.d !== DIM_ID) {
-      player.teleport({ x: o.x, y: o.y, z: o.z }, { dimension: world.getDimension(o.d), rotation: { x: o.rx ?? 0, y: o.ry ?? 0 } });
+    let o;
+    try { o = typeof raw === "string" ? JSON.parse(raw) : null; } catch {}
+    if (o && [o.x, o.y, o.z].every(Number.isFinite) && typeof o.d === "string" && physicalDestinationId(o.d) !== DIM_ID) {
+      if (o.d === "minecraft:overworld") await safeReturnToEarth(player, { savedOrigin: o, label: "Kaioshin return" });
+      else {
+        destinationId = physicalDestinationId(o.d);
+        phase = "lookup";
+        const dimension = world.getDimension(destinationId);
+        phase = "teleport";
+        await safeTeleport(player, { x: o.x, y: o.y, z: o.z }, { requireGround: true, dimension, rotation: { x: o.rx ?? 0, y: o.ry ?? 0 } });
+      }
+      phase = "teleport";
       player.setDynamicProperty(ORIGIN_PROP, undefined);
-      player.sendMessage("§aYou are back from Kai's planet.");
+      player.sendMessage("§aYou are back from Kaioshin Planet.");
       return;
     }
+    let spaceOrigin;
+    try { spaceOrigin = JSON.parse(player.getDynamicProperty(SPACE_ORIGIN_PROP)); } catch {}
+    await safeReturnToEarth(player, { savedOrigin: spaceOrigin, label: "Kaioshin return to Earth" });
+    phase = "teleport";
+    if (raw !== undefined) player.setDynamicProperty(ORIGIN_PROP, undefined);
+    if (spaceOrigin?.d === "minecraft:overworld") player.setDynamicProperty(SPACE_ORIGIN_PROP, undefined);
+    player.sendMessage("§aYou are back from Kaioshin Planet.");
   } catch (e) {
-    console.warn("[Kai] could not use saved origin: " + e);
-  }
-  try {
-    // came here through space: use the same trip home as the other planets ("Earth")
-    if (typeof player.getDynamicProperty(SPACE_ORIGIN_PROP) === "string") {
-      player.runCommand("scriptevent dbe:space earth");
-      return;
-    }
-  } catch (e) {
-    console.warn("[Kai] could not use the space return point: " + e);
-  }
-  try {
-    const sp = player.getSpawnPoint();
-    if (sp) {
-      player.teleport({ x: sp.x + 0.5, y: sp.y, z: sp.z + 0.5 }, { dimension: sp.dimension });
-    } else {
-      player.teleport(world.getDefaultSpawnLocation(), { dimension: world.getDimension("minecraft:overworld") });
-    }
-  } catch (e) {
-    console.warn("[Kai] return failed: " + e);
-  }
+    reportTravelFailure(player, "Kaioshin return", e, destinationId, phase);
+  } finally { travelling.delete(player.id); }
 }
 
 // ---------------------------------------------------------------- setup
 
 try {
-  // If dimensions/kai.json was loaded this throws "already registered" and is ignored. Otherwise Kai is
-  // registered here as a plain void dimension.
-  system.beforeEvents.startup.subscribe(({ dimensionRegistry }) => {
-    try {
-      dimensionRegistry.registerCustomDimension(DIM_ID);
-    } catch (e) {
-      /* already registered */
-    }
-  });
+  // dimensions/kaioshin.json owns the native dimension definition, including its legacy dbe:kai ID.
 
   world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(() => {
       try {
         scan();
       } catch (e) {
-        console.warn("[Kai] scan error: " + e);
+        console.warn("[Kaioshin] scan error: " + e);
       }
     }, SCAN_TICKS);
 
     system.afterEvents.scriptEventReceive.subscribe((ev) => {
       const src = ev.sourceEntity;
       if (!src || src.typeId !== "minecraft:player") return;
-      if (ev.id === "dbe:kai") sendToKai(src);
-      else if (ev.id === "dbe:kai_return") sendHome(src);
-      else if (ev.id === "dbe:kai_sky") ensureSky(true);
+      if (ev.id === "dbe:kai" || ev.id === "dbe:kaioshin") sendToKaioshin(src);
+      else if (ev.id === "dbe:kai_return" || ev.id === "dbe:kaioshin_return") sendHome(src);
+      else if (ev.id === "dbe:kai_sky" || ev.id === "dbe:kaioshin_sky") ensureSky(true);
     });
   });
 } catch (e) {
-  console.warn("[Kai] setup failed: " + e);
+  console.warn("[Kaioshin] setup failed: " + e);
 }
 
 // exposed for offline testing of the terrain shape
-export const __kaiTerrain = { heightAt, isRiver, pillarAt, findSpawn, rockAt, terrace, terrainJob, decorateJob, chunkState };
+const repairCore = new Map();
+function repairColumn(x, z) {
+  const cx = chunkOf(x), cz = chunkOf(z), key = cx + "," + cz;
+  let coreTop = repairCore.get(key);
+  if (coreTop === undefined) {
+    let min = Infinity;
+    for (let dx = 0; dx < 16; dx++) for (let dz = 0; dz < 16; dz++) min = Math.min(min, heightAt(cx * 16 + dx, cz * 16 + dz));
+    coreTop = min - 8;
+    repairCore.set(key, coreTop);
+  }
+  const h = heightAt(x, z);
+  if (isRiver(x, z)) return [
+    { from: MIN_Y + 1, to: h - 5, type: STONE },
+    { from: h - 4, to: h - 4, type: SAND },
+    { from: h - 3, to: h - 1, type: WATER },
+  ];
+  const neighbours = [heightAt(x - 1, z), heightAt(x + 1, z), heightAt(x, z - 1), heightAt(x, z + 1)];
+  const lo = Math.min(h, ...neighbours), face = Math.max(...neighbours) - h >= 2;
+  const rockFrom = Math.max(lo - 1, coreTop + 1);
+  const spans = [{ from: MIN_Y + 1, to: rockFrom - 1, type: STONE }, { from: rockFrom, to: face ? h : h - 2, type: rockAt(x, z) }];
+  if (!face) spans.push({ from: h - 1, to: h - 1, type: DIRT }, { from: h, to: h, type: GRASS });
+  return spans;
+}
+
+registerTerrainRepair({
+  eventId: "dbe:kaioshin_repair", dimensionId: DIM_ID, minY: MIN_Y, maxY: 319,
+  natural: new Set([AIR, STONE, GRASS, DIRT, SAND, WATER, "minecraft:bedrock", ...ROCK, ...ROCK_PINK,
+    "minecraft:oak_log", "minecraft:oak_leaves", "minecraft:short_grass", "minecraft:fern", "minecraft:green_terracotta", "minecraft:lime_terracotta", "minecraft:green_concrete", "minecraft:pink_concrete",
+    "minecraft:pink_stained_glass", "minecraft:white_stained_glass"]),
+  column: repairColumn,
+  async lock() {
+    if (repairing) throw new Error("Kaioshin repair is already running");
+    repairing = true;
+    const deadline = system.currentTick + 600;
+    try {
+      while (busy) { if (system.currentTick >= deadline) throw new Error("Kaioshin generation is busy; retry repair later"); await waitTicks(1); }
+      return () => { repairing = false; };
+    } catch (error) { repairing = false; throw error; }
+  },
+}, ["dbe:kai_repair"]);
+registerTerrainOwnership(DIM_ID, terrainOwnership);
+
+export const __kaioshinTerrain = { heightAt, isRiver, pillarAt, findSpawn, rockAt, terrace, terrainJob, ownedTerrainJob, decorateJob, chunkState, repairColumn };

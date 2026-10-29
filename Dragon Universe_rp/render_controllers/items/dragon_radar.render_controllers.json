@@ -13,6 +13,9 @@
                 }
             },
             "geometry": "Geometry.default",
+            "part_visibility": [
+                { "dragonBall": "q.has_property('dbe:dragon_radar_location') ? q.property('dbe:dragon_radar_location') != 0.0 : 0.0" }
+            ],
             "materials": [ { "*": "Material.default" } ],
             "textures": [ "t.life_time = q.life_time * 4; return Array.frames[t.life_time];" ]
         }

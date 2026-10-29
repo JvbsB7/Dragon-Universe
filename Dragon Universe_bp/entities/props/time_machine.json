@@ -14,6 +14,7 @@
         },
 
         "components": {
+            "minecraft:persistent": { },
             "minecraft:collision_box": {
                 "width": 2.7,
                 "height": 3.7

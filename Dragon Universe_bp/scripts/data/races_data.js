@@ -1176,7 +1176,7 @@ const races_data = [
     ],
   },
   {
-    id: "demon",
+    id: "glind",
     regenRate: 1.5,
     colorIndexes: {
       aura: 0,
@@ -1384,6 +1384,8 @@ const races_data = [
           },
         ],
       },
+      "ultra_ego",
+      "ultimate_form",
     ],
   },
 ];

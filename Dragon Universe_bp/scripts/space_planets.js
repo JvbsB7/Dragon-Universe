@@ -1,5 +1,7 @@
+import { acquireLoadedArea, releaseLoadedArea, safeTeleport, travelOrigin, isTravelPending, safeReturnToEarth, reportTravelFailure, isSafeStanding } from "./travel_safety.js";
+import { fillAirColumn, emptyChunk, runTerrainJob, registerTerrainOwnership, registerTerrainRepair } from "./terrain_repair.js";
 /**
- * Space system: Orbital Station + extra planets (Vegeta, Frieza Planet, Yardrat, Kai).
+ * Space system: Orbital Station + extra planets (Vegeta, Frieza Planet, Yardrat, Kaioshin).
  *
  * Every world here is a custom void dimension that this script builds chunk by chunk around the
  * players (same technique as namek_dimension.js: deterministic terrain, a marker row in the bottom
@@ -8,12 +10,12 @@
  *
  *   dbe:space          Orbital Station: a glass-domed saucer at the centre of a small "solar system".
  *                      Planet spheres orbit around it (Earth, Namek, Vegeta, Frieza Planet,
- *                      Yardrat, Universe 6 Arena, Kai). Fly into one to travel there. Asteroids float further out.
+ *                      Yardrat, Universe 6 Arena, Kaioshin). Fly into one to travel there. Asteroids float further out.
  *   dbe:vegeta         Red cratered wasteland with lava lakes.
  *   dbe:frieza_planet  Violet mesas, crystal spires and Frieza Force outposts.
  *   dbe:yardrat        Pink sea world with blossom trees and white domes.
- *   dbe:kai            King Kai's lush planet (kai_dimension.js). Also a planet sphere in space: fly into it to land
- *                      on Kai, fly up to y >= 500 there to return to the Orbital Station.
+ *   dbe:kai            Kaioshin's lush planet (kaioshin_dimension.js). Also a planet sphere in space: fly into it to land
+ *                      on Kaioshin, fly up to y >= 500 there to return to the Orbital Station.
  *   dbe:universe_6_arena  Tournament of Destroyers arena (universe_6_dimension.js). Also a planet sphere in space: fly
  *                      into it to land in the arena, fly up to y >= 500 there to return to the Orbital Station.
  *
@@ -23,7 +25,7 @@
  * Travel
  *   Star Navigator (dbe:star_navigator, craftable): use it to open a destination menu.
  *   Operators / cheats enabled:
- *     /scriptevent dbe:space <earth|space|namek|vegeta|frieza|yardrat|universe6|kai>
+ *     /scriptevent dbe:space <earth|space|namek|vegeta|frieza|yardrat|universe6|kaioshin>
  *
  * Saiyan Pod (dbe:saiyan_pod, craftable, dropped by Saiyans): a round Saiyan attack ball that works exactly like the Space Pod.
  * Space Pod (dbe:space_pod, craftable): place it, sit in and fly. It is fast and
@@ -43,13 +45,12 @@ const { world, system, BlockVolume } = mc;
 
 const MIN_Y = -64;
 const SCAN_TICKS = 4;
-const CORE_SLAB = 8; // layers per fillBlocks call when building the stone core of a chunk
 const ORIGIN_PROP = "dbe:namek_origin"; // shared with namek_dimension.js
 const NAMEK_ID = "dbe:namek";
 const U6_ID = "dbe:universe_6_arena"; // Tournament of Destroyers arena, handled by universe_6_dimension.js
 const U6_KEY = "universe6";
-const KAI_ID = "dbe:kai"; // Kai planet, handled by kai_dimension.js
-const KAI_KEY = "kai";
+const KAIOSHIN_ID = "dbe:kai"; // Kaioshin planet, handled by kaioshin_dimension.js
+const KAIOSHIN_KEY = "kaioshin";
 const NAVIGATOR_ITEM = "dbe:star_navigator";
 const POD_ID = "dbe:space_pod"; // rideable Space Pod: fast, travels with you between worlds
 const SAIYAN_POD_ID = "dbe:saiyan_pod"; // Saiyan Pod: same rules as the Space Pod, a faster round ship
@@ -170,13 +171,9 @@ const offsets = (r) => {
 };
 const NEIGHBOURS = offsetsWithin(1).filter((o) => o[0] !== 0 || o[1] !== 0);
 
-/** Safe block write (chunk edge / unloaded chunk: skip). */
+/** Required writes must fail the job; a missing branch is not completed decoration. */
 function put(dim, x, y, z, id) {
-  try {
-    dim.setBlockType({ x, y, z }, id);
-  } catch (e) {
-    /* ignore */
-  }
+  dim.setBlockType({ x, y, z }, id);
 }
 
 function fill(dim, x1, y1, z1, x2, y2, z2, id) {
@@ -184,11 +181,7 @@ function fill(dim, x1, y1, z1, x2, y2, z2, id) {
 }
 
 function tryFill(dim, x1, y1, z1, x2, y2, z2, id) {
-  try {
-    fill(dim, x1, y1, z1, x2, y2, z2, id);
-  } catch (e) {
-    /* ignore */
-  }
+  fill(dim, x1, y1, z1, x2, y2, z2, id);
 }
 
 /** Lumpy sphere. */
@@ -279,11 +272,8 @@ const LOOT_FALLBACK = {
 
 /** Places a chest and fills it from loot_tables/chests/space/<table>.json (script fallback if the command fails). */
 function lootChest(dim, x, y, z, table, rng) {
-  try {
-    dim.setBlockType({ x, y, z }, "minecraft:chest");
-  } catch (e) {
-    return;
-  }
+  if (dim.getBlock({ x, y, z })?.typeId === "minecraft:chest") return;
+  dim.setBlockType({ x, y, z }, "minecraft:chest");
   let filled = false;
   try {
     dim.runCommand("loot insert " + x + " " + y + " " + z + ' loot "chests/space/' + table + '"');
@@ -566,7 +556,7 @@ export function isSpaceDimension(dimId) {
 }
 
 // destinations offered by the menu / script event
-const DESTS = ["earth", "space", "namek", "vegeta", "frieza", "yardrat", U6_KEY, KAI_KEY];
+const DESTS = ["earth", "space", "namek", "vegeta", "frieza", "yardrat", U6_KEY, KAIOSHIN_KEY];
 
 // ---------------------------------------------------------------- planet terrain helpers
 
@@ -623,69 +613,116 @@ const villages = initVillages({
 
 // ---------------------------------------------------------------- chunk state
 
+const planetOwnership = (P, cx, cz) => "dbe:planet_terrain_v1:" + P.key + ":" + cx + "," + cz;
+const planetBuffer = (P, cx, cz) => "dbe:planet_buffer_v1710:" + P.key + ":" + cx + "," + cz;
+const BUFFER_NEIGHBORS = [[0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]];
+class PlanetPreservationError extends Error {
+  constructor(message) { super(message); this.name = "PlanetPreservationError"; }
+}
+function planetProvenance(P, cx, cz) {
+  const state = world.getDynamicProperty(planetOwnership(P, cx, cz)), buffer = world.getDynamicProperty(planetBuffer(P, cx, cz));
+  const match = typeof buffer === "string" && /^building-air:(0|[1-9]\d{0,2})$/.exec(buffer);
+  const progress = match && Number(match[1]) <= 256 * Math.ceil((P.liquidLevel - MIN_Y) / 64) ? Number(match[1]) : undefined;
+  const knownState = state === undefined || ["inspecting", "building", "complete", "legacy", "protected"].includes(state);
+  const knownBuffer = buffer === undefined || progress !== undefined || ["building", "ready", "converting", "profile", "legacy-profile"].includes(buffer);
+  const bufferOwned = buffer === undefined || ["building", "complete", "protected"].includes(state);
+  if (!knownState || !knownBuffer || !bufferOwned)
+    throw new PlanetPreservationError(P.key + " preserves unknown terrain/buffer provenance at " + cx + "," + cz + "; review this world copy before retrying");
+  return { state, buffer, progress };
+}
+function planetWritable(P, cx, cz, phase) {
+  const state = world.getDynamicProperty(planetOwnership(P, cx, cz));
+  if (state !== (phase === "terrain" ? "building" : "complete")) throw new PlanetPreservationError(P.key + " " + phase + " preserves " + (state ?? "unowned") + " chunk " + cx + "," + cz + "; review the world copy before terrain repair");
+}
+function planetColumn(P, x, z) {
+  const h = heightAt(P, x, z), wet = P.liquid !== null && h < P.liquidLevel;
+  const spans = [{ from: MIN_Y + 1, to: h - 4, type: P.stone }, { from: h - 3, to: h - 1, type: wet ? P.floor : P.sub }, { from: h, to: h, type: wet ? P.floor : P.top }];
+  if (wet) spans.push({ from: h + 1, to: P.liquidLevel, type: P.liquid });
+  return spans;
+}
+for (const P of Object.values(PLANETS)) {
+  registerTerrainOwnership(P.id, (cx, cz) => planetOwnership(P, cx, cz));
+  registerTerrainRepair({
+    eventId: "dbe:" + P.key + "_repair", dimensionId: P.id, minY: MIN_Y, maxY: 319,
+    natural: new Set([AIR, BEDROCK, P.top, P.sub, P.stone, P.floor, P.liquid, FALLBACK[P.key].soil, FALLBACK[P.key].rock].filter(Boolean)),
+    column: (x, z) => planetColumn(P, x, z),
+    // Explicit reviewed repair only: a bucket/imported liquid is never adopted by generation.
+    replaceable: (current, expected) => current === P.liquid && [P.top, P.sub, P.stone, P.floor].includes(expected),
+    async lock() {
+      if (repairing) throw new Error("Another space terrain repair is active");
+      repairing = true;
+      try { await waitForWriter(); return () => { repairing = false; }; }
+      catch (error) { repairing = false; throw error; }
+    },
+  });
+}
+
 /** 0 = not generated, 1 = terrain only, 2 = terrain + decoration, -1 = chunk not loaded. */
 function chunkState(dim, cx, cz) {
   const x0 = cx * 16;
   const z0 = cz * 16;
-  const a = dim.getBlock({ x: x0, y: MIN_Y, z: z0 });
-  if (!a) return -1;
-  if (a.typeId !== BEDROCK) return 0;
-  const b = dim.getBlock({ x: x0 + 1, y: MIN_Y, z: z0 });
-  if (!b) return -1;
-  return b.typeId === BEDROCK ? 2 : 1;
+  try {
+    const a = dim.getBlock({ x: x0, y: MIN_Y, z: z0 });
+    if (!a) return -1;
+    if (a.typeId !== BEDROCK) return 0;
+    const b = dim.getBlock({ x: x0 + 1, y: MIN_Y, z: z0 });
+    if (!b) return -1;
+    return b.typeId === BEDROCK ? 2 : 1;
+  } catch (error) {
+    if (/UnloadedChunksError|LocationInUnloadedChunk/.test(String(error))) return -1;
+    throw error;
+  }
 }
 
 // ---------------------------------------------------------------- planet generation
 
+// Each fresh chunk first receives a versioned solid buffer up to sea level. Adjacent
+// buffers contain native fluid updates while a chunk is converted to its real profile.
+// A 1.7.9 building marker without this separate proof never authorizes replacement.
+function* fillPlanetSpan(P, dim, x, z, from, to, type) {
+  const buffer = world.getDynamicProperty(planetBuffer(P, chunkOf(x), chunkOf(z)));
+  const convertible = buffer === "ready" || buffer === "converting";
+  const runs = []; let start;
+  for (let y = from; y <= to + 1; y++) {
+    const current = y <= to ? dim.getBlock({ x, y, z }) : undefined;
+    if (y <= to && !current) throw new Error(P.key + " terrain unavailable at " + x + "," + y + "," + z);
+    const scaffold = convertible && y <= P.liquidLevel && current?.typeId === P.stone;
+    if (y <= to && current.typeId !== type) {
+      if (!scaffold && (current.typeId !== AIR || convertible && y <= P.liquidLevel)) throw new PlanetPreservationError(P.key + " preserves changed buffer/profile " + current.typeId + " at " + x + "," + y + "," + z + "; required " + type);
+      start ??= y; continue;
+    }
+    if (start !== undefined) { runs.push({ from: start, to: y - 1 }); start = undefined; }
+  }
+  for (const run of runs) dim.fillBlocks(new BlockVolume({ x, y: run.from, z }, { x, y: run.to, z }), type);
+  yield;
+}
+
 function* terrainJob(P, dim, cx, cz) {
   const x0 = cx * 16;
   const z0 = cz * 16;
-  const hs = new Array(256);
-  let minH = 999;
   for (let i = 0; i < 16; i++) {
     for (let j = 0; j < 16; j++) {
-      const h = heightAt(P, x0 + i, z0 + j);
-      hs[i * 16 + j] = h;
-      if (h < minH) minH = h;
+      const x = x0 + i, z = z0 + j;
+      for (const span of planetColumn(P, x, z)) for (let y = span.from; y <= span.to; y += 64) {
+        planetWritable(P, cx, cz, "terrain");
+        yield* fillPlanetSpan(P, dim, x, z, y, Math.min(y + 63, span.to), span.type);
+      }
     }
   }
-  // solid core in thin slabs (one huge fill would exceed the engine's volume limit)
-  const coreTop = minH - 4;
-  let slabs = 0;
-  for (let y = MIN_Y + 1; y <= coreTop; y += CORE_SLAB) {
-    const top = Math.min(y + CORE_SLAB - 1, coreTop);
-    fill(dim, x0, y, z0, x0 + 15, top, z0 + 15, P.stone);
-    if (++slabs % 6 === 0) yield;
-  }
-  yield;
-  for (let i = 0; i < 16; i++) {
-    for (let j = 0; j < 16; j++) {
-      const h = hs[i * 16 + j];
-      const x = x0 + i;
-      const z = z0 + j;
-      const lo = minH - 3;
-      const wet = P.liquid !== null && h < P.liquidLevel;
-      if (h - 4 >= lo) fill(dim, x, lo, z, x, h - 4, z, P.stone);
-      const subLo = Math.max(lo, h - 3);
-      if (h - 1 >= subLo) fill(dim, x, subLo, z, x, h - 1, z, wet ? P.floor : P.sub);
-      dim.setBlockType({ x, y: h, z }, wet ? P.floor : P.top);
-      if (wet) fill(dim, x, h + 1, z, x, P.liquidLevel, z, P.liquid);
-    }
-    yield;
-  }
-  // verify before marking the chunk done (otherwise it is retried instead of left as a hole)
-  for (const [i, j] of [[0, 0], [15, 0], [0, 15], [15, 15], [8, 8], [3, 12]]) {
-    const h = hs[i * 16 + j];
-    const wet = P.liquid !== null && h < P.liquidLevel;
-    const at = wet ? P.liquidLevel : h;
-    const b = dim.getBlock({ x: x0 + i, y: at, z: z0 + j });
-    const core = dim.getBlock({ x: x0 + i, y: MIN_Y + 1, z: z0 + j });
-    if (!b || b.typeId === AIR || !core || core.typeId !== P.stone) {
-      throw new Error("terrain verification failed in chunk " + cx + "," + cz);
+  yield* verifyPlanetProfile(P, dim, cx, cz);
+}
+
+function* verifyPlanetProfile(P, dim, cx, cz) {
+  const x0 = cx * 16, z0 = cz * 16;
+  for (let i = 0; i < 16; i++) for (let j = 0; j < 16; j++) {
+    const x = x0 + i, z = z0 + j;
+    for (const span of planetColumn(P, x, z)) for (let y = span.from; y <= span.to; y++) {
+      const block = dim.getBlock({ x, y, z }), liquid = span.type === P.liquid;
+      if (!block || block.typeId === AIR || (liquid ? !block.isSolid && !block.isLiquid : !block.isSolid || block.isLiquid)) throw new Error(P.key + " terrain verification failed at " + x + "," + y + "," + z + "; expected " + span.type + ", observed " + (block?.typeId ?? "unavailable"));
+      if (block.typeId !== span.type) throw new PlanetPreservationError(P.key + " terrain preserves unexpected " + block.typeId + " at " + x + "," + y + "," + z + "; expected original profile " + span.type + "; review the world copy before repair");
+      if ((y - span.from + 1) % 64 === 0 || y === span.to) { planetWritable(P, cx, cz, "terrain"); yield; }
     }
   }
-  fill(dim, x0, MIN_Y, z0, x0 + 15, MIN_Y, z0 + 15, BEDROCK);
-  dim.setBlockType({ x: x0 + 1, y: MIN_Y, z: z0 }, P.stone); // "not decorated yet"
 }
 
 /** Levels a rectangle to height y (cuts hills, fills dips), topped with block `topId`. */
@@ -694,13 +731,9 @@ function* levelArea(c, x1, z1, x2, z2, y, topId) {
   for (let x = x1; x <= x2; x++) {
     for (let z = z1; z <= z2; z++) {
       const h = heightAt(P, x, z);
-      try {
-        if (h > y) dim.fillBlocks(new BlockVolume({ x, y: y + 1, z }, { x, y: h, z }), AIR);
-        else if (h < y) dim.fillBlocks(new BlockVolume({ x, y: h, z }, { x, y: y - 1, z }), P.stone);
-        dim.setBlockType({ x, y, z }, topId);
-      } catch (e) {
-        /* skip column */
-      }
+      if (h > y) dim.fillBlocks(new BlockVolume({ x, y: y + 1, z }, { x, y: h, z }), AIR);
+      else if (h < y) dim.fillBlocks(new BlockVolume({ x, y: h, z }, { x, y: y - 1, z }), P.stone);
+      dim.setBlockType({ x, y, z }, topId);
     }
     yield;
   }
@@ -805,7 +838,6 @@ function* decorateJob(P, dim, cx, cz) {
     }
     yield;
   }
-  dim.setBlockType({ x: x0 + 1, y: MIN_Y, z: z0 }, BEDROCK); // decorated
 }
 
 // ---------------------------------------------------------------- space generation
@@ -866,7 +898,7 @@ const SPHERE_DEFS = [
   { key: "yardrat", r: 9, ang: 250, dy: 26 },
   { key: U6_KEY, r: 10, ang: 310, dy: 4 },
   // added last: the seed of each sphere comes from its index, so the existing planets keep their look
-  { key: KAI_KEY, r: 10, ang: 340, dy: -8 },
+  { key: KAIOSHIN_KEY, r: 10, ang: 340, dy: -8 },
 ];
 const SPHERES = SPHERE_DEFS.map((d, i) => {
   const a = (d.ang * Math.PI) / 180;
@@ -907,8 +939,8 @@ function spherePick(S, x, y, z) {
       if (m > 0.84) return "minecraft:lime_concrete";
       if (n > 0.64) return "minecraft:magenta_concrete";
       return n < 0.36 ? "minecraft:light_blue_concrete" : "minecraft:purple_concrete";
-    case KAI_KEY:
-      // Kai: bright green terraces and rivers, brown striped cliffs, pink bubbles drifting in a magenta haze
+    case KAIOSHIN_KEY:
+      // Kaioshin: bright green terraces and rivers, brown striped cliffs, pink bubbles drifting in a magenta haze
       if (m > 0.84) return "minecraft:pink_concrete";
       if (n > 0.68) return "minecraft:brown_terracotta";
       if (n > 0.5) return "minecraft:lime_concrete";
@@ -1026,57 +1058,326 @@ function* spaceJob(dim, cx, cz) {
 // ---------------------------------------------------------------- job runner (one chunk job at a time)
 
 let busy = false;
+let busyActivity, repairing = false;
 const retryAt = new Map();
+const chunkJobs = new Map();
 
 const waitTicks = (n) => new Promise((resolve) => system.runTimeout(resolve, n));
 
-function runJobAsync(gen) {
-  return new Promise((resolve, reject) => {
-    system.runJob(
-      (function* () {
-        try {
-          yield* gen;
-          resolve();
-        } catch (e) {
-          reject(e);
+function scopedPlanetDimension(P, dim, cx, cz, phase, activity) {
+  const halo = phase === "decoration" ? 1 : 0;
+  const scope = { expected: new Map(), failed: false, error: undefined, operation: "starting", position: undefined };
+  // Retain this job's own writes after required-write verification drains expected.
+  // A later overlap still has to read and match that exact value before replacing it.
+  const written = new Map(), columns = new Map();
+  const fail = error => { if (!scope.failed) { scope.failed = true; scope.error = error; } throw error; };
+  const writable = (from, to) => {
+    if (![from.x, from.y, from.z, to.x, to.y, to.z].every(Number.isInteger) || from.x < (cx - halo) * 16 || to.x > (cx + halo + 1) * 16 - 1 || from.z < (cz - halo) * 16 || to.z > (cz + halo + 1) * 16 - 1 || from.y < MIN_Y || to.y > 319) throw new Error(P.key + " " + phase + " write exceeds its loaded footprint: " + JSON.stringify({ from, to }));
+    planetWritable(P, cx, cz, phase);
+    for (let x = chunkOf(from.x); x <= chunkOf(to.x); x++) for (let z = chunkOf(from.z); z <= chunkOf(to.z); z++) planetWritable(P, x, z, phase);
+  };
+  const remember = (from, to, block) => {
+    const type = typeof block === "string" ? block : block.type?.id ?? block.id;
+    if (!type) throw new Error("Cannot verify required block type");
+    for (let x = from.x; x <= to.x; x++) for (let z = from.z; z <= to.z; z++) for (let y = from.y; y <= to.y; y++) {
+      const key = x + "," + y + "," + z;
+      scope.expected.set(key, { x, y, z, type }); written.set(key, type);
+    }
+  };
+  const preserveExisting = (from, to, block) => {
+    const desired = typeof block === "string" ? block : block.type?.id ?? block.id;
+    if (!desired) throw new Error("Cannot verify required block type");
+    if (phase === "terrain" && desired === P.liquid) for (const proof of activity.containment?.values() ?? []) {
+      if (world.getDynamicProperty(proof.ownerKey) !== proof.owner || world.getDynamicProperty(proof.bufferKey) !== proof.buffer) throw new PlanetPreservationError(P.key + " fluid containment changed during preparation; preserve the neighboring player edit and retry after review");
+    }
+    // Prove the whole volume before the first native write, including foundation markers.
+    for (let x = from.x; x <= to.x; x++) for (let z = from.z; z <= to.z; z++) {
+      const columnKey = x + "," + z;
+      if (phase === "decoration" && !columns.has(columnKey)) columns.set(columnKey, planetColumn(P, x, z));
+      for (let y = from.y; y <= to.y; y++) {
+        const point = { x, y, z }, current = dim.getBlock(point);
+        if (!current) throw new Error(P.key + " write preflight unavailable at " + x + "," + y + "," + z);
+        activity.serial++;
+        if (current.typeId === desired || phase === "terrain" && current.typeId === AIR) continue;
+        const buffer = phase === "terrain" && world.getDynamicProperty(planetBuffer(P, chunkOf(x), chunkOf(z)));
+        if ((buffer === "ready" || buffer === "converting") && y > MIN_Y && y <= P.liquidLevel && current.typeId === P.stone) continue;
+        if (phase === "decoration") {
+          const key = x + "," + y + "," + z;
+          // This direct read proves a preceding write, even when both occur before a yield.
+          if (written.get(key) === current.typeId) continue;
+          const natural = y === MIN_Y ? (x === chunkOf(x) * 16 + 1 && z === chunkOf(z) * 16 ? P.stone : BEDROCK) : columns.get(columnKey).find(span => y >= span.from && y <= span.to)?.type ?? AIR;
+          if (current.typeId === natural) continue;
         }
-      })()
-    );
-  });
+        throw new PlanetPreservationError(P.key + " " + phase + " preserves unexpected " + current.typeId + " at " + x + "," + y + "," + z + "; required " + desired + "; review the world copy before retrying decoration or repair");
+      }
+    }
+  };
+  const guarded = new Proxy(dim, { get(target, name) {
+    if (name === "getBlock") return point => {
+      scope.lastRead = point;
+      try { const block = target.getBlock(point); if (!block) throw new Error(P.key + " block unavailable at " + JSON.stringify(point)); activity.serial++; return block; }
+      catch (error) { return fail(error); }
+    };
+    if (name === "setBlockType") return (point, block) => {
+      scope.operation = "setBlockType"; scope.position = point;
+      try { if (scope.failed) throw scope.error; scope.freshBulk = undefined; writable(point, point); preserveExisting(point, point, block); target.setBlockType(point, block); remember(point, point, block); }
+      catch (error) { return fail(error); }
+    };
+    if (name === "fillBlocks") return (volume, block, options) => {
+      scope.operation = "fillBlocks";
+      try {
+        if (scope.failed) throw scope.error;
+        const from = volume.getMin(), to = volume.getMax(); scope.position = { from, to };
+        writable(from, to);
+        if (options?.blockFilter) throw new Error("Filtered required writes cannot be certified by this generator");
+        const proof = scope.freshBulk; scope.freshBulk = undefined;
+        const fresh = proof && proof.tick === system.currentTick && block === P.stone && from.x === proof.from.x && from.y === proof.from.y && from.z === proof.from.z && to.x === proof.to.x && to.y === proof.to.y && to.z === proof.to.z && world.getDynamicProperty(planetBuffer(P, cx, cz)) === "building";
+        if (!fresh) preserveExisting(from, to, block);
+        const result = target.fillBlocks(volume, block, options);
+        // This single atomic fresh fill has its own complete, batched containment proof below.
+        if (!fresh) remember(from, to, block);
+        return result;
+      } catch (error) { return fail(error); }
+    };
+    const value = Reflect.get(target, name, target);
+    return typeof value === "function" ? value.bind(target) : value;
+  } });
+  scope.dimension = guarded;
+  return scope;
+}
+
+function* verifyRequiredWrites(scope, P, cx, cz, phase) {
+  if (scope.failed) throw scope.error;
+  let checked = 0;
+  for (const [key, point] of scope.expected) {
+    if (checked % 64 === 0) planetWritable(P, cx, cz, phase);
+    scope.operation = "verify required write"; scope.position = point;
+    const actual = scope.dimension.getBlock(point);
+    if (actual.typeId !== point.type) throw new Error(P.key + " " + phase + " write verification failed at " + point.x + "," + point.y + "," + point.z + "; expected " + point.type + ", observed " + actual.typeId);
+    scope.expected.delete(key);
+    if (++checked % 64 === 0) yield;
+  }
+}
+
+function* checkedPlanetJob(generator, scope, P, cx, cz) {
+  try {
+    for (;;) {
+      if (scope.failed) throw scope.error;
+      const next = generator.next();
+      yield* verifyRequiredWrites(scope, P, cx, cz, "terrain");
+      if (next.done) break;
+      yield;
+    }
+  } finally { generator.return(); }
+}
+
+function freshBulkEmpty(P, dim, cx, cz, activity) {
+  for (let y = MIN_Y; y <= 319; y += 128) {
+    const from = { x: cx * 16, y, z: cz * 16 }, to = { x: cx * 16 + 15, y: Math.min(y + 127, 319), z: cz * 16 + 15 };
+    const found = dim.getBlocks(new BlockVolume(from, to), { excludeTypes: [AIR] }, false);
+    for (const point of found.getBlockLocationIterator()) {
+      if (!point || ![point.x, point.y, point.z].every(Number.isInteger) || point.x < from.x || point.x > to.x || point.y < from.y || point.y > to.y || point.z < from.z || point.z > to.z) throw new Error(P.key + " bulk ownership inspection returned an invalid position");
+      const actual = dim.getBlock(point);
+      if (!actual || actual.typeId === AIR) throw new Error(P.key + " bulk ownership inspection was inconsistent; no fresh buffer was written");
+      activity.serial++; return false;
+    }
+    activity.serial++;
+  }
+  return true;
+}
+
+function* verifyContainment(P, dim, cx, cz, activity, strictBuffer = false) {
+  for (let x = cx * 16; x < cx * 16 + 16; x++) for (let z = cz * 16; z < cz * 16 + 16; z++) {
+    const profile = planetColumn(P, x, z);
+    for (let y = MIN_Y + 1; y <= P.liquidLevel; y++) {
+      const actual = dim.getBlock({ x, y, z }), expected = profile.find(span => y >= span.from && y <= span.to)?.type;
+      if (!actual) throw new Error(P.key + " fluid containment unavailable at " + x + "," + y + "," + z);
+      activity.serial++;
+      const contained = strictBuffer ? actual.typeId === P.stone && actual.isSolid && !actual.isLiquid : actual.isSolid && !actual.isLiquid || expected === P.liquid && actual.typeId === P.liquid && actual.isLiquid;
+      if (!contained)
+        throw new PlanetPreservationError(P.key + " fluid containment is incomplete at " + x + "," + y + "," + z + "; observed " + actual.typeId + "; review and repair this neighboring chunk before travel");
+      if ((y - MIN_Y) % 64 === 0 || y === P.liquidLevel) yield;
+    }
+  }
+}
+
+function* preparePlanetBuffer(P, dim, cx, cz, activity) {
+  const ownerKey = planetOwnership(P, cx, cz), bufferKey = planetBuffer(P, cx, cz);
+  const { state, buffer, progress } = planetProvenance(P, cx, cz);
+  if (["complete", "legacy", "protected"].includes(state)) {
+    // Existing worlds may contain valid lakes/builds. Read real containment, never adopt them.
+    yield* verifyContainment(P, dim, cx, cz, activity);
+    return;
+  }
+  if (state === "building" && (buffer === undefined || buffer === "legacy-profile" || buffer === "profile")) {
+    // A reviewed old chunk can contain a correct full profile without new scaffold provenance.
+    // Certify the existing blocks only; this does not authorize any buffer conversion.
+    const old = scopedPlanetDimension(P, dim, cx, cz, "terrain", activity);
+    yield* verifyPlanetProfile(P, old.dimension, cx, cz);
+    return;
+  }
+  if (state === "building" && (buffer === "ready" || buffer === "converting" || buffer === "profile")) {
+    yield* verifyContainment(P, dim, cx, cz, activity, buffer === "ready");
+    return;
+  }
+  const scope = scopedPlanetDimension(P, dim, cx, cz, "terrain", activity), target = scope.dimension;
+  if (state !== "building") {
+    if (chunkState(target, cx, cz) >= 1) { world.setDynamicProperty(ownerKey, "legacy"); yield* verifyContainment(P, dim, cx, cz, activity); return; }
+    world.setDynamicProperty(ownerKey, "inspecting");
+    const bulk = typeof dim.getBlocks === "function";
+    const empty = bulk ? freshBulkEmpty(P, target, cx, cz, activity) : yield* emptyChunk(target, cx, cz, MIN_Y, 319);
+    if (!empty) {
+      if (world.getDynamicProperty(ownerKey) !== "protected") world.setDynamicProperty(ownerKey, "legacy");
+      yield* verifyContainment(P, dim, cx, cz, activity); return;
+    }
+    if (world.getDynamicProperty(ownerKey) === "protected") throw new PlanetPreservationError("Planet buffer inspection interrupted by a player edit");
+    world.setDynamicProperty(ownerKey, "building");
+    if (bulk) {
+      // Only an atomic empty proof authorizes partial-buffer replacement after interruption.
+      world.setDynamicProperty(bufferKey, "building");
+      const from = { x: cx * 16, y: MIN_Y + 1, z: cz * 16 }, to = { x: cx * 16 + 15, y: P.liquidLevel, z: cz * 16 + 15 };
+      if ((to.y - from.y + 1) * 256 > 32768) throw new Error("Planet buffer exceeds the native fill volume limit");
+      // No yield between the three empty bulk queries, provenance and this one native fill.
+      scope.freshBulk = { from, to, tick: system.currentTick };
+      target.fillBlocks(new BlockVolume(from, to), P.stone);
+      yield* verifyContainment(P, dim, cx, cz, activity, true);
+      planetWritable(P, cx, cz, "terrain");
+      world.setDynamicProperty(bufferKey, "ready");
+      return;
+    }
+    world.setDynamicProperty(bufferKey, "building-air:0");
+  }
+  let issued = progress ?? 0, range = 0;
+  yield* checkedPlanetJob((function* () {
+    for (let x = cx * 16; x < cx * 16 + 16; x++) for (let z = cz * 16; z < cz * 16 + 16; z++) for (let y = MIN_Y + 1; y <= P.liquidLevel; y += 64) {
+      planetWritable(P, cx, cz, "terrain");
+      const to = Math.min(y + 63, P.liquidLevel);
+      if (buffer === "building" || ++range <= issued) fillAirColumn(target, x, z, y, to, P.stone);
+      else {
+        // A yielded empty scan cannot adopt even matching imported rocks as our scaffold.
+        for (let at = y; at <= to; at++) if (target.getBlock({ x, y: at, z }).typeId !== AIR) throw new PlanetPreservationError(P.key + " buffer changed after inspection at " + x + "," + at + "," + z + "; preserve it for reviewed repair");
+        world.setDynamicProperty(bufferKey, "building-air:" + range);
+        issued = range;
+        target.fillBlocks(new BlockVolume({ x, y, z }, { x, y: to, z }), P.stone);
+      }
+      yield;
+    }
+  })(), scope, P, cx, cz);
+  yield* verifyContainment(P, dim, cx, cz, activity, true);
+  planetWritable(P, cx, cz, "terrain");
+  world.setDynamicProperty(bufferKey, "ready");
+}
+
+async function waitForWriter() {
+  let last = system.currentTick, activity, token = 0;
+  while (busy) {
+    if (activity !== busyActivity) { activity = busyActivity; token = 0; }
+    if (activity && activity.serial > token) { token = activity.serial; last = system.currentTick; }
+    if (system.currentTick - last >= 600) throw new Error("Space terrain queue made no verified progress for600 ticks");
+    await waitTicks(2);
+  }
 }
 
 const reported = new Set();
 let lastError = "none";
 
-function reportError(W, e) {
+function reportError(W, e, operation = "") {
   lastError = (W ? W.key : "?") + ": " + String(e);
-  const k = lastError.slice(0, 80);
+  const k = operation + ": " + lastError;
   if (reported.has(k)) return;
   reported.add(k);
-  for (const p of world.getPlayers()) {
-    if (!W || p.dimension.id === W.id) {
-      try {
-        p.sendMessage("§c[Space] terrain error - " + lastError.slice(0, 140));
-      } catch (err) {
-        /* ignore */
-      }
-    }
-  }
+  if (reported.size > 128) reported.delete(reported.values().next().value);
+  console.warn("[Space] " + operation + ": " + String(e) + (e?.stack ? "\n" + e.stack : ""));
 }
 
-async function runExclusive(gen, key, W) {
-  while (busy) await waitTicks(2);
-  busy = true;
+function runExclusive(build, W, cx, cz, phase = "terrain", strict = false) {
+  const key = W.key + ":" + phase + ":" + cx + "," + cz;
+  let shared = chunkJobs.get(key);
+  if (!shared) {
+    shared = runLoadedJob(build, key, W, cx, cz, phase);
+    chunkJobs.set(key, shared);
+    shared.then(() => chunkJobs.delete(key), () => chunkJobs.delete(key));
+  }
+  return strict ? shared : shared.catch(() => false);
+}
+
+async function runLoadedJob(build, key, W, cx, cz, phase) {
+  let area, ownsBusy = false, scope;
+  const activity = { serial: 0 };
   try {
-    await runJobAsync(gen);
+    if (repairing) throw new Error("Space terrain repair is active; retry after it finishes");
+    while (busy) await waitForWriter();
+    if (repairing) throw new Error("Space terrain repair is active; retry after it finishes");
+    busy = ownsBusy = true; busyActivity = activity;
+    const dim = world.getDimension(W.id), halo = W.kind === "planet" ? 1 : 0;
+    area = await acquireLoadedArea(dim, { x: (cx - halo) * 16, y: MIN_Y, z: (cz - halo) * 16 }, { x: (cx + halo + 1) * 16 - 1, y: MIN_Y, z: (cz + halo + 1) * 16 - 1 }, W.key + " " + phase + " chunk " + cx + "," + cz);
+    activity.serial++;
+    if (W.kind === "planet") scope = scopedPlanetDimension(W, dim, cx, cz, phase, activity);
+    const target = scope?.dimension ?? dim;
+    await runTerrainJob((function* () {
+      let certifyExisting = false;
+      if (W.kind === "planet") {
+        const { state, buffer } = planetProvenance(W, cx, cz);
+        if (phase === "terrain") {
+          if (["complete", "legacy", "protected"].includes(state)) return;
+          if (state === "building" && (buffer === undefined || buffer === "legacy-profile" || buffer === "profile")) {
+            yield* verifyPlanetProfile(W, target, cx, cz);
+            certifyExisting = buffer !== "profile";
+          } else {
+            activity.containment = new Map();
+            for (const [dx, dz] of BUFFER_NEIGHBORS) {
+              const nx = cx + dx, nz = cz + dz, ownerKey = planetOwnership(W, nx, nz), bufferKey = planetBuffer(W, nx, nz);
+              const ownerBefore = world.getDynamicProperty(ownerKey), bufferBefore = world.getDynamicProperty(bufferKey);
+              yield* preparePlanetBuffer(W, dim, nx, nz, activity);
+              const owner = world.getDynamicProperty(ownerKey), buffer = world.getDynamicProperty(bufferKey);
+              const startedFresh = ownerBefore === undefined || ownerBefore === "inspecting";
+              if (startedFresh ? !["building", "legacy"].includes(owner) : ownerBefore !== owner) throw new PlanetPreservationError(W.key + " fluid preparation was changed by an external edit");
+              if (bufferBefore !== buffer && !(buffer === "ready" && (bufferBefore === undefined || bufferBefore === "building" || bufferBefore?.startsWith("building-air:")))) throw new PlanetPreservationError(W.key + " buffer provenance changed during preparation");
+              if (dx || dz) activity.containment.set(nx + "," + nz, { ownerKey, bufferKey, owner, buffer });
+            }
+            planetWritable(W, cx, cz, "terrain");
+            world.setDynamicProperty(planetBuffer(W, cx, cz), "converting");
+          }
+        } else if (state !== "complete") return;
+      }
+      // A certified profile still goes through the real terrain iterator; matching
+      // blocks cause no terrain writes and the full profile is proven again before markers.
+      const gen = build(target);
+      try {
+        for (;;) {
+          if (scope?.failed) throw scope.error;
+          const next = gen.next();
+          if (scope) yield* verifyRequiredWrites(scope, W, cx, cz, phase);
+          if (next.done) break;
+          yield;
+        }
+      } finally { gen.return(); }
+      if (scope && phase === "terrain") {
+        const x = cx * 16, z = cz * 16;
+        fill(target, x + 2, MIN_Y, z, x + 15, MIN_Y, z, BEDROCK);
+        fill(target, x, MIN_Y, z + 1, x + 15, MIN_Y, z + 15, BEDROCK);
+        put(target, x + 1, MIN_Y, z, W.stone);
+        yield* verifyRequiredWrites(scope, W, cx, cz, phase);
+        put(target, x, MIN_Y, z, BEDROCK);
+        yield* verifyRequiredWrites(scope, W, cx, cz, phase);
+        planetWritable(W, cx, cz, phase);
+        world.setDynamicProperty(planetBuffer(W, cx, cz), certifyExisting ? "legacy-profile" : "profile");
+        world.setDynamicProperty(planetOwnership(W, cx, cz), "complete");
+      } else if (scope && phase === "decoration") {
+        put(target, cx * 16 + 1, MIN_Y, cz * 16, BEDROCK);
+        yield* verifyRequiredWrites(scope, W, cx, cz, phase);
+      }
+    })(), W.kind === "planet" ? { inactivityTicks: 2400, activity: () => activity.serial, label: key } : { label: key });
     retryAt.delete(key);
+    return true;
   } catch (e) {
-    const swapped = W && W.kind === "planet" && applyFallback(W, String(e));
-    retryAt.set(key, system.currentTick + (swapped ? 5 : 100));
-    console.warn("[Space] chunk " + key + " failed: " + e);
-    reportError(W, e);
+    retryAt.set(key, e instanceof PlanetPreservationError ? Infinity : system.currentTick + 100);
+    try { reportError(W, e, key + " failed; lastOperation=" + scope?.operation + ", lastWrite=" + JSON.stringify(scope?.position) + ", lastRead=" + JSON.stringify(scope?.lastRead)); } catch (feedback) { console.warn("[Space] terrain diagnostics unavailable: " + feedback); }
+    if (e instanceof PlanetPreservationError) return false;
+    throw e;
   } finally {
-    busy = false;
+    if (area) releaseLoadedArea(area);
+    if (ownsBusy) { busy = false; busyActivity = undefined; }
     system.run(() => {
       try {
         scan();
@@ -1126,14 +1427,14 @@ function dockPod(player, pod) {
   }
 }
 
-// ---------------------------------------------------------------- sphere retrofit (Universe 6, Kai)
+// ---------------------------------------------------------------- sphere retrofit (Universe 6, Kaioshin)
 // Space chunks that were generated before a planet existed have no sphere in them. The first time a player is in
 // space we add the missing spheres to those chunks (chunks generated later get them from spaceJob like every other planet).
 const U6_SPHERE_PROP = "dbe:space_u6_sphere";
-const KAI_SPHERE_PROP = "dbe:space_kai_sphere";
+const KAIOSHIN_SPHERE_PROP = "dbe:space_kai_sphere";
 const RETROFITS = [
   { key: U6_KEY, prop: U6_SPHERE_PROP, name: "Universe 6" },
-  { key: KAI_KEY, prop: KAI_SPHERE_PROP, name: "Kai" },
+  { key: KAIOSHIN_KEY, prop: KAIOSHIN_SPHERE_PROP, name: "Kaioshin" },
 ];
 let retrofitting = false;
 
@@ -1145,37 +1446,23 @@ async function retrofitSphere(R) {
   let area = null;
   try {
     const dim = world.getDimension(SPACE.id);
-    const id = "dbe:space_" + R.key + "_sphere_" + system.currentTick;
-    try {
-      await world.tickingAreaManager.createTickingArea(id, {
-        dimension: dim,
-        from: { x: S.x - S.r - 16, y: MIN_Y, z: S.z - S.r - 16 },
-        to: { x: S.x + S.r + 16, y: MIN_Y, z: S.z + S.r + 16 },
-      });
-      area = id;
-    } catch (e) {
-      console.warn("[Space] could not create ticking area for the " + R.name + " sphere: " + e);
-    }
+    area = await acquireLoadedArea(dim,
+      { x: S.x - S.r - 16, y: MIN_Y, z: S.z - S.r - 16 },
+      { x: S.x + S.r + 16, y: MIN_Y, z: S.z + S.r + 16 }, "space " + R.name + " sphere");
     for (let cx = chunkOf(S.x - S.r); cx <= chunkOf(S.x + S.r); cx++) {
       for (let cz = chunkOf(S.z - S.r); cz <= chunkOf(S.z + S.r); cz++) {
         for (let tries = 0; tries < 40 && chunkState(dim, cx, cz) === -1; tries++) await waitTicks(5);
         const st = chunkState(dim, cx, cz);
         if (st === -1) throw new Error("chunk not loaded");
         if (st === 0) continue; // not generated yet: spaceJob will add the sphere itself
-        await runExclusive(sphereInChunk(dim, S, cx * 16, cz * 16, { n: 0 }), R.key + "sphere:" + cx + "," + cz, SPACE);
+        await runExclusive(loaded => sphereInChunk(loaded, S, cx * 16, cz * 16, { n: 0 }), SPACE, cx, cz, "retrofit", true);
       }
     }
     world.setDynamicProperty(R.prop, 1);
   } catch (e) {
     console.warn("[Space] " + R.name + " sphere retrofit will retry: " + e);
   } finally {
-    if (area) {
-      try {
-        world.tickingAreaManager.removeTickingArea(area);
-      } catch (e) {
-        /* already gone */
-      }
-    }
+    if (area) releaseLoadedArea(area);
   }
 }
 
@@ -1228,18 +1515,13 @@ function rescueDead(p) {
     rescueUntil.delete(p.id);
     return false;
   }
-  if (p.dimension.id !== OTHER_WORLD.dim && system.currentTick - (lastRescue.get(p.id) ?? -1000) >= 30) {
+  if (p.dimension.id !== OTHER_WORLD.dim && !isTravelPending(p) && system.currentTick - (lastRescue.get(p.id) ?? -1000) >= 30) {
     lastRescue.set(p.id, system.currentTick);
-    try {
-      p.teleport({ x: OTHER_WORLD.x, y: OTHER_WORLD.y, z: OTHER_WORLD.z }, { dimension: world.getDimension(OTHER_WORLD.dim) });
-      try {
+    safeTeleport(p, { x: OTHER_WORLD.x, y: OTHER_WORLD.y, z: OTHER_WORLD.z }, { dimension: world.getDimension(OTHER_WORLD.dim), label: "Other World respawn recovery" })
+      .then(() => {
         p.setProperty("dbe:is_death", true);
-      } catch (e) {
-        /* property not available */
-      }
-    } catch (e) {
-      /* dimension not ready yet: try again on the next scan */
-    }
+      })
+      .catch((error) => console.warn("[Space] Other World respawn recovery failed; retry is bounded by the respawn window: " + error));
   }
   return true;
 }
@@ -1253,7 +1535,7 @@ function scan() {
     updateFog(p, W);
     if (rescueDead(p)) continue;
     const dimId = p.dimension.id;
-    const canLaunch = W ? W.kind === "planet" : dimId === "minecraft:overworld" || dimId === NAMEK_ID || dimId === U6_ID || dimId === KAI_ID;
+    const canLaunch = W ? W.kind === "planet" : dimId === "minecraft:overworld" || dimId === NAMEK_ID || dimId === U6_ID || dimId === KAIOSHIN_ID;
     if (canLaunch && p.location.y >= LAUNCH_Y && !travelling.has(p.id) && system.currentTick - (lastLaunch.get(p.id) ?? -10000) > LAUNCH_COOLDOWN) {
       lastLaunch.set(p.id, system.currentTick);
       try {
@@ -1295,16 +1577,18 @@ function scan() {
         }
       }
     } else if (y < MIN_Y + 8) {
-      // fell through terrain that is not generated yet: back to the surface
+      // A predicted height is not proof that generation actually produced a safe surface.
       try {
-        p.teleport({ x, y: Math.max(heightAt(W, Math.floor(x), Math.floor(z)), W.liquidLevel) + 2, z });
+        const target = { x, y: Math.max(heightAt(W, Math.floor(x), Math.floor(z)), W.liquidLevel) + 1, z };
+        const { state, buffer, progress } = planetProvenance(W, chunkOf(x), chunkOf(z));
+        if (!["inspecting", "building"].includes(state) && progress === undefined && !["building", "ready", "converting"].includes(buffer) && !isTravelPending(p) && isSafeStanding(p.dimension, target)) p.teleport(target, { checkForBlocks: true });
       } catch (err) {
-        /* ignore */
+        /* Unavailable or unsupported terrain is left to the loaded-area preparation path. */
       }
     }
   }
 
-  if (busy) return;
+  if (busy || repairing) return;
 
   for (const p of players) {
     const W = BY_DIM.get(p.dimension.id);
@@ -1320,10 +1604,11 @@ function scan() {
     for (const [dx, dz] of offsets(W.radius)) {
       const cx = pcx + dx;
       const cz = pcz + dz;
-      const k = W.key + ":" + cx + "," + cz;
+      const k = W.key + ":terrain:" + cx + "," + cz;
       if (!canRetry(k)) continue;
-      if (chunkState(dim, cx, cz) === 0) {
-        runExclusive(terrainFor(W, dim, cx, cz), k, W);
+      const state = W.kind === "planet" ? world.getDynamicProperty(planetOwnership(W, cx, cz)) : undefined;
+      if (W.kind === "planet" ? !["complete", "legacy", "protected"].includes(state) : chunkState(dim, cx, cz) === 0) {
+        runExclusive(loaded => terrainFor(W, loaded, cx, cz), W, cx, cz);
         return;
       }
     }
@@ -1331,11 +1616,12 @@ function scan() {
     for (const [dx, dz] of offsets(W.decorRadius)) {
       const cx = pcx + dx;
       const cz = pcz + dz;
-      const k = "d" + W.key + ":" + cx + "," + cz;
+      const k = W.key + ":decoration:" + cx + "," + cz;
       if (!canRetry(k)) continue;
+      if (world.getDynamicProperty(planetOwnership(W, cx, cz)) !== "complete") continue;
       if (chunkState(dim, cx, cz) !== 1) continue;
       if (NEIGHBOURS.every(([nx, nz]) => chunkState(dim, cx + nx, cz + nz) >= 1)) {
-        runExclusive(decorateJob(W, dim, cx, cz), k, W);
+        runExclusive(loaded => decorateJob(W, loaded, cx, cz), W, cx, cz, "decoration");
         return;
       }
     }
@@ -1351,41 +1637,32 @@ const destName = (key) => ({ translate: "dbe.space.dest." + key });
 
 /** Removes a temporary ticking area; never throws (the area may already be gone). */
 function removeArea(id) {
-  try {
-    world.tickingAreaManager.removeTickingArea(id);
-  } catch (e) {
-    /* already gone */
-  }
+  releaseLoadedArea(id);
 }
 
 async function prepareArea(W, dim, cx, cz) {
   const rad = W.kind === "space" ? W.prep : W.radius;
-  const id = "dbe:space_travel_" + system.currentTick + "_" + Math.floor(Math.random() * 1000);
-  let area = false;
-  try {
-    await world.tickingAreaManager.createTickingArea(id, {
-      dimension: dim,
-      from: { x: (cx - rad) * 16, y: MIN_Y, z: (cz - rad) * 16 },
-      to: { x: (cx + rad + 1) * 16 - 1, y: MIN_Y, z: (cz + rad + 1) * 16 - 1 },
-    });
-    area = true;
-  } catch (e) {
-    console.warn("[Space] could not create ticking area: " + e);
-  }
+  const id = await acquireLoadedArea(dim,
+    { x: (cx - rad) * 16, y: MIN_Y, z: (cz - rad) * 16 },
+    { x: (cx + rad + 1) * 16 - 1, y: MIN_Y, z: (cz + rad + 1) * 16 - 1 },
+    "space_planets.js: destination preparation");
   try {
     for (const [dx, dz] of offsets(rad)) {
-      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainFor(W, dim, cx + dx, cz + dz), W.key + ":t" + dx + "," + dz, W);
+      const nx = cx + dx, nz = cz + dz;
+      const state = W.kind === "planet" ? world.getDynamicProperty(planetOwnership(W, nx, nz)) : undefined;
+      if (W.kind === "planet" ? !["complete", "legacy", "protected"].includes(state) : chunkState(dim, nx, nz) === 0) await runExclusive(loaded => terrainFor(W, loaded, nx, nz), W, nx, nz, "terrain", true);
     }
     if (W.kind === "planet") {
       for (const [dx, dz] of offsets(W.decorRadius)) {
-        if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(W, dim, cx + dx, cz + dz), "d" + W.key + ":t" + dx + "," + dz, W);
+        const nx = cx + dx, nz = cz + dz;
+        if (world.getDynamicProperty(planetOwnership(W, nx, nz)) === "complete" && chunkState(dim, nx, nz) === 1) await runExclusive(loaded => decorateJob(W, loaded, nx, nz), W, nx, nz, "decoration", true);
       }
     }
   } catch (e) {
-    if (area) removeArea(id);
+    releaseLoadedArea(id);
     throw e;
   }
-  return area ? id : null;
+  return id;
 }
 
 /** Remembers where (dimension, exact position, facing) the player left from. Shared with the Namek pod. */
@@ -1395,23 +1672,23 @@ function saveOrigin(player, fromSky = false) {
     // leaving the arena for space: if the player came straight from a world, that spot is home
     try {
       const o = player.getDynamicProperty("dbe:u6_origin");
-      if (typeof o === "string") player.setDynamicProperty(ORIGIN_PROP, o);
+      if (typeof o === "string" && JSON.parse(o)?.d === "minecraft:overworld") player.setDynamicProperty(ORIGIN_PROP, o);
     } catch (e) {
       /* ignore */
     }
     return;
   }
-  if (dimId === KAI_ID) {
-    // leaving Kai for space: if the player came straight from a world, that spot is home
+  if (dimId === KAIOSHIN_ID) {
+    // leaving Kaioshin for space: if the player came straight from a world, that spot is home
     try {
       const o = player.getDynamicProperty("dbe:kai_origin");
-      if (typeof o === "string") player.setDynamicProperty(ORIGIN_PROP, o);
+      if (typeof o === "string" && JSON.parse(o)?.d === "minecraft:overworld") player.setDynamicProperty(ORIGIN_PROP, o);
     } catch (e) {
       /* ignore */
     }
     return;
   }
-  if (dimId === NAMEK_ID || BY_DIM.has(dimId)) return; // never overwrite it with a spot on another planet
+  if (dimId !== "minecraft:overworld") return; // home must remain on Earth
   try {
     const { x, z } = player.location;
     let y = player.location.y;
@@ -1432,37 +1709,27 @@ function saveOrigin(player, fromSky = false) {
   }
 }
 
-function sendHome(player) {
+async function sendHome(player) {
+  if (travelling.has(player.id)) return;
+  travelling.add(player.id);
+  let phase = "origin";
   try {
     const raw = player.getDynamicProperty(ORIGIN_PROP);
-    const o = typeof raw === "string" ? JSON.parse(raw) : null;
-    if (o && typeof o.x === "number" && typeof o.y === "number" && typeof o.z === "number" && o.d !== NAMEK_ID && o.d !== U6_ID && o.d !== KAI_ID && !BY_DIM.has(o.d)) {
-      player.teleport({ x: o.x, y: o.y, z: o.z }, { dimension: world.getDimension(o.d), rotation: { x: o.rx ?? 0, y: o.ry ?? 0 } });
-      player.setDynamicProperty(ORIGIN_PROP, undefined);
-      try {
-        player.addEffect("slow_falling", 200, { amplifier: 0, showParticles: false });
-      } catch (e) {
-        /* ignore */
-      }
-      player.sendMessage(tr("dbe.space.home"));
-      return;
-    }
-  } catch (e) {
-    console.warn("[Space] could not use saved origin: " + e);
-  }
-  try {
-    const sp = player.getSpawnPoint();
-    if (sp) player.teleport({ x: sp.x + 0.5, y: sp.y, z: sp.z + 0.5 }, { dimension: sp.dimension });
-    else player.teleport(world.getDefaultSpawnLocation(), { dimension: world.getDimension("minecraft:overworld") });
+    let savedOrigin;
+    try { savedOrigin = typeof raw === "string" ? JSON.parse(raw) : undefined; } catch {}
+    await safeReturnToEarth(player, { savedOrigin, label: "Space return to Earth" });
+    phase = "teleport";
+    if (raw !== undefined) player.setDynamicProperty(ORIGIN_PROP, undefined);
     player.sendMessage(tr("dbe.space.home"));
-  } catch (e) {
-    console.warn("[Space] return failed: " + e);
-  }
+  } catch (error) {
+    reportTravelFailure(player, "Space return", error, "minecraft:overworld", phase);
+  } finally { travelling.delete(player.id); }
 }
 
 const travelling = new Set();
 
 async function travelTo(player, key, opts = {}) {
+  if (key === "kai") key = KAIOSHIN_KEY;
   if (travelling.has(player.id)) return;
   ensureBlocks();
   const pod = ridingPod(player);
@@ -1479,8 +1746,7 @@ async function travelTo(player, key, opts = {}) {
       saveOrigin(player);
       await player.runCommand("scriptevent dbe:namek");
     } catch (e) {
-      console.warn("[Space] Namek travel failed: " + e);
-      player.sendMessage(tr("dbe.space.error"));
+      reportTravelFailure(player, "Space " + key, e, NAMEK_ID, "dispatch");
     }
     return;
   }
@@ -1491,20 +1757,18 @@ async function travelTo(player, key, opts = {}) {
       saveOrigin(player, !!opts.atmosphere);
       await player.runCommand("scriptevent dbe:tournament");
     } catch (e) {
-      console.warn("[Space] Universe 6 travel failed: " + e);
-      player.sendMessage(tr("dbe.space.error"));
+      reportTravelFailure(player, "Space " + key, e, U6_ID, "dispatch");
     }
     return;
   }
-  if (key === KAI_KEY) {
+  if (key === KAIOSHIN_KEY) {
     if (pod) dockPod(player, pod);
-    // Kai is handled by kai_dimension.js (like Namek and the arena)
+    // Kaioshin is handled by kaioshin_dimension.js (like Namek and the arena)
     try {
       saveOrigin(player, !!opts.atmosphere);
-      await player.runCommand("scriptevent dbe:kai");
+      await player.runCommand("scriptevent dbe:kaioshin");
     } catch (e) {
-      console.warn("[Space] Kai travel failed: " + e);
-      player.sendMessage(tr("dbe.space.error"));
+      reportTravelFailure(player, "Space " + key, e, KAIOSHIN_ID, "dispatch");
     }
     return;
   }
@@ -1512,8 +1776,11 @@ async function travelTo(player, key, opts = {}) {
   if (!W) return;
   travelling.add(player.id);
   let areaId = null;
+  let phase = "lookup";
   try {
     const dim = world.getDimension(W.id);
+    phase = "generation";
+    const origin = travelOrigin(player);
     saveOrigin(player, !!opts.atmosphere);
     player.sendMessage(tr("dbe.space.launching", destName(key)));
     let target;
@@ -1523,6 +1790,12 @@ async function travelTo(player, key, opts = {}) {
       target = { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 };
     }
     areaId = await prepareArea(W, dim, chunkOf(target.x), chunkOf(target.z));
+    if (W.kind === "planet") {
+      const { state, buffer, progress } = planetProvenance(W, chunkOf(target.x), chunkOf(target.z));
+      if (["inspecting", "building"].includes(state) || progress !== undefined || ["building", "ready", "converting"].includes(buffer)) throw new Error(W.key + " arrival terrain remains incomplete; the player was kept at the origin. Review generation diagnostics before retrying");
+    }
+    phase = "teleport";
+    await safeTeleport(player, target, { origin, requireGround: true, dimension: dim });
     if (pod) {
       try {
         pod.remove();
@@ -1530,7 +1803,6 @@ async function travelTo(player, key, opts = {}) {
         /* already gone */
       }
     }
-    player.teleport(target, { dimension: dim });
     player.sendMessage(tr("dbe.space.arrived", destName(key)));
     if (pod) {
       // the pod follows you: a fresh one is waiting under your feet
@@ -1549,9 +1821,8 @@ async function travelTo(player, key, opts = {}) {
     }
     if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
-    console.warn("[Space] travel to " + key + " failed: " + e);
     try {
-      player.sendMessage(tr("dbe.space.error"));
+      reportTravelFailure(player, "Space " + key, e, W.id, phase);
     } catch (e2) {
       /* ignore */
     }
@@ -1574,7 +1845,7 @@ async function openMenu(player) {
       if (k === "earth") return here !== "minecraft:overworld";
       if (k === "namek") return here !== NAMEK_ID;
       if (k === U6_KEY) return here !== U6_ID;
-      if (k === KAI_KEY) return here !== KAI_ID;
+      if (k === KAIOSHIN_KEY) return here !== KAIOSHIN_ID;
       return WORLDS[k].id !== here;
     });
     const form = new ActionFormData().title({ translate: "dbe.space.menu.title" }).body({ translate: "dbe.space.menu.body" });
@@ -1586,7 +1857,7 @@ async function openMenu(player) {
       await waitTicks(10);
     }
     if (!res || res.canceled) return;
-    travelTo(player, dests[res.selection]);
+    await travelTo(player, dests[res.selection]);
   } catch (e) {
     console.warn("[Space] menu failed: " + e);
   } finally {
@@ -1597,18 +1868,7 @@ async function openMenu(player) {
 // ---------------------------------------------------------------- setup
 
 try {
-  // If dimensions/*.json were loaded (newer game versions) registerCustomDimension throws
-  // "already registered" and is ignored. Otherwise the worlds are registered here as void dimensions.
-  system.beforeEvents.startup.subscribe(({ dimensionRegistry }) => {
-    for (const W of Object.values(WORLDS)) {
-      try {
-        dimensionRegistry.registerCustomDimension(W.id);
-      } catch (e) {
-        /* already registered */
-      }
-    }
-  });
-
+  // The four BP dimension definitions are authoritative; do not register a second definition.
   world.afterEvents.worldLoad.subscribe(() => {
     world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
       if (initialSpawn || !player.hasTag(DEAD_TAG)) return;
@@ -1650,7 +1910,7 @@ try {
         for (const l of out) src.sendMessage(l);
         return;
       }
-      if (DESTS.includes(key)) travelTo(src, key);
+      if (DESTS.includes(key) || key === "kai") travelTo(src, key);
       else src.sendMessage("§e/scriptevent dbe:space <" + DESTS.join("|") + "|debug>");
     });
   });

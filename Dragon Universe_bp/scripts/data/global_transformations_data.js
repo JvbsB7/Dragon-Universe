@@ -36,6 +36,7 @@ const global_transformations_data = [
   },
   {
     id: "beast",
+    allowedRaceIds: ["earthling", "saiyan"],
     auraProperties: {
       sparks: true,
       color: "#FF1CF7"

@@ -1676,8 +1676,8 @@ const main_quests_data = [
         tasks: [
           {
             type: "enter_biome",
-            dimensionId: "dbe:kai",
-            biomeId: "dbe:kai",
+            dimensionId: "dbe:kaioshin",
+            biomeId: "dbe:kaioshin",
           },
         ],
       },
@@ -1686,7 +1686,7 @@ const main_quests_data = [
         startRequirements: [
           {
             test: "in_biome",
-            value: "dbe:kai",
+            value: "dbe:kaioshin",
           },
         ],
         tasks: [
@@ -2540,7 +2540,7 @@ const main_quests_data = [
                   willpower: 1,
                 },
               },
-              availableTransformations: ["ssjg"],
+              availableTransformations: ["ssjr"],
             },
           },
         ],
@@ -2648,6 +2648,7 @@ const main_quests_data = [
     type: "main",
     objectives: [
       {
+        teleportOnFinish: "lookout",
         tasks: [
           {
             type: "defeat_enemy",

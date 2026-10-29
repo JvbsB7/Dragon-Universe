@@ -65,12 +65,13 @@ dimension.minecraft:nether=Nether
 dimension.minecraft:overworld=Overworld
 dimension.minecraft:the_end=The End
 dimension.dbe:namek=Planet Namek
-dimension.dbe:kai=Kai's Planet
+dimension.dbe:kai=Kaioshin Planet
+dimension.dbe:kaioshin=Kaioshin Planet
 dimension.dbe:hell=Hell
 dimension.dbe:space=Space
 dimension.dbe:vegeta=Planet Vegeta
 dimension.dbe:frieza_planet=Planet Frieza
-dimension.dbe:yardrat=Yardrat
+dimension.dbe:yardrat=Planet Yardrat
 dimension.dbe:universe_6_arena=Universe 6 Arena
 dimension.dbe:other_world=Other World
 dimension.dbe:hyperbolic_time_chamber=Hyperbolic Time Chamber
@@ -79,6 +80,12 @@ dimension.dbe:world_martial_arts_tournament=World Martial Arts Tournament
 biome.minecraft:beach=Beach
 biome.dbe:dirtstone=Dirtstone
 biome.dbe:namek=Planet Namek
+biome.dbe:vegeta=Planet Vegeta
+biome.dbe:frieza=Planet Frieza
+biome.dbe:yardrat=Planet Yardrat
+biome.dbe:universe_6_arena=Universe 6 Arena
+biome.dbe:hell=Hell
+biome.dbe:space=Space
 
 
 
@@ -576,6 +583,7 @@ quest.objective.defeat_enemy_location=Defeat %s in the %s
 quest.objective.defeat_enemy_location_time=Defeat %s in the %s in
 quest.objective.deliver_item=Deliver %s to %s
 quest.objective.enter_biome=Go to %s (%s) at coordinates %s
+quest.objective.travel_to=Travel to: %s
 quest.objective.enter_region=Go to %s
 quest.objective.enter_structure=Go to the %s in %s
 quest.objective.ki_charge=Charge your Ki
@@ -1078,8 +1086,16 @@ demon.transformation.abyssal_king=Abyssal King
 demon.transformation.true_oni_rage=True Oni Rage
 ## glind
 glind=Glind
-glind.description=A little-known race that does not rely on transformations to grow stronger. Glind focus on refining their ki techniques, endurance, and unique abilities in battle, reaching higher levels of power through training and discipline rather than form changes.
+glind.description=Glind combine regeneration, endurance, and ki power with transformations that increase their strength in battle.
 glind.transformation.base=Base Form
+glind.transformation.ultra_ego=Ultra Ego
+glind.transformation.ultimate_form=Ultimate Form
+glind.transformation.horned_form=Horned Form
+glind.transformation.infernal_form=Infernal Form
+glind.transformation.archdemon=Archdemon
+glind.transformation.demon_lord=Demon Lord
+glind.transformation.abyssal_king=Abyssal King
+glind.transformation.true_oni_rage=True Oni Rage
 
 
 
@@ -1467,7 +1483,8 @@ dbe.space.dest.vegeta=Planet Vegeta
 dbe.space.dest.frieza=Frieza Planet
 dbe.space.dest.yardrat=Yardrat
 dbe.space.dest.universe6=Universe 6 Arena
-dbe.space.dest.kai=Planet Kai
+dbe.space.dest.kai=Kaioshin Planet
+dbe.space.dest.kaioshin=Kaioshin Planet
 dbe.space.launching=§bLaunching to %s...
 dbe.space.arrived=§aYou arrived at %s.
 dbe.space.home=§aYou are back home.
@@ -1499,4 +1516,26 @@ quest.android_conversion.dialog_3=Bring me the parts and I'll start the procedur
 quest.android_conversion.objective_2.task_1.dialog_1=Perfect, everything checks out. Hold still...
 quest.android_conversion.objective_2.task_1.dialog_2=Core installed. Ki limiter removed.
 quest.android_conversion.objective_2.task_1.dialog_3=Procedure complete. Welcome to your new body.
-biome.dbe:kai=Kai's Planet
+biome.dbe:kai=Kaioshin Planet
+biome.dbe:kaioshin=Kaioshin Planet
+
+## Future preparation feedback
+dbe.future.progress.loading=§eLoading the Future: %s/%s areas; last area: %s. Wait at your starting location.
+dbe.future.progress.preflight=§eChecking the Future's terrain: %s/%s areas; last area: %s. Wait at your starting location.
+dbe.future.progress.generation=§eGenerating the Future's terrain: %s/%s areas; last area: %s. Wait at your starting location.
+dbe.future.progress.verify=§eFinal terrain check for the Future: %s/%s areas; last area: %s. Wait at your starting location.
+dbe.future.progress.placement=§ePreparing the Future's city: %s/%s areas; last area: %s. Wait at your starting location.
+dbe.future.deferred=§eThe Future's city was deferred to preserve existing terrain. The local terrain and arrival safety will still be checked.
+dbe.future.wait_cancelled=§eYour wait to travel to the Future was cancelled. Shared preparation continues. Try travelling again to wait for it.
+dbe.future.wait_inactive=§eYour wait to travel to the Future ended after %s ticks without progress (%s ticks in total). Shared preparation continues. Try travelling again.
+dbe.future.failed=§cPreparation of the Future failed. This attempt did not teleport you. Try again from a safe location; details are in the Content Log.
+dbe.future.already_waiting=§eYou already have a trip in progress. Wait for it to finish before trying again.
+dbe.future.travel_failed=§cCould not complete the trip to the Future. Try again from a safe location; details are in the Content Log.
+dbe.quest.staff.pending=§eYour Magic Staff delivery is pending. Talk to Master Roshi or reopen the quest menu to try claiming it.
+dbe.quest.staff.full=§eFree an inventory slot and talk to Master Roshi or reopen the quest menu. Your Magic Staff is still pending.
+dbe.quest.staff.claimed=§aMagic Staff delivered.
+dbe.quest.staff.review=§eYour Magic Staff delivery needs an operator review. Do not restart the quest to try receiving it again.
+dbe.quest.staff.failed=§cThe Magic Staff delivery could not be confirmed. Contact an operator and check the Content Log for details.
+dbe.travel.failed.lookup=§cDestination %s is unavailable. Ask the person responsible for this world to check dimension loading in the Content Log before using this destination.
+dbe.travel.failed.preparation=§cCould not start the trip or prepare/validate arrival at %s. Check the Content Log with the person responsible for this world.
+dbe.travel.failed.teleport=§cCould not complete or confirm the trip to %s. Find a safe location and check the Content Log with the person responsible for this world.

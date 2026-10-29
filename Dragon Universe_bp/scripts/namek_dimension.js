@@ -1,3 +1,4 @@
+import { acquireLoadedArea, releaseLoadedArea, safeTeleport, travelOrigin, safeReturnToEarth, reportTravelFailure, physicalDestinationId } from "./travel_safety.js";
 /**
  * Namek dimension (dbe:namek)
  *
@@ -450,8 +451,15 @@ function runJobAsync(gen) {
   });
 }
 
-async function runExclusive(gen, key) {
-  while (busy) await waitTicks(2);
+async function runExclusive(gen, key, strict = false) {
+  const deadline = system.currentTick + 600;
+  while (busy) {
+    if (system.currentTick >= deadline) {
+      if (strict) throw new Error("Terrain preparation queue timed out");
+      return;
+    }
+    await waitTicks(2);
+  }
   busy = true;
   try {
     await runJobAsync(gen);
@@ -459,6 +467,7 @@ async function runExclusive(gen, key) {
   } catch (e) {
     retryAt.set(key, system.currentTick + 100);
     console.warn("[Namek] chunk " + key + " failed: " + e);
+    if (strict) throw e;
   } finally {
     busy = false;
     // keep generating straight away instead of waiting for the next scan tick, so fast travellers
@@ -550,38 +559,26 @@ function scan() {
 
 /** Removes a temporary ticking area; never throws (the area may already be gone). */
 function removeArea(id) {
-  try {
-    world.tickingAreaManager.removeTickingArea(id);
-  } catch (e) {
-    /* already gone */
-  }
+  releaseLoadedArea(id);
 }
 
 async function prepareArea(dim, cx, cz) {
-  const id = "dbe:namek_travel_" + system.currentTick + "_" + Math.floor(Math.random() * 1e6);
-  let area = false;
-  try {
-    await world.tickingAreaManager.createTickingArea(id, {
-      dimension: dim,
-      from: { x: (cx - TERRAIN_RADIUS) * 16, y: MIN_Y, z: (cz - TERRAIN_RADIUS) * 16 },
-      to: { x: (cx + TERRAIN_RADIUS + 1) * 16 - 1, y: MIN_Y, z: (cz + TERRAIN_RADIUS + 1) * 16 - 1 },
-    });
-    area = true;
-  } catch (e) {
-    console.warn("[Namek] could not create ticking area: " + e);
-  }
+  const id = await acquireLoadedArea(dim,
+    { x: (cx - TERRAIN_RADIUS) * 16, y: MIN_Y, z: (cz - TERRAIN_RADIUS) * 16 },
+    { x: (cx + TERRAIN_RADIUS + 1) * 16 - 1, y: MIN_Y, z: (cz + TERRAIN_RADIUS + 1) * 16 - 1 },
+    "namek_dimension.js: destination preparation");
   try {
     for (const [dx, dz] of OFFSETS_TERRAIN) {
-      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive(terrainJob(dim, cx + dx, cz + dz), "t" + dx + "," + dz);
+      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 0) yield* terrainJob(dim, cx + dx, cz + dz); })(), "t" + dx + "," + dz, true);
     }
     for (const [dx, dz] of OFFSETS_DECOR) {
-      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive(decorateJob(dim, cx + dx, cz + dz), "d" + dx + "," + dz);
+      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 1) yield* decorateJob(dim, cx + dx, cz + dz); })(), "d" + dx + "," + dz, true);
     }
   } catch (e) {
-    if (area) removeArea(id);
+    releaseLoadedArea(id);
     throw e;
   }
-  return area ? id : null;
+  return id;
 }
 
 const travelling = new Set(); // player ids currently being sent to Namek
@@ -591,22 +588,21 @@ async function sendToNamek(player) {
   if (travelling.has(player.id)) return;
   travelling.add(player.id);
   let areaId = null;
+  let phase = "lookup";
   try {
     const dim = world.getDimension(DIM_ID);
+    phase = "generation";
+    const origin = travelOrigin(player);
     const s = findSpawn();
     rememberOrigin(player); // so the pod can bring the player back to this exact spot
     player.sendMessage("§aTravelling to Namek...");
     areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z));
-    player.teleport({ x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { dimension: dim });
+    phase = "teleport";
+    await safeTeleport(player, { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { origin, requireGround: true, dimension: dim });
     lastPodUse.set(player.id, system.currentTick);
     if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
-    console.warn("[Namek] travel failed: " + e);
-    try {
-      player.sendMessage("§cCould not travel to Namek (is the dimension available in this game version?).");
-    } catch (e2) {
-      /* ignore */
-    }
+    reportTravelFailure(player, "Namek", e, DIM_ID, phase);
   } finally {
     if (areaId) removeArea(areaId);
     travelling.delete(player.id);
@@ -630,48 +626,39 @@ function rememberOrigin(player) {
   }
 }
 
-function sendHome(player) {
-  // back to the exact spot the pod was used at
+async function sendHome(player) {
+  if (travelling.has(player.id)) return;
+  travelling.add(player.id);
+  let destinationId = "minecraft:overworld", phase = "origin";
   try {
     const raw = player.getDynamicProperty(ORIGIN_PROP);
-    const o = typeof raw === "string" ? JSON.parse(raw) : null;
-    if (o && typeof o.x === "number" && typeof o.y === "number" && typeof o.z === "number" && o.d !== DIM_ID) {
-      player.teleport(
-        { x: o.x, y: o.y, z: o.z },
-        { dimension: world.getDimension(o.d), rotation: { x: o.rx ?? 0, y: o.ry ?? 0 } }
-      );
-      player.setDynamicProperty(ORIGIN_PROP, undefined);
-      player.sendMessage("§aYou are back from Namek.");
-      return;
-    }
-  } catch (e) {
-    console.warn("[Namek] could not use saved origin: " + e);
-  }
-  // no saved spot (e.g. first arrived by command): fall back to the spawn point
-  try {
-    const sp = player.getSpawnPoint();
-    if (sp) {
-      player.teleport({ x: sp.x + 0.5, y: sp.y, z: sp.z + 0.5 }, { dimension: sp.dimension });
+    let savedOrigin;
+    try { savedOrigin = typeof raw === "string" ? JSON.parse(raw) : undefined; } catch {}
+    if (savedOrigin && [savedOrigin.x, savedOrigin.y, savedOrigin.z].every(Number.isFinite) && typeof savedOrigin.d === "string" && savedOrigin.d !== "minecraft:overworld" && physicalDestinationId(savedOrigin.d) !== DIM_ID) {
+      destinationId = physicalDestinationId(savedOrigin.d);
+      phase = "lookup";
+      const dimension = world.getDimension(destinationId);
+      phase = "teleport";
+      await safeTeleport(player, { x: savedOrigin.x, y: savedOrigin.y, z: savedOrigin.z }, {
+        dimension, requireGround: true,
+        rotation: Number.isFinite(savedOrigin.rx) && Number.isFinite(savedOrigin.ry) ? { x: savedOrigin.rx, y: savedOrigin.ry } : undefined,
+        label: "Namek saved return",
+      });
     } else {
-      player.teleport(world.getDefaultSpawnLocation(), { dimension: world.getDimension("minecraft:overworld") });
+      await safeReturnToEarth(player, { savedOrigin, label: "Namek return to Earth" });
     }
-  } catch (e) {
-    console.warn("[Namek] return failed: " + e);
-  }
+    phase = "teleport";
+    if (raw !== undefined) player.setDynamicProperty(ORIGIN_PROP, undefined);
+    player.sendMessage("\u00a7aYou are back from Namek.");
+  } catch (error) {
+    reportTravelFailure(player, "Namek return", error, destinationId, phase);
+  } finally { travelling.delete(player.id); }
 }
 
 // ---------------------------------------------------------------- setup
 
 try {
-  // If dimensions/namek.json was loaded (newer game versions) this throws "already registered" and
-  // is ignored. Otherwise Namek is registered here as a plain void dimension.
-  system.beforeEvents.startup.subscribe(({ dimensionRegistry }) => {
-    try {
-      dimensionRegistry.registerCustomDimension(DIM_ID);
-    } catch (e) {
-      /* already registered */
-    }
-  });
+  // dimensions/namek.json owns the native dimension definition and its biome/height settings.
 
   world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(() => {

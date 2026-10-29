@@ -65,12 +65,13 @@ dimension.minecraft:nether=Nether
 dimension.minecraft:overworld=Superficie
 dimension.minecraft:the_end=El End
 dimension.dbe:namek=Planeta Namek
-dimension.dbe:kai=Planeta de Kaio
+dimension.dbe:kai=Planeta Kaioshin
+dimension.dbe:kaioshin=Planeta Kaioshin
 dimension.dbe:hell=Infierno
 dimension.dbe:space=Espacio
 dimension.dbe:vegeta=Planeta Vegeta
 dimension.dbe:frieza_planet=Planeta Freezer
-dimension.dbe:yardrat=Yardrat
+dimension.dbe:yardrat=Planeta Yardrat
 dimension.dbe:universe_6_arena=Arena del Universo 6
 dimension.dbe:other_world=Otro Mundo
 dimension.dbe:hyperbolic_time_chamber=Sala del Tiempo
@@ -79,6 +80,12 @@ dimension.dbe:world_martial_arts_tournament=Torneo de Artes Marciales
 biome.minecraft:beach=Playa
 biome.dbe:dirtstone=Dirtstone
 biome.dbe:namek=Planeta Namek
+biome.dbe:vegeta=Planeta Vegeta
+biome.dbe:frieza=Planeta Freezer
+biome.dbe:yardrat=Planeta Yardrat
+biome.dbe:universe_6_arena=Arena del Universo 6
+biome.dbe:hell=Infierno
+biome.dbe:space=Espacio
 
 
 
@@ -576,6 +583,7 @@ quest.objective.defeat_enemy_location=Derrota a %s en %s
 quest.objective.defeat_enemy_location_time=Derrota a %s en %s en
 quest.objective.deliver_item=Lleva %s a %s
 quest.objective.enter_biome=Ve a %s (%s), en las coordenadas %s
+quest.objective.travel_to=Viaja a: %s
 quest.objective.enter_region=Ve a %s
 quest.objective.enter_structure=Ve a %s en %s
 quest.objective.ki_charge=Carga tu Ki
@@ -1078,8 +1086,16 @@ demon.transformation.abyssal_king=Rey del Abismo
 demon.transformation.true_oni_rage=Furia Oni Verdadera
 ## glind
 glind=Glind
-glind.description=Una raza poco conocida que no depende de transformaciones para evolucionar. Los Glind se enfocan en perfeccionar sus técnicas de ki, resistencia y habilidades únicas en batalla, alcanzando poder a través del entrenamiento y la disciplina en lugar de cambios de forma.
+glind.description=Los Glind combinan regeneración, resistencia y poder de ki con transformaciones que aumentan su fuerza en batalla.
 glind.transformation.base=Forma Base
+glind.transformation.ultra_ego=Ultra Ego
+glind.transformation.ultimate_form=Forma Mística
+glind.transformation.horned_form=Forma Cornuda
+glind.transformation.infernal_form=Forma Infernal
+glind.transformation.archdemon=Archidemonio
+glind.transformation.demon_lord=Señor Demonio
+glind.transformation.abyssal_king=Rey del Abismo
+glind.transformation.true_oni_rage=Furia Oni Verdadera
 
 
 
@@ -1467,7 +1483,8 @@ dbe.space.dest.vegeta=Planeta Vegeta
 dbe.space.dest.frieza=Planeta Freezer
 dbe.space.dest.yardrat=Yardrat
 dbe.space.dest.universe6=Arena del Universo 6
-dbe.space.dest.kai=Planeta Kai
+dbe.space.dest.kai=Planeta Kaioshin
+dbe.space.dest.kaioshin=Planeta Kaioshin
 dbe.space.launching=§bPartiendo hacia %s...
 dbe.space.arrived=§aHas llegado a %s.
 dbe.space.home=§aHas vuelto a casa.
@@ -1499,4 +1516,26 @@ quest.android_conversion.dialog_3=Bring me the parts and I'll start the procedur
 quest.android_conversion.objective_2.task_1.dialog_1=Perfect, everything checks out. Hold still...
 quest.android_conversion.objective_2.task_1.dialog_2=Core installed. Ki limiter removed.
 quest.android_conversion.objective_2.task_1.dialog_3=Procedure complete. Welcome to your new body.
-biome.dbe:kai=Planeta de Kaio
+biome.dbe:kai=Planeta Kaioshin
+biome.dbe:kaioshin=Planeta Kaioshin
+
+## Future preparation feedback
+dbe.future.progress.loading=§eCargando el Futuro: %s/%s zonas; última zona: %s. Espera en el punto de origen.
+dbe.future.progress.preflight=§eComprobando el terreno del Futuro: %s/%s zonas; última zona: %s. Espera en el punto de origen.
+dbe.future.progress.generation=§eGenerando el terreno del Futuro: %s/%s zonas; última zona: %s. Espera en el punto de origen.
+dbe.future.progress.verify=§eComprobación final del terreno del Futuro: %s/%s zonas; última zona: %s. Espera en el punto de origen.
+dbe.future.progress.placement=§ePreparando la ciudad del Futuro: %s/%s zonas; última zona: %s. Espera en el punto de origen.
+dbe.future.deferred=§eLa ciudad del Futuro se ha pospuesto para preservar el terreno existente. El terreno local y la seguridad de la llegada aún se comprobarán.
+dbe.future.wait_cancelled=§eSe ha cancelado tu espera para viajar al Futuro. La preparación compartida continúa. Intenta viajar de nuevo para esperarla.
+dbe.future.wait_inactive=§eTu espera para viajar al Futuro terminó tras %s ticks sin progreso (%s ticks en total). La preparación compartida continúa. Intenta viajar de nuevo.
+dbe.future.failed=§cLa preparación del Futuro falló. Este intento no te ha teletransportado. Inténtalo de nuevo desde un lugar seguro; los detalles están en el Content Log.
+dbe.future.already_waiting=§eYa tienes un viaje en curso. Espera a que termine antes de intentarlo de nuevo.
+dbe.future.travel_failed=§cNo se pudo completar el viaje al Futuro. Inténtalo de nuevo desde un lugar seguro; los detalles están en el Content Log.
+dbe.quest.staff.pending=§eLa entrega de tu Bastón Mágico está pendiente. Habla con el Maestro Roshi o vuelve a abrir el menú de misiones para intentar recibirlo.
+dbe.quest.staff.full=§eLibera un espacio en el inventario y habla con el Maestro Roshi o vuelve a abrir el menú de misiones. Tu Bastón Mágico sigue pendiente.
+dbe.quest.staff.claimed=§aBastón Mágico entregado.
+dbe.quest.staff.review=§eLa entrega del Bastón Mágico requiere la revisión de un operador. No reinicies la misión para intentar recibirlo de nuevo.
+dbe.quest.staff.failed=§cNo se pudo confirmar la entrega del Bastón Mágico. Consulta a un operador y los detalles en el Content Log.
+dbe.travel.failed.lookup=§cEl destino %s no está disponible. Pide al responsable del mundo que revise la carga de la dimensión en el Content Log antes de usar ese destino.
+dbe.travel.failed.preparation=§cNo se pudo iniciar el viaje o preparar/validar la llegada a %s. Consulta el Content Log con el responsable del mundo.
+dbe.travel.failed.teleport=§cNo se pudo completar o confirmar el viaje a %s. Busca un lugar seguro y consulta el Content Log con el responsable del mundo.

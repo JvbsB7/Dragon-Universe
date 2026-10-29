@@ -19,20 +19,10 @@
                 "beep": "item.dragon_radar.beep"
             },
             "scripts": {
-                "initialize": [
-                    "v.dragon_radar_location = 0.0;",
-                    "v.dragon_ball_position_x = 0.0;",
-                    "v.dragon_ball_position_z = 0.0;"
-                ],
-                "pre_animation": [
-                    "v.dragon_radar_location = q.property('dbe:dragon_radar_location');",
-                    "v.dragon_ball_position_x = (math.floor(v.dragon_radar_location / 1000) - 164) * 4 / 64;",
-                    "v.dragon_ball_position_z = (math.mod(v.dragon_radar_location, 1000) - 164) * 4 / 64;"
-                ],
                 "animate": [
                     "holding",
                     {
-                        "scanning": "c.is_first_person && (v.dragon_ball_position_x != 0 || v.dragon_ball_position_z != 0)"
+                        "scanning": "c.is_first_person && (q.has_property('dbe:dragon_radar_location') ? q.property('dbe:dragon_radar_location') != 0.0 : 0.0)"
                     }
                 ]
             },

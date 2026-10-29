@@ -14,7 +14,7 @@
 			"animation_length": 1,
 			"bones": {
 				"dragonBall": {
-					"position": [ "v.dragon_ball_position_x", 1, "v.dragon_ball_position_z" ],
+					"position": [ "q.has_property('dbe:dragon_radar_location') ? (math.floor(q.property('dbe:dragon_radar_location') / 1000) - 164) * 4 / 64 : 0.0", 1, "q.has_property('dbe:dragon_radar_location') ? (math.mod(q.property('dbe:dragon_radar_location'), 1000) - 164) * 4 / 64 : 0.0" ],
 					"scale": {
 						"0.0": [ 0, 0, 0 ],
 						"0.375": [ 0, 0, 0 ],

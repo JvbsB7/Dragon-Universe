@@ -1,3 +1,4 @@
+import { acquireLoadedArea, releaseLoadedArea, safeTeleport, travelOrigin } from "./travel_safety.js";
 /**
  * Planet of the Kais in the Other World.
  *
@@ -87,31 +88,14 @@ function runJobAsync(gen) {
 }
 
 async function withLoadedArea(dim, P, work) {
-  const id = "dbe:ow_kai_" + system.currentTick;
-  let created = false;
   const pad = 16;
   const from = { x: P.x - P.r - pad, y: P.y, z: P.z - P.r - pad };
   const to = { x: P.x + P.r + pad, y: P.y, z: P.z + P.r + pad };
+  const area = await acquireLoadedArea(dim, from, to, "Kaioshin orbital sphere");
   try {
-    await world.tickingAreaManager.createTickingArea(id, { dimension: dim, from, to });
-    created = true;
-  } catch (e) {
-    console.warn("[KaiPlanet] could not create ticking area: " + e);
-  }
-  try {
-    for (let i = 0; i < 60; i++) {
-      if (dim.getBlock({ x: from.x, y: P.y, z: from.z }) && dim.getBlock({ x: to.x, y: P.y, z: to.z })) break;
-      await waitTicks(5);
-    }
     await work();
   } finally {
-    if (created) {
-      try {
-        world.tickingAreaManager.removeTickingArea(id);
-      } catch (e) {
-        /* already gone */
-      }
-    }
+    releaseLoadedArea(area);
   }
 }
 
@@ -172,7 +156,7 @@ function cameFromOtherWorld(player) {
   }
 }
 
-function enterKai(player, P) {
+async function enterKai(player, P) {
   lastUse.set(player.id, system.currentTick);
   const { x, y, z } = player.location;
   // Stand the player a few blocks outside the planet first, so that is the spot they come back to.
@@ -188,11 +172,12 @@ function enterKai(player, P) {
   }
   const out = P.r + 8;
   try {
-    player.teleport({ x: P.x + (vx / len) * out, y: P.y + (vy / len) * out, z: P.z + (vz / len) * out });
+    await safeTeleport(player, { x: P.x + (vx / len) * out, y: P.y + (vy / len) * out, z: P.z + (vz / len) * out });
   } catch (e) {
-    /* ignore */
+    console.warn("[KaiPlanet] entry interrupted: " + e);
+    return;
   }
-  player.sendMessage("§dEntering the Planet of the Kais...");
+  player.sendMessage("§dEntering Kaioshin Planet...");
   system.runTimeout(() => {
     try {
       player.runCommand("scriptevent dbe:kai");
@@ -246,7 +231,7 @@ world.afterEvents.worldLoad.subscribe(() => {
       const old = loadPlanet();
       const { x, y, z } = src.location;
       const P = { x: Math.floor(x), y: Math.floor(y) + 14, z: Math.floor(z), r: 12 };
-      src.sendMessage("§dBuilding the Planet of the Kais here...");
+      src.sendMessage("§dBuilding Kaioshin Planet here...");
       buildPlanet(P, old);
     } else if (ev.id === "dbe:kai_planet_rebuild") {
       const P = loadPlanet() ?? DEFAULT_PLANET;

@@ -1,3 +1,4 @@
+import { acquireLoadedArea, releaseLoadedArea, safeTeleport, travelOrigin, safeReturnToEarth, reportTravelFailure, physicalDestinationId } from "./travel_safety.js";
 /**
  * Universe 6 arena dimension (dbe:universe_6_arena)
  *
@@ -37,8 +38,37 @@ const Y0 = 100; // top of the surrounding floor
 const FLOOR = 60; // the floor spans -FLOOR..FLOOR on x and z
 const ST_MIN = -24; // stage spans ST_MIN..ST_MAX on x and z (48 x 48)
 const ST_MAX = 23;
-const SPAWN = { x: 0.5, y: Y0 + 2, z: 40.5 }; // south of the stage, facing the desks
+const SPAWN = { x: 0.5, y: Y0 + 1, z: 40.5 }; // feet immediately above the generated floor at Y0
 const FALL_Y = Y0 - 40; // below this you fell off the world: back to the spawn
+const GOKU_SPAWN = { x: 6.5, y: Y0 + 1, z: 40.5 };
+const GOKU_TAG = "dbe:u6_goku";
+let arenaGoku;
+
+function ensureGoku(dim) {
+  if (arenaGoku?.isValid) return;
+  // The NPC has no movement AI: load its anchor before checking for an existing copy.
+  if (!dim.isChunkLoaded(GOKU_SPAWN)) return;
+  const existing = dim.getEntities({ type: "dbe:goku", tags: [GOKU_TAG] })[0];
+  if (existing) {
+    arenaGoku = existing;
+    return;
+  }
+  const floor = dim.getBlock({ x: 6, y: Y0, z: 40 });
+  if (!floor || floor.isAir || floor.isLiquid) return;
+  if (
+    !dim.getBlock({ x: 6, y: Y0 + 1, z: 40 })?.isAir ||
+    !dim.getBlock({ x: 6, y: Y0 + 2, z: 40 })?.isAir
+  ) return;
+  const npc = dim.spawnEntity("dbe:goku", GOKU_SPAWN);
+  try {
+    npc.addTag(GOKU_TAG);
+    npc.nameTag = "Goku";
+    arenaGoku = npc;
+  } catch (error) {
+    if (npc.isValid) npc.remove();
+    throw error;
+  }
+}
 
 const planets = [
   // glowing gas giants so they stay visible at night; bands by latitude with a slight tilt
@@ -293,32 +323,11 @@ function runJobAsync(gen) {
 }
 
 async function withArea(dim, id, x1, z1, x2, z2, work) {
-  let created = false;
+  const area = await acquireLoadedArea(dim, { x: x1, y: Y0, z: z1 }, { x: x2, y: Y0, z: z2 }, id);
   try {
-    await world.tickingAreaManager.createTickingArea(id, {
-      dimension: dim,
-      from: { x: x1, y: Y0, z: z1 },
-      to: { x: x2, y: Y0, z: z2 },
-    });
-    created = true;
-  } catch (e) {
-    console.warn("[Universe 6] could not create ticking area: " + e);
-  }
-  try {
-    // wait until the chunks are really loaded
-    for (let i = 0; i < 60; i++) {
-      if (dim.getBlock({ x: x1, y: Y0, z: z1 }) && dim.getBlock({ x: x2, y: Y0, z: z2 })) break;
-      await waitTicks(5);
-    }
     await work();
   } finally {
-    if (created) {
-      try {
-        world.tickingAreaManager.removeTickingArea(id);
-      } catch (e) {
-        /* already gone */
-      }
-    }
+    releaseLoadedArea(area);
   }
 }
 
@@ -328,7 +337,7 @@ let planetBuild = null;
 function ensureArena(force = false) {
   if (!force && world.getDynamicProperty(PROP_ARENA) === BUILD_VERSION) return Promise.resolve();
   if (arenaBuild) return arenaBuild;
-  arenaBuild = (async () => {
+  arenaBuild = Promise.resolve().then(async () => {
     try {
       const dim = world.getDimension(DIM_ID);
       await withArea(dim, "dbe:u6_arena_" + system.currentTick, -FLOOR, -FLOOR, FLOOR, FLOOR, async () => {
@@ -338,7 +347,7 @@ function ensureArena(force = false) {
     } finally {
       arenaBuild = null;
     }
-  })();
+  });
   return arenaBuild;
 }
 
@@ -395,60 +404,61 @@ function rememberOrigin(player) {
 async function sendToArena(player, force = false) {
   if (travelling.has(player.id)) return;
   travelling.add(player.id);
+  let phase = "lookup";
   try {
     const dim = world.getDimension(DIM_ID);
+    phase = "generation";
+    const origin = travelOrigin(player);
     const first = world.getDynamicProperty(PROP_ARENA) !== BUILD_VERSION || force;
     rememberOrigin(player);
     player.sendMessage(first ? "§dThe arena is being prepared... one moment." : "§dTravelling to the Tournament of Destroyers arena...");
     await ensureArena(force);
-    player.teleport(SPAWN, { dimension: dim, rotation: { x: 0, y: 180 } });
+    phase = "teleport";
+    await safeTeleport(player, SPAWN, { origin, requireGround: true, dimension: dim, rotation: { x: 0, y: 180 } });
     ensurePlanets(force); // the planets finish building while the player looks around
   } catch (e) {
-    console.warn("[Universe 6] travel failed: " + e);
-    try {
-      player.sendMessage("§cCould not travel to the arena (is the dimension available in this game version?).");
-    } catch (e2) {
-      /* ignore */
-    }
+    reportTravelFailure(player, "Universe 6", e, DIM_ID, phase);
   } finally {
     travelling.delete(player.id);
   }
 }
 
-function sendHome(player) {
+async function sendHome(player) {
+  if (travelling.has(player.id)) return;
+  travelling.add(player.id);
+  let destinationId = "minecraft:overworld", phase = "origin";
   try {
     const raw = player.getDynamicProperty(ORIGIN_PROP);
-    const o = typeof raw === "string" ? JSON.parse(raw) : null;
-    if (o && typeof o.x === "number" && typeof o.y === "number" && typeof o.z === "number" && o.d !== DIM_ID) {
-      player.teleport({ x: o.x, y: o.y, z: o.z }, { dimension: world.getDimension(o.d), rotation: { x: o.rx ?? 0, y: o.ry ?? 0 } });
-      player.setDynamicProperty(ORIGIN_PROP, undefined);
-      player.sendMessage("§aYou left the arena.");
-      return;
+    let savedOrigin;
+    try { savedOrigin = typeof raw === "string" ? JSON.parse(raw) : undefined; } catch {}
+    if (savedOrigin && [savedOrigin.x, savedOrigin.y, savedOrigin.z].every(Number.isFinite) && typeof savedOrigin.d === "string" && savedOrigin.d !== "minecraft:overworld" && physicalDestinationId(savedOrigin.d) !== DIM_ID) {
+      destinationId = physicalDestinationId(savedOrigin.d);
+      phase = "lookup";
+      const dimension = world.getDimension(destinationId);
+      phase = "teleport";
+      await safeTeleport(player, { x: savedOrigin.x, y: savedOrigin.y, z: savedOrigin.z }, {
+        dimension, requireGround: true,
+        rotation: Number.isFinite(savedOrigin.rx) && Number.isFinite(savedOrigin.ry) ? { x: savedOrigin.rx, y: savedOrigin.ry } : undefined,
+        label: "Universe 6 saved return",
+      });
+    } else {
+      if (!savedOrigin || savedOrigin.d !== "minecraft:overworld") {
+        try { savedOrigin = JSON.parse(player.getDynamicProperty(NAMEK_ORIGIN_PROP)); } catch {}
+      }
+      await safeReturnToEarth(player, { savedOrigin, label: "Universe 6 return to Earth" });
     }
-  } catch (e) {
-    console.warn("[Universe 6] could not use saved origin: " + e);
-  }
-  try {
-    // came here through space: use the same trip home as the other planets ("Earth")
-    if (typeof player.getDynamicProperty(NAMEK_ORIGIN_PROP) === "string") {
-      player.runCommand("scriptevent dbe:space earth");
-      return;
-    }
-  } catch (e) {
-    console.warn("[Universe 6] could not use the space return point: " + e);
-  }
-  try {
-    const sp = player.getSpawnPoint();
-    if (sp) player.teleport({ x: sp.x + 0.5, y: sp.y, z: sp.z + 0.5 }, { dimension: sp.dimension });
-    else player.teleport(world.getDefaultSpawnLocation(), { dimension: world.getDimension("minecraft:overworld") });
-  } catch (e) {
-    console.warn("[Universe 6] return failed: " + e);
-  }
+    phase = "teleport";
+    if (raw !== undefined) player.setDynamicProperty(ORIGIN_PROP, undefined);
+    player.sendMessage("\u00a7aYou left the arena.");
+  } catch (error) {
+    reportTravelFailure(player, "Universe 6 return", error, destinationId, phase);
+  } finally { travelling.delete(player.id); }
 }
 
 function scan() {
   for (const p of world.getPlayers()) {
     const now = p.dimension.id === DIM_ID;
+    if (now && world.getDynamicProperty(PROP_ARENA) === BUILD_VERSION) ensureGoku(p.dimension);
     if (now !== (inArena.get(p.id) || false)) {
       inArena.set(p.id, now);
       try {
@@ -472,14 +482,7 @@ function scan() {
 
 // ---------------------------------------------------------------- setup
 try {
-  // If dimensions/universe_6_arena.json was loaded this throws "already registered" and is ignored.
-  system.beforeEvents.startup.subscribe(({ dimensionRegistry }) => {
-    try {
-      dimensionRegistry.registerCustomDimension(DIM_ID);
-    } catch (e) {
-      /* already registered */
-    }
-  });
+  // dimensions/universe_6_arena.json owns the native dimension definition and its biome/height settings.
 
   world.afterEvents.worldLoad.subscribe(() => {
     system.runInterval(() => {

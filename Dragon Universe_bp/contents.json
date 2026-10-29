@@ -25,7 +25,7 @@
          "path" : "biomes/hell.biome.json"
       },
       {
-         "path" : "biomes/kai.biome.json"
+         "path" : "biomes/kaioshin.biome.json"
       },
       {
          "path" : "biomes/namek.biome.json"
@@ -226,7 +226,7 @@
          "path" : "dimensions/hell.json"
       },
       {
-         "path" : "dimensions/kai.json"
+         "path" : "dimensions/kaioshin.json"
       },
       {
          "path" : "dimensions/namek.json"
@@ -1876,7 +1876,7 @@
          "path" : "scripts/index.js"
       },
       {
-         "path" : "scripts/kai_dimension.js"
+         "path" : "scripts/kaioshin_dimension.js"
       },
       {
          "path" : "scripts/namek_dimension.js"
@@ -1891,7 +1891,19 @@
          "path" : "scripts/space_planets.js"
       },
       {
+         "path" : "scripts/future_terrain.js"
+      },
+      {
+         "path" : "scripts/terrain_repair.js"
+      },
+      {
+         "path" : "scripts/travel_safety.js"
+      },
+      {
          "path" : "scripts/universe_6_dimension.js"
+      },
+      {
+         "path" : "scripts/world_spawn_policy.js"
       },
       {
          "path" : "scripts/world_structures.js"

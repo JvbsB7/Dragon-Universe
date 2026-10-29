@@ -48,8 +48,8 @@
                 },
                 "dbe:dragon_radar_location": {
                     "type": "int",
-                    "range": [ 100100, 228228 ],
-                    "default": 164164,
+                    "range": [ 0, 228228 ],
+                    "default": 0,
                     "client_sync": true
                 },
                 "dbe:fusion_type": {

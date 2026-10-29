@@ -32,7 +32,7 @@ const skills_data = [
       {
         test: "is_race",
         operator: "!=",
-        value: "demon",
+        value: "glind",
       },
     ],
   },
@@ -261,13 +261,7 @@ const skills_data = [
       grantTrigger: "on_damage",
       hasDecay: true,
     },
-    requirements: [
-      {
-        test: "has_skill",
-        value: "ultra_instinct",
-        operator: "!=",
-      },
-    ],
+    requirements: [],
     tiers: [
       {
         upgradeCost: 10,
@@ -862,11 +856,6 @@ const skills_data = [
       {
         test: "has_skill",
         value: "divine_ki",
-      },
-      {
-        test: "has_skill",
-        value: "hakai",
-        operator: "!=",
       },
       {
         test: "is_transformation",

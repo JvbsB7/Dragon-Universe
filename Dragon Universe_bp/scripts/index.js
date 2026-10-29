@@ -1,11 +1,30 @@
 // Núcleo do Dragon Evolution (About04), base do Dragon Universe.
 // Gerado por tools/deobfuscate-core.mjs a partir da versão ofuscada (commit 2d4f628): textos decodificados e
 // código formatado, sem mudança de lógica. Os nomes curtos de variáveis vêm do ofuscador e não puderam ser recuperados.
-import "./kai_dimension.js";
+import "./kaioshin_dimension.js";
 import "./other_world_kai.js";
 import "./world_structures.js";
 import "./hell_dimension.js";
 import "./universe_6_dimension.js";
+import "./world_spawn_policy.js";
+import { safeTeleport as duSafeTeleport, isTravelPending as duIsTravelPending,
+  acquireLoadedArea as duAcquireLoadedArea, releaseLoadedArea as duReleaseLoadedArea,
+  safeReturnToEarth as duSafeReturnToEarth,
+  physicalDestinationId as duPhysicalDestinationId, isSafeStanding as duIsSafeStanding,
+  reportTravelFailure as duReportTravelFailure } from "./travel_safety.js";
+import { initializeFutureTerrain, prepareFutureCity } from "./future_terrain.js";
+async function duTravel(entity, location, options = {}) {
+  try {
+    const dimension = options.dimension ?? entity.dimension;
+    if (dimension.id === "minecraft:overworld" && entity.dimension.id !== dimension.id)
+      await duSafeReturnToEarth(entity, { ...options, savedOrigin: { ...location, d: dimension.id } });
+    else await duSafeTeleport(entity, location, options);
+    return !0;
+  } catch (error) {
+    duReportTravelFailure(entity, options?.label ?? "destination", error);
+    return !1;
+  }
+}
 import { namekDragonBallSpot as __nbl } from "./namek_dimension.js";
 import { dragonBallsData as d } from "./data/dragon_balls_data.js";
 import {
@@ -243,8 +262,13 @@ var aC = class sJ {
             try {
               let sP = sH.getBlock(new aD(sI.x + sM, sI.y + sN, sI.z + sO));
               sP && sP.typeId === sG && sL.push(sP);
-            } catch {}
+            } catch (error) {
+              if (!aF.isUnavailable(error)) throw error;
+            }
       return sL;
+    }
+    static isUnavailable(error) {
+      return /LocationInUnloadedChunk|LocationOutOfWorldBoundaries|unloaded chunk|outside.*(?:world|bound)/i.test(error?.name + ": " + error);
     }
   },
   aG = class {
@@ -4042,6 +4066,7 @@ var bD = class {
         sK = this.instances.get(sI);
       sK || ((sK = new Map()), this.instances.set(sI, sK));
       let sL = sK.get(sH);
+      if (sL) sL.provider = sG;
       return sL || ((sL = new sV(sG, sH)), sK.set(sH, sL)), sL;
     }
     static saveAllInstances() {
@@ -7576,7 +7601,8 @@ var cA = class {
     priority = 0;
     triggerChance = 1;
     get distanceToTarget() {
-      return this.target?.isValid ? bO.distance(this.entity.location, this.target.location) : 0;
+      const target = this.target;
+      return this.entity.isValid && target?.isValid ? bO.distance(this.entity.location, target.location) : 0;
     }
     get isInCooldown() {
       return this.lastExecutionTime + this.cooldownDuration > cz.currentTick;
@@ -7768,9 +7794,21 @@ var cF = class {
         this.saveState();
     }
     enable() {
+      if ((this.id === "ultra_instinct" || this.id === "hakai") &&
+          this.dbeEntity instanceof hN && !dC.testAll(this.dbeEntity, this.requirements)) {
+        this.dbeEntity.player.sendMessage(dC.listDescription(this.requirements, this.dbeEntity));
+        return;
+      }
       if (this.kiDrain > 0 && this.dbeEntity.ki.currentValue <= 0) {
         this.dbeEntity instanceof hN && this.dbeEntity.player.sendMessage({ translate: "message.noKi.warning" });
         return;
+      }
+      if (this.id === "ultra_instinct" || this.id === "hakai") {
+        if (this.id === "ultra_instinct") {
+          this.dbeEntity.skills.getToggleSkill("hakai")?.disable();
+          if (this.dbeEntity.transformations.currentTransformation.id === "ultra_ego")
+            this.dbeEntity.transformations.untransform();
+        } else if (this.id === "hakai") this.dbeEntity.skills.getToggleSkill("ultra_instinct")?.disable();
       }
       this.propertyId && this.dbeEntity.trySetProperty(this.propertyId, !0),
         (this.entitySkillData.state.enabled = !0),
@@ -7844,8 +7882,12 @@ var cF = class {
       }
     }
     async tryTeleportToLocation(sG) {
-      await cy.waitTicks(1), this.applyTeleportEffects();
-      let sH = this.dbeEntity.entity.tryTeleport(sG, {
+      let entity = this.dbeEntity.entity,
+        dimension = entity.dimension;
+      await cy.waitTicks(1);
+      if (!entity.isValid || entity.dimension.id !== dimension.id) return !1;
+      this.applyTeleportEffects();
+      let sH = entity.tryTeleport(sG, {
         checkForBlocks: !0,
         facingLocation: this.dbeEntity.target?.location,
       });
@@ -7905,13 +7947,14 @@ var cN = class {
         ", preparem-se!",
     ),
       await cM.waitTicks(300);
-    try {
-      this.tournament.sendMessage("Lutem! (" + sG.name + " vs " + sH.name + ")"),
-        sG.entity.teleport(this.tournament.opponentOneSpawnLocation, { dimension: this.tournament.dimension }),
-        sH.entity.teleport(this.tournament.opponentTwoSpawnLocation, { dimension: this.tournament.dimension }),
-        sG.recoverConstitution(),
-        sH.recoverConstitution();
-    } catch {}
+    const arrivals = await Promise.all([
+      duTravel(sG.entity, this.tournament.opponentOneSpawnLocation, { dimension: this.tournament.dimension, label: "tournament fighter one" }),
+      duTravel(sH.entity, this.tournament.opponentTwoSpawnLocation, { dimension: this.tournament.dimension, label: "tournament fighter two" }),
+    ]);
+    if (arrivals.includes(!1)) throw new Error("Tournament destination unavailable; retry the queue");
+    this.tournament.sendMessage("Lutem! (" + sG.name + " vs " + sH.name + ")");
+    sG.recoverConstitution();
+    sH.recoverConstitution();
     await this.handleMatch(sG, sH);
   }
   handleMatch(sG, sH) {
@@ -7933,7 +7976,8 @@ var cN = class {
       sG.entity.isValid && this.tournament.sendMessage(sG.name + " venceu a luta!");
   }
   teleportToSpawn(sG) {
-    sG.entity.isValid && sG.entity.teleport(this.tournament.spectatorSpawn, { dimension: this.tournament.dimension });
+    return sG.entity.isValid && duTravel(sG.entity, this.tournament.spectatorSpawn,
+      { dimension: this.tournament.dimension, label: "tournament spectator" });
   }
 };
 import { Player as cO } from "@minecraft/server";
@@ -8052,8 +8096,12 @@ var cP = class {
         await cK.waitTicks(100);
     }
     async startTournament() {
-      for (let sI of this.waitingPlayers)
-        this._participants.push(new cP(this, sI)), sI.teleport(this.spectatorSpawn, { dimension: this.dimension });
+      try {
+      for (let sI of this.waitingPlayers) {
+        this._participants.push(new cP(this, sI));
+        if (!(await duTravel(sI, this.spectatorSpawn, { dimension: this.dimension, label: "tournament queue" })))
+          throw new Error("Tournament arrival failed");
+      }
       this.waitingPlayersMap.clear(), await this.startTournamentIntro();
       let sG = await this.createInitialBracket();
       for (; sG.length > 1; ) {
@@ -8070,6 +8118,15 @@ var cP = class {
       }
       let sH = sG[0].winnerParticipant;
       sH && this.finishTournament(sH);
+      } catch (error) {
+        console.warn(`[Dragon Universe] Tournament travel failed: ${error?.stack ?? error}`);
+        this.sendMessage("§cViagem do torneio indisponível. Entre novamente na fila para tentar outra vez.");
+        for (let participant of this._participants)
+          if (participant.entity.isValid) this.waitingPlayersMap.add(participant.entity);
+        this._participants = [];
+        this.isStartSequenceActive = !1;
+        this.round = 0;
+      }
     }
     updateWaitingPlayers() {
       let { waitingPlayers: sG } = this;
@@ -8333,12 +8390,24 @@ var dv = class {
       }),
       sG.runInterval(() => {
         if (!sG.isLoadingAttack && sG.advancedCombat) {
-          for (let sH of this.getAllBehaviors())
-            sH.isInCooldown || Math.random() >= sH.triggerChance || sH.onTimedExecution();
+          for (let sH of this.getAllBehaviors()) {
+            if (!sG.entity.isValid) return;
+            if (sH.isInCooldown || this.runningBehaviors.has(sH) || Math.random() >= sH.triggerChance) continue;
+            this.runningBehaviors.add(sH);
+            try {
+              Promise.resolve(sH.onTimedExecution()).catch(error => {
+                console.warn("[Dragon Universe] Combat behavior " + sH.constructor.name + " failed: " + (error?.stack ?? error));
+              }).finally(() => this.runningBehaviors.delete(sH));
+            } catch (error) {
+              this.runningBehaviors.delete(sH);
+              console.warn("[Dragon Universe] Combat behavior " + sH.constructor.name + " failed: " + (error?.stack ?? error));
+            }
+          }
         }
       }, 20));
   }
   behaviorsMap = new Map();
+  runningBehaviors = new Set();
   cachedBehaviors = null;
   lastEventId;
   get isFlying() {
@@ -8412,9 +8481,11 @@ var dB = class {
     isEqualityOperator(sG) {
       return sG === "==" || !sG;
     }
-    listDescription(sG) {
+    listDescription(sG, sK) {
       let sH = [];
-      for (let sI of sG) this.get(sI.test) && sH.push({ text: "\n- " }, this.getDescription(sI));
+      for (let sI of sG)
+        !sI.exceptRaceIds?.includes(sK?.race?.id) && this.get(sI.test) &&
+          sH.push({ text: "\n- " }, this.getDescription(sI));
       return { rawtext: sH };
     }
     register(sG) {
@@ -8607,7 +8678,7 @@ var dW = class extends dR {
     }
     update() {
       let sG = this.dbeEntity.getGravity();
-      this.setValue(0.0075 / (sG + 1));
+      this.setValue(0.028 / (sG + 1));
     }
   },
   dX = class extends dR {
@@ -9517,26 +9588,29 @@ var eH = class {
       (this.options.spawnLocation = sG), this.dimensionRegionManager.save();
     }
     teleportToFallbackLocation(sG) {
-      dz.run(async () => {
-        if (this.accessRequirements) {
-          if (sG instanceof dx) {
-            let sH = hO(sG);
-            await ex.tryStopFusion(sH);
-          }
-          sG.teleport(this.accessRequirements.deniedAccessLocation, { dimension: this.dimension });
+      return new Promise((resolve) => dz.run(async () => {
+        try {
+          if (!this.accessRequirements) return resolve(!1);
+          if (sG instanceof dx) await ex.tryStopFusion(hO(sG));
+          resolve(await duTravel(sG, this.accessRequirements.deniedAccessLocation,
+            { dimension: this.dimension, label: "region fallback " + this.id }));
+        } catch (error) {
+          console.warn(`[Dragon Universe] Region fallback failed: ${error?.stack ?? error}`);
+          resolve(!1);
         }
-      });
+      }));
     }
     teleportToRegion(sG) {
-      dz.run(async () => {
-        if (this.spawnPoint) {
-          if (sG instanceof dx) {
-            let sH = hO(sG);
-            await ex.tryStopFusion(sH);
-          }
-          sG.teleport(this.spawnPoint, { dimension: this.dimension });
+      return new Promise((resolve) => dz.run(async () => {
+        try {
+          if (!this.spawnPoint) return resolve(!1);
+          if (sG instanceof dx) await ex.tryStopFusion(hO(sG));
+          resolve(await duTravel(sG, this.spawnPoint, { dimension: this.dimension, label: "region " + this.id }));
+        } catch (error) {
+          console.warn(`[Dragon Universe] Region travel failed: ${error?.stack ?? error}`);
+          resolve(!1);
         }
-      });
+      }));
     }
     isAdmin(sG) {
       return sG.playerPermissionLevel === dy.Operator && sG.getGameMode() === dw.Creative;
@@ -9792,6 +9866,8 @@ var eT = class {
   }
   init() {
     this.loadAllSkills(),
+      this.isSkillActive("ultra_instinct") &&
+        this.getToggleSkill("hakai")?.disable(),
       this.dbeEntity.trySetProperty("dbe:charging_attack", 0),
       this.dbeEntity.runInterval(() => {
         let { attributes: sG, masteries: sH } = this.dbeEntity,
@@ -9830,7 +9906,10 @@ var eT = class {
       if (this.hasSkill(sG))
         this.dbeEntity.entity instanceof eR &&
           this.dbeEntity.entity.sendMessage({ translate: "message.learn.error.3" });
-      else
+      else if (this.dbeEntity instanceof hN && !this.canLearnSkill(sG)) {
+        let sH = eQ.find(({ id: sI }) => sI === sG);
+        this.dbeEntity.player.sendMessage(dC.listDescription(sH?.requirements ?? [], this.dbeEntity));
+      } else
         return (
           this.addSkill(sG),
           this.dbeEntity instanceof hN &&
@@ -10374,7 +10453,10 @@ var fv = class extends fj {
         if (!sI) {
           if (Math.random() < 0.25 && this.auraEnabled && sM.currentTransformation.auraProperties?.sparks) {
             let { dimension: sN, location: sO } = sK;
-            sN.spawnParticle("dbe:aura_spark", sO), sN.playSound("common.spark", sO, { volume: 0.15 });
+            if (!duIsTravelPending(sK) && sN.isChunkLoaded(sO)) {
+              sN.spawnParticle("dbe:aura_spark", sO);
+              sN.playSound("common.spark", sO, { volume: 0.15 });
+            }
           }
           if (sK.isSneaking) {
             let sP = sL.getToggleSkill("limiter");
@@ -10565,7 +10647,11 @@ var fM = class {
     return this.transformationData.bodyType;
   }
   get canTransform() {
-    return dC.testAll(this.dbeEntity, this.requirements);
+    return this.isRaceAllowed && dC.testAll(this.dbeEntity, this.requirements);
+  }
+  get isRaceAllowed() {
+    let sG = this.transformationData.allowedRaceIds;
+    return !sG || sG.includes(this.dbeEntity.race?.id);
   }
   get colorOverrides() {
     if ("raceColorOverrides" in this.transformationData) {
@@ -10606,6 +10692,9 @@ var fM = class {
     return this.transformationData.tags || [];
   }
   applyTransformation() {
+    if (!this.isRaceAllowed) return !1;
+    if (this.id === "ultra_ego")
+      this.dbeEntity.skills.getToggleSkill("ultra_instinct")?.disable();
     let { attributes: sG, transformations: sH } = this.dbeEntity,
       sI = sH.currentTransformation;
     if (this.dbeEntity instanceof hN) {
@@ -10623,7 +10712,7 @@ var fM = class {
       this.updateIcon();
   }
   transform() {
-    this.applyTransformation(), this.applyTransformationEffects();
+    if (this.applyTransformation() !== !1) this.applyTransformationEffects();
   }
   updateIcon() {
     if (this.dbeEntity instanceof hN) {
@@ -10684,7 +10773,8 @@ var fO = class {
     return this.getTransformationByIndex(this.currentTransformationIndex) ?? this.getCurrentBaseTransformation();
   }
   get selectedTransformation() {
-    return this.getTransformationById(this.selectedTransformationId) ?? this.currentTransformation;
+    let sG = this.getTransformationById(this.selectedTransformationId);
+    return sG?.isRaceAllowed ? sG : this.currentTransformation;
   }
   get transformationsData() {
     let { race: sG } = this.dbeEntity,
@@ -10732,9 +10822,14 @@ var fO = class {
     (this.currentTransformationIndex = Number(this.dbeEntity.entity.getProperty("dbe:transformation")) || 0),
       this.initializeTransformations(),
       this.updateAvailableTransformations();
+    if (!this.currentTransformation.isRaceAllowed ||
+        (this.currentTransformation.id === "ultra_ego" &&
+          this.dbeEntity.skills.isSkillActive("ultra_instinct")))
+      this.getCurrentBaseTransformation().applyTransformation();
+    this.selectedTransformationId = this.currentTransformation.id;
   }
   isTransformationAvailable(sG) {
-    return this.availableTransformationIds.has(sG);
+    return this.availableTransformationIds.has(sG) && !!this.getTransformationById(sG)?.isRaceAllowed;
   }
   isTransformed() {
     return !this.currentTransformation.isBase;
@@ -10881,7 +10976,8 @@ var fP = class extends Error {
       return this.getAll().filter(({ id: sH }) => this.isRaceAvailableForPlayer(sG, sH));
     }
     static get(sG) {
-      return this.raceTypesCache.get(sG);
+      this.getAll();
+      return this.raceTypesCache.get(sG === "demon" ? "glind" : sG);
     }
     static getByIndex(sG) {
       return this.getAll()[sG];
@@ -11038,7 +11134,10 @@ var fP = class extends Error {
       sG ? sH.setCooldown("guard", sG ?? 20) : sH.clearCooldown("guard"), (this.isGuarding = !1);
     }
     init() {
-      this.isGuarding = !!this.dbeEntity.entity.getProperty("dbe:is_defending");
+      this.isGuarding = this.dbeEntity instanceof hN
+        ? this.dbeEntity.player.selectedSlotIndex === 8
+        : !!this.dbeEntity.entity.getProperty("dbe:is_defending");
+      this.dbeEntity.trySetProperty("dbe:is_defending", this.isGuarding);
     }
     shouldDodge(sG) {
       if (this.dbeEntity.isLoadingAttack) return !1;
@@ -11093,6 +11192,7 @@ var fP = class extends Error {
         ((this.entityDefinitions = sH),
         (this.entityData = fC.getDBEEntityDataByTypeId(sG.typeId)),
         (this.data = bG(sG, "dbe")));
+      this.loadRace();
       let sI = this.entityData?.entityDefinitions;
       if (sI) {
         let sK = this.data.get("entity_definitions");
@@ -11100,6 +11200,15 @@ var fP = class extends Error {
           ? (this.entityDefinitions = sK)
           : ((this.entityDefinitions = JSON.parse(JSON.stringify({ ...sI, ...(this.entityDefinitions ?? {}) }))),
             this.data.set("entity_definitions", this.entityDefinitions));
+      }
+      if (
+        sG.typeId === "dbe:goku_black" &&
+        this.entityDefinitions?.powerDefinition?.level === 125 &&
+        this.entityDefinitions.availableTransformations?.length === 1 &&
+        this.entityDefinitions.availableTransformations[0] === "ssjg"
+      ) {
+        this.entityDefinitions.availableTransformations = ["ssjr"];
+        this.data.set("entity_definitions", this.entityDefinitions);
       }
       (this.alignment = new f7(this)),
         (this.attributes = new ef(this)),
@@ -11175,6 +11284,7 @@ var fP = class extends Error {
       return this._race;
     }
     get target() {
+      if (!this.entity.isValid) return;
       let { target: sG } = this.entity;
       if (sG?.isValid) return sG;
     }
@@ -11219,8 +11329,7 @@ var fP = class extends Error {
       return (sK += sL), sK;
     }
     initialize() {
-      this.loadRace(),
-        this.attributes.init(),
+      this.attributes.init(),
         this.colors.init(),
         this.guard.init(),
         this.health.init(),
@@ -11241,8 +11350,24 @@ var fP = class extends Error {
         this.entity.dimension.playSound("mob.sheep.shear", this.entity.location);
     }
     runInterval(sG, sH) {
+      let running = false;
+      const failed = error => {
+        console.warn("[Dragon Universe] Entity interval failed: " + (error?.stack ?? error));
+        try { this.clearRun(sI); }
+        catch (cleanup) { console.warn("[Dragon Universe] Entity interval cleanup failed: " + (cleanup?.stack ?? cleanup)); }
+      };
+      const finished = () => {
+        running = false;
+        try { if (!this.entity.isValid) this.clearAllRuns(); }
+        catch (error) { failed(error); }
+      };
       let sI = cw.runInterval(() => {
-        this.entity.isValid ? sG(this) : this.clearAllRuns();
+        try {
+          if (!this.entity.isValid) { this.clearAllRuns(); return; }
+          if (running) return;
+          running = true;
+          Promise.resolve(sG(this)).then(finished, error => { failed(error); finished(); });
+        } catch (error) { running = false; failed(error); }
       }, sH);
       return this.runIds.add(sI), sI;
     }
@@ -11255,10 +11380,23 @@ var fP = class extends Error {
       });
     }
     async trySpread(sG, sH) {
-      let sI = this.skills.getSkill("rapid_movement");
-      if (sI instanceof cI) {
-        let sK = d2(this.entity.dimension, sG, sH);
-        if (sK) return sI.tryTeleportToLocation(sK);
+      try {
+        let entity = this.entity,
+          dimension = entity.dimension,
+          origin = { ...entity.location },
+          target = { ...sG };
+        // Block/light queries must run outside beforeEvents.entityHurt.
+        await cw.waitTicks(1);
+        if (!entity.isValid || entity.dimension.id !== dimension.id) return !1;
+        let location = entity.location;
+        if (Math.hypot(location.x - origin.x, location.y - origin.y, location.z - origin.z) > 1) return !1;
+        let sI = this.skills.getSkill("rapid_movement");
+        if (sI instanceof cI) {
+          let sK = d2(dimension, target, sH);
+          if (sK) return await sI.tryTeleportToLocation(sK);
+        }
+      } catch (error) {
+        console.warn("[Dragon Universe] Rapid movement failed:", error);
       }
       return !1;
     }
@@ -11266,11 +11404,17 @@ var fP = class extends Error {
       for (let sG of this.runIds) this.clearRun(sG);
     }
     loadRace() {
-      let sG = this.entity instanceof cv ? String(this.entity.getProperty("dbe:race")) : this.entityData?.race;
+      let sG = this.entity instanceof cv ? this.entity.getProperty("dbe:race") : this.entityData?.race;
+      if (this.entity instanceof cv && (!sG || typeof sG !== "string")) {
+        throw new Error("Propriedade dbe:race indisponível para " + this.entity.name +
+          ". Verifique se o Behavior Pack correto está ativo e se a definição do jogador foi carregada.");
+      }
       if (sG) {
         let sH = fR.get(sG)?.getData();
-        if (sH) this._race = new fS(sH);
-        else throw new fP(sG);
+        if (sH) {
+          this._race = new fS(sH);
+          if (sG === "demon" && this.entity instanceof cv) this.trySetProperty("dbe:race", "glind");
+        } else throw new fP(sG);
       }
     }
     distributeAttributes(sG, sH) {
@@ -12087,8 +12231,10 @@ var gQ = class extends gN {
     }
     async startTaskCheckLoop() {
       let { player: sG } = this.dbePlayer;
-      for (; sG.isValid; ) {
-        for (let sH of this.getActiveTasks()) if (sH.updateProgress?.() && (await gJ.waitTicks(1), !sG.isValid)) return;
+      await gJ.waitTicks(1);
+      for (; sG.isValid && i0.get(sG.id) === this.dbePlayer; ) {
+        for (let sH of this.getActiveTasks())
+          if (sH.updateProgress?.() && (await gJ.waitTicks(1), !sG.isValid || i0.get(sG.id) !== this.dbePlayer)) return;
         await gJ.waitTicks(20);
       }
     }
@@ -12290,14 +12436,32 @@ var gZ = class {
     return this.objectiveData.teleportOnStart;
   }
   async completeObjective() {
-    this.isStarted &&
-      !this.isCompleted &&
-      ((this._progress.isCompleted = !0),
-      this.stopObjective(),
-      this.notifyProgressChanged(),
-      this.dialogs.on_finish &&
-        (await gP(this.dbePlayer.player, "ui.dbe.npc", this.getDialogueKeys("on_finish", this.dialogs.on_finish))),
-      this.teleportOnFinishId && (this.teleportToRegion(this.teleportOnFinishId), await gY.waitTicks(100)));
+    if (!this.isStarted || this.isCompleted || this.completing) return !1;
+    this.completing = !0;
+    let generation = this.startGeneration ?? 0;
+    try {
+      if (this.dialogs.on_finish)
+        await gP(this.dbePlayer.player, "ui.dbe.npc", this.getDialogueKeys("on_finish", this.dialogs.on_finish));
+      if (!this.isStarted || generation !== (this.startGeneration ?? 0)) return !1;
+      if (this.teleportOnFinishId) {
+        let arrived = await this.teleportToRegion(this.teleportOnFinishId);
+        if (!this.isStarted || generation !== (this.startGeneration ?? 0)) return !1;
+        if (!arrived) {
+          this.stopObjective();
+          return !1;
+        }
+      }
+      this._progress.isCompleted = !0;
+      this.stopObjective();
+      this.notifyProgressChanged();
+      return !0;
+    } catch (error) {
+      console.warn(`[Dragon Universe] Mission finish ${this.id} failed: ${error?.stack ?? error}`);
+      if (generation === (this.startGeneration ?? 0)) this.stopObjective();
+      return !1;
+    } finally {
+      this.completing = !1;
+    }
   }
   fail() {
     this.isStarted &&
@@ -12327,17 +12491,32 @@ var gZ = class {
     this.isStarted && this.isRestartable && (this.stopObjective(), this.startObjective());
   }
   async startObjective() {
-    if (!this.isStarted && this.canStart) {
+    if (!this.isStarted && this.canStart && !this.starting) {
       let { dbePlayer: sG, dialogs: sH, teleportOnStartId: sI } = this;
-      (this._progress.isStarted = !0),
-        this.notifyProgressChanged(),
-        sI && (this.teleportToRegion(sI), await gY.waitTicks(100)),
-        sH.on_start && (await gP(sG.player, "ui.dbe.npc", this.getDialogueKeys("on_start", sH.on_start)));
-      for (let sK of this.getTasks()) sK.startTask();
-      this.loadCooldowns();
+      this.starting = !0;
+      let generation = this.startGeneration = (this.startGeneration ?? 0) + 1;
+      try {
+        if (sI && !(await this.teleportToRegion(sI))) return !1;
+        if (generation !== this.startGeneration || !sG.player.isValid) return !1;
+        if (sH.on_start) await gP(sG.player, "ui.dbe.npc", this.getDialogueKeys("on_start", sH.on_start));
+        if (generation !== this.startGeneration || !sG.player.isValid) return !1;
+        this._progress.isStarted = !0;
+        this.notifyProgressChanged();
+        for (let sK of this.getTasks()) sK.startTask();
+        this.loadCooldowns();
+        if (this.isGoalReached) await this.completeObjective();
+        return !0;
+      } catch (error) {
+        console.warn(`[Dragon Universe] Mission start ${this.id} failed: ${error?.stack ?? error}`);
+        this.stopObjective();
+        return !1;
+      } finally {
+        this.starting = !1;
+      }
     }
   }
   stopObjective() {
+    this.startGeneration = (this.startGeneration ?? 0) + 1;
     if (this.isStarted) {
       (this._progress.isStarted = !1), this.notifyProgressChanged(), this.deleteCooldowns();
       for (let sG of this.getTasks()) sG.stopTask();
@@ -12393,10 +12572,12 @@ var gZ = class {
     for (let sH of cY.getAll()) {
       let sI = eO(sH).getRegion(sG);
       if (sI) {
-        sI.teleportToRegion(this.dbePlayer.player);
-        break;
+        return sI.teleportToRegion(this.dbePlayer.player);
       }
     }
+    console.warn("[Dragon Universe] Mission destination region is unavailable: " + sG);
+    this.dbePlayer.player.sendMessage("§cDestino da missão indisponível. Tente iniciar a missão novamente.");
+    return Promise.resolve(!1);
   }
   updateProgress() {
     this.isGoalReached && this.completeObjective();
@@ -12406,6 +12587,7 @@ import { EntityTypes as h0, Player as h1, system as h2 } from "@minecraft/server
 var h3 = class extends gN {
   taskData;
   spawnedEntities = [];
+  spawnGeneration = 0;
   constructor(sG, sH, sI, sK) {
     super(sG, sH, sI, sK), (this.taskData = sI);
   }
@@ -12454,42 +12636,60 @@ var h3 = class extends gN {
   despawnEntities() {
     let sG = this.dbePlayer.player.id,
       sH = [...this.spawnedEntities];
+    this.spawnGeneration++;
     if (!this.spawnedEntities.length) {
       for (let sI of cY.getAll())
         for (let sK of sI.getEntities())
           sK.getDynamicProperty("dbe:spawned_by") === this.localizationKey + "_" + sG && sH.push(sK);
     }
+    this.spawnedEntities = [];
     h2.runTimeout(() => {
-      this.spawnedEntities.length = 0;
       for (let sL of sH) sL.isValid && sL.remove();
     }, 20);
   }
   async spawnEntities() {
-    let { player: sG } = this.dbePlayer,
-      { dimension: sH, location: sI } = sG,
-      sK = this.entityTypeId === "dbe:shadow_dummy";
-    this.despawnEntities();
-    for (let sL = 0; sL < this.requiredProgress; sL++) {
-      let sM = d2(sH, sI, 8);
-      if (sM) {
+    let generation;
+    try {
+      let { player: sG } = this.dbePlayer,
+        { dimension: sH, location: sI } = sG,
+        sK = this.entityTypeId === "dbe:shadow_dummy";
+      this.despawnEntities();
+      generation = this.spawnGeneration;
+      for (let sL = 0; sL < this.requiredProgress; sL++) {
+        if (generation !== this.spawnGeneration) return;
+        if (!this.isStarted || !sG.isValid) {
+          this.despawnEntities();
+          return;
+        }
+        if (sG.dimension.id !== sH.id) {
+          this.fail();
+          return;
+        }
+        let sM = d2(sH, sI, 8);
+        if (!sM) {
+          this.fail();
+          return;
+        }
         let sN;
         if (sK) sN = this.dbePlayer.trySpawnShadowDummy(sM);
-        else {
-          if (this.entityTypeId.startsWith("dbe:")) {
-            let sO = i3.trySpawnDBEEntity(this.entityTypeId, sH, sM, { entityDefinitions: this.entityDefinitions });
-            sO && (sN = sO.entity);
-          } else sN = d4(this.entityTypeId, sH, sM);
+        else if (this.entityTypeId.startsWith("dbe:")) {
+          let sO = i3.trySpawnDBEEntity(this.entityTypeId, sH, sM, { entityDefinitions: this.entityDefinitions });
+          sN = sO?.entity;
+        } else sN = d4(this.entityTypeId, sH, sM);
+        if (!sN) {
+          this.fail();
+          return;
         }
-        sN &&
-          (this.spawnEvent && sN.triggerEvent(this.spawnEvent),
-          sN.setDynamicProperty("dbe:spawned_by", this.localizationKey + "_" + sG.id),
-          this.spawnedEntities.push(sN),
-          sH.playSound("common.teleport2", sM),
-          await h2.waitTicks(5));
-      } else {
-        this.fail();
-        break;
+        // Track ownership before callbacks that can fail.
+        this.spawnedEntities.push(sN);
+        sN.setDynamicProperty("dbe:spawned_by", this.localizationKey + "_" + sG.id);
+        this.spawnEvent && sN.triggerEvent(this.spawnEvent);
+        sH.playSound("common.teleport2", sM);
+        await h2.waitTicks(5);
       }
+    } catch (error) {
+      console.warn("[Dragon Universe] Quest enemy spawn failed:", error);
+      if (generation === undefined || generation === this.spawnGeneration) this.fail();
     }
   }
 };
@@ -12506,6 +12706,8 @@ var h4 = class {
         ((this.progress = { id: sH.id, started: sI?.started ?? !1, objectives: sI?.objectives || [] }),
         gW.run(() => {
           this.loadObjectives(), this.loadRewards();
+          if (this.id === "fetch_bulma_outfit" && sG.entity.isValid && i0.get(sG.entity.id) === sG &&
+              sG.quests.questsMap.get(this.id) === this) sG.claimBulmaStaffReward();
         }));
     }
     objectives = [];
@@ -12554,6 +12756,7 @@ var h4 = class {
     }
     completeQuest() {
       if (this.isStarted && !this._isCompleted) {
+        if (this.id === "fetch_bulma_outfit" && !this.dbePlayer.prepareBulmaStaffReward()) return !1;
         (this._isCompleted = !0),
           this.grantRewards(),
           this.onCompleted(),
@@ -12568,6 +12771,7 @@ var h4 = class {
         sG.advanceToNextMainQuest(this),
           sG.deleteQuest(this.id, !0),
           bM.dispatch("quest_completed", { dbePlayer: this.dbePlayer, quest: this });
+        if (this.id === "fetch_bulma_outfit") this.dbePlayer.claimBulmaStaffReward();
       }
     }
     fail() {
@@ -12699,8 +12903,10 @@ var h4 = class {
       );
     }
     grantRewards() {
-      for (let sG of this.getRewards())
+      for (let sG of this.getRewards()) {
+        if (this.id === "fetch_bulma_outfit" && sG.rewardData.type === "item" && sG.rewardData.item === "dbe:power_pole") continue;
         sG.amount && (sG.tryGrantReward(this.dbePlayer), sG.sendRewardMessage(this.dbePlayer));
+      }
     }
     loadObjectives() {
       for (let sG = 0; sG < this.questData.objectives.length; sG++) {
@@ -12756,7 +12962,9 @@ var h4 = class {
     constructor(sG) {
       (this.dbePlayer = sG),
         ((this.questsInfo = sG.data.get("quests_info") || { quests: [], completedQuests: [], mainSagaRestartCount: 0 }),
-        gU.run(() => this.loadQuests()));
+        gU.run(() => {
+          if (sG.entity.isValid && i0.get(sG.entity.id) === sG) this.loadQuests();
+        }));
     }
     questsInfo;
     questsMap = new Map();
@@ -13411,6 +13619,8 @@ var hJ = 1,
   hM = class {
     constructor(sG) {
       this.inputPermissions = sG;
+      // Native permissions survive reconnects; the transient owners below are rebuilt for this session.
+      this.setPermissions([bW.Movement, bW.Camera], !0);
     }
     blockedPermissions = new Map();
     blockInputPermission(sG, sH) {
@@ -13516,8 +13726,10 @@ var hJ = 1,
       }
     }
     reset() {
-      bX.run(() => {
+      return new Promise((resolve) => bX.run(() => {
+        if (!this.player.isValid || i0.get(this.player.id) !== this) return resolve(!1);
         let sG = [
+          "dbe:color_0",
           "dbe:color_1",
           "dbe:color_2",
           "dbe:color_3",
@@ -13537,6 +13749,7 @@ var hJ = 1,
           "dbe:gender",
           "dbe:has_majin_mark",
           "dbe:has_tail",
+          "dbe:oni_blessing",
           "dbe:is_armor_visible",
           "dbe:is_death",
           "dbe:is_defending",
@@ -13549,10 +13762,40 @@ var hJ = 1,
           "dbe:transformation",
           "dbe:ultra_instinct",
         ];
-        for (let sH of sG) this.entity.resetProperty(sH);
-        for (let sI of this.player.getTags()) sI.startsWith("dbe:") && this.player.removeTag(sI);
-        this.skills.disableToggleSkills(), this.data.clear(), this.clearAllRuns(), i3.deleteEntity(this.player);
-      });
+        const properties = new Map();
+        let tags = [], saved;
+        try {
+          tags = this.player.getTags().filter(tag => tag.startsWith("dbe:"));
+          saved = JSON.parse(JSON.stringify(this.data.getData()));
+          for (const id of sG) {
+            const value = this.entity.getProperty(id);
+            if (value === undefined) throw new Error("Reset property unavailable: " + id);
+            properties.set(id, value);
+          }
+          for (let sH of sG) this.entity.resetProperty(sH);
+          for (const tag of tags) this.player.removeTag(tag);
+          this.skills.disableToggleSkills();
+          this.data.clear();
+          this.data.save();
+          if (this.data.dirty) throw new Error("Character reset could not be persisted");
+          this.clearAllRuns(), i3.deleteEntity(this.player);
+          resolve(!0);
+        } catch (error) {
+          console.warn("[Afterlife] character reset failed; restoring saved state: " + (error?.stack ?? error));
+          try {
+            for (const [id, value] of properties) this.entity.setProperty(id, value);
+            for (const tag of tags) this.player.addTag(tag);
+            if (saved !== undefined) {
+              this.data.data = saved;
+              this.data.dirty = !0;
+              this.data.save();
+            }
+          } catch (restoreError) {
+            console.warn("[Afterlife] reset rollback requires inspection: " + (restoreError?.stack ?? restoreError));
+          }
+          resolve(!1);
+        }
+      }));
     }
     sendQueueMessage(sG) {
       this.queueMessages.push(sG), this.processingQueueMessages || this.processQueueMessages();
@@ -13567,7 +13810,7 @@ var hJ = 1,
           this.transformations.clearTransformations(),
           this.skills.disableToggleSkills();
         for (let sI of this.race.defaultSkills) this.skills.addSkill(sI);
-        this.trySetProperty("dbe:race", sG), (this.playerCustomization.raceIndex = fR.getIndex(sG) ?? 0);
+        this.trySetProperty("dbe:race", this.race.id), (this.playerCustomization.raceIndex = fR.getIndex(this.race.id) ?? 0);
       } else throw new fP(sG);
     }
     trySpawnShadowDummy(sG) {
@@ -13592,14 +13835,163 @@ var hJ = 1,
         cj.displayForm(this.player, "news"),
         this.data.set("has_started_adventure", !0);
     }
-    teleportToSpawnPoint() {
-      let sG = b5.dimensions.overworld,
-        sH = this.player.getSpawnPoint() || bY.getDefaultSpawnLocation(),
-        sI = sG.getTopmostBlock(sH);
-      if (sI) {
-        let sK = { x: sI.x, y: sI.y + 1, z: sI.z };
-        this.player.teleport(sK, { dimension: sG });
+    async teleportToSpawnPoint(options = {}) {
+      try {
+        await duSafeReturnToEarth(this.player, { ...options, label: "return to Earth" });
+        return this.player.isValid && i0.get(this.player.id) === this &&
+          this.player.dimension.id === "minecraft:overworld" && duIsSafeStanding(this.player.dimension, this.player.location);
+      } catch (error) {
+        duReportTravelFailure(this.player, "return to Earth", error);
+        return !1;
       }
+    }
+    persistAfterlifeReturn(value) {
+      const previous = this.data.get("afterlife_return");
+      try {
+        value === undefined ? this.data.delete("afterlife_return") : this.data.set("afterlife_return", value);
+        this.data.save();
+        if (this.data.dirty) throw new Error("Return intent could not be saved for this player");
+      } catch (error) {
+        previous === undefined ? this.data.delete("afterlife_return") : this.data.set("afterlife_return", previous);
+        try { this.data.save(); } catch (restoreError) { console.warn("[Afterlife] intent rollback: " + restoreError); }
+        throw error;
+      }
+    }
+    async returnFromAfterlife(kind) {
+      if (!["revive", "reincarnate"].includes(kind) || this.afterlifeReturnPending) return !1;
+      const current = () => this.player.isValid && i0.get(this.player.id) === this;
+      if (!current()) return !1;
+      if (!this.data.get("afterlife_return") && !this.isDeath && this.player.dimension.id !== "dbe:other_world") return !1;
+      this.afterlifeReturnPending = !0;
+      try {
+        const success = await this.teleportToSpawnPoint({ onPrepared: (target) => {
+          if (!current()) throw new Error("Player instance changed during Earth preparation");
+          this.persistAfterlifeReturn({ kind, stage: "prepared", target });
+        } });
+        if (!success || !current()) return !1;
+        const intent = this.data.get("afterlife_return");
+        this.persistAfterlifeReturn({ ...intent, kind, stage: "arrived" });
+        await ex.tryStopFusion(this);
+        if (!current()) return !1;
+        if (this.player.dimension.id !== "minecraft:overworld" || !duIsSafeStanding(this.player.dimension, this.player.location))
+          throw new Error("Earth arrival was interrupted before confirmation; no character reset or revival was committed");
+        if (kind === "revive") {
+          const death = this.player.getProperty("dbe:is_death"), joined = this.player.getTags().includes("dbe:join_other_world");
+          if (death === undefined) throw new Error("Revival property is unavailable");
+          try {
+            this.player.setProperty("dbe:is_death", !1);
+            this.player.removeTag("dbe:join_other_world");
+            this.persistAfterlifeReturn(undefined);
+          } catch (error) {
+            try {
+              this.player.setProperty("dbe:is_death", death);
+              if (joined) this.player.addTag("dbe:join_other_world");
+            } catch (restoreError) { console.warn("[Afterlife] revival rollback requires inspection: " + restoreError); }
+            throw error;
+          }
+        } else {
+          if (!(await this.reset())) throw new Error("Character reset did not complete; saved progression was retained");
+          if (this.player.isValid) cj.displayForm(this.player, "select_race");
+        }
+        return !0;
+      } catch (error) {
+        duReportTravelFailure(this.player, "afterlife " + kind, error);
+        return !1;
+      } finally { this.afterlifeReturnPending = !1; }
+    }
+    notifyBulmaStaff(key) {
+      if (this.staffNotice?.key === key && bX.currentTick - this.staffNotice.tick < 100) return;
+      this.staffNotice = { key, tick: bX.currentTick };
+      try { if (this.player.isValid) this.player.sendMessage({ translate: "dbe.quest.staff." + key }); }
+      catch (error) { console.warn("[Dragon Universe] Staff reward feedback unavailable: " + (error?.stack ?? error)); }
+    }
+    persistBulmaStaffReceipt(receipt) {
+      const previous = this.data.get("bulma_staff_reward");
+      try {
+        this.data.set("bulma_staff_reward", receipt);
+        this.data.save();
+        if (this.data.dirty) throw new Error("Staff receipt was not persisted");
+      } catch (error) {
+        if (previous === undefined) this.data.delete("bulma_staff_reward");
+        else this.data.set("bulma_staff_reward", previous);
+        try { this.data.save(); } catch (cleanup) { console.warn("[Dragon Universe] Staff receipt rollback: " + (cleanup?.stack ?? cleanup)); }
+        throw error;
+      }
+    }
+    prepareBulmaStaffReward() {
+      try {
+        if (!this.player.isValid || i0.get(this.player.id) !== this) return !1;
+        if (!this.data.get("bulma_staff_reward")) {
+          this.persistBulmaStaffReceipt({ quest: "fetch_bulma_outfit", token: this.player.id + ":fetch_bulma_outfit", state: "pending" });
+          this.notifyBulmaStaff("pending");
+        }
+        return !0;
+      } catch (error) {
+        console.warn("[Dragon Universe] Staff reward preparation failed: " + (error?.stack ?? error));
+        this.notifyBulmaStaff("failed"); return !1;
+      }
+    }
+    claimBulmaStaffReward() {
+      if (this.staffClaiming || !this.player.isValid || i0.get(this.player.id) !== this) return !1;
+      if (!this.quests.getCompletedQuestIds().includes("fetch_bulma_outfit")) {
+        const quest = this.quests.questsMap?.get("fetch_bulma_outfit"), defined = quest?.getDefinedObjectives();
+        if (this.staffQuestResuming || !quest?.isStarted || quest._isCompleted || !defined?.length ||
+            quest.getAllObjectives().length !== defined.length) return !1;
+        this.staffQuestResuming = !0;
+        try {
+          if (!quest.objectivesCompleted()) {
+            const tasks = quest.getAllTasks(), task = tasks.length === 1 ? tasks[0] : undefined;
+            if (!task?.hasPaidNpcCost || !task.completeNpcDelivery()) return !1;
+          }
+          if (!this.quests.getCompletedQuestIds().includes("fetch_bulma_outfit") && quest.objectivesCompleted()) quest.completeQuest();
+          return this.data.get("bulma_staff_reward")?.state === "delivered";
+        } catch (error) {
+          console.warn("[Dragon Universe] Earned staff quest recovery failed: " + (error?.stack ?? error));
+          this.notifyBulmaStaff("failed"); return !1;
+        } finally { this.staffQuestResuming = !1; }
+      }
+      const receipt = this.data.get("bulma_staff_reward");
+      if (!receipt) { this.notifyBulmaStaff("review"); return !1; }
+      if (receipt.state === "delivered") return !0;
+      this.staffClaiming = !0;
+      let container, snapshot;
+      try {
+        if (receipt.quest !== "fetch_bulma_outfit" || typeof receipt.token !== "string" || !["pending", "delivering"].includes(receipt.state))
+          throw new Error("Invalid staff reward receipt; operator review required");
+        container = this.player.getComponent("inventory")?.container;
+        const hasToken = () => {
+          for (let slot = 0; slot < (container?.size ?? 0); slot++) {
+            const item = container.getItem(slot);
+            if (item?.typeId === "dbe:power_pole" && item.getDynamicProperty("dbe:quest_reward") === receipt.token) return !0;
+          }
+          return !1;
+        };
+        if (hasToken()) { this.persistBulmaStaffReceipt({ ...receipt, state: "delivered" }); return !0; }
+        if (receipt.state === "delivering") { this.notifyBulmaStaff("review"); return !1; }
+        // Persist completion and currency before the staff-only delivery; retries never rerun quest rewards.
+        const info = this.quests.questsInfo;
+        info.quests = [...this.quests.getQuests()].map(quest => quest.getProgress());
+        this.data.set("quests_info", info);
+        this.persistBulmaStaffReceipt(receipt);
+        if (!container?.emptySlotsCount) { this.notifyBulmaStaff("full"); return !1; }
+        this.persistBulmaStaffReceipt({ ...receipt, state: "delivering" });
+        snapshot = Array.from({ length: container.size }, (_, slot) => container.getItem(slot));
+        const reward = new qM({ type: "item", item: "dbe:power_pole", amount: 1 });
+        const accepted = reward.grantReward(this, { inventoryOnly: !0, token: receipt.token });
+        const inserted = hasToken();
+        if (!accepted || !inserted) throw new Error("Staff insertion was not confirmed in the inventory");
+        this.persistBulmaStaffReceipt({ ...receipt, state: "delivered" });
+        this.notifyBulmaStaff("claimed"); return !0;
+      } catch (error) {
+        console.warn("[Dragon Universe] Staff reward delivery failed: " + (error?.stack ?? error));
+        if (snapshot) {
+          try {
+            for (let slot = 0; slot < snapshot.length; slot++) container.setItem(slot, snapshot[slot]);
+            this.persistBulmaStaffReceipt({ ...receipt, state: "pending" });
+          } catch (rollback) { console.warn("[Dragon Universe] Staff inventory rollback uncertain; operator review required: " + (rollback?.stack ?? rollback)); }
+        }
+        this.notifyBulmaStaff("failed"); return !1;
+      } finally { this.staffClaiming = !1; }
     }
     toggleMovement(sG) {
       sG
@@ -13621,7 +14013,13 @@ var hJ = 1,
       let sG = this.getTrainingWeight()?.typeId;
       this.currentTrainingWeight !== sG && ((this.currentTrainingWeight = sG), this.attributes.updateStats());
     }
+    restoreInputPermissions() {
+      if (this.isKnockedOut) this.inputPermissionManager.blockInputPermission("knocked", [bW.Camera, bW.Movement]);
+      if (this.getCurrentFusion()?.isController === !1)
+        this.inputPermissionManager.blockInputPermission("fusion", [bW.Movement]);
+    }
     initialize() {
+      this.restoreInputPermissions();
       super.initialize(),
         this.playerCustomization.init(),
         g1.validatePlayerAccess(this),
@@ -13633,6 +14031,14 @@ var hJ = 1,
             this.player.name === "About04" && this.redeem.activateRedeem("creator"),
             gI.isBanned(this.player.name) && gI.showBanForm(this.player));
         }, 100);
+      if (this.data.get("afterlife_return")) bX.runTimeout(() => {
+        const intent = this.data.get("afterlife_return");
+        if (this.player.isValid && i0.get(this.player.id) === this && intent)
+          this.returnFromAfterlife(intent.kind);
+      }, 50);
+      if (this.data.get("bulma_staff_reward") || this.quests?.questsInfo?.quests?.some(quest => quest.id === "fetch_bulma_outfit")) bX.runTimeout(() => {
+        if (this.player.isValid && i0.get(this.player.id) === this) this.claimBulmaStaffReward();
+      }, 60);
     }
     processQueueMessages() {
       let sG = this.queueMessages[0];
@@ -13687,14 +14093,19 @@ var hP = class extends cA {
       super(sG, sH), (this.cooldownDuration = 120), (this.triggerChance = 0.3);
     }
     async onTimedExecution() {
-      if (this.target) {
+      const target = this.target;
+      if (target) {
+        const dimension = this.entity.dimension.id;
+        const current = () => this.entity.isValid && target.isValid && this.entity.dimension.id === dimension &&
+          target.dimension.id === dimension && this.target === target;
+        if (!current()) return;
         if (this.dbeEntity.transformations.currentTransformation.isOozaru) return;
         let { distanceToTarget: sG } = this;
         if (sG > 48) return;
-        let sH = i3.getDBEEntity(this.target)?.isLoadingAttack ?? !1,
-          sI = this.target.getBlockFromViewDirection({ maxDistance: 32 })?.block.location;
-        sI && (await this.dbeEntity.trySpread(sI, 5)),
-          (sH || sG < 8) && (await this.dbeEntity.trySpread(this.target.location, 20));
+        let sH = i3.getDBEEntity(target)?.isLoadingAttack ?? !1,
+          sI = target.getBlockFromViewDirection({ maxDistance: 32 })?.block.location;
+        if (sI) { await this.dbeEntity.trySpread(sI, 5); if (!current()) return; }
+        if (sH || sG < 8) { await this.dbeEntity.trySpread(target.location, 20); if (!current()) return; }
         let { skills: sK } = this.dbeEntity,
           sL = sK.getSkillsByType("ki_attack"),
           sM = Math.floor(Math.random() * sL.length),
@@ -13704,6 +14115,16 @@ var hP = class extends cA {
     }
   };
 import { system as hR } from "@minecraft/server";
+// Only these shipped entity definitions implement both movement transition events.
+const duMovementModeTypes = new Set([
+  "battle_jacket", "pirate_robot", "android_17", "android_18", "android_19", "android_20",
+  "beerus_enemy", "botamo", "burter", "cabba", "cell", "cell_junior", "corrupted_fused_zamasu",
+  "cui", "dabura", "dodoria", "fat_buu", "frieza", "frieza_soldier", "frost", "fused_zamasu",
+  "general_black", "ginyu", "goku_black", "guldo", "hitto", "jeice", "kid_buu", "king_cold",
+  "magetta", "majin_vegeta", "nappa", "puipui", "raditz", "recoome", "saibabrute", "saibaman",
+  "shisami", "super_buu", "tagoma", "test_enemy", "vegeta", "yakon", "zamasu", "zarbon",
+  "future_trunks_enemy", "goku_enemy", "namekian", "piccolo_enemy", "shadow_dummy",
+].map(id => "dbe:" + id));
 var hS = class extends cA {
     constructor(sG, sH) {
       super(sG, sH);
@@ -13955,7 +14376,13 @@ var hX = class {
     }
     trySpawnDBEEntity(sG, sH, sI, sK) {
       let sL = d4(sG, sH, sI, sK);
-      return sL ? this.createDBEEntity(sL, sK?.entityDefinitions) : void 0;
+      if (!sL) return;
+      try {
+        return this.createDBEEntity(sL, sK?.entityDefinitions);
+      } catch (error) {
+        if (sL.isValid) sL.remove();
+        throw error;
+      }
     }
     createDBEEntity(sG, sH) {
       if (sG.typeId !== "dbe:ki_attack") {
@@ -13964,17 +14391,22 @@ var hX = class {
           throw new Error(
             "Tentativa de acessar a DBEEntity enquanto ela ainda estava sendo inicializada. Isso normalmente indica uma chamada recursiva durante a inicialização.",
           );
-        return (
-          !sI &&
-            sG.isValid &&
-            d3(sG) &&
-            (this.initializingEntities.add(sG.id),
-            sG instanceof bR ? (sI = new hN(sG)) : ((sI = new fV(sG, sH)), this.setupCombatBehaviors(sI)),
-            i0.set(sG.id, sI),
-            this.initializingEntities.delete(sG.id),
-            sI.initialize()),
-          sI
-        );
+        if (!sI && sG.isValid && d3(sG)) {
+          this.initializingEntities.add(sG.id);
+          try {
+            sG instanceof bR ? (sI = new hN(sG)) : ((sI = new fV(sG, sH)), this.setupCombatBehaviors(sI));
+            i0.set(sG.id, sI);
+            this.initializingEntities.delete(sG.id);
+            sI.initialize();
+          } catch (error) {
+            i0.delete(sG.id);
+            sI?.clearAllRuns();
+            throw error;
+          } finally {
+            this.initializingEntities.delete(sG.id);
+          }
+        }
+        return sI;
       }
     }
     createKiAttackEntity(sG) {
@@ -14001,7 +14433,7 @@ var hX = class {
       sH &&
         (sH.addBehavior("dash", new hP(sG, sH)),
         sH.addBehavior("ki_attack", new hQ(sG, sH)),
-        sH.addBehavior("movement_mode", new hS(sG, sH)),
+        duMovementModeTypes.has(sI.typeId) && sH.addBehavior("movement_mode", new hS(sG, sH)),
         sH.addBehavior("transformation", new hU(sG, sH)),
         sI.typeId === "dbe:pirate_robot" && sH.addBehavior("pirate_gun", new hT(sG, sH)));
     }
@@ -14101,7 +14533,7 @@ var i9 = class {
         sL = sI.stats.getStat("melee_damage");
       if (sL) {
         let sM = this.getModifiedSkillDamage(sG);
-        return (sH + sL.value + sM) * sK.damageMultiplier * (sG.race?.id === "demon" ? 2.25 : 1);
+        return (sH + sL.value + sM) * sK.damageMultiplier * (sG.race?.id === "glind" ? 2.25 : 1);
       }
       return sH;
     }
@@ -14936,17 +15368,24 @@ var jw = class extends jj {
   },
   jC = new jB(),
   jD = class {
+    reset(sG) {
+      sG.setProperty("dbe:dragon_radar_location", 0);
+    }
     scanDragonBalls(sG) {
       let sH = iH.getRadarDetectableBalls(sG.dimension, sG.location)[0],
         sI = 0,
         sK = 0;
       if (sH) {
-        let sL = this.getRelativeLocation(sH.location, sG.location, sG.getViewDirection());
+        let sL = this.getRelativeLocation(sH.location, sG.location, sG.getViewDirection(), sG.getRotation().y);
         (sI = -sL.x), (sK = sL.z), aQ.tryDamageHeldItem(sG, 1);
       }
-      sG.setProperty("dbe:dragon_radar_location", +("" + (sI + 164) + (sK + 164)));
+      sG.setProperty("dbe:dragon_radar_location", sH ? +("" + (sI + 164) + (sK + 164)) : 0);
     }
-    getRelativeLocation(sG, sH, sI) {
+    getRelativeLocation(sG, sH, sI, yaw = 0) {
+      if (Math.hypot(sI.x, sI.z) < 0.000001) {
+        let angle = (yaw * Math.PI) / 180;
+        sI = { x: -Math.sin(angle), z: Math.cos(angle) };
+      }
       let sK = sG.x - sH.x,
         sL = sG.z - sH.z,
         sM = Math.hypot(sI.x, sI.z),
@@ -15133,6 +15572,7 @@ var jR = class {
     async showDialogue(sG, sH, sI) {
       let sK = hO(sG),
         { cooldowns: sL, quests: sM } = sK;
+      if (sI.npcId === "dbe:master_roshi") sK.claimBulmaStaffReward();
       if (sI.requirements) {
         let { requirements: sO } = sI;
         if (!dC.testAll(sK, sO ?? [])) {
@@ -15248,7 +15688,8 @@ var jR = class {
             ],
           },
           onClick: () => {
-            sP && sK.trySpend("skill_points", sP) && sI.tryLearnSkill(sO);
+            if (!sI.hasSkill(sO) && sI.canLearnSkill(sO) && (!sP || sK.trySpend("skill_points", sP)))
+              sI.tryLearnSkill(sO);
           },
         });
       }
@@ -15365,6 +15806,7 @@ var jY = class {
     }
   };
 function k0(sG) {
+  hO(sG).claimBulmaStaffReward();
   let sH = jZ.lastMenuId.get(sG.id) ?? "statistics";
   cj.displayForm(sG, sH);
 }
@@ -15395,11 +15837,62 @@ function k5(sG, sH) {
       }
     }));
 }
+function removeTimeChamberHostile(entity) {
+  if (
+    !entity.isValid ||
+    entity.dimension.id !== "dbe:hyperbolic_time_chamber" ||
+    !entity.typeId.startsWith("minecraft:") ||
+    entity.getDynamicProperty("dbe:spawned_by") ||
+    entity.getDynamicProperty("dbe:is_friendly_damage")
+  )
+    return !1;
+  if (!entity.getComponent("minecraft:type_family")?.hasTypeFamily("monster")) return !1;
+  entity.remove();
+  return !0;
+}
+const duNpcInteractions = new Map();
+async function duHandleNpcInteraction(player, target, wrapper, dimensionId) {
+  const current = () => player.isValid && target.isValid && i0.get(player.id) === wrapper &&
+    player.dimension.id === dimensionId && target.dimension.id === dimensionId;
+  if (!current()) return;
+  if (wrapper.race.id === "namekian") {
+    const other = i3.getDBEEntity(target);
+    if (other && iK.tryFusion(wrapper, other)) return;
+  }
+  for (const task of wrapper.tasks.getActiveTasksByType("collect_item")) {
+    if (!current()) return;
+    if (task.deliverToNpc !== target.typeId || task.isCompleted || !task.isStarted ||
+        !wrapper.tasks.getActiveTasksByType("collect_item").includes(task)) continue;
+    if (!task.completeNpcDelivery()) continue;
+    await n.waitTicks(10);
+    if (!current()) return;
+  }
+  for (const task of wrapper.tasks.getActiveTasksByType("interact_npc")) {
+    if (!current()) return;
+    if (task.npcTypeId === target.typeId) { await task.showDialog(); return; }
+  }
+  for (const { sourceId } of d) {
+    if (!current()) return;
+    if (sourceId === target.typeId) { await jC.handleWishSession(player, target); return; }
+  }
+  if (!current()) return;
+  const dialogue = jW.getNpcDialogue(target.typeId);
+  if (dialogue) {
+    await jW.showDialogue(player, target, dialogue);
+    if (!current()) return;
+    n.run(() => {
+      if (!current()) return;
+      try { player.playSound("random.pop"), target.playAnimation("animation.humanoid.pop", { players: [player] }); }
+      catch (error) { console.warn("[Dragon Universe] NPC interaction effect failed: " + (error?.stack ?? error)); }
+    });
+  }
+}
 var k6 = class {
   constructor() {
     let { afterEvents: sG, beforeEvents: sH } = o;
     sG.entityDie.subscribe(this.afterEntityDie),
       sG.entityHitEntity.subscribe(this.afterEntityHitEntity),
+      sG.entityLoad.subscribe(this.afterEntityLoad),
       sG.entitySpawn.subscribe(this.afterEntitySpawn),
       sG.itemCompleteUse.subscribe(this.afterItemCompleteUse),
       sG.itemStartUse.subscribe(this.afterItemStartUse),
@@ -15422,8 +15915,7 @@ var k6 = class {
       sH.playerPlaceBlock.subscribe(this.beforePlayerPlaceBlock),
       n.runInterval(this.onTickEvent),
       n.beforeEvents.watchdogTerminate.subscribe((sI) => {
-        (sI.cancel = !0),
-          console.warn("Foi detectada uma tentativa de desligamento do servidor. Motivo: " + sI.terminateReason);
+        console.warn("Watchdog solicitou encerramento; proteção mantida. Motivo: " + sI.terminateReason);
       });
   }
   afterEntityDie({ damageSource: sG, deadEntity: sH }) {
@@ -15435,7 +15927,11 @@ var k6 = class {
     let sI = i3.getDBEEntity(sG);
     sI instanceof hN && sH.typeId === "dbe:training_orb" && sI.concentrationTraining.claimOrb(sH);
   }
+  afterEntityLoad({ entity }) {
+    removeTimeChamberHostile(entity);
+  }
   afterEntitySpawn({ cause: sG, entity: sH }) {
+    if (removeTimeChamberHostile(sH)) return;
     if (
       !sH.isValid ||
       sG !== "Spawned" ||
@@ -15482,9 +15978,14 @@ var k6 = class {
     }
   }
   afterPlayerDimensionChange({ fromDimension: sG, player: sH, toDimension: sI }) {
+    jE.reset(sH);
+    let flight = i0.get(sH.id)?.skills.getToggleSkill("fly");
+    flight?.isEnabled && flight.disable();
     eO(sG).updateEntityRegions(sH), eO(sI).updateEntityRegions(sH);
   }
   afterPlayerHotbarSelectedSlotChange({ newSlotSelected: sG, player: sH, previousSlotSelected: sI }) {
+    let radar = aN.getEquippedItem(sH, l.Mainhand);
+    radar?.typeId === "dbe:dragon_radar" ? jE.scanDragonBalls(sH) : jE.reset(sH);
     let { guard: sK } = hO(sH);
     sG === 8 && sK.tryGuard(), sI === 8 && sK.breakGuard();
   }
@@ -15504,10 +16005,13 @@ var k6 = class {
     }
   }
   afterPlayerSpawn({ player: sG }) {
+    jE.reset(sG);
     let sH = hO(sG);
     sH.recoverConstitution(),
       sG.hasTag("dbe:join_other_world") &&
         n.runTimeout(() => {
+          if (!sG.isValid || i0.get(sG.id) !== sH || sH.data.get("afterlife_return") ||
+              !sG.hasTag("dbe:join_other_world") || duIsTravelPending(sG)) return;
           let sI = o.getDimension("dbe:other_world"),
             sK = eO(sI).getRegion("other_world");
           sK && (sH.trySetProperty("dbe:is_death", !0), sK.teleportToRegion(sG));
@@ -15515,6 +16019,11 @@ var k6 = class {
   }
   afterWorldLoad(sG) {
     o.gameRules.showTags = !1;
+    try {
+      for (let entity of o.getDimension("dbe:hyperbolic_time_chamber").getEntities()) removeTimeChamberHostile(entity);
+    } catch (error) {
+      console.warn("[Dragon Universe] Time chamber hostile cleanup failed:", error);
+    }
   }
   afterProjectileHitBlock({ dimension: sG, location: sH, projectile: sI }) {
     if (sI.typeId === "dbe:ki_attack") {
@@ -15576,36 +16085,33 @@ var k6 = class {
     let sK = eO(sH).getTopRegionAt(sI);
     sK && !sK.canBuild(sG.player) && ((sG.cancel = !0), k5(sG.player, sK.owner));
   }
-  async beforePlayerInteractWithEntity(sG) {
-    let { itemStack: sH, player: sI, target: sK } = sG,
-      sL = hO(sI),
-      { race: sM, tasks: sN } = sL;
+  beforePlayerInteractWithEntity(sG) {
+    let { itemStack: sH, player: sI, target: sK } = sG;
+    const wrapper = i0.get(sI.id);
     if (sH?.hasComponent("dbe:hoi_poi_capsule")) {
-      (sG.cancel = !0), n.run(() => iy.tryStoreEntitiesFromLocation(sI, sH, sK.location));
+      sG.cancel = !0;
+      n.run(() => {
+        if (sI.isValid && sK.isValid && wrapper && i0.get(sI.id) === wrapper && sI.dimension.id === sK.dimension.id)
+          try { iy.tryStoreEntitiesFromLocation(sI, sH, sK.location); }
+          catch (error) { console.warn("[Dragon Universe] Capsule interaction failed: " + (error?.stack ?? error)); }
+      });
       return;
     }
-    if (sM.id === "namekian") {
-      let sP = i3.getDBEEntity(sK);
-      if (sP && iK.tryFusion(sL, sP)) return;
-    }
-    for (let sQ of sN.getActiveTasksByType("collect_item"))
-      sQ.deliverToNpc === sK.typeId && sQ.isGoalReached && (sQ.completeTask(), await n.waitTicks(10));
-    for (let sR of sN.getActiveTasksByType("interact_npc"))
-      if (sR.npcTypeId === sK.typeId) {
-        sR.showDialog();
-        return;
-      }
-    for (let { sourceId: sS } of d)
-      if (sS === sK.typeId) {
-        jC.handleWishSession(sI, sK);
-        return;
-      }
-    let sO = jW.getNpcDialogue(sK.typeId);
-    sO &&
-      (jW.showDialogue(sI, sK, sO),
+    if (!wrapper || !sI.isValid || !sK.isValid || duNpcInteractions.get(sI.id)?.wrapper === wrapper) return;
+    const dimensionId = sI.dimension.id, token = { wrapper };
+    duNpcInteractions.set(sI.id, token);
+    try {
       n.run(() => {
-        sI.playSound("random.pop"), sK.playAnimation("animation.humanoid.pop", { players: [sI] });
-      }));
+        duHandleNpcInteraction(sI, sK, wrapper, dimensionId).catch(error => {
+          console.warn("[Dragon Universe] NPC interaction failed: " + (error?.stack ?? error));
+        }).finally(() => {
+          if (duNpcInteractions.get(sI.id) === token) duNpcInteractions.delete(sI.id);
+        });
+      });
+    } catch (error) {
+      if (duNpcInteractions.get(sI.id) === token) duNpcInteractions.delete(sI.id);
+      console.warn("[Dragon Universe] NPC interaction scheduling failed: " + (error?.stack ?? error));
+    }
   }
   beforePlayerBreakBlock(sG) {
     let { dimension: sH, location: sI } = sG.block;
@@ -15632,7 +16138,7 @@ var k6 = class {
             ex.fusionHandler(sL),
             eP.syncEntityRegionState(sN),
             k1(sL),
-            sP?.typeId === "dbe:dragon_radar" && jE.scanDragonBalls(sN);
+            sP?.typeId === "dbe:dragon_radar" ? jE.scanDragonBalls(sN) : jE.reset(sN);
         }
         if ((sI && (aQ.setPlayerFixedItems(sN, k2), k7(sL), sO.updateAvailableTransformations()), sK)) {
           let sQ = sM.getCooldown("senzu_bean_daily"),
@@ -15716,7 +16222,15 @@ var k8 = new k6(),
       let sH = hO(sG),
         { ki: sI, race: sK, transformations: sL } = sH;
       jZ.lastMenuId.set(sG.id, "transformations"), this.setTitle("ui.dbe.transformations.title");
-      for (let sM of sL.getTransformations()) {
+      const forms = [...sL.getTransformations()];
+      if (sK.id === "glind") {
+        const mystic = forms.findIndex(form => form.id === "ultimate_form");
+        if (mystic >= 0 && forms.some(form => form.id === "demon_lord")) {
+          const [form] = forms.splice(mystic, 1);
+          forms.splice(forms.findIndex(entry => entry.id === "demon_lord"), 0, form);
+        }
+      }
+      for (let sM of forms) {
         let { id: sN, canTransform: sO, isBase: sP, requirements: sQ } = sM;
         if (sP && sO) continue;
         let sR = {
@@ -15913,6 +16427,13 @@ var kq = class t8 extends jY {
         { selectedTransformation: sH } = sG,
         sI = sG.getCurrentBaseTransformation(),
         sK = sG.getAvailableTransformations().filter(({ id: sL, isBase: sM }) => !sM || (sM && sL === sI.id));
+      if (this.dbePlayer.race.id === "glind") {
+        const mystic = sK.findIndex(form => form.id === "ultimate_form");
+        if (mystic >= 0 && sK.some(form => form.id === "demon_lord")) {
+          const [form] = sK.splice(mystic, 1);
+          sK.splice(sK.findIndex(entry => entry.id === "demon_lord"), 0, form);
+        }
+      }
       return {
         text: "" + sH.localizationKey,
         callback: () => {
@@ -16305,6 +16826,7 @@ var kU = class {
     sG.permutationToPlace = sG.permutationToPlace.withState("dbe:is_petrified", sH?.isPetrified ?? !0);
   }
   onTick({ block: sG, dimension: sH }) {
+    try {
     let sI = iH.getDragonBall(sG.typeId);
     if (!sI) return;
     let { permutation: sK, typeId: sL } = sG,
@@ -16318,17 +16840,28 @@ var kU = class {
         return;
       }
       if (!sO && kS.currentTick % 20 === 0) {
-        let sQ = aF.getNearbyBlocks(sL, sH, sM, 1),
-          sR = sQ.some((sT) => +(sT.permutation.getState("dbe:level") === sP)),
+        let sQ = aF.getNearbyBlocks(sL, sH, sM, 1);
+        if (!sQ.length) return;
+        let sR = sQ.some((sT) => +(sT.permutation.getState("dbe:level") === sP)),
           sS = Math.min(sP, sQ.length - 1);
         (sN["dbe:level"] = sS),
           (sN["dbe:is_powered"] = sR),
           sG.setPermutation(kQ.resolve(sG.typeId, sN)),
           sS === sP &&
-            kS.runTimeout(() => {
-              sH.spawnParticle("dbe:dragon_ball_warn", sM), sH.playSound("block.dragon_ball.glowing", sM);
-            });
+          kS.runTimeout(() => {
+            try {
+              const block = sH.getBlock({ x: Math.floor(sM.x), y: Math.floor(sM.y), z: Math.floor(sM.z) });
+              if (block?.typeId === sL) {
+                sH.spawnParticle("dbe:dragon_ball_warn", sM), sH.playSound("block.dragon_ball.glowing", sM);
+              }
+            } catch (error) {
+              if (!aF.isUnavailable(error)) console.warn("[Dragon Universe] Dragon Ball effect failed: " + (error?.stack ?? error));
+            }
+          });
       }
+    }
+    } catch (error) {
+      if (!aF.isUnavailable(error)) console.warn("[Dragon Universe] Dragon Ball tick failed: " + (error?.stack ?? error));
     }
   }
   onPlayerInteract({ block: sG, dimension: sH, player: sI }) {
@@ -17275,9 +17808,11 @@ var ox = {
           sI
             ? (sG.sendMessage({ translate: "player_group.base.teleporting" }),
               ov.runTimeout(() => {
-                sG.isValid &&
-                  (sG.playSound("entity.player.teleport"),
-                  sG.teleport(sI.location, { dimension: ow.getDimension(sI.dimensionId) }));
+                if (!sG.isValid) return;
+                try {
+                  sG.playSound("entity.player.teleport");
+                  duTravel(sG, sI.location, { dimension: ow.getDimension(duPhysicalDestinationId(sI.dimensionId)), label: "group home" });
+                } catch (error) { duReportTravelFailure(sG, "group home", error); }
               }, 80))
             : sG.sendMessage({ translate: "player_group.base.not_set" });
         } else sG.sendMessage({ translate: "player_group.not_in_group" });
@@ -17506,7 +18041,6 @@ function pj(sG) {
 lb.beforeEvents.startup.subscribe(({ customCommandRegistry: sG }) => pj(sG));
 import { dialogues_data as pk } from "./data/dialogues_data.js";
 import { system as pp } from "@minecraft/server";
-import { system as pq } from "@minecraft/server";
 jW.registerDialogue({
   id: "enma_daioh_main_menu",
   npcId: "dbe:enma_daioh",
@@ -17519,10 +18053,7 @@ jW.registerDialogue({
   buttons: [
     {
       buttonText: "ui.dbe.npc.enma_daioh.main.button.revive",
-      onClick: async (sG) => {
-        let sH = hO(sG);
-        await ex.tryStopFusion(sH), sH.teleportToSpawnPoint(), sG.setProperty("dbe:is_death", !1);
-      },
+      onClick: (sG) => i0.get(sG.id)?.returnFromAfterlife("revive"),
     },
     { buttonText: "ui.dbe.npc.enma_daioh.main.button.reincarnate", nextDialogue: "confirm_reincarnate" },
   ],
@@ -17535,15 +18066,7 @@ jW.registerDialogue({
       buttons: [
         {
           buttonText: "ui.dbe.npc.enma_daioh.reincarnate.button.confirm",
-          onClick: async (sG) => {
-            let sH = hO(sG);
-            await ex.tryStopFusion(sH),
-              sH.skills.tryLearnRandomSkill(),
-              sH.teleportToSpawnPoint(),
-              pq.runTimeout(() => {
-                sH.reset(), cj.displayForm(sG, "select_race");
-              }, 20);
-          },
+          onClick: (sG) => i0.get(sG.id)?.returnFromAfterlife("reincarnate"),
         },
       ],
     },
@@ -17805,18 +18328,28 @@ var pH = class {
             (this.startedDimensions.has(sL.id) ||
               (this.startFloorGeneration(sL), this.startedDimensions.add(sL.id), await pD.waitTicks(20)),
             pD.run(() => {
-              sK.teleport(pL, { dimension: sL });
+              duTravel(sK, pL, { dimension: sL, label: "angel staff entry" });
             }));
       }
     }
     exitDimension(sG, sH) {
       let sI = this.getDimensionData(sH);
       if (sI) {
-        let { player: sK } = sG,
-          sL = pE.getDimension(sI.staffDimensionId ?? "minecraft:overworld"),
-          sM = sI.staffLocation ?? sK.location;
-        pD.run(() => {
-          sK.teleport(sM, { dimension: sL });
+        let { player: sK } = sG;
+        pD.run(async () => {
+          if (!sK.isValid) return;
+          let dimension;
+          try {
+            if (typeof sI.staffDimensionId !== "string" || !sI.staffDimensionId)
+              throw new Error("Saved angel staff return dimension is missing");
+            dimension = pE.getDimension(duPhysicalDestinationId(sI.staffDimensionId));
+          } catch (error) {
+            duReportTravelFailure(sK, "angel staff saved destination", error);
+            try { await duSafeReturnToEarth(sK, { label: "angel staff Earth fallback" }); }
+            catch (fallbackError) { duReportTravelFailure(sK, "angel staff Earth fallback", fallbackError); }
+            return;
+          }
+          await duTravel(sK, sI.staffLocation, { dimension, label: "angel staff return" });
         });
       }
     }
@@ -17848,10 +18381,14 @@ var pH = class {
     }
     async setup(sG) {
       let sH = { x: 0, y: -64, z: 0 };
-      await pE.tickingAreaManager.createTickingArea(sG.id, { dimension: sG, from: sH, to: sH }),
+      let loadedArea = await duAcquireLoadedArea(sG, sH, pL, "angel staff setup");
+      try {
         sG.setBlockType(sH, "minecraft:barrier");
-      let sI = d4("dbe:angel_staff_entity", sG, pL);
-      sI && sI.setDynamicProperty("dimension_id", sG.id), pE.tickingAreaManager.removeTickingArea(sG.id);
+        let sI = d4("dbe:angel_staff_entity", sG, pL);
+        sI && sI.setDynamicProperty("dimension_id", sG.id);
+      } finally {
+        duReleaseLoadedArea(loadedArea);
+      }
     }
     startFloorGeneration(sG) {
       pJ.register(sG).onLoad(function* (sH) {
@@ -18167,11 +18704,94 @@ var qq = class extends gN {
     }
     return sI;
   }
+  get hasPaidNpcCost() {
+    if (this.id !== "fetch_bulma_outfit.objective_1.task_1" || this.dbePlayer.quests.getCompletedQuestIds().includes("fetch_bulma_outfit")) return !1;
+    const receipt = this.dbePlayer.data.get("bulma_staff_reward"), paid = receipt?.costPaid;
+    return receipt?.quest === "fetch_bulma_outfit" && receipt.state === "pending" && !receipt.costReview &&
+      receipt.token === this.dbePlayer.player.id + ":fetch_bulma_outfit" &&
+      paid?.taskId === this.id && paid.item === this.itemTypeId && paid.count === this.requiredProgress && paid.npc === this.deliverToNpc;
+  }
+  completeNpcDelivery() {
+    const { player } = this.dbePlayer;
+    if (!player.isValid || i0.get(player.id) !== this.dbePlayer || !this.deliverToNpc || !this.isStarted || this.isCompleted) return !1;
+    const staff = this.id === "fetch_bulma_outfit.objective_1.task_1";
+    let container, changes, before, costPersisted = false;
+    try {
+      if (this.npcDeliveryCostUncertain || (staff && this.dbePlayer.data.get("bulma_staff_reward")?.costReview)) {
+        if (staff) this.dbePlayer.notifyBulmaStaff("review");
+        return !1;
+      }
+      if (this.hasPaidNpcCost) {
+        this.npcDeliveryPaid = !0;
+        this.completeTask();
+        return this.isCompleted;
+      }
+      before = this.getItemAmount();
+      this.setProgress(before);
+      if (!this.isGoalReached) return !1;
+      if (staff && !this.dbePlayer.prepareBulmaStaffReward()) return !1;
+      if (this.removeItemsOnComplete) {
+        container = player.getComponent("minecraft:inventory")?.container;
+        if (!container || !Number.isInteger(this.requiredProgress) || this.requiredProgress < 1) throw new Error("NPC delivery inventory or required amount is invalid");
+        let remaining = this.requiredProgress;
+        const planned = [];
+        for (let slot = 0; slot < container.size && remaining; slot++) {
+          const item = container.getItem(slot);
+          if (item?.typeId !== this.itemTypeId) continue;
+          const amount = Math.min(remaining, item.amount), after = item.amount > amount ? item.clone() : undefined;
+          if (after) after.amount -= amount;
+          planned.push({ slot, before: item, after });
+          remaining -= amount;
+        }
+        if (remaining) throw new Error("NPC delivery no longer has the required items");
+        if (staff) {
+          const receipt = this.dbePlayer.data.get("bulma_staff_reward");
+          // Keep reconnect blocked if both inventory rollback and later receipt saves fail.
+          this.dbePlayer.persistBulmaStaffReceipt({ ...receipt, costReview: { taskId: this.id, item: this.itemTypeId, count: this.requiredProgress, npc: this.deliverToNpc, before } });
+        }
+        changes = planned;
+        for (const change of changes) container.setItem(change.slot, change.after);
+        if (this.getItemAmount() !== before - this.requiredProgress) throw new Error("NPC delivery consumption was not confirmed");
+        if (staff) {
+          const { costReview, ...receipt } = this.dbePlayer.data.get("bulma_staff_reward");
+          this.dbePlayer.persistBulmaStaffReceipt({ ...receipt, costPaid: { taskId: this.id, item: this.itemTypeId, count: this.requiredProgress, npc: this.deliverToNpc } });
+          costPersisted = !0;
+        }
+        this.npcDeliveryPaid = !0;
+      }
+      this.completeTask();
+      return this.isCompleted;
+    } catch (error) {
+      if (changes && !costPersisted && !this.isCompleted) {
+        try {
+          for (const change of changes) container.setItem(change.slot, change.before);
+          if (this.getItemAmount() !== before) throw new Error("NPC delivery inventory restoration was not confirmed");
+          if (staff) {
+            const { costReview, ...receipt } = this.dbePlayer.data.get("bulma_staff_reward");
+            this.dbePlayer.persistBulmaStaffReceipt(receipt);
+          }
+        } catch (rollback) {
+          this.npcDeliveryCostUncertain = !0;
+          if (staff) {
+            try {
+              const receipt = this.dbePlayer.data.get("bulma_staff_reward");
+              this.dbePlayer.persistBulmaStaffReceipt({ ...receipt, costReview: { taskId: this.id, item: this.itemTypeId, count: this.requiredProgress, npc: this.deliverToNpc, before } });
+            } catch (storage) { console.warn("[Dragon Universe] Uncertain NPC delivery cost could not be persisted: " + (storage?.stack ?? storage)); }
+          }
+          console.warn("[Dragon Universe] NPC delivery cost rollback uncertain: " + (rollback?.stack ?? rollback));
+        }
+      }
+      console.warn("[Dragon Universe] NPC delivery failed: " + (error?.stack ?? error));
+      return !1;
+    } finally { this.npcDeliveryPaid = !1; }
+  }
   onComplete() {
-    this.removeItemsOnComplete &&
+    this.removeItemsOnComplete && !this.npcDeliveryPaid &&
       qk.run(() => {
         let { player: sG } = this.dbePlayer;
-        sG.runCommand("clear @s " + this.itemTypeId + " 0 " + this.requiredProgress);
+        if (!sG.isValid || i0.get(sG.id) !== this.dbePlayer || !this.isCompleted) return;
+        try { sG.runCommand("clear @s " + this.itemTypeId + " 0 " + this.requiredProgress); }
+        catch (error) { console.warn("[Dragon Universe] Quest item consumption failed: " + (error?.stack ?? error)); }
       });
   }
   onStart() {
@@ -18219,11 +18839,11 @@ var qx = new Map(),
     biomeLocation;
     constructor(sG, sH, sI, sK) {
       super(sG, sH, sI, sK), (this.taskData = sI);
-      let sL = qw.getDimension(sI.dimensionId);
+      let sL = qw.getDimension(duPhysicalDestinationId(sI.dimensionId));
       if (((this.biomeLocation = qx.get(this.biomeId)), !this.biomeLocation)) {
         let sM = qw.getDefaultSpawnLocation();
         (sM.y = 0),
-          (this.biomeLocation = sL.calculateClosestBiomeFromSeed(sM, this.biomeId)),
+          (this.biomeLocation = sL.calculateClosestBiomeFromSeed(sM, duPhysicalDestinationId(this.biomeId))),
           this.biomeLocation &&
             qx.set(this.biomeId, {
               dimension: sL,
@@ -18247,6 +18867,16 @@ var qx = new Map(),
       !this.isCompleted && this.isInAllowedBiome() && this.completeTask();
     }
     createDescription() {
+      if (this.dimensionId.startsWith("dbe:")) {
+        return {
+          rawtext: [
+            {
+              translate: "quest.objective.travel_to",
+              with: { rawtext: [{ translate: "dimension." + this.dimensionId }] },
+            },
+          ],
+        };
+      }
       return {
         rawtext: [
           {
@@ -18264,7 +18894,8 @@ var qx = new Map(),
     }
     isInAllowedBiome() {
       let { dimension: sG, location: sH } = this.dbePlayer.player;
-      return sG.isChunkLoaded(sH) && sG.getBiome(sH).id === this.biomeId ? !eO(sG).isBlockProtection(sH) : !1;
+      return sG.id === duPhysicalDestinationId(this.dimensionId) && sG.isChunkLoaded(sH) &&
+        sG.getBiome(sH).id === duPhysicalDestinationId(this.biomeId) ? !eO(sG).isBlockProtection(sH) : !1;
     }
   };
 import { LocationWaypoint as qz, system as qA } from "@minecraft/server";
@@ -18493,12 +19124,17 @@ var qM = class extends gA {
     get itemTypeId() {
       return this.rewardData.item;
     }
-    grantReward(sG) {
+    grantReward(sG, options = {}) {
       let { player: sH } = sG,
         sI = new qL(this.itemTypeId, this.amount),
         sK = ["§r§9" + sH.name],
         sL = sH.getComponent("inventory")?.container;
-      sI.setLore(sK), sL?.emptySlotsCount ? sL.addItem(sI) : sH.dimension.spawnItem(sI, sH.location);
+      sI.setLore(sK);
+      if (options.token) sI.setDynamicProperty("dbe:quest_reward", options.token);
+      if (options.inventoryOnly) return !!sL && !sL.addItem(sI);
+      const remainder = sL?.addItem(sI) ?? (!sL ? sI : undefined);
+      if (remainder) sH.dimension.spawnItem(remainder, sH.location);
+      return !0;
     }
     createDescription() {
       return { rawtext: [{ text: this.amount + "x " }, { translate: new qL(this.itemTypeId).localizationKey }] };
@@ -18579,6 +19215,46 @@ function qP() {
   });
 }
 qP();
+function duHandleStaffRecovery({ id, message, sourceEntity }) {
+  if (id !== "dbe:bulma_staff_recovery" || sourceEntity?.typeId !== "minecraft:player") return;
+  try {
+    if (message === "claim") { hO(sourceEntity).claimBulmaStaffReward(); return; }
+    if (!Number.isInteger(sourceEntity.commandPermissionLevel) || sourceEntity.commandPermissionLevel < 1 || !message.startsWith("reviewed "))
+      throw new Error("Staff legacy recovery requires an operator and reviewed <exact online player name>");
+    const target = o.getAllPlayers().find(player => player.name === message.slice(9).trim());
+    if (!target?.isValid) throw new Error("Staff recovery target is not online");
+    const wrapper = hO(target), receipt = wrapper.data.get("bulma_staff_reward");
+    if (receipt?.costReview) {
+      const review = receipt.costReview, quest = wrapper.quests.questsMap.get("fetch_bulma_outfit"), defined = quest?.getDefinedObjectives();
+      const tasks = quest?.getAllTasks(), task = tasks?.length === 1 ? tasks[0] : undefined;
+      if (receipt.quest !== "fetch_bulma_outfit" || receipt.state !== "pending" || receipt.token !== target.id + ":fetch_bulma_outfit" ||
+          !quest?.isStarted || quest._isCompleted || !defined?.length || quest.getAllObjectives().length !== defined.length ||
+          wrapper.quests.getCompletedQuestIds().includes("fetch_bulma_outfit") || !task?.isStarted || task.isCompleted ||
+          task.id !== "fetch_bulma_outfit.objective_1.task_1" || review.taskId !== task.id ||
+          review.item !== task.itemTypeId || review.count !== task.requiredProgress || review.npc !== task.deliverToNpc ||
+          !Number.isInteger(review.before) || review.before < task.requiredProgress || task.getItemAmount() < review.before)
+        throw new Error("Uncertain NPC delivery requires the exact active loaded task and operator-restored input inventory");
+      const { costReview, costPaid, ...restored } = receipt;
+      wrapper.persistBulmaStaffReceipt(restored);
+      task.npcDeliveryCostUncertain = !1;
+      wrapper.notifyBulmaStaff("pending");
+      return;
+    }
+    if (!wrapper.quests.getCompletedQuestIds().includes("fetch_bulma_outfit")) throw new Error("Staff recovery requires the completed Bulma outfit quest");
+    if (receipt && receipt.state !== "delivering") throw new Error("Staff reward already has a receipt; use its normal claim path");
+    const container = target.getComponent("inventory")?.container;
+    if (!container) throw new Error("Staff recovery inventory is unavailable");
+    for (let slot = 0; slot < container.size; slot++) if (container.getItem(slot)?.typeId === "dbe:power_pole")
+      throw new Error("Staff already exists in the target inventory; no recovery was granted");
+    if (receipt) wrapper.persistBulmaStaffReceipt({ ...receipt, state: "pending" });
+    else if (!wrapper.prepareBulmaStaffReward()) return;
+    wrapper.claimBulmaStaffReward();
+  } catch (error) {
+    console.warn("[Dragon Universe] Staff recovery refused: " + (error?.stack ?? error));
+    try { if (sourceEntity.isValid) sourceEntity.sendMessage({ translate: "dbe.quest.staff.failed" }); } catch {}
+  }
+}
+q6.afterEvents.scriptEventReceive.subscribe(duHandleStaffRecovery);
 var qQ = {
   "dbe:angel_staff": 1,
   "dbe:z_sword": 1,
@@ -18715,44 +19391,10 @@ function r2(sG, sH, sI) {
     ),
   );
 }
-import { system as r3 } from "@minecraft/server";
-var r4 = class {
-    addArea(sG, sH, sI, sK, sL) {
-      sH.runCommand(
-        "tickingarea add " + sI.x + " " + sI.y + " " + sI.z + " " + sK.x + " " + sK.y + " " + sK.z + " " + sG,
-      ),
-        typeof sL == "number" && r3.runTimeout(() => this.removeArea(sG, sH), sL);
-    }
-    addCircle(sG, sH, sI, sK, sL) {
-      this.addArea(sG, sH, new bP(sI.x - sK, sI.y - sK, sI.z - sK), new bP(sI.x + sK, sI.y + sK, sI.z + sK), sL);
-    }
-    removeArea(sG, sH) {
-      sH.runCommand("tickingarea remove " + sG);
-    }
-  },
-  r5 = new r4();
 function r6() {
-  let sG = qW.getDimension("dbe:future_trunks");
-  pJ.register(sG).onLoad(function* (sH) {
-    let sI = [];
-    for (let sK = 0; sK < 16; sK++)
-      for (let sL = 0; sL < 16; sL++) {
-        let sM = sH.chunkOrigin.x + sK,
-          sN = sH.chunkOrigin.z + sL,
-          sO = r2(sM / 35, 0, sN / 35),
-          sP = Math.floor(sO * 4) + 63;
-        sI.push(new qU(new bP(sM, sP, sN), new bP(sM, sP + 2, sN))), yield;
-      }
-    yield;
-    for (let sQ of sI)
-      try {
-        sH.dimension.fillBlocks(sQ, "dbe:dirtstone", { blockFilter: { includeTypes: ["minecraft:air"] } });
-      } catch {
-        return;
-      }
-    pJ.markChunkAsGenerated(sH.id);
-  });
+  initializeFutureTerrain(r2);
 }
+r6();
 bM.on("entity_enter_region", ({ entity: sG, region: sH }) => {
   sH.id === "future_trunks" &&
     sG instanceof qV &&
@@ -18766,13 +19408,12 @@ bM.on("entity_enter_region", ({ entity: sG, region: sH }) => {
   bM.on("region_load", async ({ region: sG }) => {
     if (sG.id === "future_trunks") {
       if (!qW.getDynamicProperty("futureTrunksCityLoaded")) {
-        let sH = new bP(0, 0, 0);
-        r5.addCircle("future_trunks", sG.dimension, sH, 4, 1200),
-          await aH.waitForChunkLoad(sG.dimension, sH),
-          qW.structureManager.placeJigsawStructure("dbe:city", sG.dimension, new bP(-31, 49, -22), {
-            ignoreStartHeight: !0,
-          }),
-          qW.setDynamicProperty("futureTrunksCityLoaded", !0);
+        try {
+          await prepareFutureCity(sG.dimension, () => qW.structureManager.placeJigsawStructure(
+            "dbe:city", sG.dimension, new bP(-31, 49, -22), { ignoreStartHeight: !0 }));
+        } catch (error) {
+          console.warn("[Future] city initialization deferred; existing blocks/flags preserved: " + (error?.stack ?? error));
+        }
       }
       r6();
     }
@@ -18792,47 +19433,116 @@ bM.on("entity_enter_region", ({ entity: sG, region: sH }) => {
 });
 import { world as rb } from "@minecraft/server";
 import { system as rf, world as rj } from "@minecraft/server";
-var rk = 128,
+// Measured from the shipped NBT files; the regression check validates every size against its asset.
+var rk = {
+    "dbe:hyperbolic_time_chamber": { x: 57, y: 17, z: 33 },
+    king_kai_planet: { x: 71, y: 52, z: 57 },
+    "dbe:lookout": { x: 63, y: 101, z: 63 },
+    "dbe:enma_daioh_palace_front": { x: 63, y: 22, z: 64 },
+    "dbe:enma_daioh_palace_back": { x: 63, y: 22, z: 20 },
+    Torneio_de_artes_marciais_mundial: { x: 64, y: 64, z: 64 },
+    snake_path_end: { x: 5, y: 4, z: 7 },
+    snake_path_1: { x: 25, y: 7, z: 64 },
+    snake_path_2: { x: 25, y: 4, z: 64 },
+    snake_path_3: { x: 25, y: 7, z: 64 },
+    snake_path_4: { x: 25, y: 4, z: 64 },
+    snake_path_start: { x: 25, y: 9, z: 64 },
+  },
   rp = class {
-    loadedStructureIds = [];
+    loadedStructureIds;
+    placingStructureIds;
     queueSet = new Map();
     isLoading = !1;
+    clearedLegacyAreas = new Set();
+    retryRun;
     constructor() {
-      rf.run(() => {
-        this.loadedStructureIds = bG(rj, "structures").get("loaded") ?? [];
-      });
+      this.ready = new Promise((resolve, reject) => rf.run(() => {
+        try {
+          const saved = bG(rj, "structures");
+          const previousLoaded = saved.get("loaded"), previousPlacing = saved.get("placing");
+          const loaded = previousLoaded === undefined ? [] : previousLoaded;
+          const placing = previousPlacing === undefined ? [] : previousPlacing;
+          if (![loaded, placing].every(list => Array.isArray(list) && list.every(id => typeof id === "string")))
+            throw new Error("Invalid saved structure metadata; no structures will be replaced");
+          this.loadedStructureIds = loaded;
+          this.placingStructureIds = placing;
+          resolve();
+        } catch (error) { reject(error); }
+      }));
+      this.ready.catch(error => console.warn("[Structures] saved metadata: " + (error.stack ?? error)));
     }
     addToQueue(sG, sH) {
-      this.queueSet.set(sG, sH), this.isLoading || this.loadAllAsync();
+      this.queueSet.set(sG, sH);
+      this.loadAllAsync().catch(error => console.warn("[Structures] queue: " + (error.stack ?? error)));
     }
     hasLoaded(sG) {
       return this.loadedStructureIds ? this.loadedStructureIds.includes(sG) : !1;
     }
     async loadAllAsync() {
-      if ((this.loadedStructureIds || (await rf.waitTicks(1)), !this.isLoading)) {
-        let sG = [...this.queueSet.entries()];
-        this.isLoading = !0;
-        for (let [sH, sI] of sG) this.queueSet.delete(sH), await this.loadAsync(sH, sI);
-        (this.isLoading = !1), this.queueSet.size && this.loadAllAsync();
+      if (this.isLoading) return;
+      this.isLoading = !0;
+      let ready = false;
+      try {
+        await this.ready;
+        ready = true;
+        for (const [id, placement] of [...this.queueSet]) {
+          try {
+            await this.loadAsync(id, placement);
+            this.queueSet.delete(id);
+          } catch (error) {
+            console.warn("[Structures] " + id + ": " + (error.stack ?? error));
+            if (error.stage !== "loading") this.queueSet.delete(id);
+          }
+        }
+      } finally {
+        this.isLoading = !1;
+        if (ready && this.queueSet.size && this.retryRun === undefined) {
+          this.retryRun = rf.runTimeout(() => {
+            this.retryRun = undefined;
+            this.loadAllAsync().catch(error => console.warn("[Structures] retry: " + (error.stack ?? error)));
+          }, 100);
+        }
       }
     }
     async loadAsync(sG, sH) {
-      if (!this.hasLoaded(sG)) {
-        let { dimension: sI, location: sK, structureId: sL } = sH;
-        await rj.tickingAreaManager.createTickingArea(sG, {
-          dimension: sI,
-          from: new bP(sK.x - rk, sK.y - rk, sK.z - rk),
-          to: new bP(sK.x + rk, sK.y + rk, sK.z + rk),
-        }),
-          rj.structureManager.place(sL, sI, sK),
-          await rf.waitTicks(20),
-          this.markLoaded(sG),
-          rj.tickingAreaManager.removeTickingArea(sG);
+      await this.ready;
+      if (!this.clearedLegacyAreas.has(sG)) {
+        // These exact names were owned by the old structure loader, never by the new shared leases.
+        try { rj.tickingAreaManager.removeTickingArea(sG); } catch {}
+        this.clearedLegacyAreas.add(sG);
+      }
+      if (this.hasLoaded(sG)) return;
+      if (this.placingStructureIds.includes(sG))
+        throw new Error("Structure placement was interrupted: " + sG + "; inspect a world copy before retrying. Existing blocks were preserved");
+      const { dimension, location, structureId } = sH, size = rk[structureId];
+      if (!size || ![location.x, location.y, location.z].every(Number.isInteger))
+        throw new Error("Unknown structure bounds or invalid origin: " + structureId);
+      const end = { x: location.x + size.x - 1, y: location.y + size.y - 1, z: location.z + size.z - 1 };
+      const area = await duAcquireLoadedArea(dimension, location, end, "structure " + sG);
+      try {
+        const placing = [...this.placingStructureIds, sG];
+        bG(rj, "structures").set("placing", placing);
+        this.placingStructureIds = placing;
+        if (structureId === "dbe:lookout" && !rj.getDynamicProperty("lookoutLoaded")) {
+          dimension.fillBlocks(new ry(
+            { x: rx.lookoutLocation.x, y: -64, z: rx.lookoutLocation.z },
+            { x: rx.lookoutLocation.x, y: 218, z: rx.lookoutLocation.z }), "minecraft:smooth_quartz");
+          rj.setDynamicProperty("lookoutLoaded", !0);
+        }
+        rj.structureManager.place(structureId, dimension, location);
+        await rf.waitTicks(20);
+        this.markLoaded(sG);
+      } finally {
+        duReleaseLoadedArea(area);
       }
     }
     markLoaded(sG) {
-      this.loadedStructureIds &&
-        (this.loadedStructureIds.push(sG), bG(rj, "structures").set("loaded", this.loadedStructureIds));
+      const saved = bG(rj, "structures"), loaded = [...this.loadedStructureIds, sG];
+      saved.set("loaded", loaded);
+      this.loadedStructureIds = loaded;
+      const placing = this.placingStructureIds.filter(id => id !== sG);
+      saved.set("placing", placing);
+      this.placingStructureIds = placing;
     }
   },
   rq = new rp();
@@ -18896,22 +19606,11 @@ bM.on("entity_enter_region", ({ entity: sG, region: sH }) => {
   }),
   bM.on("region_load", async ({ region: sG }) => {
     sG.id === "lookout" &&
-      (rA.getDynamicProperty("lookoutLoaded") ||
-        (r5.addCircle("lookout", sG.dimension, rx.lookoutLocation, 4, 1200),
-        await aH.waitForChunkLoad(sG.dimension, rx.lookoutLocation),
-        sG.dimension.fillBlocks(
-          new ry(
-            { x: rx.lookoutLocation.x, y: -64, z: rx.lookoutLocation.z },
-            { x: rx.lookoutLocation.x, y: 218, z: rx.lookoutLocation.z },
-          ),
-          "minecraft:smooth_quartz",
-        ),
-        rA.setDynamicProperty("lookoutLoaded", !0)),
       rq.addToQueue("lookout", {
         dimension: sG.dimension,
         location: new bP(rx.lookoutLocation.x - 31, 219, rx.lookoutLocation.z - 31),
         structureId: "dbe:lookout",
-      }));
+      });
   });
 import { Player as rB, world as rC } from "@minecraft/server";
 import { world as rD } from "@minecraft/server";
@@ -19108,6 +19807,7 @@ dC.register({
   dC.register({
     type: "has_skill",
     test: (sG, sH) => {
+      if (sH.exceptRaceIds?.includes(sG.race?.id)) return !0;
       let sI = sG.skills.getSkill(sH.value);
       return sI && sH.level !== void 0
         ? dC.compare(sI.level, sH.level, sH.operator)
@@ -19150,7 +19850,7 @@ dC.register({
     type: "in_biome",
     test: (sG, sH) => {
       let { dimension: sI, location: sK } = sG.entity;
-      return dC.compare(sI.getBiome(sK).id, sH.value, sH.operator);
+      return dC.compare(sI.getBiome(sK).id, duPhysicalDestinationId(sH.value), sH.operator);
     },
     localizationKey: (sG) => [
       {
@@ -19261,7 +19961,15 @@ var rP = class extends cH {
     super(sG, sH);
     let { dimension: sI, location: sK } = sG.entity;
     aH.waitForChunkLoad(sI, sK).then(() => {
-      this.isEnabled && this.startRiding(), (this.isLoaded = !0);
+      if (!sG.entity.isValid) return;
+      if (this.isEnabled && !this.startRiding()) this.disable();
+      this.isLoaded = !0;
+    }).catch((error) => {
+      console.warn("[Flight] initialization failed; flight can be retried: " + error);
+      if (sG.entity.isValid) {
+        this.disable();
+        this.isLoaded = !0;
+      }
     });
   }
   get flyMode() {
@@ -19282,11 +19990,11 @@ var rP = class extends cH {
       this.setFlyModeProperty("none");
   }
   async enable() {
+    if (!this.startRiding()) return;
     let { dimension: sG, location: sH } = this.dbeEntity.entity;
     sG.playSound("common.bukujyutsu_up", sH),
       (this.entitySkillData.state.enabled = !0),
       this.saveState(),
-      this.startRiding(),
       this.setFlyModeProperty("normal");
   }
   onTick() {
@@ -19299,7 +20007,9 @@ var rP = class extends cH {
         { currentTransformation: sK } = sI,
         sL = sH.getGameMode() === rN.Creative;
       if (this.isEnabled) {
-        let sM = sH.hasComponent("minecraft:riding");
+        let riding = sH.getComponent("minecraft:riding")?.entityRidingOn;
+        let sM = this.flyEntity?.isValid && riding?.id === this.flyEntity.id &&
+          this.flyEntity.dimension.id === sH.dimension.id;
         this.setFlyModeProperty(this.flyMode), (sL || sG.currentValue <= 0 || sK.isOozaru || !sM) && this.disable();
       } else !sL && sG.currentValue > 0 && !sK.isOozaru && this.isDoubleJump && this.enable();
     }
@@ -19315,9 +20025,12 @@ var rP = class extends cH {
     );
   }
   async setFlyModeProperty(sG) {
-    sG === "none" && (await rO.waitTicks(1)),
-      this.dbeEntity.trySetProperty("dbe:fly_mode", sG),
-      this.setFlySpeed(this.flyMode === "fast" ? 2 : 1);
+    if (sG === "none") {
+      await rO.waitTicks(1);
+      if (this.isEnabled) return;
+    }
+    this.dbeEntity.trySetProperty("dbe:fly_mode", sG);
+    this.setFlySpeed(this.flyMode === "fast" ? 2 : 1);
   }
   setFlySpeed(sG) {
     let sH = this.flySpeed * sG,
@@ -19326,19 +20039,34 @@ var rP = class extends cH {
     sI && (sI.value = sH), sK && sK.setCurrentValue(sH);
   }
   startRiding() {
+    if (this.flyEntity?.isValid) this.stopRiding();
     let { entity: sG } = this.dbeEntity,
       { dimension: sH, location: sI } = sG,
       sK = sG.getRotation();
-    if (((this.flyEntity = d4("dbe:player_fly", sH, sI, { initialRotation: sK.y })), this.flyEntity)) {
-      let sL = this.flyEntity.getComponent("minecraft:rideable");
-      sL && sL.addRider(sG);
+    try {
+      if (((this.flyEntity = d4("dbe:player_fly", sH, sI, { initialRotation: sK.y })), this.flyEntity)) {
+        let sL = this.flyEntity.getComponent("minecraft:rideable");
+        if (sL?.addRider(sG)) {
+          this.setFlySpeed(this.flyMode === "fast" ? 2 : 1);
+          return !0;
+        }
+      }
+    } catch (error) {
+      console.warn("[Flight] rider attachment failed: " + error);
     }
+    if (this.flyEntity?.isValid) this.flyEntity.remove();
+    this.flyEntity = void 0;
+    return !1;
   }
   stopRiding() {
     let sG = this.flyEntity;
     if (((this.flyEntity = void 0), sG?.isValid)) {
       let sH = sG.getVelocity();
-      this.dbeEntity.entity.applyImpulse({ x: sH.x, y: sH.y, z: sH.z }), sG.remove();
+      let player = this.dbeEntity.entity;
+      if (player.isValid && player.dimension.id === sG.dimension.id &&
+          bO.distance(player.location, sG.location) < 4)
+        player.applyImpulse({ x: sH.x, y: sH.y, z: sH.z });
+      sG.remove();
     }
   }
 };
@@ -19353,6 +20081,11 @@ var rT = 2,
     }
     onTick() {
       if (this.dbeEntity instanceof hN) {
+        if (this.dbeEntity.skills.isSkillActive("fly")) {
+          this.isMidAir = !1;
+          this.ticks = 0;
+          return;
+        }
         let { attributes: sG, player: sH, stamina: sI, transformations: sK } = this.dbeEntity;
         if ((sH.isJumping && !this.isMidAir && (this.isMidAir = !0), this.isMidAir)) {
           let sL = sG.stats.getStat("jump")?.value ?? 0,

@@ -688,7 +688,7 @@
          "path" : "biomes/hell.client_biome.json"
       },
       {
-         "path" : "biomes/kai.client_biome.json"
+         "path" : "biomes/kaioshin.client_biome.json"
       },
       {
          "path" : "biomes/namek.client_biome.json"
@@ -1042,7 +1042,7 @@
          "path" : "fogs/hyperbolic_time_chamber_fog_setting.json"
       },
       {
-         "path" : "fogs/kai_fog_setting.json"
+         "path" : "fogs/kaioshin_fog_setting.json"
       },
       {
          "path" : "fogs/namek_fog_setting.json"
@@ -4330,16 +4330,10 @@
          "path" : "textures/entity/villagers/frieza_villager_1.png"
       },
       {
-         "path" : "textures/entity/villagers/frieza_villager_2.png"
-      },
-      {
          "path" : "textures/entity/villagers/hell_villager_0.png"
       },
       {
          "path" : "textures/entity/villagers/hell_villager_1.png"
-      },
-      {
-         "path" : "textures/entity/villagers/hell_villager_2.png"
       },
       {
          "path" : "textures/entity/villagers/saiyan_villager_0.png"
@@ -4351,16 +4345,10 @@
          "path" : "textures/entity/villagers/saiyan_villager_tail.png"
       },
       {
-         "path" : "textures/entity/villagers/saiyan_villager_2.png"
-      },
-      {
          "path" : "textures/entity/villagers/yardrat_villager_0.png"
       },
       {
          "path" : "textures/entity/villagers/yardrat_villager_1.png"
-      },
-      {
-         "path" : "textures/entity/villagers/yardrat_villager_2.png"
       },
       {
          "path" : "textures/entity/z_sword.png"
