@@ -4051,6 +4051,8 @@ var bD = class {
     data;
     dirty = !1;
     isSaving = !1;
+    corruptRaw; // texto original inválido ainda não copiado para <id>__corrupt
+    saveFailures = 0;
     static cleanup() {
       for (let sG of [...this.instances.values()])
         for (let sH of [...sG.values()]) sH.isProviderValid() || this.deleteInstance(sH);
@@ -4070,7 +4072,13 @@ var bD = class {
       return sL || ((sL = new sV(sG, sH)), sK.set(sH, sL)), sL;
     }
     static saveAllInstances() {
-      for (let sG of [...this.instances.values()]) for (let sH of [...sG.values()]) sH.save();
+      for (let sG of [...this.instances.values()])
+        for (let sH of [...sG.values()])
+          try {
+            sH.save();
+          } catch (sI) {
+            console.error("[Dragon Universe] Falha ao salvar '" + sH.dataId + "' no encerramento: " + sI);
+          }
     }
     get id() {
       return this.dataId;
@@ -4103,25 +4111,76 @@ var bD = class {
       (this.data[sG] = sH), (this.dirty = !0), this.scheduleSave();
     }
     save() {
-      !this.dirty ||
-        !this.isProviderValid() ||
-        (this.provider.setDynamicProperty(this.dataId, JSON.stringify(this.data)), (this.dirty = !1));
+      if (!this.dirty || !this.isProviderValid()) return;
+      // nunca sobrescreve um original inválido antes de copiá-lo para <id>__corrupt
+      if (this.corruptRaw !== void 0 && !this.preserveCorrupt()) return;
+      let sG;
+      try {
+        (sG = JSON.stringify(this.data)), this.provider.setDynamicProperty(this.dataId, sG), (this.dirty = !1);
+        this.saveFailures && console.warn("[Dragon Universe] '" + this.dataId + "' voltou a ser salvo.");
+        this.saveFailures = 0;
+      } catch (sH) {
+        // dirty continua true: o próximo set() ou o encerramento tentam de novo
+        this.reportSaveFailure("Falha ao salvar (" + (sG?.length ?? "?") + " caracteres)", sH);
+      }
+    }
+    reportSaveFailure(sG, sH) {
+      ++this.saveFailures,
+        (this.saveFailures === 1 || this.saveFailures % 20 === 0) &&
+          console.error(
+            "[Dragon Universe] " + sG + " '" + this.dataId + "' (" + this.providerLabel() + ", tentativa " +
+              this.saveFailures + "): " + sH,
+          );
+    }
+    preserveCorrupt() {
+      let sG = this.dataId + "__corrupt";
+      try {
+        this.provider.getDynamicProperty(sG) !== void 0 && (sG += "_" + Date.now());
+        this.provider.setDynamicProperty(sG, this.corruptRaw);
+      } catch (sH) {
+        return this.reportSaveFailure("Original inválido não pôde ser preservado; nada foi gravado em", sH), !1;
+      }
+      return (
+        console.warn("[Dragon Universe] Original inválido de '" + this.dataId + "' preservado em '" + sG + "'."),
+        (this.corruptRaw = void 0),
+        !0
+      );
+    }
+    providerLabel() {
+      try {
+        return this.provider instanceof aA ? "world" : this.provider.typeId + " " + this.provider.id;
+      } catch {
+        return "?";
+      }
     }
     toString() {
       return JSON.stringify(this.data);
     }
     parseData(sG) {
+      let sH;
       try {
-        return JSON.parse(sG);
-      } catch {
-        return {};
+        sH = JSON.parse(sG);
+      } catch (sI) {
+        sH = sI;
       }
+      if (sH && typeof sH == "object" && !Array.isArray(sH) && !(sH instanceof Error)) return sH;
+      // começa vazio, mas guarda o texto original: save() só grava depois de copiá-lo para <id>__corrupt
+      this.corruptRaw = sG;
+      console.error(
+        "[Dragon Universe] Dados inválidos em '" + this.dataId + "' (" + this.providerLabel() + ", " + sG.length +
+          " caracteres): " + (sH instanceof Error ? sH.message : "não é um objeto") + ". O original será preservado.",
+      );
+      return {};
     }
     scheduleSave() {
       this.isSaving ||
         ((this.isSaving = !0),
         az.runTimeout(() => {
-          this.save(), (this.isSaving = !1);
+          try {
+            this.save();
+          } finally {
+            this.isSaving = !1;
+          }
         }, 20));
     }
   };
