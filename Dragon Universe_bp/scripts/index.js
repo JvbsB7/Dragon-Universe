@@ -15307,6 +15307,7 @@ var jw = class extends jj {
   },
   jA = new Map(),
   jA2 = new Map(), // sessão de desejos ativa: id do dragão -> id do jogador
+  jA3 = new Map(), // cinemática do dragão em curso: id do jogador -> token
   jB = class {
     wishes = [];
     constructor() {
@@ -15345,6 +15346,8 @@ var jw = class extends jj {
         return;
       }
       jA2.set(sH.id, sG.id);
+      // abrir o desejo encerra a cinemática deste jogador e devolve a câmera na hora
+      jA3.has(sG.id) && (jA3.delete(sG.id), sG.camera.clear());
       try {
         for (; sG.isValid && sH.isValid && this.getWishesMade(sH) < sI.maxWishes; ) {
           // fechar o menu encerra só a sessão: o dragão fica com os desejos restantes
@@ -15405,7 +15408,12 @@ var jw = class extends jj {
       sI.push(sH.name), sG.data.set("granted_wishes", sI);
     }
     async playAnimation(sG, sH, sI) {
-      let sK = sH.getComponent("minecraft:scale")?.value ?? 1;
+      let sK = sH.getComponent("minecraft:scale")?.value ?? 1,
+        sT = {},
+        sV = sG.id,
+        // false se a cinemática foi encerrada (desejo aberto ou nova invocação) ou se o jogador saiu
+        sU = () => jA3.get(sV) === sT && (sG.isValid || (jA3.delete(sV), !1));
+      jA3.set(sV, sT);
       sG.camera.setCamera("minecraft:free", {
         facingLocation: bO.add(sH.location, { y: 32 * sK }),
         location: bO.add(sH.location, { x: 32 * sK, y: 32 * sK, z: 32 * sK }),
@@ -15414,13 +15422,14 @@ var jw = class extends jj {
         sI.spawnSound && (sG.playMusic(sI.spawnSound, { fade: 1 }), aN.applyCameraShake(sG, 0.5, 5)),
         await j8.waitTicks(40),
         sI.sourceAnimation && sH.playAnimation(sI.sourceAnimation),
-        await j8.waitTicks(200),
-        sG.camera.fade({
-          fadeColor: { red: 1, green: 1, blue: 1 },
-          fadeTime: { fadeInTime: 0.5, fadeOutTime: 0.5, holdTime: 0.5 },
-        }),
-        await j8.waitTicks(15),
-        sG.camera.clear();
+        await j8.waitTicks(200);
+      if (!sU()) return;
+      sG.camera.fade({
+        fadeColor: { red: 1, green: 1, blue: 1 },
+        fadeTime: { fadeInTime: 0.5, fadeOutTime: 0.5, holdTime: 0.5 },
+      });
+      await j8.waitTicks(15);
+      sU() && (jA3.delete(sV), sG.camera.clear());
     }
     restoreNormalTimeOfDay(sG) {
       let sH = jA.get(sG.id);
