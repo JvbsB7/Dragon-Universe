@@ -19634,9 +19634,11 @@ var rk = {
         this.clearedLegacyAreas.add(sG);
       }
       if (this.hasLoaded(sG)) return;
-      // Still marked as placing: the world closed before markLoaded. A fixed .mcstructure places the same blocks
-      // again, so the placement is resumed instead of leaving a permanent hole.
+      // Still marked as placing: the world closed before markLoaded. Only the Snake Way pieces are resumed (a fixed
+      // .mcstructure in the Other World sky places the same blocks again); every other structure keeps its blocks.
       const resumed = this.placingStructureIds.includes(sG);
+      if (resumed && !sG.startsWith("snake_path_"))
+        throw new Error("Structure placement was interrupted: " + sG + "; inspect a world copy before retrying. Existing blocks were preserved");
       if (resumed) console.warn("[Structures] " + sG + ": placement was interrupted in a previous session; placing it again");
       const { dimension, location, structureId } = sH, size = rk[structureId];
       if (!size || ![location.x, location.y, location.z].every(Number.isInteger))
