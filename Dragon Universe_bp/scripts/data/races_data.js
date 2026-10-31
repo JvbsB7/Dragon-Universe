@@ -169,7 +169,7 @@ const races_data = [
         hair: {
           type: "variant",
           barberEditable: true,
-          optionCount: 7,
+          optionCount: 10,
           propertyIndex: 1,
         },
         hair_color: {
