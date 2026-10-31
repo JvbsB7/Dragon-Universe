@@ -46,6 +46,19 @@ export function findUnexpectedBlock(dimension, from, to, allowedTypes) {
   }
 }
 
+// Native verification is only trusted if a query really reports air: probe one known-air block, once per dimension.
+const queryProbes = new Map();
+export function queriesReportAir(dimension, point) {
+  if (queryProbes.has(dimension.id)) return queryProbes.get(dimension.id);
+  const block = dimension.getBlock(point);
+  if (block?.typeId !== AIR) return false; // Not a usable probe; decide on a later chunk.
+  const found = [...dimension.getBlocks(new BlockVolume(point, point), { excludeTypes: ["minecraft:bedrock"] }, false).getBlockLocationIterator()];
+  const trusted = found.length === 1;
+  queryProbes.set(dimension.id, trusted);
+  if (!trusted) console.warn("[Terrain] " + dimension.id + ": block queries do not report air; using per-block verification");
+  return trusted;
+}
+
 export function runTerrainJob(generator, { timeoutTicks = 2400, inactivityTicks, activity, label = "Terrain job" } = {}) {
   let resolve, reject;
   const completion = new Promise((yes, no) => { resolve = yes; reject = no; });

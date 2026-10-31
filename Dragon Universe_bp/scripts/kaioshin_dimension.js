@@ -1,5 +1,5 @@
 import { acquireLoadedArea, releaseLoadedArea, safeTeleport, safeReturnToEarth, travelOrigin, reportTravelFailure, physicalDestinationId } from "./travel_safety.js";
-import { fillAirColumn, emptyChunk, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
+import { fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 /**
  * Kaioshin dimension (dbe:kai)  -  the lush Kaioshin planet from Dragon Ball Z
  *
@@ -255,10 +255,14 @@ function setTerrain(dim, x, y, z, block) {
   if (existing.typeId === AIR) dim.setBlockType({ x, y, z }, block);
 }
 
-function fillTerrainColumn(dim, x, z, y1, y2, block) {
+// fresh: the chunk was proven empty in this job, so no per-block read is needed. The native filter still
+// leaves anything that appeared since then untouched, and the final verification would then fail safely.
+const AIR_ONLY = { blockFilter: { includeTypes: [AIR] } };
+function fillTerrainColumn(dim, x, z, y1, y2, block, fresh = false) {
   if (y2 < y1) return;
   checkWritable(x, z);
-  fillAirColumn(dim, x, z, y1, y2, block);
+  if (fresh) dim.fillBlocks(new BlockVolume({ x, y: y1, z }, { x, y: y2, z }), block, AIR_ONLY);
+  else fillAirColumn(dim, x, z, y1, y2, block);
 }
 
 /** Vertical fill in one column (ignored when empty). */
@@ -300,7 +304,7 @@ function chunkState(dim, cx, cz) {
   return b.typeId === "minecraft:bedrock" ? 2 : 1;
 }
 
-function* terrainJob(dim, cx, cz) {
+function* terrainJob(dim, cx, cz, fresh = false) {
   const x0 = cx * 16;
   const z0 = cz * 16;
 
@@ -320,9 +324,9 @@ function* terrainJob(dim, cx, cz) {
   for (let i = 0; i < 16; i++) {
     for (let j = 0; j < 16; j++) {
       if (world.getDynamicProperty?.(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin generation stopped after a player edit; use reviewed terrain repair");
-      fillTerrainColumn(dim, x0 + i, z0 + j, MIN_Y + 1, coreTop, STONE);
+      fillTerrainColumn(dim, x0 + i, z0 + j, MIN_Y + 1, coreTop, STONE, fresh);
     }
-    yield;
+    if (!fresh || i % 4 === 3) yield;
   }
   yield;
 
@@ -336,9 +340,9 @@ function* terrainJob(dim, cx, cz) {
       if (isRiver(x, z)) {
         // river: sand bed 4 below the bank, water up to 1 below the bank; on terrace steps this makes waterfalls
         const bed = h - 4;
-        fillTerrainColumn(dim, x, z, coreTop + 1, bed - 1, STONE);
+        fillTerrainColumn(dim, x, z, coreTop + 1, bed - 1, STONE, fresh);
         setTerrain(dim, x, bed, z, SAND);
-        fillTerrainColumn(dim, x, z, bed + 1, h - 1, WATER);
+        fillTerrainColumn(dim, x, z, bed + 1, h - 1, WATER, fresh);
         tops[i * 16 + j] = h - 1;
         continue;
       }
@@ -350,24 +354,34 @@ function* terrainJob(dim, cx, cz) {
       const hi = Math.max(n1, n2, n3, n4);
       const face = hi - h >= 2; // standing below a higher neighbour: a cliff face, bare rock
       const rockFrom = lo - 1; // striped rock down to just below the lowest neighbour (visible wall)
-      fillTerrainColumn(dim, x, z, coreTop + 1, rockFrom - 1, STONE);
+      fillTerrainColumn(dim, x, z, coreTop + 1, rockFrom - 1, STONE, fresh);
       if (face) {
-        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h, rockAt(x, z));
+        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h, rockAt(x, z), fresh);
       } else {
-        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h - 2, rockAt(x, z));
+        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h - 2, rockAt(x, z), fresh);
         setTerrain(dim, x, h - 1, z, DIRT);
         setTerrain(dim, x, h, z, GRASS);
       }
       tops[i * 16 + j] = h;
     }
-    yield;
+    if (!fresh || i % 4 === 3) yield;
   }
 
   // Safety net: make sure the terrain really is there before the chunk is marked as done. If it is not
   // (chunk unloaded mid-job, engine refused a fill...) throw, so the chunk is retried instead of being a hole.
+  const nativeCheck = fresh && queriesReportAir(dim, { x: x0, y: 319, z: z0 });
   for (let column = 0; column < 256; column++) {
     const i = Math.floor(column / 16), j = column % 16;
     const x = x0 + i, z = z0 + j, top = tops[column];
+    if (nativeCheck) {
+      // A fresh chunk must hold exactly the generated profile; any difference fails, and the retry (state "building") uses the per-block path.
+      for (const span of repairColumn(x, z)) {
+        const point = findUnexpectedBlock(dim, { x, y: span.from, z }, { x, y: span.to, z }, [span.type]);
+        if (point) throw new Error("Kaioshin terrain verification failed at " + point.x + "," + point.y + "," + point.z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type);
+      }
+      if (column % 64 === 63) yield;
+      continue;
+    }
     for (const span of repairColumn(x, z)) for (let y = span.from; y <= span.to; y++) {
       const block = dim.getBlock({ x, y, z }), waterLayer = span.type === WATER;
       if (!block || block.typeId === AIR || (waterLayer ? !block.isSolid && !block.isLiquid : !block.isSolid || block.isLiquid)) {
@@ -399,7 +413,8 @@ function* ownedTerrainJob(dim, cx, cz) {
     if (world.getDynamicProperty(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin ownership inspection interrupted by a player edit");
     world.setDynamicProperty(terrainOwnership(cx, cz), "building");
   }
-  yield* terrainJob(dim, cx, cz);
+  // Only a chunk proven empty just above writes without per-block reads; a resumed "building" chunk may hold anything.
+  yield* terrainJob(dim, cx, cz, state !== "building");
   world.setDynamicProperty(terrainOwnership(cx, cz), "complete");
 }
 
