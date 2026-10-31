@@ -1,5 +1,5 @@
 import { acquireLoadedArea, releaseLoadedArea, safeTeleport, safeReturnToEarth, travelOrigin, reportTravelFailure, physicalDestinationId } from "./travel_safety.js";
-import { fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
+import { AIR_ONLY_FILL, airFilterWorks, fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 /**
  * Kaioshin dimension (dbe:kai)  -  the lush Kaioshin planet from Dragon Ball Z
  *
@@ -257,11 +257,10 @@ function setTerrain(dim, x, y, z, block) {
 
 // fresh: the chunk was proven empty in this job, so no per-block read is needed. The native filter still
 // leaves anything that appeared since then untouched, and the final verification would then fail safely.
-const AIR_ONLY = { blockFilter: { includeTypes: [AIR] } };
 function fillTerrainColumn(dim, x, z, y1, y2, block, fresh = false) {
   if (y2 < y1) return;
   checkWritable(x, z);
-  if (fresh) dim.fillBlocks(new BlockVolume({ x, y: y1, z }, { x, y: y2, z }), block, AIR_ONLY);
+  if (fresh) dim.fillBlocks(new BlockVolume({ x, y: y1, z }, { x, y: y2, z }), block, AIR_ONLY_FILL);
   else fillAirColumn(dim, x, z, y1, y2, block);
 }
 
@@ -413,8 +412,9 @@ function* ownedTerrainJob(dim, cx, cz) {
     if (world.getDynamicProperty(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin ownership inspection interrupted by a player edit");
     world.setDynamicProperty(terrainOwnership(cx, cz), "building");
   }
-  // Only a chunk proven empty just above writes without per-block reads; a resumed "building" chunk may hold anything.
-  yield* terrainJob(dim, cx, cz, state !== "building");
+  // Only a chunk proven empty just above writes without per-block reads, and only once the filter passed its active
+  // check (no yield since the proof). A resumed "building" chunk may hold anything.
+  yield* terrainJob(dim, cx, cz, state !== "building" && airFilterWorks(dim, cx * 16, cz * 16, 319));
   world.setDynamicProperty(terrainOwnership(cx, cz), "complete");
 }
 
