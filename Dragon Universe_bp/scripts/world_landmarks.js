@@ -179,6 +179,12 @@ function structureSpots() {
   }
 }
 
+/** Overworld landmark spots, so world_structures.js does not plan a city on top of one. */
+export function overworldLandmarkCenters() {
+  const plan = loadPlan();
+  return SPECS.filter((s) => s.dim === "overworld" && plan.spots[s.key] && !plan.spots[s.key].none).map((s) => centerOf(s, plan.spots[s.key]));
+}
+
 const dimensionOf = (spec) => world.getDimension(spec.dim === "overworld" ? OVERWORLD : ENV[spec.dim].id);
 const centerOf = (spec, spot) => ({ x: spot.x + spec.size.x / 2, z: spot.z + spec.size.z / 2 });
 

@@ -17,7 +17,7 @@
  */
 import * as mc from "@minecraft/server";
 import { acquireLoadedArea, releaseLoadedArea } from "./travel_safety.js";
-import "./world_landmarks.js";
+import { overworldLandmarkCenters } from "./world_landmarks.js";
 
 const { world, system } = mc;
 
@@ -146,7 +146,7 @@ function scan() {
   // plan one spot per scan, so the seed searches never pile up in a single tick
   const next = SPECS.find((s) => !plan.spots[s.key]);
   if (next) {
-    const taken = Object.values(plan.spots).filter((s) => !s.none);
+    const taken = [...Object.values(plan.spots).filter((s) => !s.none), ...overworldLandmarkCenters()];
     plan.spots[next.key] = planSpot(dim, next, taken);
     savePlan(plan);
     return;
