@@ -18,6 +18,8 @@ createSpaceArena({
   item: "dbe:bills_invitation",
   events: { go: "dbe:bills_planet", back: "dbe:bills_planet_return", rebuild: "dbe:bills_planet_rebuild" },
   spawn: { x: 0.5, y: 130, z: 1.5 }, // on the planks at build offset (69, 69, 54)
+  arrivalClear: { height: 2 },
+  arrivalFloor: "minecraft:dark_oak_planks",
   fogTag: "dbe_bills_planet",
   originProp: "dbe:bills_origin",
   stateProp: "dbe:bills_planet_pieces",

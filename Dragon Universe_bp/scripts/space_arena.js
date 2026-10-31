@@ -20,7 +20,7 @@ const distXZ = (x, z, p) => Math.hypot(Math.max(p.x - x, 0, x - (p.x + p.sx)), M
 
 /**
  * label, dimId, item, events { go, back, rebuild? }, spawn, rotation?, fogTag, originProp, stateProp, fallY,
- * pieces [{ id, x, y, z, sx, sy, sz }], arrivalRadius, loadRadius, arrivalClear? { types, radius, height }, protectBlocks?, removeMobs?
+ * pieces [{ id, x, y, z, sx, sy, sz }], arrivalRadius, loadRadius, arrivalClear? { height }, arrivalFloor?, protectBlocks?, removeMobs?
  */
 export function createSpaceArena(cfg) {
   const FOG_PUSH = "fog @s push dbe:fog_space " + cfg.fogTag;
@@ -76,20 +76,22 @@ export function createSpaceArena(cfg) {
     }
   }
 
-  /** Removes cfg.arrivalClear.types from the space the player arrives in, whatever the game thinks of those blocks. */
+  /**
+   * Keeps the arrival usable: the column the player arrives in is emptied, whatever stands there (a block a player
+   * placed, or one the game may count as solid), and the floor under it is put back if it is gone.
+   */
   async function clearArrival(dim) {
-    if (!cfg.arrivalClear) return;
-    const { types, radius, height } = cfg.arrivalClear;
+    if (!cfg.arrivalClear && !cfg.arrivalFloor) return;
     const x = Math.floor(cfg.spawn.x), y = Math.floor(cfg.spawn.y), z = Math.floor(cfg.spawn.z);
-    const area = await acquireLoadedArea(dim, { x: x - radius, y, z: z - radius }, { x: x + radius, y, z: z + radius }, cfg.label + " arrival");
+    const area = await acquireLoadedArea(dim, { x, y, z }, { x, y, z }, cfg.label + " arrival");
     try {
-      for (let dx = -radius; dx <= radius; dx++) {
-        for (let dz = -radius; dz <= radius; dz++) {
-          for (let dy = 0; dy < height; dy++) {
-            const block = dim.getBlock({ x: x + dx, y: y + dy, z: z + dz });
-            if (block && types.includes(block.typeId)) block.setType("minecraft:air");
-          }
-        }
+      for (let dy = 0; dy < (cfg.arrivalClear?.height ?? 0); dy++) {
+        const block = dim.getBlock({ x, y: y + dy, z });
+        if (block && !block.isAir) block.setType("minecraft:air");
+      }
+      if (cfg.arrivalFloor) {
+        const floor = dim.getBlock({ x, y: y - 1, z });
+        if (floor && floor.typeId !== cfg.arrivalFloor) floor.setType(cfg.arrivalFloor);
       }
     } finally {
       releaseLoadedArea(area);
