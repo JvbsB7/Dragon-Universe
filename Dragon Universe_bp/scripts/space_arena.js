@@ -20,7 +20,7 @@ const distXZ = (x, z, p) => Math.hypot(Math.max(p.x - x, 0, x - (p.x + p.sx)), M
 
 /**
  * label, dimId, item, events { go, back, rebuild? }, spawn, rotation?, fogTag, originProp, stateProp, fallY,
- * pieces [{ id, x, y, z, sx, sy, sz }], arrivalRadius, loadRadius, protectBlocks?, removeMobs?
+ * pieces [{ id, x, y, z, sx, sy, sz }], arrivalRadius, loadRadius, arrivalClear? { types, radius, height }, protectBlocks?, removeMobs?
  */
 export function createSpaceArena(cfg) {
   const FOG_PUSH = "fog @s push dbe:fog_space " + cfg.fogTag;
@@ -30,6 +30,7 @@ export function createSpaceArena(cfg) {
   const lastUse = new Map();
   const lastFall = new Map();
   const retry = new Map(); // piece index -> { fails, at }
+  const keyGiven = new Set();
   let placed = null;
   let placing = false;
 
@@ -75,6 +76,26 @@ export function createSpaceArena(cfg) {
     }
   }
 
+  /** Removes cfg.arrivalClear.types from the space the player arrives in, whatever the game thinks of those blocks. */
+  async function clearArrival(dim) {
+    if (!cfg.arrivalClear) return;
+    const { types, radius, height } = cfg.arrivalClear;
+    const x = Math.floor(cfg.spawn.x), y = Math.floor(cfg.spawn.y), z = Math.floor(cfg.spawn.z);
+    const area = await acquireLoadedArea(dim, { x: x - radius, y, z: z - radius }, { x: x + radius, y, z: z + radius }, cfg.label + " arrival");
+    try {
+      for (let dx = -radius; dx <= radius; dx++) {
+        for (let dz = -radius; dz <= radius; dz++) {
+          for (let dy = 0; dy < height; dy++) {
+            const block = dim.getBlock({ x: x + dx, y: y + dy, z: z + dz });
+            if (block && types.includes(block.typeId)) block.setType("minecraft:air");
+          }
+        }
+      }
+    } finally {
+      releaseLoadedArea(area);
+    }
+  }
+
   function rememberOrigin(player) {
     if (player.dimension.id === cfg.dimId) return;
     if (isSpaceDimension(player.dimension.id) || player.dimension.id === "dbe:namek" || player.dimension.id === "dbe:kai") {
@@ -98,6 +119,7 @@ export function createSpaceArena(cfg) {
       rememberOrigin(player);
       player.sendMessage("§dTravelling to " + cfg.label + "... one moment.");
       await ensureArrival(dim);
+      await clearArrival(dim);
       phase = "teleport";
       await safeTeleport(player, cfg.spawn, { origin, requireGround: true, dimension: dim, rotation: cfg.rotation ?? { x: 0, y: 0 }, maxDrift: Infinity, label: cfg.label });
     } catch (e) {
@@ -152,13 +174,29 @@ export function createSpaceArena(cfg) {
     }
   }
 
+  /** The item is the way out: whoever is inside without one gets one, once per visit. */
+  function giveKeyIfMissing(player) {
+    if (keyGiven.has(player.id)) return;
+    try {
+      const container = player.getComponent("minecraft:inventory")?.container;
+      if (!container) return;
+      for (let slot = 0; slot < container.size; slot++) if (container.getItem(slot)?.typeId === cfg.item) return;
+      container.addItem(new mc.ItemStack(cfg.item, 1));
+      keyGiven.add(player.id);
+    } catch (e) {
+      console.warn("[" + cfg.label + "] could not give the way out: " + e);
+    }
+  }
+
   function scanPlayers() {
     for (const p of world.getPlayers()) {
       const now = p.dimension.id === cfg.dimId;
       if (now !== (inside.get(p.id) || false)) {
         inside.set(p.id, now);
+        if (!now) keyGiven.delete(p.id);
         try { p.runCommand(now ? FOG_PUSH : FOG_POP); } catch (e) { /* ignore */ }
       }
+      if (now && !travelling.has(p.id)) giveKeyIfMissing(p);
       if (now && p.location.y < cfg.fallY && !travelling.has(p.id) && system.currentTick - (lastFall.get(p.id) ?? -1000) > 40) {
         lastFall.set(p.id, system.currentTick);
         try {

@@ -87,6 +87,8 @@ createSpaceArena({
   fallY: -68,
   pieces: PIECES,
   arrivalRadius: 40,
+  // The arrival stands inside invisible light blocks; the safety check must not depend on how the game classifies them.
+  arrivalClear: { types: ["minecraft:light_block_15"], radius: 1, height: 2 },
   loadRadius: 96,
   protectBlocks: true,
   removeMobs: true,
