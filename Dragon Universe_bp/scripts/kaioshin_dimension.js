@@ -399,6 +399,18 @@ function* terrainJob(dim, cx, cz, fresh = false) {
 }
 
 const terrainOwnership = (cx, cz) => "dbe:kai_terrain_v2:" + cx + "," + cz;
+// Diagnostic only: names what made a chunk legacy (water from a river, sky glass, a build...).
+function firstBlockFound(dim, cx, cz) {
+  try {
+    for (let y = MIN_Y; y <= 319; y += 128) {
+      const point = findUnexpectedBlock(dim, { x: cx * 16, y, z: cz * 16 }, { x: cx * 16 + 15, y: Math.min(y + 127, 319), z: cz * 16 + 15 }, [AIR]);
+      if (point) return dim.getBlock(point)?.typeId + " at " + point.x + "," + point.y + "," + point.z;
+    }
+  } catch (e) {
+    return "block lookup failed: " + e;
+  }
+  return "no block on recheck";
+}
 function* ownedTerrainJob(dim, cx, cz) {
   const state = world.getDynamicProperty(terrainOwnership(cx, cz));
   if (["legacy", "complete", "protected"].includes(state)) return;
@@ -406,7 +418,7 @@ function* ownedTerrainJob(dim, cx, cz) {
     world.setDynamicProperty(terrainOwnership(cx, cz), "inspecting");
     if (!(yield* emptyChunk(dim, cx, cz, MIN_Y, 319))) {
       if (world.getDynamicProperty(terrainOwnership(cx, cz)) !== "protected") world.setDynamicProperty(terrainOwnership(cx, cz), "legacy");
-      console.warn("[Kaioshin] Unowned nonempty chunk " + cx + "," + cz + " preserved; use a reviewed dbe:kaioshin_repair preview on a world copy");
+      console.warn("[Kaioshin] Unowned nonempty chunk " + cx + "," + cz + " marked legacy: no terrain will be generated there (found " + firstBlockFound(dim, cx, cz) + "); blocks preserved; use a reviewed dbe:kaioshin_repair preview on a world copy");
       return;
     }
     if (world.getDynamicProperty(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin ownership inspection interrupted by a player edit");
