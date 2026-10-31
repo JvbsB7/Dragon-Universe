@@ -21,6 +21,7 @@ import { acquireLoadedArea, releaseLoadedArea, safeTeleport, travelOrigin, safeR
  */
 import * as mc from "@minecraft/server";
 import { isSpaceDimension } from "./space_planets.js";
+import "./bills_planet.js";
 
 const { world, system, BlockVolume, BlockPermutation } = mc;
 

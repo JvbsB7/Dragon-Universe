@@ -1986,6 +1986,7 @@ async function openMenu(player) {
 const BP_DIMENSIONS = [
   ["dbe:vegeta", "Vegeta"], ["dbe:frieza_planet", "Frieza"], ["dbe:yardrat", "Yardrat"], ["dbe:kai", "Kaioshin"],
   ["dbe:universe_6_arena", "Universe 6 arena"], ["dbe:hell", "Hell"], ["dbe:space", "Space"], ["dbe:namek", "Namek"],
+  ["dbe:bills_planet", "Bills planet"],
 ];
 function auditBpDimensions() {
   const loaded = [];
