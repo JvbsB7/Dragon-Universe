@@ -16379,6 +16379,13 @@ var k8 = new k6(),
       this.initiator.removeTag("dbe_alignment_question"), cj.displayForm(this.initiator, "quest_list");
     }
   };
+// sorteia um valor em [0, sG) fora de sH (randomExclude dos dados da raça); sem sobra, ignora a exclusão
+function kpPick(sG, sH) {
+  let sI = Array.isArray(sH) ? sH : [],
+    sK = [];
+  for (let sL = 0; sL < sG; sL++) sI.includes(sL) || sK.push(sL);
+  return sK.length ? sK[Math.floor(Math.random() * sK.length)] : Math.floor(Math.random() * sG);
+}
 function kp(sG) {
   let { playerCustomization: sH } = sG,
     sI = fR.getAvailableRaces(sG),
@@ -16390,12 +16397,13 @@ function kp(sG) {
   if (sN) {
     let sO = Object.entries(sN);
     for (let [sP, sQ] of sO) {
+      // randomExclude: opções que o sorteio não usa, mas que continuam escolhíveis na criação e na barbearia
       if (sQ.type === "variant") {
-        let sR = Math.floor(Math.random() * sQ.optionCount);
+        let sR = kpPick(sQ.optionCount, sQ.randomExclude);
         sH.setOptionValue(sP, sR);
       }
       if (sQ.type === "color") {
-        let sS = Math.floor(Math.random() * sQ.palette.length);
+        let sS = kpPick(sQ.palette.length, sQ.randomExclude);
         sH.setOptionValue(sP, sS);
       }
     }
