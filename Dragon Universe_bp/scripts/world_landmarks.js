@@ -34,6 +34,7 @@ const MAX_REJECTS = 12; // spots drawn again before a landmark gives up
 const SAMPLE_STEP = 8; // blocks between surface samples
 const MAX_WET = 0.1; // share of samples that may be liquid
 const FOUNDATION_DEPTH = 48;
+const CITY_GAP = 80;
 
 const LAND = ["minecraft:plains", "minecraft:sunflower_plains", "minecraft:forest", "minecraft:birch_forest", "minecraft:savanna", "minecraft:taiga", "dbe:dirtstone_plains", "dbe:west_forest"];
 
@@ -71,6 +72,7 @@ const SPECS = [
   { key: "red_ribbon_tower", dim: "overworld", size: { x: 33, y: 65, z: 32 }, pieces: single("dbe:landmarks/red_ribbon_tower", { x: 33, z: 32 }), biomes: LAND, maxRange: 8, foundation: "minecraft:dirt" },
   { key: "frieza_army_base", dim: "frieza", size: { x: 59, y: 46, z: 59 }, pieces: single("dbe:landmarks/frieza_army_base", { x: 59, z: 59 }), maxRange: 7, foundation: "dbe:frieza_rock" },
   { key: "guru_house", dim: "namek", size: { x: 91, y: 105, z: 91 }, pieces: grid("dbe:landmarks/guru_house_", [64, 27], [64, 27]), maxRange: 12, foundation: "dbe:namek_stone" },
+  { key: "capsule_corp", dim: "overworld", size: { x: 141, y: 42, z: 154 }, pieces: grid("dbe:landmarks/capsule_corp_", [64, 64, 13], [64, 64, 26]), draw: drawBesideCity, maxRange: 10, foundation: "minecraft:dirt" },
 ];
 
 const ENV = { frieza: friezaLandmarkEnv, namek: namekLandmarkEnv };
@@ -201,6 +203,27 @@ function surfaceLevel(spec, heights) {
   return y + spec.size.y > 319 ? undefined : y;
 }
 
+/**
+ * Next to a West City of world_structures.js. The city is one piece of 72 x 64 placed around its spot, so CITY_GAP clears it
+ * whether or not it stands yet. Each reject moves to the next side, then to the next city.
+ */
+function drawBesideCity(spec, plan, rejects) {
+  const spots = structureSpots();
+  const keys = ["west_city_1", "west_city_2", "west_city_3"];
+  if (!keys.every((k) => spots[k])) return undefined;
+  const cities = keys.map((k) => spots[k]).filter((c) => !c.none && !c.fallback);
+  if (!cities.length) return undefined;
+  const city = cities[Math.floor(rejects / 4) % cities.length];
+  const { x, z } = city;
+  const { x: w, z: d } = spec.size;
+  return [
+    { x: x + CITY_GAP, z: z - (d >> 1) },
+    { x: x - CITY_GAP - w, z: z - (d >> 1) },
+    { x: x - (w >> 1), z: z + CITY_GAP },
+    { x: x - (w >> 1), z: z - CITY_GAP - d },
+  ][rejects % 4];
+}
+
 const pieceFrom = (spot, piece, y) => ({ x: spot.x + piece.dx, y, z: spot.z + piece.dz });
 const pieceTo = (spot, piece, y, height) => ({ x: spot.x + piece.dx + piece.x - 1, y: y + height - 1, z: spot.z + piece.dz + piece.z - 1 });
 
@@ -296,6 +319,7 @@ function* foundationJob(dim, spec, spot, piece, y) {
 }
 
 let busy = false;
+let drawTurn = 0;
 
 async function placeLandmark(dim, spec, spot, plan) {
   busy = true;
@@ -349,14 +373,16 @@ function scan() {
   const plan = loadPlan();
 
   // one spot per scan, so the biome searches never pile up in a single tick
-  const next = SPECS.find((s) => enabled(s) && !plan.spots[s.key] && (!s.dim || s.dim === "overworld" || ENV[s.dim]));
-  if (next) {
+  const missing = SPECS.filter((s) => enabled(s) && !plan.spots[s.key]);
+  if (missing.length) {
+    // a landmark still without a spot (no usable draw yet, or its city not planned) does not hold back the others
+    const next = missing[drawTurn++ % missing.length];
     const drawn = draw(next, plan, dimensionOf(next), 0);
     if (drawn) {
       plan.spots[next.key] = drawn;
       savePlan(plan);
+      return;
     }
-    return;
   }
 
   for (const spec of SPECS) {
