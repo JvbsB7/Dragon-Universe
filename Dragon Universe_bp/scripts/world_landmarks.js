@@ -42,7 +42,7 @@ const LAND = ["minecraft:plains", "minecraft:sunflower_plains", "minecraft:fores
 // Not part of any natural surface here. Found inside a footprint, they mean a player build or an existing structure.
 const PLACED_BLOCKS = ["chest", "trapped_chest", "barrel", "ender_chest", "crafting_table", "furnace", "blast_furnace", "smoker", "bed", "torch",
   "lantern", "glass", "glass_pane", "oak_planks", "spruce_planks", "birch_planks", "jungle_planks", "acacia_planks", "dark_oak_planks", "mangrove_planks",
-  "cherry_planks", "stone_bricks", "cobblestone", "bricks", "brick_block", "wooden_door", "iron_door", "spruce_door", "birch_door", "oak_fence", "spruce_fence",
+  "cherry_planks", "stone_bricks", "cobblestone", "brick_block", "wooden_door", "iron_door", "spruce_door", "birch_door", "oak_fence", "spruce_fence",
   "white_wool", "white_concrete", "quartz_block", "smooth_quartz", "bookshelf", "lectern", "anvil", "enchanting_table", "hopper", "dispenser", "dropper", "lever",
   "redstone_wire", "rail", "ladder", "standing_sign", "wall_sign", "flower_pot", "composter", "bell", "purple_concrete", "polished_blackstone_bricks"]
   .map((id) => "minecraft:" + id);
