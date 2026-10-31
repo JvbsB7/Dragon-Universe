@@ -220,6 +220,9 @@
          "path" : "contents.json"
       },
       {
+         "path" : "dimensions/bills_planet.json"
+      },
+      {
          "path" : "dimensions/frieza_planet.json"
       },
       {
@@ -233,6 +236,9 @@
       },
       {
          "path" : "dimensions/space.json"
+      },
+      {
+         "path" : "dimensions/tournament_of_power.json"
       },
       {
          "path" : "dimensions/universe_6_arena.json"
@@ -736,6 +742,9 @@
          "path" : "items/armors/vegeta_super_battle_leggings.json"
       },
       {
+         "path" : "items/bills_invitation.json"
+      },
+      {
          "path" : "items/black_flying_nimbus.json"
       },
       {
@@ -1181,6 +1190,9 @@
       },
       {
          "path" : "items/potara_earrings.json"
+      },
+      {
+         "path" : "items/power_tournament_invitation.json"
       },
       {
          "path" : "items/props/time_machine.json"
@@ -1723,6 +1735,9 @@
          "path" : "recipes/items/armors/vegeta_battle_leggings.json"
       },
       {
+         "path" : "recipes/items/bills_invitation.json"
+      },
+      {
          "path" : "recipes/items/bucket_medical_liquid.json"
       },
       {
@@ -1789,6 +1804,9 @@
          "path" : "recipes/items/potara_earrings.json"
       },
       {
+         "path" : "recipes/items/power_tournament_invitation.json"
+      },
+      {
          "path" : "recipes/items/ramen.json"
       },
       {
@@ -1808,6 +1826,9 @@
       },
       {
          "path" : "recipes/items/z_sword.json"
+      },
+      {
+         "path" : "scripts/bills_planet.js"
       },
       {
          "path" : "scripts/config/config.js"
@@ -1888,6 +1909,9 @@
          "path" : "scripts/planet_villages.js"
       },
       {
+         "path" : "scripts/space_arena.js"
+      },
+      {
          "path" : "scripts/space_planets.js"
       },
       {
@@ -1897,10 +1921,16 @@
          "path" : "scripts/terrain_repair.js"
       },
       {
+         "path" : "scripts/tournament_of_power.js"
+      },
+      {
          "path" : "scripts/travel_safety.js"
       },
       {
          "path" : "scripts/universe_6_dimension.js"
+      },
+      {
+         "path" : "scripts/world_landmarks.js"
       },
       {
          "path" : "scripts/world_spawn_policy.js"
@@ -1993,6 +2023,21 @@
          "path" : "structures/dbe/babidi_spaceship_3.mcstructure"
       },
       {
+         "path" : "structures/dbe/bills_planet/bills_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/bills_planet/bills_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/bills_planet/bills_3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/bills_planet/bills_4.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/bills_planet/bills_5.mcstructure"
+      },
+      {
          "path" : "structures/dbe/cell_arena.mcstructure"
       },
       {
@@ -2062,6 +2107,69 @@
          "path" : "structures/dbe/hyperbolic_time_chamber.mcstructure"
       },
       {
+         "path" : "structures/dbe/landmarks/capsule_corp_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/capsule_corp_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/capsule_corp_3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/capsule_corp_4.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/capsule_corp_5.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/capsule_corp_6.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/capsule_corp_7.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/capsule_corp_8.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/capsule_corp_9.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/frieza_army_base.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/guru_house_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/guru_house_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/guru_house_3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/guru_house_4.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/martial_arts_tournament_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/martial_arts_tournament_2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/martial_arts_tournament_3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/martial_arts_tournament_4.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/piccolo_house.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/red_ribbon_tower.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/landmarks/yamcha_house.mcstructure"
+      },
+      {
          "path" : "structures/dbe/lookout.mcstructure"
       },
       {
@@ -2087,6 +2195,195 @@
       },
       {
          "path" : "structures/dbe/namek_village/village_centers/meeting_point_1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y0_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y0_z1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y0_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y0_zn2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y1_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y1_z1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y1_z2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y1_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y1_zn2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y1_zn3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y2_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y2_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y3_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_y3_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_yn1_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x0_yn1_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x1_y0_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x1_y0_z1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x1_y0_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x1_y0_zn2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x1_y1_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x1_y1_z1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x1_y1_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x1_y1_zn2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x2_y1_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x2_y1_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x2_y2_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x2_y2_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x2_yn1_z2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x3_y1_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x3_y1_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x3_y2_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_x3_y2_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y0_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y0_z1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y0_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y0_zn2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y1_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y1_z1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y1_z2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y1_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y1_zn2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y1_zn3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y2_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y2_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y3_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_y3_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_yn1_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn1_yn1_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y0_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y0_z1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y0_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y0_zn2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y1_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y1_z1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y1_z2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y1_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y1_zn2.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn2_y1_zn3.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn3_y1_z0.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn3_y1_z1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn3_y1_zn1.mcstructure"
+      },
+      {
+         "path" : "structures/dbe/tournament_of_power/tp_xn3_y1_zn2.mcstructure"
       },
       {
          "path" : "structures/dbe/west_city.mcstructure"
