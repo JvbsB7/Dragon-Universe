@@ -19834,13 +19834,32 @@ bM.on("entity_enter_region", ({ entity: sG, region: sH }) => {
       rF());
   }),
   bM.on("region_load", async ({ region: sG }) => {
-    sG.id === "world_martial_arts_tournament" &&
-      rq.addToQueue("world_martial_arts_tournament", {
-        dimension: sG.dimension,
-        location: new bP(-28, -64, -12),
-        structureId: "Torneio_de_artes_marciais_mundial",
-      });
+    if (sG.id !== "world_martial_arts_tournament" || sG.dimension.id !== "dbe:world_martial_arts_tournament") return;
+    try {
+      // Worlds that already have the old build keep it; the others get the new tournament from world_landmarks.js.
+      await rq.ready;
+      if (resolveMartialArtsMode(rq.hasLoaded("world_martial_arts_tournament")) === "legacy")
+        rq.addToQueue("world_martial_arts_tournament", {
+          dimension: sG.dimension,
+          location: new bP(-28, -64, -12),
+          structureId: "Torneio_de_artes_marciais_mundial",
+        });
+    } catch (error) {
+      console.warn("[Structures] tournament mode: " + String(error));
+    }
   });
+import { resolveMartialArtsMode, onMartialArtsSite } from "./world_landmarks.js";
+// A failure here must not stop the landmark scan that starts right after this call in world_landmarks.js.
+onMartialArtsSite((regions) => {
+  for (const region of regions) {
+    try {
+      eO(rj.getDimension(region.dimensionId)).setRegionAsync(region)
+        .catch((error) => console.warn("[Structures] tournament region " + region.id + ": " + String(error)));
+    } catch (error) {
+      console.warn("[Structures] tournament region " + region.id + ": " + String(error));
+    }
+  }
+});
 function rG() {
   for (let sG of qR) {
     let sH = qT.getDimension(sG.dimensionId);
