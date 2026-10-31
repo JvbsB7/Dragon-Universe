@@ -115,18 +115,31 @@ export function createSpaceArena(cfg) {
       const raw = player.getDynamicProperty(cfg.originProp);
       let saved;
       try { saved = typeof raw === "string" ? JSON.parse(raw) : undefined; } catch {}
-      if (saved && [saved.x, saved.y, saved.z].every(Number.isFinite) && typeof saved.d === "string") {
+      let home = false;
+      if (saved && [saved.x, saved.y, saved.z].every(Number.isFinite) && typeof saved.d === "string" && saved.d !== "minecraft:overworld") {
         destinationId = physicalDestinationId(saved.d);
-        phase = "lookup";
-        const dimension = world.getDimension(destinationId);
-        phase = "teleport";
-        await safeTeleport(player, { x: saved.x, y: saved.y, z: saved.z }, {
-          dimension, requireGround: true,
-          rotation: Number.isFinite(saved.rx) && Number.isFinite(saved.ry) ? { x: saved.rx, y: saved.ry } : undefined,
-          label: cfg.label + " saved return",
-        });
-      } else {
-        try { saved = JSON.parse(player.getDynamicProperty(NAMEK_ORIGIN_PROP)); } catch {}
+        try {
+          phase = "lookup";
+          const dimension = world.getDimension(destinationId);
+          phase = "teleport";
+          await safeTeleport(player, { x: saved.x, y: saved.y, z: saved.z }, {
+            dimension, requireGround: true,
+            rotation: Number.isFinite(saved.rx) && Number.isFinite(saved.ry) ? { x: saved.rx, y: saved.ry } : undefined,
+            label: cfg.label + " saved return",
+          });
+          home = true;
+        } catch (error) {
+          // The player has not moved: the saved spot is unusable, so go to Earth instead of staying stuck here.
+          if (error?.afterTeleport || ["interrupted", "transaction", "teleport"].includes(error?.stage)) throw error;
+          console.warn("[" + cfg.label + "] saved return failed, going to Earth: " + error);
+          destinationId = "minecraft:overworld";
+          saved = undefined;
+        }
+      }
+      if (!home) {
+        if (!saved || saved.d !== "minecraft:overworld") {
+          try { saved = JSON.parse(player.getDynamicProperty(NAMEK_ORIGIN_PROP)); } catch {}
+        }
         phase = "teleport";
         await safeReturnToEarth(player, { savedOrigin: saved, label: cfg.label + " return to Earth" });
       }
