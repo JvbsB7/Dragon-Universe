@@ -416,7 +416,7 @@ function* ownedTerrainJob(dim, cx, cz) {
   if (["legacy", "complete", "protected"].includes(state)) return;
   if (state !== "building") {
     world.setDynamicProperty(terrainOwnership(cx, cz), "inspecting");
-    if (!(yield* emptyChunk(dim, cx, cz, MIN_Y, 319))) {
+    if (!(yield* emptyExceptSky(dim, cx, cz))) {
       if (world.getDynamicProperty(terrainOwnership(cx, cz)) !== "protected") world.setDynamicProperty(terrainOwnership(cx, cz), "legacy");
       console.warn("[Kaioshin] Unowned nonempty chunk " + cx + "," + cz + " marked legacy: no terrain will be generated there (found " + firstBlockFound(dim, cx, cz) + "); blocks preserved; use a reviewed dbe:kaioshin_repair preview on a world copy");
       return;
@@ -696,6 +696,59 @@ function* bubble(dim, cx, cy, cz, r, block) {
       if (++n % 120 === 0) yield;
     }
   }
+}
+
+/** The glass bubble() leaves at this exact position, or undefined. Same geometry as bubble(). */
+function skyBlockAt(x, y, z) {
+  const s = findSpawn();
+  for (const b of BUBBLES) {
+    const dx = Math.abs(x - (s.x + b.dx)), dy = y - b.y, dz = z - (s.z + b.dz);
+    const q = b.r * b.r - dy * dy - dz * dz;
+    if (q < 0) continue;
+    const outer = Math.floor(Math.sqrt(q));
+    if (dx > outer) continue;
+    const Ri = b.r - 1, qi = Ri * Ri - dy * dy - dz * dz;
+    if (qi < 0 || dx >= Math.floor(Math.sqrt(qi)) + 1) return b.glass;
+  }
+  return undefined;
+}
+
+function chunkTouchesSky(cx, cz) {
+  const s = findSpawn(), x1 = cx * 16, z1 = cz * 16;
+  return BUBBLES.some((b) => {
+    const bx = s.x + b.dx, bz = s.z + b.dz;
+    return bx + b.r >= x1 && bx - b.r <= x1 + 15 && bz + b.r >= z1 && bz - b.r <= z1 + 15;
+  });
+}
+
+/** Every non-air block of the chunk, checked in one step: each must be the expected bubble glass at its exact position. */
+function skyOnlyProof(dim, cx, cz) {
+  let count = 0;
+  for (let y = MIN_Y; y <= 319; y += 128) {
+    const from = { x: cx * 16, y, z: cz * 16 }, to = { x: cx * 16 + 15, y: Math.min(y + 127, 319), z: cz * 16 + 15 };
+    for (const point of dim.getBlocks(new BlockVolume(from, to), { excludeTypes: [AIR] }, false).getBlockLocationIterator()) {
+      const type = dim.getBlock(point)?.typeId;
+      if (type === AIR) continue;
+      if (!type || type !== skyBlockAt(point.x, point.y, point.z)) return { ok: false, count, found: (type ?? "unavailable") + " at " + point.x + "," + point.y + "," + point.z };
+      count++;
+    }
+  }
+  return { ok: true, count };
+}
+
+/** Empty chunk proof that tolerates this module's own sky bubbles (written before the ground below them exists). */
+function* emptyExceptSky(dim, cx, cz) {
+  if (!chunkTouchesSky(cx, cz)) return yield* emptyChunk(dim, cx, cz, MIN_Y, 319);
+  if (queriesReportAir(dim, { x: cx * 16, y: 319, z: cz * 16 })) return skyOnlyProof(dim, cx, cz).ok;
+  for (let dx = 0; dx < 16; dx++) {
+    for (let dz = 0; dz < 16; dz++) for (let y = MIN_Y; y <= 319; y++) {
+      const x = cx * 16 + dx, z = cz * 16 + dz, type = dim.getBlock({ x, y, z })?.typeId;
+      if (!type) throw new Error("Kaioshin terrain inspection is unavailable at " + x + "," + y + "," + z);
+      if (type !== AIR && type !== skyBlockAt(x, y, z)) return false;
+    }
+    yield;
+  }
+  return true;
 }
 
 async function withArea(dim, id, x1, z1, x2, z2, y, work) {
