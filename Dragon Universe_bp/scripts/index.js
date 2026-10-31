@@ -15307,6 +15307,7 @@ var jw = class extends jj {
   },
   jA = new Map(),
   jA2 = new Map(), // sessão de desejos ativa: id do dragão -> id do jogador
+  jA3 = new Map(), // cinemática do dragão em curso: id do jogador -> token
   jB = class {
     wishes = [];
     constructor() {
@@ -15346,6 +15347,16 @@ var jw = class extends jj {
       }
       jA2.set(sH.id, sG.id);
       try {
+        // abrir o desejo encerra a cinemática deste jogador e devolve a câmera na hora;
+        // uma falha aqui não pode deixar a trava jA2 presa nem impedir o menu
+        if (jA3.has(sG.id)) {
+          jA3.delete(sG.id);
+          try {
+            sG.camera.clear();
+          } catch (sM) {
+            console.warn("[Dragon Universe] Falha ao devolver a câmera: " + String(sM));
+          }
+        }
         for (; sG.isValid && sH.isValid && this.getWishesMade(sH) < sI.maxWishes; ) {
           // fechar o menu encerra só a sessão: o dragão fica com os desejos restantes
           if ((await this.showWishSelectionMenu(sG, sH)) !== "granted") return;
@@ -15405,7 +15416,12 @@ var jw = class extends jj {
       sI.push(sH.name), sG.data.set("granted_wishes", sI);
     }
     async playAnimation(sG, sH, sI) {
-      let sK = sH.getComponent("minecraft:scale")?.value ?? 1;
+      let sK = sH.getComponent("minecraft:scale")?.value ?? 1,
+        sT = {},
+        sV = sG.id,
+        // false se a cinemática foi encerrada (desejo aberto ou nova invocação) ou se o jogador saiu
+        sU = () => jA3.get(sV) === sT && (sG.isValid || (jA3.delete(sV), !1));
+      jA3.set(sV, sT);
       sG.camera.setCamera("minecraft:free", {
         facingLocation: bO.add(sH.location, { y: 32 * sK }),
         location: bO.add(sH.location, { x: 32 * sK, y: 32 * sK, z: 32 * sK }),
@@ -15414,13 +15430,14 @@ var jw = class extends jj {
         sI.spawnSound && (sG.playMusic(sI.spawnSound, { fade: 1 }), aN.applyCameraShake(sG, 0.5, 5)),
         await j8.waitTicks(40),
         sI.sourceAnimation && sH.playAnimation(sI.sourceAnimation),
-        await j8.waitTicks(200),
-        sG.camera.fade({
-          fadeColor: { red: 1, green: 1, blue: 1 },
-          fadeTime: { fadeInTime: 0.5, fadeOutTime: 0.5, holdTime: 0.5 },
-        }),
-        await j8.waitTicks(15),
-        sG.camera.clear();
+        await j8.waitTicks(200);
+      if (!sU()) return;
+      sG.camera.fade({
+        fadeColor: { red: 1, green: 1, blue: 1 },
+        fadeTime: { fadeInTime: 0.5, fadeOutTime: 0.5, holdTime: 0.5 },
+      });
+      await j8.waitTicks(15);
+      sU() && (jA3.delete(sV), sG.camera.clear());
     }
     restoreNormalTimeOfDay(sG) {
       let sH = jA.get(sG.id);
@@ -19594,8 +19611,9 @@ var rk = {
             await this.loadAsync(id, placement);
             this.queueSet.delete(id);
           } catch (error) {
-            console.warn("[Structures] " + id + ": " + (error.stack ?? error));
-            if (error.stage !== "loading") this.queueSet.delete(id);
+            // Bedrock stacks carry only the frames, so log the message too.
+            console.warn("[Structures] " + id + ": " + String(error) + (error?.stack ? "\n" + error.stack : ""));
+            if (error?.stage !== "loading") this.queueSet.delete(id);
           }
         }
       } finally {
@@ -19616,24 +19634,36 @@ var rk = {
         this.clearedLegacyAreas.add(sG);
       }
       if (this.hasLoaded(sG)) return;
-      if (this.placingStructureIds.includes(sG))
+      // Still marked as placing: the world closed before markLoaded. Only the Snake Way pieces are resumed (a fixed
+      // .mcstructure in the Other World sky places the same blocks again); every other structure keeps its blocks.
+      const resumed = this.placingStructureIds.includes(sG);
+      if (resumed && !sG.startsWith("snake_path_"))
         throw new Error("Structure placement was interrupted: " + sG + "; inspect a world copy before retrying. Existing blocks were preserved");
+      if (resumed) console.warn("[Structures] " + sG + ": placement was interrupted in a previous session; placing it again");
       const { dimension, location, structureId } = sH, size = rk[structureId];
       if (!size || ![location.x, location.y, location.z].every(Number.isInteger))
         throw new Error("Unknown structure bounds or invalid origin: " + structureId);
       const end = { x: location.x + size.x - 1, y: location.y + size.y - 1, z: location.z + size.z - 1 };
       const area = await duAcquireLoadedArea(dimension, location, end, "structure " + sG);
       try {
-        const placing = [...this.placingStructureIds, sG];
-        bG(rj, "structures").set("placing", placing);
-        this.placingStructureIds = placing;
-        if (structureId === "dbe:lookout" && !rj.getDynamicProperty("lookoutLoaded")) {
-          dimension.fillBlocks(new ry(
-            { x: rx.lookoutLocation.x, y: -64, z: rx.lookoutLocation.z },
-            { x: rx.lookoutLocation.x, y: 218, z: rx.lookoutLocation.z }), "minecraft:smooth_quartz");
-          rj.setDynamicProperty("lookoutLoaded", !0);
+        if (!resumed) {
+          const placing = [...this.placingStructureIds, sG];
+          bG(rj, "structures").set("placing", placing);
+          this.placingStructureIds = placing;
         }
-        rj.structureManager.place(structureId, dimension, location);
+        try {
+          if (structureId === "dbe:lookout" && !rj.getDynamicProperty("lookoutLoaded")) {
+            dimension.fillBlocks(new ry(
+              { x: rx.lookoutLocation.x, y: -64, z: rx.lookoutLocation.z },
+              { x: rx.lookoutLocation.x, y: 218, z: rx.lookoutLocation.z }), "minecraft:smooth_quartz");
+            rj.setDynamicProperty("lookoutLoaded", !0);
+          }
+          rj.structureManager.place(structureId, dimension, location);
+        } catch (error) {
+          // An exception ends the attempt: leave placing so the next region load can try again.
+          this.clearPlacing(sG);
+          throw error;
+        }
         await rf.waitTicks(20);
         this.markLoaded(sG);
       } finally {
@@ -19644,8 +19674,11 @@ var rk = {
       const saved = bG(rj, "structures"), loaded = [...this.loadedStructureIds, sG];
       saved.set("loaded", loaded);
       this.loadedStructureIds = loaded;
+      this.clearPlacing(sG);
+    }
+    clearPlacing(sG) {
       const placing = this.placingStructureIds.filter(id => id !== sG);
-      saved.set("placing", placing);
+      bG(rj, "structures").set("placing", placing);
       this.placingStructureIds = placing;
     }
   },
