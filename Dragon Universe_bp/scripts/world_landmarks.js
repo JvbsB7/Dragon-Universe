@@ -16,6 +16,7 @@
 import * as mc from "@minecraft/server";
 import { acquireLoadedArea, releaseLoadedArea } from "./travel_safety.js";
 import { friezaLandmarkEnv } from "./space_planets.js";
+import { namekLandmarkEnv } from "./namek_dimension.js";
 
 const { world, system, BlockVolume } = mc;
 
@@ -47,6 +48,19 @@ const PLACED_BLOCKS = ["chest", "trapped_chest", "barrel", "ender_chest", "craft
 const SOFT = /leaves|_log$|_wood$|vine|short_grass|tall_grass|fern|flower|poppy|dandelion|tulip|orchid|allium|bluet|daisy|cornflower|lily|peony|rose|lilac|snow_layer|mushroom|bush|azalea|sapling|dead_bush|bamboo|sugar_cane|cactus|pumpkin|melon|seagrass|kelp|moss_carpet|web|^minecraft:air$/;
 
 const single = (id, size) => [{ id, dx: 0, dz: 0, ...size }];
+const grid = (prefix, widths, depths) => {
+  const pieces = [];
+  let dx = 0;
+  for (const x of widths) {
+    let dz = 0;
+    for (const z of depths) {
+      pieces.push({ id: prefix + (pieces.length + 1), dx, dz, x, z });
+      dz += z;
+    }
+    dx += x;
+  }
+  return pieces;
+};
 /**
  * dim: "overworld" or a key of ENV. size: x, y, z of the assembled structure. pieces: structure ids with their offset.
  * biomes: overworld biomes to look for. maxRange: allowed height difference across the footprint. foundation: fill block.
@@ -56,9 +70,10 @@ const SPECS = [
   { key: "yamcha_house", dim: "overworld", size: { x: 26, y: 45, z: 25 }, pieces: single("dbe:landmarks/yamcha_house", { x: 26, z: 25 }), biomes: ["minecraft:desert"], maxRange: 8, foundation: "minecraft:sandstone" },
   { key: "red_ribbon_tower", dim: "overworld", size: { x: 33, y: 65, z: 32 }, pieces: single("dbe:landmarks/red_ribbon_tower", { x: 33, z: 32 }), biomes: LAND, maxRange: 8, foundation: "minecraft:dirt" },
   { key: "frieza_army_base", dim: "frieza", size: { x: 59, y: 46, z: 59 }, pieces: single("dbe:landmarks/frieza_army_base", { x: 59, z: 59 }), maxRange: 7, foundation: "dbe:frieza_rock" },
+  { key: "guru_house", dim: "namek", size: { x: 91, y: 105, z: 91 }, pieces: grid("dbe:landmarks/guru_house_", [64, 27], [64, 27]), maxRange: 12, foundation: "dbe:namek_stone" },
 ];
 
-const ENV = { frieza: friezaLandmarkEnv };
+const ENV = { frieza: friezaLandmarkEnv, namek: namekLandmarkEnv };
 
 const enabled = (spec) => !spec.enabled || spec.enabled();
 const waitTicks = (n) => new Promise((resolve) => system.runTimeout(resolve, n));

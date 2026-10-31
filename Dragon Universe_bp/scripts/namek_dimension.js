@@ -487,6 +487,48 @@ function canRetry(key) {
   return t === undefined || system.currentTick >= t;
 }
 
+/** Generates and decorates a chunk rectangle (and terrain one chunk around it) so a landmark can stand on finished ground. */
+async function prepareLandmarkChunks(minCx, minCz, maxCx, maxCz) {
+  const dim = world.getDimension(DIM_ID);
+  const leased = async (cx, cz, radius, work) => {
+    const area = await acquireLoadedArea(dim, { x: (cx - radius) * 16, y: MIN_Y, z: (cz - radius) * 16 }, { x: (cx + radius) * 16 + 15, y: MIN_Y, z: (cz + radius) * 16 + 15 }, "landmark ground");
+    try {
+      await work();
+    } finally {
+      releaseLoadedArea(area);
+    }
+  };
+  for (let cx = minCx - 1; cx <= maxCx + 1; cx++) {
+    for (let cz = minCz - 1; cz <= maxCz + 1; cz++) {
+      await leased(cx, cz, 0, async () => {
+        if (chunkState(dim, cx, cz) === 0) await runExclusive(terrainJob(dim, cx, cz), cx + "," + cz, true);
+      });
+    }
+  }
+  for (let cx = minCx; cx <= maxCx; cx++) {
+    for (let cz = minCz; cz <= maxCz; cz++) {
+      await leased(cx, cz, 1, async () => {
+        if (chunkState(dim, cx, cz) === 1) await runExclusive(decorateJob(dim, cx, cz), "d" + cx + "," + cz, true);
+      });
+    }
+  }
+  return true;
+}
+
+/** Surface queries and ground preparation used by world_landmarks.js on Namek. */
+export const namekLandmarkEnv = {
+  id: DIM_ID,
+  sea: SEA_LEVEL,
+  surface: heightAt,
+  clear(x, z) {
+    const v = villageInChunkCell(chunkOf(x), chunkOf(z));
+    if (v && Math.abs(x - v.x) <= 34 && Math.abs(z - v.z) <= 41) return false;
+    const s = findSpawn();
+    return Math.hypot(x - s.x, z - s.z) >= 40 && !ballSpots().some((b) => Math.abs(x - b.x) <= BALL_CLEAR + 8 && Math.abs(z - b.z) <= BALL_CLEAR + 8);
+  },
+  prepare: prepareLandmarkChunks,
+};
+
 // ---------------------------------------------------------------- per-player scan
 
 const inNamek = new Map(); // player id -> was in Namek at last scan
