@@ -325,7 +325,7 @@ function* terrainJob(dim, cx, cz, fresh = false) {
       if (world.getDynamicProperty?.(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin generation stopped after a player edit; use reviewed terrain repair");
       fillTerrainColumn(dim, x0 + i, z0 + j, MIN_Y + 1, coreTop, STONE, fresh);
     }
-    if (!fresh || i % 4 === 3) yield;
+    yield; // The core is the heaviest fill: one row per step keeps the peak per step of the per-block path.
   }
   yield;
 
@@ -363,7 +363,7 @@ function* terrainJob(dim, cx, cz, fresh = false) {
       }
       tops[i * 16 + j] = h;
     }
-    if (!fresh || i % 4 === 3) yield;
+    if (!fresh || i % 2 === 1) yield;
   }
 
   // Safety net: make sure the terrain really is there before the chunk is marked as done. If it is not
