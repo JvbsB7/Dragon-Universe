@@ -4,9 +4,9 @@
 
 | Item | Valor |
 |---|---|
-| Arquivo | `Dragon-Universe-1.7.13.mcaddon` (20.927.683 bytes, 2765 arquivos) |
-| SHA-256 | `74b3850a0bed8925b5d58a06d3959b4a1668025da9160b0dee7ef32b7adc51ef` |
-| Fonte | commit `8b6b416` (branch `integration/1.7.13`); base 1.7.12 candidata |
+| Arquivo | `Dragon-Universe-1.7.13.mcaddon` (20.968.692 bytes, 2835 arquivos) |
+| SHA-256 | `f0b15f1a225772e45eb2db03a1a18962313654e1d8d472752fb23e0e983dc7d1` |
+| Fonte | commit `95ff64c` (branch `integration/1.7.13`); base 1.7.12 candidata |
 | Alvo | Minecraft Bedrock 26.60, PC (Windows) e Android |
 | Versão dos packs | BP/RP `[1,7,13]`, `min_engine_version` `[1,26,50]`, UUIDs iguais aos da 1.7.11 |
 
@@ -16,7 +16,7 @@ Antes de instalar, confira o hash: `sha256sum Dragon-Universe-1.7.13.mcaddon` no
 ## O que mudou em relação à 1.7.12
 
 - **Viagem a Vegeta, Freeza e Yardrat:** prepara uma área menor, mostra o progresso e avisa se já houver viagem em preparação.
-- **Namek e Inferno:** subir ou descer voando não cancela mais a preparação, e a queda para o Inferno não é cancelada por distância. Voar mais de 32 blocos na horizontal ainda cancela.
+- **Namek e Inferno:** preparam uma área menor, com progresso. Voar não cancela mais nenhuma ida a destino fixo (planetas, Espaço, Kaioshin, Arena, Namek e Inferno). Trocar de dimensão continua cancelando.
 - **Futuro:** chegada mais segura e sem o erro não tratado da cidade em mundo antigo.
 - **Kaioshin:** a geração mantém o chunk carregado durante o trabalho.
 - **Estruturas:** um trecho da Estrada da Serpente preso de sessão anterior é recolocado. As demais estruturas continuam preservadas.
@@ -25,10 +25,12 @@ Antes de instalar, confira o hash: `sha256sum Dragon-Universe-1.7.13.mcaddon` no
 
 ## Limitações conhecidas
 
-- Os cabelos do DragonMineZ têm cor fixa: a opção Cor do Cabelo não vale neles.
-- Formas ausentes no mod usam o cabelo atual. Trunks e Broly nessas formas podem cair em outro cabelo.
+- Cor do Cabelo: vale na base e nas transformações que já aceitam cor; as demais têm cor fixa, como no addon. A intensidade da cor ainda precisa ser conferida.
+- Formas ausentes no mod repetem a forma mais próxima do mesmo personagem (por exemplo, Broly SSJ2 e SSJ3 iguais ao SSJ).
+- A espera da cidade do Futuro e as viagens de volta ainda cancelam ao se afastar mais de 32 blocos, de propósito.
+- Broly LSSJ fica 1 pixel acima da cabeça.
 - Até 106 cubos e 59 ossos por modelo: o FPS ainda não foi medido.
-- A escolha aleatória de personagem também pode sortear os estilos 7 a 9.
+- O botão Aleatório não sorteia os estilos 7 a 9; eles são escolhidos manualmente.
 
 ## Como testar sem arriscar mundos
 
@@ -41,9 +43,9 @@ Antes de instalar, confira o hash: `sha256sum Dragon-Universe-1.7.13.mcaddon` no
 ## O que verificar primeiro
 
 1. O mundo abre e o script carrega. Copie o Content Log **inteiro** e anote o **primeiro erro**.
-2. **Cabelos:** Goku SSJ, Broly base e `du_flare_a`, depois os demais: frente, lado e costas, e o **FPS**, principalmente no Android.
+2. **Cabelos:** Goku SSJ, Broly base e `du_flare_a`, depois os demais: frente, lado e costas, **Cor do Cabelo**, formas repetidas e o **FPS**, principalmente no Android.
 3. **Vegeta, Freeza e Yardrat** pelo Navigator, sem sair do mundo: anote o tempo até a chegada.
-4. **Namek** voando parado, depois voando na horizontal. **Inferno** pela queda do Outro Mundo.
+4. **Namek** voando na horizontal durante a preparação: deve chegar. **Inferno** pela queda do Outro Mundo.
 5. **Futuro** três vezes seguidas e, em cópia de um mundo antigo, sem `Unhandled promise rejection`.
 6. **Kaioshin:** voe rápido em linha reta por cerca de 30 s e volte; não pode haver buracos.
 7. **Dragão:** clique nele nos primeiros 10 s; a câmera volta e o menu abre. São até 3 desejos por invocação, e o dragão some depois.
