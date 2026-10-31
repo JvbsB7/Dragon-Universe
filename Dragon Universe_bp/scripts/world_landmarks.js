@@ -49,6 +49,9 @@ const PLACED_BLOCKS = ["chest", "trapped_chest", "barrel", "ender_chest", "craft
 
 const SOFT = /leaves|_log$|_wood$|vine|short_grass|tall_grass|fern|flower|poppy|dandelion|tulip|orchid|allium|bluet|daisy|cornflower|lily|peony|rose|lilac|snow_layer|mushroom|bush|azalea|sapling|dead_bush|bamboo|sugar_cane|cactus|pumpkin|melon|seagrass|kelp|moss_carpet|web|^minecraft:air$/;
 
+// What a foundation column may replace: plants only. Trunks and wood below the structure may be a player's wall.
+const FOUNDATION_SOFT = /leaves|vine|short_grass|tall_grass|fern|flower(?!_pot)|poppy|dandelion|tulip|orchid|allium|bluet|daisy|cornflower|lily|peony|rose|lilac|snow_layer|bush|sapling|seagrass|kelp|moss_carpet/;
+
 const single = (id, size) => [{ id, dx: 0, dz: 0, ...size }];
 const grid = (prefix, widths, depths) => {
   const pieces = [];
@@ -371,7 +374,7 @@ function* foundationJob(dim, spec, spot, piece, y) {
       if (dim.getBlock({ x, y, z })?.isAir !== false) continue;
       for (let below = y - 1; below >= y - FOUNDATION_DEPTH; below--) {
         const block = dim.getBlock({ x, y: below, z });
-        if (!block || !(block.isAir || block.isLiquid || SOFT.test(block.typeId))) break;
+        if (!block || !(block.isAir || block.isLiquid || FOUNDATION_SOFT.test(block.typeId))) break;
         block.setType(spec.foundation);
       }
     }
@@ -388,11 +391,16 @@ async function placeLandmark(dim, spec, spot, plan) {
     if (spot.y === undefined) {
       const y = await chooseLevel(dim, spec, spot);
       if (y === undefined) {
+        // No new spot right now is not the end: scan keeps drawing, with the count kept in plan.rejects.
         const rejects = (spot.rejects ?? 0) + 1;
         const next = rejects < MAX_REJECTS ? draw(spec, plan, dim, rejects) : undefined;
         for (const k of Object.keys(spot)) delete spot[k];
-        Object.assign(spot, next ?? { none: true }, { rejects });
-        console.warn("[Landmarks] " + spec.key + ": spot rejected (" + rejects + ")" + (next ? "; drew " + next.x + ", " + next.z : "; giving up"));
+        if (next || rejects >= MAX_REJECTS) Object.assign(spot, next ?? { none: true }, { rejects });
+        else {
+          delete plan.spots[spec.key];
+          (plan.rejects ??= {})[spec.key] = rejects;
+        }
+        console.warn("[Landmarks] " + spec.key + ": spot rejected (" + rejects + ")" + (next ? "; drew " + next.x + ", " + next.z : rejects >= MAX_REJECTS ? "; giving up" : "; drawing again"));
         return;
       }
       spot.y = y;
@@ -450,9 +458,10 @@ function scan() {
   if (missing.length) {
     // a landmark still without a spot (no usable draw yet, or its city not planned) does not hold back the others
     const next = missing[drawTurn++ % missing.length];
-    const drawn = draw(next, plan, dimensionOf(next), 0);
+    const rejects = plan.rejects?.[next.key] ?? 0;
+    const drawn = draw(next, plan, dimensionOf(next), rejects);
     if (drawn) {
-      plan.spots[next.key] = drawn;
+      plan.spots[next.key] = rejects ? { ...drawn, rejects } : drawn;
       savePlan(plan);
       return;
     }
