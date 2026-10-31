@@ -670,7 +670,7 @@ async function sendToNamek(player) {
 }
 
 const ORIGIN_PROP = "dbe:namek_origin";
-const OFF_WORLD_IDS = ["dbe:kai", "dbe:universe_6_arena"]; // planets reached through space, never a "home"
+const OFF_WORLD_IDS = ["dbe:kai", "dbe:universe_6_arena", "dbe:bills_planet", "dbe:tournament_of_power"]; // planets reached through space, never a "home"
 
 /** Remembers where (dimension, exact position, facing) the player left for Namek. Saved with the player. */
 function rememberOrigin(player) {

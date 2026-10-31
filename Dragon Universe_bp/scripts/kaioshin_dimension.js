@@ -852,7 +852,7 @@ const SPACE_ORIGIN_PROP = "dbe:namek_origin"; // "where you left Earth from", ke
 
 function rememberOrigin(player) {
   if (player.dimension.id === DIM_ID) return;
-  if (isSpaceDimension(player.dimension.id) || player.dimension.id === "dbe:namek" || player.dimension.id === "dbe:universe_6_arena") {
+  if (isSpaceDimension(player.dimension.id) || player.dimension.id === "dbe:namek" || player.dimension.id === "dbe:universe_6_arena" || player.dimension.id === "dbe:bills_planet" || player.dimension.id === "dbe:tournament_of_power") {
     // arriving from space or another planet: the way home is the space system's saved Earth spot, not a point there
     try {
       player.setDynamicProperty(ORIGIN_PROP, undefined);
