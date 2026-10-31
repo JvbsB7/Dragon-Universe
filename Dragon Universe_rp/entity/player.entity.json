@@ -230,6 +230,10 @@
 				"du_spiky_a_hair": "textures/entity/basic_customizations/hairs/du_spiky_a/du_spiky_a_base",
 				"du_spiky_a_hair_grayscale": "textures/entity/basic_customizations/hairs/du_spiky_a/du_spiky_a_grayscale",
 				"du_spiky_a_ascended_hair": "textures/entity/basic_customizations/hairs/du_spiky_a/du_spiky_a_ascended",
+				// du_flare_a (piloto 1.7.13, modelo original da equipe)
+				"du_flare_a_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_base",
+				"du_flare_a_hair_grayscale": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_grayscale",
+				"du_flare_a_ssj_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj",
 				// namekian
 				"namekian_eyes": "textures/entity/races/namekian/eyes/namekian_base",
 				"namekian_eyes_potential_unleashed": "textures/entity/races/namekian/eyes/namekian_potential_unleashed",
@@ -427,6 +431,8 @@
 				"hair_base": "geometry.hair_base",
 				"du_spiky_a": "geometry.du_spiky_a",
 				"du_spiky_a_ascended": "geometry.du_spiky_a_ascended",
+				"du_flare_a": "geometry.du_flare_a",
+				"du_flare_a_ssj": "geometry.du_flare_a_ssj",
 				"halo": "geometry.halo",
 				"ki_manipulation": "geometry.ki_manipulation",
 				"ki_manipulation_outline": "geometry.ki_manipulation_outline",
