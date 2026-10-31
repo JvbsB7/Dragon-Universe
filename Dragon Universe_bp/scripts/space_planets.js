@@ -1452,6 +1452,41 @@ function terrainFor(W, dim, cx, cz) {
   return W.kind === "space" ? spaceJob(dim, cx, cz) : terrainJob(W, dim, cx, cz);
 }
 
+/**
+ * Generates and decorates a chunk rectangle (and terrain one chunk around it) so a landmark can stand on finished ground.
+ * False when a chunk here is legacy or protected: that ground is not ours to write on.
+ */
+async function prepareLandmarkChunks(P, minCx, minCz, maxCx, maxCz) {
+  const state = (cx, cz) => world.getDynamicProperty(planetOwnership(P, cx, cz));
+  for (let cx = minCx - 1; cx <= maxCx + 1; cx++) {
+    for (let cz = minCz - 1; cz <= maxCz + 1; cz++) {
+      if (!["complete", "legacy", "protected"].includes(state(cx, cz))) await runExclusive(loaded => terrainJob(P, loaded, cx, cz), P, cx, cz, "terrain", true);
+      if (state(cx, cz) !== "complete") return false;
+    }
+  }
+  const dim = world.getDimension(P.id);
+  for (let cx = minCx; cx <= maxCx; cx++) {
+    for (let cz = minCz; cz <= maxCz; cz++) {
+      const area = await acquireLoadedArea(dim, { x: cx * 16, y: MIN_Y, z: cz * 16 }, { x: cx * 16 + 15, y: MIN_Y, z: cz * 16 + 15 }, "landmark ground");
+      try {
+        if (chunkState(dim, cx, cz) === 1) await runExclusive(loaded => decorateJob(P, loaded, cx, cz), P, cx, cz, "decoration", true);
+      } finally {
+        releaseLoadedArea(area);
+      }
+    }
+  }
+  return true;
+}
+
+/** Surface queries and ground preparation used by world_landmarks.js on the Frieza planet. */
+export const friezaLandmarkEnv = {
+  id: PLANETS.frieza.id,
+  sea: PLANETS.frieza.liquidLevel,
+  surface: (x, z) => heightAt(PLANETS.frieza, x, z),
+  clear: (x, z) => !nearSpawn(PLANETS.frieza, x, z, 40) && !villages.near(PLANETS.frieza, x, z, 24),
+  prepare: (minCx, minCz, maxCx, maxCz) => prepareLandmarkChunks(PLANETS.frieza, minCx, minCz, maxCx, maxCz),
+};
+
 
 // ---------------------------------------------------------------- pods
 

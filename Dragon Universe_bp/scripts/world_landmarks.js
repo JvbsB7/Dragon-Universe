@@ -15,6 +15,7 @@
  */
 import * as mc from "@minecraft/server";
 import { acquireLoadedArea, releaseLoadedArea } from "./travel_safety.js";
+import { friezaLandmarkEnv } from "./space_planets.js";
 
 const { world, system, BlockVolume } = mc;
 
@@ -54,9 +55,10 @@ const SPECS = [
   { key: "piccolo_house", dim: "overworld", size: { x: 42, y: 27, z: 23 }, pieces: single("dbe:landmarks/piccolo_house", { x: 42, z: 23 }), biomes: LAND, maxRange: 8, foundation: "minecraft:dirt" },
   { key: "yamcha_house", dim: "overworld", size: { x: 26, y: 45, z: 25 }, pieces: single("dbe:landmarks/yamcha_house", { x: 26, z: 25 }), biomes: ["minecraft:desert"], maxRange: 8, foundation: "minecraft:sandstone" },
   { key: "red_ribbon_tower", dim: "overworld", size: { x: 33, y: 65, z: 32 }, pieces: single("dbe:landmarks/red_ribbon_tower", { x: 33, z: 32 }), biomes: LAND, maxRange: 8, foundation: "minecraft:dirt" },
+  { key: "frieza_army_base", dim: "frieza", size: { x: 59, y: 46, z: 59 }, pieces: single("dbe:landmarks/frieza_army_base", { x: 59, z: 59 }), maxRange: 7, foundation: "dbe:frieza_rock" },
 ];
 
-const ENV = {};
+const ENV = { frieza: friezaLandmarkEnv };
 
 const enabled = (spec) => !spec.enabled || spec.enabled();
 const waitTicks = (n) => new Promise((resolve) => system.runTimeout(resolve, n));
