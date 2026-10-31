@@ -1808,7 +1808,9 @@ async function travelTo(player, key, opts = {}) {
       if (["inspecting", "building"].includes(state) || progress !== undefined || ["building", "ready", "converting"].includes(buffer)) throw new Error(W.key + " arrival terrain remains incomplete; the player was kept at the origin. Review generation diagnostics before retrying");
     }
     phase = "teleport";
-    await safeTeleport(player, target, { origin, requireGround: true, dimension: dim });
+    // Fixed arrival point, prepared independently of the player: moving or flying meanwhile does not cancel the trip;
+    // only leaving the origin dimension does. The return point was saved before the preparation.
+    await safeTeleport(player, target, { origin, requireGround: true, dimension: dim, maxDrift: Infinity });
     if (pod) {
       try {
         pod.remove();
