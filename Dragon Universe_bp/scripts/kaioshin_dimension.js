@@ -524,7 +524,9 @@ function runJobAsync(gen) {
   return runTerrainJob(gen, { label: "Kaioshin preparation" });
 }
 
-async function runExclusive(gen, key, strict = false) {
+// chunk: { dim, cx, cz } keeps that chunk loaded for the whole job (scan jobs have no travel area around them;
+// a player flying away unloaded the chunk mid-job and the job failed with "unavailable" blocks).
+async function runExclusive(gen, key, strict = false, chunk) {
   if (repairing) {
     if (strict) throw new Error("Kaioshin terrain repair is active; retry after it finishes");
     return;
@@ -542,7 +544,12 @@ async function runExclusive(gen, key, strict = false) {
     return;
   }
   busy = true;
+  let area;
   try {
+    if (chunk) {
+      const x = chunk.cx * 16, z = chunk.cz * 16;
+      area = await acquireLoadedArea(chunk.dim, { x, y: MIN_Y, z }, { x: x + 15, y: MIN_Y, z: z + 15 }, "Kaioshin chunk " + key);
+    }
     await runJobAsync(gen);
     retryAt.delete(key);
   } catch (e) {
@@ -550,6 +557,7 @@ async function runExclusive(gen, key, strict = false) {
     console.warn("[Kaioshin] chunk " + key + " failed: " + e);
     if (strict) throw e;
   } finally {
+    if (area) releaseLoadedArea(area);
     busy = false;
     // keep generating straight away so fast travellers do not outrun the terrain
     system.run(() => {
@@ -618,7 +626,7 @@ function scan() {
       if (!canRetry(k)) continue;
       if (["legacy", "protected"].includes(world.getDynamicProperty(terrainOwnership(cx, cz)))) continue;
       if (chunkState(dim, cx, cz) === 0) {
-        runExclusive(ownedTerrainJob(dim, cx, cz), k);
+        runExclusive(ownedTerrainJob(dim, cx, cz), k, false, { dim, cx, cz });
         return;
       }
     }
@@ -630,7 +638,7 @@ function scan() {
       if (chunkState(dim, cx, cz) !== 1) continue;
       if (world.getDynamicProperty(terrainOwnership(cx, cz)) !== "complete") continue;
       if (NEIGHBOURS.every(([nx, nz]) => chunkState(dim, cx + nx, cz + nz) >= 1)) {
-        runExclusive(decorateJob(dim, cx, cz), "d" + k);
+        runExclusive(decorateJob(dim, cx, cz), "d" + k, false, { dim, cx, cz });
         return;
       }
     }

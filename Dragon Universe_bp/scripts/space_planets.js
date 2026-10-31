@@ -1640,23 +1640,36 @@ function removeArea(id) {
   releaseLoadedArea(id);
 }
 
-async function prepareArea(W, dim, cx, cz) {
-  const rad = W.kind === "space" ? W.prep : W.radius;
+// Planet arrival only needs the 3x3 around the landing chunk; the scan generates radius 3 and decorates radius 2
+// after arrival. Preparing 7x7 + 5x5 up front kept the player waiting for minutes with no feedback.
+const PLANET_ARRIVAL_RADIUS = 1;
+const PROGRESS_TICKS = 100;
+
+async function prepareArea(W, dim, cx, cz, player) {
+  const rad = W.kind === "space" ? W.prep : PLANET_ARRIVAL_RADIUS;
   const id = await acquireLoadedArea(dim,
     { x: (cx - rad) * 16, y: MIN_Y, z: (cz - rad) * 16 },
     { x: (cx + rad + 1) * 16 - 1, y: MIN_Y, z: (cz + rad + 1) * 16 - 1 },
     "space_planets.js: destination preparation");
   try {
-    for (const [dx, dz] of offsets(rad)) {
+    const chunks = offsets(rad);
+    let done = 0, noticeAt = system.currentTick + PROGRESS_TICKS;
+    const progress = () => {
+      done++;
+      if (!player || system.currentTick < noticeAt) return;
+      noticeAt = system.currentTick + PROGRESS_TICKS;
+      try { player.sendMessage(tr("dbe.space.progress", { text: String(done) }, { text: String(chunks.length) })); } catch (e) { /* player left */ }
+    };
+    for (const [dx, dz] of chunks) {
       const nx = cx + dx, nz = cz + dz;
       const state = W.kind === "planet" ? world.getDynamicProperty(planetOwnership(W, nx, nz)) : undefined;
       if (W.kind === "planet" ? !["complete", "legacy", "protected"].includes(state) : chunkState(dim, nx, nz) === 0) await runExclusive(loaded => terrainFor(W, loaded, nx, nz), W, nx, nz, "terrain", true);
+      progress();
     }
-    if (W.kind === "planet") {
-      for (const [dx, dz] of offsets(W.decorRadius)) {
-        const nx = cx + dx, nz = cz + dz;
-        if (world.getDynamicProperty(planetOwnership(W, nx, nz)) === "complete" && chunkState(dim, nx, nz) === 1) await runExclusive(loaded => decorateJob(W, loaded, nx, nz), W, nx, nz, "decoration", true);
-      }
+    // Only the landing chunk is decorated before arrival (it holds the landing pad); its neighbours are generated above.
+    if (W.kind === "planet" && world.getDynamicProperty(planetOwnership(W, cx, cz)) === "complete" && chunkState(dim, cx, cz) === 1 &&
+        NEIGHBOURS.every(([nx, nz]) => chunkState(dim, cx + nx, cz + nz) >= 1)) {
+      await runExclusive(loaded => decorateJob(W, loaded, cx, cz), W, cx, cz, "decoration", true);
     }
   } catch (e) {
     releaseLoadedArea(id);
@@ -1789,7 +1802,7 @@ async function travelTo(player, key, opts = {}) {
       const s = findSpawn(W);
       target = { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 };
     }
-    areaId = await prepareArea(W, dim, chunkOf(target.x), chunkOf(target.z));
+    areaId = await prepareArea(W, dim, chunkOf(target.x), chunkOf(target.z), player);
     if (W.kind === "planet") {
       const { state, buffer, progress } = planetProvenance(W, chunkOf(target.x), chunkOf(target.z));
       if (["inspecting", "building"].includes(state) || progress !== undefined || ["building", "ready", "converting"].includes(buffer)) throw new Error(W.key + " arrival terrain remains incomplete; the player was kept at the origin. Review generation diagnostics before retrying");
@@ -1838,6 +1851,11 @@ const menuOpen = new Set();
 
 async function openMenu(player) {
   if (menuOpen.has(player.id)) return;
+  if (travelling.has(player.id) || isTravelPending(player)) {
+    // A destination is still being prepared: say so instead of ignoring the Navigator silently.
+    try { player.sendMessage(tr("dbe.space.travel_busy")); } catch (e) { /* player left */ }
+    return;
+  }
   menuOpen.add(player.id);
   try {
     const here = player.dimension.id;
@@ -1857,7 +1875,11 @@ async function openMenu(player) {
       await waitTicks(10);
     }
     if (!res || res.canceled) return;
-    await travelTo(player, dests[res.selection]);
+    // travelTo marks the player as travelling synchronously; the menu itself is released before the
+    // (possibly long) preparation so the Navigator never stays locked until the world is reloaded.
+    const travel = travelTo(player, dests[res.selection]);
+    menuOpen.delete(player.id);
+    await travel;
   } catch (e) {
     console.warn("[Space] menu failed: " + e);
   } finally {

@@ -1,5 +1,5 @@
 import { world, system, BlockVolume, CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus } from "@minecraft/server";
-import { acquireLoadedArea, releaseLoadedArea, registerTravelPreparation } from "./travel_safety.js";
+import { acquireLoadedArea, releaseLoadedArea, registerTravelPreparation, movedFromOrigin, isSafeStanding } from "./travel_safety.js";
 import { fillAirColumn, runTerrainJob, emptyChunk, findUnexpectedBlock, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 
 const DIMENSION = "dbe:future_trunks";
@@ -239,7 +239,7 @@ async function waitForCity(entity) {
   const outcome = activity.outcome;
   const origin = entity ? { dimension: entity.dimension.id, ...entity.location } : undefined;
   const checkOrigin = () => {
-    if (entity && (!entity.isValid || entity.dimension.id !== origin.dimension || Math.hypot(entity.location.x - origin.x, entity.location.y - origin.y, entity.location.z - origin.z) > 16)) {
+    if (entity && (!entity.isValid || movedFromOrigin(entity, origin))) {
       const error = new Error("Future travel interrupted while waiting; the shared city preparation continues");
       error.playerMessage = { translate: "dbe.future.wait_cancelled" };
       throw error;
@@ -292,12 +292,15 @@ async function prepareDestination(dimension, location, entity) {
     if (nx * 16 > BOUNDS.x2 || nx * 16 + 15 < BOUNDS.x1 || nz * 16 > BOUNDS.z2 || nz * 16 + 15 < BOUNDS.z1) continue;
     await ensureChunk(dimension, nx, nz, entity, true);
   }
-  if (safeStanding(dimension, x, Math.floor(location.y), z)) return location;
+  // Same predicate as the arrival check in travel_safety.js. Centring keeps the player's footprint inside this
+  // column (integer region spawns otherwise straddle four columns) without changing the requested column.
+  const center = { x: x + 0.5, z: z + 0.5 };
+  if (isSafeStanding(dimension, { ...center, y: Math.floor(location.y) })) return { ...center, y: Math.floor(location.y) };
   const start = topAt(x, z) + 1;
   for (let distance = 0; distance <= 32; distance++) {
     for (const y of distance ? [start + distance, start - distance] : [start]) {
-      if (y <= MIN_Y || y >= MAX_Y || !safeStanding(dimension, x, y, z)) continue;
-      return { x: location.x, y, z: location.z };
+      if (y <= MIN_Y || y >= MAX_Y || !isSafeStanding(dimension, { ...center, y })) continue;
+      return { ...center, y };
     }
   }
   throw new Error("Future arrival has no solid floor and clear headroom. The player was not moved; preview the affected terrain with dbe:future_repair on a world copy");
@@ -450,6 +453,8 @@ try {
   console.warn("[Future city] operator command registration failed: " + (error?.stack ?? error));
 }
 
+function clearCityRun() { cityPromise = undefined; cityPreparing = false; cityProgress = undefined; cityActivity = undefined; }
+
 export function prepareFutureCity(dimension, placeCity) {
   try { return startCity(dimension, placeCity); }
   catch (error) { return rejectedCity(error); }
@@ -551,7 +556,11 @@ function startCity(dimension, placeCity) {
       if (area) releaseLoadedArea(area);
       if (ownsBusy) { busy = false; busyActivity = undefined; }
     }
-  })().finally(() => { cityPromise = undefined; cityPreparing = false; cityProgress = undefined; cityActivity = undefined; });
+  })().then(
+    // Not .finally(): on rejection it creates an internal promise that is rejected before its handler is attached,
+    // which the game reports as an unhandled rejection even though every caller handles cityPromise.
+    (value) => { clearCityRun(); return value; },
+    (error) => { clearCityRun(); throw error; });
   cityPromise.then(() => {
     outcome.settled = true;
     for (const wake of [...outcome.waiters]) wake();
