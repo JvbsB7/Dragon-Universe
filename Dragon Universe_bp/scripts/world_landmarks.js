@@ -74,7 +74,7 @@ const SPECS = [
   { key: "frieza_army_base", dim: "frieza", size: { x: 59, y: 46, z: 59 }, pieces: single("dbe:landmarks/frieza_army_base", { x: 59, z: 59 }), maxRange: 7, foundation: "dbe:frieza_rock" },
   { key: "guru_house", dim: "namek", size: { x: 91, y: 105, z: 91 }, pieces: grid("dbe:landmarks/guru_house_", [64, 27], [64, 27]), maxRange: 12, foundation: "dbe:namek_stone" },
   { key: "capsule_corp", dim: "overworld", size: { x: 141, y: 42, z: 154 }, pieces: grid("dbe:landmarks/capsule_corp_", [64, 64, 13], [64, 64, 26]), draw: drawBesideCity, maxRange: 10, foundation: "minecraft:dirt" },
-  { key: "martial_arts_tournament", dim: "overworld", size: { x: 110, y: 21, z: 100 }, pieces: grid("dbe:landmarks/martial_arts_tournament_", [64, 46], [64, 36]), biomes: ["minecraft:plains", "minecraft:sunflower_plains", "dbe:dirtstone_plains"], maxRange: 6, foundation: "minecraft:dirt", enabled: () => martialArtsMode() === "relative", onPlaced: martialArtsPlaced },
+  { key: "martial_arts_tournament", dim: "overworld", size: { x: 110, y: 21, z: 100 }, pieces: grid("dbe:landmarks/martial_arts_tournament_", [64, 46], [64, 36]), biomes: ["minecraft:plains", "minecraft:sunflower_plains", "dbe:dirtstone_plains"], maxRange: 6, foundation: "minecraft:dirt", enabled: () => martialArtsMode() === "relative", onPlaced: martialArtsPlaced, followUp: { pending: (spot) => !spot.announcer, run: spawnAnnouncer } },
 ];
 
 // ---------------------------------------------------------------- World Martial Arts Tournament
@@ -118,15 +118,21 @@ function applyMartialSite(spot) {
 
 async function martialArtsPlaced(spot, dim) {
   applyMartialSite(spot);
+  await spawnAnnouncer(spot, dim);
+}
+
+/** Opens the tournament queue. A failure leaves spot.announcer unset, and scan tries again while a player is near. */
+async function spawnAnnouncer(spot, dim) {
   const location = { x: spot.x + MARTIAL.announcer[0] + 0.5, y: spot.y + MARTIAL.announcer[1], z: spot.z + MARTIAL.announcer[2] + 0.5 };
-  const area = await acquireLoadedArea(dim, location, location, "tournament announcer");
+  let area;
   try {
+    area = await acquireLoadedArea(dim, location, location, "tournament announcer");
     dim.spawnEntity("dbe:announcer", location);
     spot.announcer = true;
   } catch (e) {
     console.warn("[Landmarks] tournament announcer not spawned: " + e);
   } finally {
-    releaseLoadedArea(area);
+    if (area) releaseLoadedArea(area);
   }
 }
 
@@ -423,6 +429,18 @@ async function placeLandmark(dim, spec, spot, plan) {
   }
 }
 
+async function finishFollowUp(dim, spec, spot, plan) {
+  busy = true;
+  try {
+    await spec.followUp.run(spot, dim);
+    savePlan(plan);
+  } catch (e) {
+    console.warn("[Landmarks] " + spec.key + " follow-up failed: " + e);
+  } finally {
+    busy = false;
+  }
+}
+
 function scan() {
   if (busy) return;
   const plan = loadPlan();
@@ -443,7 +461,9 @@ function scan() {
   for (const spec of SPECS) {
     if (!enabled(spec)) continue;
     const spot = plan.spots[spec.key];
-    if (!spot || spot.none || spot.placed || (spot.tries ?? 0) >= MAX_TRIES) continue;
+    if (!spot || spot.none) continue;
+    const followUp = spot.placed && spec.followUp?.pending(spot);
+    if (spot.placed ? !followUp : (spot.tries ?? 0) >= MAX_TRIES) continue;
     const dim = dimensionOf(spec);
     const near = dim.getPlayers().some((p) => {
       const dx = Math.max(spot.x - p.location.x, 0, p.location.x - (spot.x + spec.size.x));
@@ -451,7 +471,8 @@ function scan() {
       return Math.hypot(dx, dz) < PLACE_MARGIN;
     });
     if (near) {
-      placeLandmark(dim, spec, spot, plan);
+      if (followUp) finishFollowUp(dim, spec, spot, plan);
+      else placeLandmark(dim, spec, spot, plan);
       return;
     }
   }
