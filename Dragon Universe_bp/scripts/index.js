@@ -19837,8 +19837,10 @@ bM.on("entity_enter_region", ({ entity: sG, region: sH }) => {
     if (sG.id !== "world_martial_arts_tournament" || sG.dimension.id !== "dbe:world_martial_arts_tournament") return;
     try {
       // Worlds that already have the old build keep it; the others get the new tournament from world_landmarks.js.
+      // Still in placing counts as old too: the world closed after place wrote the blocks, before markLoaded.
       await rq.ready;
-      if (resolveMartialArtsMode(rq.hasLoaded("world_martial_arts_tournament")) === "legacy")
+      const oldBuild = rq.hasLoaded("world_martial_arts_tournament") || rq.placingStructureIds.includes("world_martial_arts_tournament");
+      if (resolveMartialArtsMode(oldBuild) === "legacy")
         rq.addToQueue("world_martial_arts_tournament", {
           dimension: sG.dimension,
           location: new bP(-28, -64, -12),
