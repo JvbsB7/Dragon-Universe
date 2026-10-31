@@ -17,6 +17,7 @@ import * as mc from "@minecraft/server";
 import { acquireLoadedArea, releaseLoadedArea } from "./travel_safety.js";
 import { friezaLandmarkEnv } from "./space_planets.js";
 import { namekLandmarkEnv } from "./namek_dimension.js";
+import { tournaments_data } from "./data/tournaments_data.js";
 
 const { world, system, BlockVolume } = mc;
 
@@ -73,7 +74,61 @@ const SPECS = [
   { key: "frieza_army_base", dim: "frieza", size: { x: 59, y: 46, z: 59 }, pieces: single("dbe:landmarks/frieza_army_base", { x: 59, z: 59 }), maxRange: 7, foundation: "dbe:frieza_rock" },
   { key: "guru_house", dim: "namek", size: { x: 91, y: 105, z: 91 }, pieces: grid("dbe:landmarks/guru_house_", [64, 27], [64, 27]), maxRange: 12, foundation: "dbe:namek_stone" },
   { key: "capsule_corp", dim: "overworld", size: { x: 141, y: 42, z: 154 }, pieces: grid("dbe:landmarks/capsule_corp_", [64, 64, 13], [64, 64, 26]), draw: drawBesideCity, maxRange: 10, foundation: "minecraft:dirt" },
+  { key: "martial_arts_tournament", dim: "overworld", size: { x: 110, y: 21, z: 100 }, pieces: grid("dbe:landmarks/martial_arts_tournament_", [64, 46], [64, 36]), biomes: ["minecraft:plains", "minecraft:sunflower_plains", "dbe:dirtstone_plains"], maxRange: 6, foundation: "minecraft:dirt", enabled: () => martialArtsMode() === "relative", onPlaced: martialArtsPlaced },
 ];
+
+// ---------------------------------------------------------------- World Martial Arts Tournament
+// Worlds that already have the old build keep it in its own dimension. The others get the new one in a plains biome, and
+// the tournament data follows the drawn spot. index.js settles the mode once, when the old region loads.
+const MARTIAL_MODE_PROP = "dbe:martial_arts_mode";
+const MARTIAL = { fighterOne: [54, 2, 44], fighterTwo: [71, 2, 61], spectator: [66, 1, 34], announcer: [38, 1, 53], ring: [50, 40, 75, 65] };
+const martialListeners = [];
+
+const martialArtsMode = () => world.getDynamicProperty(MARTIAL_MODE_PROP);
+
+export function resolveMartialArtsMode(alreadyLoaded) {
+  let mode = martialArtsMode();
+  if (mode !== "legacy" && mode !== "relative") {
+    mode = alreadyLoaded ? "legacy" : "relative";
+    world.setDynamicProperty(MARTIAL_MODE_PROP, mode);
+  }
+  return mode;
+}
+
+/** The two regions of a placed tournament, for index.js: they are not saved, so they are registered again on every load. */
+export function onMartialArtsSite(listener) {
+  martialListeners.push(listener);
+}
+
+function applyMartialSite(spot) {
+  const at = ([x, y, z]) => ({ x: spot.x + x, y: spot.y + y, z: spot.z + z });
+  const data = tournaments_data[0];
+  data.dimensionId = OVERWORLD;
+  data.spectatorSpawn = at(MARTIAL.spectator);
+  data.opponentOneSpawnLocation = at(MARTIAL.fighterOne);
+  data.opponentTwoSpawnLocation = at(MARTIAL.fighterTwo);
+  const [x1, z1, x2, z2] = MARTIAL.ring;
+  const common = { dimensionId: OVERWORLD, allowQuests: false, blockProtection: true, preventMobSpawning: true };
+  const regions = [
+    { ...common, id: "world_martial_arts_tournament", allowPvP: false, pos1: { x: spot.x, y: spot.y, z: spot.z }, pos2: { x: spot.x + 109, y: 319, z: spot.z + 99 }, spawnLocation: data.spectatorSpawn },
+    { ...common, id: "world_martial_arts_tournament_arena", allowPvP: true, priority: 1, pos1: { x: spot.x + x1, y: spot.y, z: spot.z + z1 }, pos2: { x: spot.x + x2, y: 319, z: spot.z + z2 } },
+  ];
+  for (const listener of martialListeners) listener(regions);
+}
+
+async function martialArtsPlaced(spot, dim) {
+  applyMartialSite(spot);
+  const location = { x: spot.x + MARTIAL.announcer[0] + 0.5, y: spot.y + MARTIAL.announcer[1], z: spot.z + MARTIAL.announcer[2] + 0.5 };
+  const area = await acquireLoadedArea(dim, location, location, "tournament announcer");
+  try {
+    dim.spawnEntity("dbe:announcer", location);
+    spot.announcer = true;
+  } catch (e) {
+    console.warn("[Landmarks] tournament announcer not spawned: " + e);
+  } finally {
+    releaseLoadedArea(area);
+  }
+}
 
 const ENV = { frieza: friezaLandmarkEnv, namek: namekLandmarkEnv };
 
@@ -353,7 +408,7 @@ async function placeLandmark(dim, spec, spot, plan) {
     spot.placed = true;
     delete spot.lastError;
     console.log("[Landmarks] placed " + spec.key + " at " + spot.x + ", " + spot.y + ", " + spot.z);
-    spec.onPlaced?.(spot, dim);
+    await spec.onPlaced?.(spot, dim);
   } catch (e) {
     if (e.stage !== "loading") spot.tries = (spot.tries ?? 0) + 1;
     spot.lastError = String(e?.message ?? e).slice(0, 120);
@@ -432,6 +487,9 @@ function retry(player, key) {
 }
 
 world.afterEvents.worldLoad.subscribe(() => {
+  const site = loadPlan().spots.martial_arts_tournament;
+  if (site?.placed && martialArtsMode() === "relative") applyMartialSite(site);
+
   system.runInterval(() => {
     try {
       scan();
