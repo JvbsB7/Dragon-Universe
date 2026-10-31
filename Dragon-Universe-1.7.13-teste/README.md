@@ -53,7 +53,7 @@ Antes de instalar, confira o hash: `sha256sum Dragon-Universe-1.7.13.mcaddon` no
 8. **Estrada da Serpente** em cópia do mundo que teve o trecho preso.
 9. Repita o que passou na 1.7.12: pay, redeem, créditos, Bulma e sair e entrar. Confira se o crédito cabe na marca-d'água.
 
-Os casos com ID estão em `relatorios/R_1.7.13.md`, seção 4, no ambiente da equipe.
+O roteiro completo para marcar está em [`ROTEIRO.md`](ROTEIRO.md).
 Registre cada resultado com plataforma, versão exata do jogo, experimentos, data e quem testou.
 
 ## Licença dos cabelos
