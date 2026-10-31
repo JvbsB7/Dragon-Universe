@@ -414,7 +414,9 @@ async function sendToArena(player, force = false) {
     player.sendMessage(first ? "§dThe arena is being prepared... one moment." : "§dTravelling to the Tournament of Destroyers arena...");
     await ensureArena(force);
     phase = "teleport";
-    await safeTeleport(player, SPAWN, { origin, requireGround: true, dimension: dim, rotation: { x: 0, y: 180 } });
+    // Fixed arrival point, prepared independently of the player: moving or flying meanwhile does not cancel the trip;
+    // only leaving the origin dimension does. The return point was saved before the preparation.
+    await safeTeleport(player, SPAWN, { origin, requireGround: true, dimension: dim, rotation: { x: 0, y: 180 }, maxDrift: Infinity });
     ensurePlanets(force); // the planets finish building while the player looks around
   } catch (e) {
     reportTravelFailure(player, "Universe 6", e, DIM_ID, phase);

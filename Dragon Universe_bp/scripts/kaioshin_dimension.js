@@ -780,7 +780,9 @@ async function sendToKaioshin(player) {
     player.sendMessage("§dTravelling to Kaioshin Planet...");
     areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z));
     phase = "teleport";
-    await safeTeleport(player, { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { origin, requireGround: true, dimension: dim, rotation: { x: 5, y: 180 } });
+    // Fixed arrival point, prepared independently of the player: moving or flying meanwhile does not cancel the trip;
+    // only leaving the origin dimension does. The return point was saved before the preparation.
+    await safeTeleport(player, { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { origin, requireGround: true, dimension: dim, rotation: { x: 5, y: 180 }, maxDrift: Infinity });
     ensureSky();
     if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {

@@ -562,17 +562,29 @@ function removeArea(id) {
   releaseLoadedArea(id);
 }
 
-async function prepareArea(dim, cx, cz) {
+// Arrival only needs the 3x3 around the landing chunk; the scan generates TERRAIN_RADIUS and decorates DECOR_RADIUS
+// after arrival. Preparing 7x7 + 5x5 up front kept the player waiting with no feedback.
+const OFFSETS_ARRIVAL = offsetsWithin(1);
+const PROGRESS_TICKS = 100;
+
+async function prepareArea(dim, cx, cz, player) {
   const id = await acquireLoadedArea(dim,
-    { x: (cx - TERRAIN_RADIUS) * 16, y: MIN_Y, z: (cz - TERRAIN_RADIUS) * 16 },
-    { x: (cx + TERRAIN_RADIUS + 1) * 16 - 1, y: MIN_Y, z: (cz + TERRAIN_RADIUS + 1) * 16 - 1 },
+    { x: (cx - 1) * 16, y: MIN_Y, z: (cz - 1) * 16 },
+    { x: (cx + 2) * 16 - 1, y: MIN_Y, z: (cz + 2) * 16 - 1 },
     "namek_dimension.js: destination preparation");
   try {
-    for (const [dx, dz] of OFFSETS_TERRAIN) {
+    let done = 0, noticeAt = system.currentTick + PROGRESS_TICKS;
+    for (const [dx, dz] of OFFSETS_ARRIVAL) {
       if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 0) yield* terrainJob(dim, cx + dx, cz + dz); })(), "t" + dx + "," + dz, true);
+      done++;
+      if (player && system.currentTick >= noticeAt) {
+        noticeAt = system.currentTick + PROGRESS_TICKS;
+        try { player.sendMessage({ translate: "dbe.space.progress", with: [String(done), String(OFFSETS_ARRIVAL.length)] }); } catch (e) { /* player left */ }
+      }
     }
-    for (const [dx, dz] of OFFSETS_DECOR) {
-      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 1) yield* decorateJob(dim, cx + dx, cz + dz); })(), "d" + dx + "," + dz, true);
+    // Only the landing chunk is decorated before arrival; its neighbours were generated above.
+    if (chunkState(dim, cx, cz) === 1 && NEIGHBOURS.every(([nx, nz]) => chunkState(dim, cx + nx, cz + nz) >= 1)) {
+      await runExclusive((function* () { if (chunkState(dim, cx, cz) === 1) yield* decorateJob(dim, cx, cz); })(), "d0,0", true);
     }
   } catch (e) {
     releaseLoadedArea(id);
@@ -585,7 +597,11 @@ const travelling = new Set(); // player ids currently being sent to Namek
 const lastPodUse = new Map(); // player id -> tick of last accepted pod use (ignores double fires)
 
 async function sendToNamek(player) {
-  if (travelling.has(player.id)) return;
+  if (travelling.has(player.id)) {
+    // Say so instead of ignoring a second request while the destination is still being prepared.
+    try { player.sendMessage({ translate: "dbe.space.travel_busy" }); } catch (e) { /* player left */ }
+    return;
+  }
   travelling.add(player.id);
   let areaId = null;
   let phase = "lookup";
@@ -596,9 +612,11 @@ async function sendToNamek(player) {
     const s = findSpawn();
     rememberOrigin(player); // so the pod can bring the player back to this exact spot
     player.sendMessage("§aTravelling to Namek...");
-    areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z));
+    areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z), player);
     phase = "teleport";
-    await safeTeleport(player, { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { origin, requireGround: true, dimension: dim });
+    // The arrival spot does not depend on where the player is: moving (or flying) while Namek is prepared does not
+    // cancel the trip; only leaving the origin dimension does. The return point was saved above.
+    await safeTeleport(player, { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { origin, requireGround: true, dimension: dim, maxDrift: Infinity });
     lastPodUse.set(player.id, system.currentTick);
     if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
