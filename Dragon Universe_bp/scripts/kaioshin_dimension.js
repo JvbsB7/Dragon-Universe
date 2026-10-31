@@ -1,5 +1,5 @@
 import { acquireLoadedArea, releaseLoadedArea, safeTeleport, safeReturnToEarth, travelOrigin, reportTravelFailure, physicalDestinationId } from "./travel_safety.js";
-import { fillAirColumn, emptyChunk, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
+import { AIR_ONLY_FILL, airFilterWorks, fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 /**
  * Kaioshin dimension (dbe:kai)  -  the lush Kaioshin planet from Dragon Ball Z
  *
@@ -255,10 +255,13 @@ function setTerrain(dim, x, y, z, block) {
   if (existing.typeId === AIR) dim.setBlockType({ x, y, z }, block);
 }
 
-function fillTerrainColumn(dim, x, z, y1, y2, block) {
+// fresh: the chunk was proven empty in this job, so no per-block read is needed. The native filter still
+// leaves anything that appeared since then untouched, and the final verification would then fail safely.
+function fillTerrainColumn(dim, x, z, y1, y2, block, fresh = false) {
   if (y2 < y1) return;
   checkWritable(x, z);
-  fillAirColumn(dim, x, z, y1, y2, block);
+  if (fresh) dim.fillBlocks(new BlockVolume({ x, y: y1, z }, { x, y: y2, z }), block, AIR_ONLY_FILL);
+  else fillAirColumn(dim, x, z, y1, y2, block);
 }
 
 /** Vertical fill in one column (ignored when empty). */
@@ -300,7 +303,7 @@ function chunkState(dim, cx, cz) {
   return b.typeId === "minecraft:bedrock" ? 2 : 1;
 }
 
-function* terrainJob(dim, cx, cz) {
+function* terrainJob(dim, cx, cz, fresh = false) {
   const x0 = cx * 16;
   const z0 = cz * 16;
 
@@ -320,9 +323,9 @@ function* terrainJob(dim, cx, cz) {
   for (let i = 0; i < 16; i++) {
     for (let j = 0; j < 16; j++) {
       if (world.getDynamicProperty?.(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin generation stopped after a player edit; use reviewed terrain repair");
-      fillTerrainColumn(dim, x0 + i, z0 + j, MIN_Y + 1, coreTop, STONE);
+      fillTerrainColumn(dim, x0 + i, z0 + j, MIN_Y + 1, coreTop, STONE, fresh);
     }
-    yield;
+    yield; // The core is the heaviest fill: one row per step keeps the peak per step of the per-block path.
   }
   yield;
 
@@ -336,9 +339,9 @@ function* terrainJob(dim, cx, cz) {
       if (isRiver(x, z)) {
         // river: sand bed 4 below the bank, water up to 1 below the bank; on terrace steps this makes waterfalls
         const bed = h - 4;
-        fillTerrainColumn(dim, x, z, coreTop + 1, bed - 1, STONE);
+        fillTerrainColumn(dim, x, z, coreTop + 1, bed - 1, STONE, fresh);
         setTerrain(dim, x, bed, z, SAND);
-        fillTerrainColumn(dim, x, z, bed + 1, h - 1, WATER);
+        fillTerrainColumn(dim, x, z, bed + 1, h - 1, WATER, fresh);
         tops[i * 16 + j] = h - 1;
         continue;
       }
@@ -350,24 +353,34 @@ function* terrainJob(dim, cx, cz) {
       const hi = Math.max(n1, n2, n3, n4);
       const face = hi - h >= 2; // standing below a higher neighbour: a cliff face, bare rock
       const rockFrom = lo - 1; // striped rock down to just below the lowest neighbour (visible wall)
-      fillTerrainColumn(dim, x, z, coreTop + 1, rockFrom - 1, STONE);
+      fillTerrainColumn(dim, x, z, coreTop + 1, rockFrom - 1, STONE, fresh);
       if (face) {
-        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h, rockAt(x, z));
+        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h, rockAt(x, z), fresh);
       } else {
-        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h - 2, rockAt(x, z));
+        fillTerrainColumn(dim, x, z, Math.max(rockFrom, coreTop + 1), h - 2, rockAt(x, z), fresh);
         setTerrain(dim, x, h - 1, z, DIRT);
         setTerrain(dim, x, h, z, GRASS);
       }
       tops[i * 16 + j] = h;
     }
-    yield;
+    if (!fresh || i % 2 === 1) yield;
   }
 
   // Safety net: make sure the terrain really is there before the chunk is marked as done. If it is not
   // (chunk unloaded mid-job, engine refused a fill...) throw, so the chunk is retried instead of being a hole.
+  const nativeCheck = fresh && queriesReportAir(dim, { x: x0, y: 319, z: z0 });
   for (let column = 0; column < 256; column++) {
     const i = Math.floor(column / 16), j = column % 16;
     const x = x0 + i, z = z0 + j, top = tops[column];
+    if (nativeCheck) {
+      // A fresh chunk must hold exactly the generated profile; any difference fails, and the retry (state "building") uses the per-block path.
+      for (const span of repairColumn(x, z)) {
+        const point = findUnexpectedBlock(dim, { x, y: span.from, z }, { x, y: span.to, z }, [span.type]);
+        if (point) throw new Error("Kaioshin terrain verification failed at " + point.x + "," + point.y + "," + point.z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type);
+      }
+      if (column % 64 === 63) yield;
+      continue;
+    }
     for (const span of repairColumn(x, z)) for (let y = span.from; y <= span.to; y++) {
       const block = dim.getBlock({ x, y, z }), waterLayer = span.type === WATER;
       if (!block || block.typeId === AIR || (waterLayer ? !block.isSolid && !block.isLiquid : !block.isSolid || block.isLiquid)) {
@@ -386,21 +399,38 @@ function* terrainJob(dim, cx, cz) {
 }
 
 const terrainOwnership = (cx, cz) => "dbe:kai_terrain_v2:" + cx + "," + cz;
+// Diagnostic only: names what made a chunk legacy (water from a river, sky glass, a build...).
+function firstBlockFound(dim, cx, cz) {
+  try {
+    for (let y = MIN_Y; y <= 319; y += 128) {
+      const point = findUnexpectedBlock(dim, { x: cx * 16, y, z: cz * 16 }, { x: cx * 16 + 15, y: Math.min(y + 127, 319), z: cz * 16 + 15 }, [AIR]);
+      if (point) return dim.getBlock(point)?.typeId + " at " + point.x + "," + point.y + "," + point.z;
+    }
+  } catch (e) {
+    return "block lookup failed: " + e;
+  }
+  return "no block on recheck";
+}
 function* ownedTerrainJob(dim, cx, cz) {
   const state = world.getDynamicProperty(terrainOwnership(cx, cz));
-  if (["legacy", "complete", "protected"].includes(state)) return;
-  if (state !== "building") {
+  if (["complete", "protected"].includes(state)) return;
+  const reclaiming = state === "legacy";
+  if (reclaiming && !reclaimSkyLegacy(dim, cx, cz)) return;
+  if (state !== "building" && !reclaiming) {
     world.setDynamicProperty(terrainOwnership(cx, cz), "inspecting");
-    if (!(yield* emptyChunk(dim, cx, cz, MIN_Y, 319))) {
+    if (!(yield* emptyExceptSky(dim, cx, cz))) {
       if (world.getDynamicProperty(terrainOwnership(cx, cz)) !== "protected") world.setDynamicProperty(terrainOwnership(cx, cz), "legacy");
-      console.warn("[Kaioshin] Unowned nonempty chunk " + cx + "," + cz + " preserved; use a reviewed dbe:kaioshin_repair preview on a world copy");
+      console.warn("[Kaioshin] Unowned nonempty chunk " + cx + "," + cz + " marked legacy: no terrain will be generated there (found " + firstBlockFound(dim, cx, cz) + "); blocks preserved; use a reviewed dbe:kaioshin_repair preview on a world copy");
       return;
     }
     if (world.getDynamicProperty(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin ownership inspection interrupted by a player edit");
     world.setDynamicProperty(terrainOwnership(cx, cz), "building");
   }
-  yield* terrainJob(dim, cx, cz);
+  // Only a chunk proven empty just above writes without per-block reads, and only once the filter passed its active
+  // check (no yield since the proof). A resumed "building" chunk may hold anything.
+  yield* terrainJob(dim, cx, cz, state !== "building" && airFilterWorks(dim, cx * 16, cz * 16, 319));
   world.setDynamicProperty(terrainOwnership(cx, cz), "complete");
+  if (reclaiming) console.warn("[Kaioshin] Legacy chunk " + cx + "," + cz + " repaired: terrain generated below the sky bubble");
 }
 
 // ---------------------------------------------------------------- decoration
@@ -624,7 +654,8 @@ function scan() {
       const cz = pcz + dz;
       const k = cx + "," + cz;
       if (!canRetry(k)) continue;
-      if (["legacy", "protected"].includes(world.getDynamicProperty(terrainOwnership(cx, cz)))) continue;
+      const owned = world.getDynamicProperty(terrainOwnership(cx, cz));
+      if (owned === "protected" || (owned === "legacy" && !skyRepairPending(cx, cz))) continue;
       if (chunkState(dim, cx, cz) === 0) {
         runExclusive(ownedTerrainJob(dim, cx, cz), k, false, { dim, cx, cz });
         return;
@@ -669,6 +700,81 @@ function* bubble(dim, cx, cy, cz, r, block) {
       if (++n % 120 === 0) yield;
     }
   }
+}
+
+/** The glass bubble() leaves at this exact position, or undefined. Same geometry as bubble(). */
+function skyBlockAt(x, y, z) {
+  const s = findSpawn();
+  for (const b of BUBBLES) {
+    const dx = Math.abs(x - (s.x + b.dx)), dy = y - b.y, dz = z - (s.z + b.dz);
+    const q = b.r * b.r - dy * dy - dz * dz;
+    if (q < 0) continue;
+    const outer = Math.floor(Math.sqrt(q));
+    if (dx > outer) continue;
+    const Ri = b.r - 1, qi = Ri * Ri - dy * dy - dz * dz;
+    if (qi < 0 || dx >= Math.floor(Math.sqrt(qi)) + 1) return b.glass;
+  }
+  return undefined;
+}
+
+function chunkTouchesSky(cx, cz) {
+  const s = findSpawn(), x1 = cx * 16, z1 = cz * 16;
+  return BUBBLES.some((b) => {
+    const bx = s.x + b.dx, bz = s.z + b.dz;
+    return bx + b.r >= x1 && bx - b.r <= x1 + 15 && bz + b.r >= z1 && bz - b.r <= z1 + 15;
+  });
+}
+
+/** Every non-air block of the chunk, checked in one step: each must be the expected bubble glass at its exact position. */
+function skyOnlyProof(dim, cx, cz) {
+  let count = 0;
+  for (let y = MIN_Y; y <= 319; y += 128) {
+    const from = { x: cx * 16, y, z: cz * 16 }, to = { x: cx * 16 + 15, y: Math.min(y + 127, 319), z: cz * 16 + 15 };
+    for (const point of dim.getBlocks(new BlockVolume(from, to), { excludeTypes: [AIR] }, false).getBlockLocationIterator()) {
+      const type = dim.getBlock(point)?.typeId;
+      if (type === AIR) continue;
+      if (!type || type !== skyBlockAt(point.x, point.y, point.z)) return { ok: false, count, found: (type ?? "unavailable") + " at " + point.x + "," + point.y + "," + point.z };
+      count++;
+    }
+  }
+  return { ok: true, count };
+}
+
+/** Empty chunk proof that tolerates this module's own sky bubbles (written before the ground below them exists). */
+function* emptyExceptSky(dim, cx, cz) {
+  if (!chunkTouchesSky(cx, cz)) return yield* emptyChunk(dim, cx, cz, MIN_Y, 319);
+  if (queriesReportAir(dim, { x: cx * 16, y: 319, z: cz * 16 })) return skyOnlyProof(dim, cx, cz).ok;
+  for (let dx = 0; dx < 16; dx++) {
+    for (let dz = 0; dz < 16; dz++) for (let y = MIN_Y; y <= 319; y++) {
+      const x = cx * 16 + dx, z = cz * 16 + dz, type = dim.getBlock({ x, y, z })?.typeId;
+      if (!type) throw new Error("Kaioshin terrain inspection is unavailable at " + x + "," + y + "," + z);
+      if (type !== AIR && type !== skyBlockAt(x, y, z)) return false;
+    }
+    yield;
+  }
+  return true;
+}
+
+// Existing worlds: a chunk the old proof marked legacy only because of the bubbles can still get its ground.
+// Conservative: every non-air block must be expected glass, at least one must be seen, and the terrain sentinel must
+// be absent. Checked in one step, then the state moves to "building" (player edits are tracked and a stop resumes).
+const skyRepairRefused = new Set();
+const skyRepairPending = (cx, cz) => chunkTouchesSky(cx, cz) && !skyRepairRefused.has(cx + "," + cz);
+function reclaimSkyLegacy(dim, cx, cz) {
+  if (!skyRepairPending(cx, cz)) return false;
+  const refuse = (why) => {
+    skyRepairRefused.add(cx + "," + cz);
+    console.warn("[Kaioshin] Chunk " + cx + "," + cz + " kept legacy under a sky bubble, nothing written: " + why);
+    return false;
+  };
+  if (chunkState(dim, cx, cz) !== 0) return refuse("terrain marker present");
+  if (!queriesReportAir(dim, { x: cx * 16, y: 319, z: cz * 16 })) return refuse("block queries are not reliable");
+  const proof = skyOnlyProof(dim, cx, cz);
+  if (!proof.ok) return refuse("found " + proof.found);
+  if (!proof.count) return refuse("no bubble block seen");
+  world.setDynamicProperty(terrainOwnership(cx, cz), "building");
+  console.warn("[Kaioshin] Legacy chunk " + cx + "," + cz + " under repair: only " + proof.count + " expected sky bubble blocks found; generating the terrain below them");
+  return true;
 }
 
 async function withArea(dim, id, x1, z1, x2, z2, y, work) {

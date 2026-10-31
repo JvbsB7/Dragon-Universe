@@ -46,6 +46,47 @@ export function findUnexpectedBlock(dimension, from, to, allowedTypes) {
   }
 }
 
+// Native verification is only trusted if a query really reports air: probe one known-air block, once per dimension.
+const queryProbes = new Map();
+export function queriesReportAir(dimension, point) {
+  if (queryProbes.has(dimension.id)) return queryProbes.get(dimension.id);
+  const block = dimension.getBlock(point);
+  if (block?.typeId !== AIR) return false; // Not a usable probe; decide on a later chunk.
+  const found = [...dimension.getBlocks(new BlockVolume(point, point), { excludeTypes: ["minecraft:bedrock"] }, false).getBlockLocationIterator()];
+  const trusted = found.length === 1;
+  queryProbes.set(dimension.id, trusted);
+  if (!trusted) console.warn("[Terrain] " + dimension.id + ": block queries do not report air; using per-block verification");
+  return trusted;
+}
+
+// Active check that a fill filtered to air really keeps existing blocks and fills air, once per session and dimension.
+// Runs inside one chunk proven empty, in a single step: a marker on top, a filtered fill, then both blocks removed.
+export const AIR_ONLY_FILL = { blockFilter: { includeTypes: [AIR] } };
+const FILTER_MARKER = "minecraft:glass", FILTER_FILL = "minecraft:stone";
+const filterProbes = new Map();
+export function airFilterWorks(dimension, x, z, y) {
+  if (filterProbes.has(dimension.id)) return filterProbes.get(dimension.id);
+  const marker = { x, y, z }, target = { x, y: y - 1, z };
+  if (dimension.getBlock(marker)?.typeId !== AIR || dimension.getBlock(target)?.typeId !== AIR) return false; // No usable spot; decide on a later chunk.
+  let works = false, failure = "marker overwritten or air not filled";
+  try {
+    dimension.setBlockType(marker, FILTER_MARKER);
+    dimension.fillBlocks(new BlockVolume(target, marker), FILTER_FILL, AIR_ONLY_FILL);
+    works = dimension.getBlock(marker)?.typeId === FILTER_MARKER && dimension.getBlock(target)?.typeId === FILTER_FILL;
+  } catch (error) { failure = String(error); }
+  try {
+    dimension.setBlockType(marker, AIR);
+    dimension.setBlockType(target, AIR);
+    if (dimension.getBlock(marker)?.typeId !== AIR || dimension.getBlock(target)?.typeId !== AIR) throw new Error("blocks remain");
+  } catch (error) {
+    works = false;
+    failure += "; cleanup failed at " + x + "," + (y - 1) + ".." + y + "," + z + ": " + error;
+  }
+  filterProbes.set(dimension.id, works);
+  if (!works) console.warn("[Terrain] " + dimension.id + ": air-only fill is not reliable (" + failure + "); using per-block writes");
+  return works;
+}
+
 export function runTerrainJob(generator, { timeoutTicks = 2400, inactivityTicks, activity, label = "Terrain job" } = {}) {
   let resolve, reject;
   const completion = new Promise((yes, no) => { resolve = yes; reject = no; });
