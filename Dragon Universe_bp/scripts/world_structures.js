@@ -17,6 +17,7 @@
  */
 import * as mc from "@minecraft/server";
 import { acquireLoadedArea, releaseLoadedArea } from "./travel_safety.js";
+import "./world_landmarks.js";
 
 const { world, system } = mc;
 
