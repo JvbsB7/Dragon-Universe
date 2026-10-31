@@ -5942,6 +5942,150 @@
       },
       {
          "path" : "ui/server_form.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/broly.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/broly_lssj.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/broly_ssj.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/gohan_end.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/gohan_end_ssj.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/gohan_end_ssj2.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/gohan_mid.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/gohan_mid_ssj2.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/goku.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/goku_ssj.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/goku_ssj2.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/goku_ssj3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/goku_ssj4.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/trunks.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/trunks_ssg3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/trunks_ssj.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/vegeta.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/vegeta_ssj3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/vegeta_ssj4.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_flare_a.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_flare_a_ssj.geo.json"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/broly.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/broly_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/broly_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/gohan_end.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/gohan_end_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/gohan_end_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/gohan_end_ultimate.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/gohan_mid.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/gohan_mid_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/gohan_mid_ssj2_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/goku.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/goku_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/goku_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/goku_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/goku_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/trunks.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/trunks_ssg3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/trunks_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/vegeta.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/vegeta_ssg2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/vegeta_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/vegeta_ssj2.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/vegeta_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/vegeta_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj.png"
       }
    ],
    "version" : 1
