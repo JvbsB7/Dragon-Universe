@@ -15346,9 +15346,17 @@ var jw = class extends jj {
         return;
       }
       jA2.set(sH.id, sG.id);
-      // abrir o desejo encerra a cinemática deste jogador e devolve a câmera na hora
-      jA3.has(sG.id) && (jA3.delete(sG.id), sG.camera.clear());
       try {
+        // abrir o desejo encerra a cinemática deste jogador e devolve a câmera na hora;
+        // uma falha aqui não pode deixar a trava jA2 presa nem impedir o menu
+        if (jA3.has(sG.id)) {
+          jA3.delete(sG.id);
+          try {
+            sG.camera.clear();
+          } catch (sM) {
+            console.warn("[Dragon Universe] Falha ao devolver a câmera: " + String(sM));
+          }
+        }
         for (; sG.isValid && sH.isValid && this.getWishesMade(sH) < sI.maxWishes; ) {
           // fechar o menu encerra só a sessão: o dragão fica com os desejos restantes
           if ((await this.showWishSelectionMenu(sG, sH)) !== "granted") return;
