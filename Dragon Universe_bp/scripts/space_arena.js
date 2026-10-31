@@ -1,6 +1,7 @@
 /**
  * Fixed builds in their own void dimension with the look of the Orbital Station (biome dbe:space).
  * Travel follows the Universe 6 arena: use the item to go, use it again inside to return to the exact spot you left from.
+ * Whoever is inside without the item leaves by holding sneak for 5 seconds, so losing it never traps anyone.
  *
  * A build is a list of .mcstructure pieces at fixed coordinates. The pieces around the arrival point are placed before the
  * player travels; the rest are placed as a player comes near. A piece that fails is tried again with a growing delay and
@@ -15,6 +16,8 @@ const { world, system } = mc;
 const NAMEK_ORIGIN_PROP = "dbe:namek_origin"; // "where you left Earth from", kept by the space system
 const LOAD_TICKS = 10;
 const MAX_RETRY_TICKS = 2400;
+const EXIT_HOLD_TICKS = 100; // hold sneak this long, without the item, to leave
+const HINT_TICKS = 200;
 
 const distXZ = (x, z, p) => Math.hypot(Math.max(p.x - x, 0, x - (p.x + p.sx)), Math.max(p.z - z, 0, z - (p.z + p.sz)));
 
@@ -30,7 +33,8 @@ export function createSpaceArena(cfg) {
   const lastUse = new Map();
   const lastFall = new Map();
   const retry = new Map(); // piece index -> { fails, at }
-  const keyGiven = new Set();
+  const holdStart = new Map();
+  const lastHint = new Map();
   let placed = null;
   let placing = false;
 
@@ -176,17 +180,34 @@ export function createSpaceArena(cfg) {
     }
   }
 
-  /** The item is the way out: whoever is inside without one gets one, once per visit. */
-  function giveKeyIfMissing(player) {
-    if (keyGiven.has(player.id)) return;
+  function hasKey(player) {
     try {
       const container = player.getComponent("minecraft:inventory")?.container;
-      if (!container) return;
-      for (let slot = 0; slot < container.size; slot++) if (container.getItem(slot)?.typeId === cfg.item) return;
-      container.addItem(new mc.ItemStack(cfg.item, 1));
-      keyGiven.add(player.id);
+      for (let slot = 0; slot < (container?.size ?? 0); slot++) if (container.getItem(slot)?.typeId === cfg.item) return true;
     } catch (e) {
-      console.warn("[" + cfg.label + "] could not give the way out: " + e);
+      /* unreadable inventory: treated as no item, so the way out stays open */
+    }
+    return false;
+  }
+
+  /** The way out without the item: hold sneak. A player who carries the item is never sent away by sneaking. */
+  function exitWithoutKey(player) {
+    if (!player.isSneaking) {
+      holdStart.delete(player.id);
+      if (system.currentTick - (lastHint.get(player.id) ?? -HINT_TICKS) >= HINT_TICKS && !hasKey(player)) {
+        lastHint.set(player.id, system.currentTick);
+        try { player.onScreenDisplay.setActionBar("§eNo invitation: hold sneak to leave"); } catch (e) { /* ignore */ }
+      }
+      return;
+    }
+    if (hasKey(player)) {
+      holdStart.delete(player.id);
+      return;
+    }
+    if (!holdStart.has(player.id)) holdStart.set(player.id, system.currentTick);
+    if (system.currentTick - holdStart.get(player.id) >= EXIT_HOLD_TICKS) {
+      holdStart.delete(player.id);
+      sendHome(player);
     }
   }
 
@@ -195,10 +216,9 @@ export function createSpaceArena(cfg) {
       const now = p.dimension.id === cfg.dimId;
       if (now !== (inside.get(p.id) || false)) {
         inside.set(p.id, now);
-        if (!now) keyGiven.delete(p.id);
         try { p.runCommand(now ? FOG_PUSH : FOG_POP); } catch (e) { /* ignore */ }
       }
-      if (now && !travelling.has(p.id)) giveKeyIfMissing(p);
+      if (now && !travelling.has(p.id)) exitWithoutKey(p);
       if (now && p.location.y < cfg.fallY && !travelling.has(p.id) && system.currentTick - (lastFall.get(p.id) ?? -1000) > 40) {
         lastFall.set(p.id, system.currentTick);
         try {
