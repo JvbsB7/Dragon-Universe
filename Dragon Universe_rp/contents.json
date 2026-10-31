@@ -6086,6 +6086,216 @@
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly__ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly_ssj__beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly_ssj__ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly_ssj__ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly_ssj__ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly_ssj__ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly_ssj__ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly_ssj__ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly_ssj__ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end__ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end_ssj2__beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end_ssj2__lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end_ssj2__ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end_ssj2__ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end_ssj2__ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end_ssj2__ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end_ssj__ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end_ssj__ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_end_ssj__ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid__ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid_ssj2__beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid_ssj2__lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid_ssj2__ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid_ssj2__ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid_ssj2__ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid_ssj2__ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid_ssj2_ssj__ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid_ssj2_ssj__ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/gohan_mid_ssj2_ssj__ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/goku__ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/goku_ssj2__lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/goku_ssj2__ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/goku_ssj2__ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/goku_ssj3__beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/goku_ssj4__ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/goku_ssj__ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/goku_ssj__ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/goku_ssj__ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks__ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks_ssg3__beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks_ssg3__lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks_ssg3__ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks_ssg3__ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks_ssg3__ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks_ssg3__ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks_ssj__ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks_ssj__ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/trunks_ssj__ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/vegeta__ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/vegeta_ssj2__lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/vegeta_ssj2__ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/vegeta_ssj2__ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/vegeta_ssj3__beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/vegeta_ssj4__ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/vegeta_ssj__ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/vegeta_ssj__ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/vegeta_ssj__ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/broly_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/broly_ssj_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/gohan_end_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/gohan_end_ssj2_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/gohan_end_ultimate_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/gohan_mid_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/gohan_mid_ssj2_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/goku_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/goku_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/trunks_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/trunks_ssg3_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/vegeta_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/vegeta_ssj4_grayscale.png"
       }
    ],
    "version" : 1
