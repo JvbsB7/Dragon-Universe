@@ -1,5 +1,5 @@
 import { acquireLoadedArea, releaseLoadedArea, safeTeleport, travelOrigin, isTravelPending, safeReturnToEarth, reportTravelFailure, isSafeStanding } from "./travel_safety.js";
-import { fillAirColumn, emptyChunk, runTerrainJob, registerTerrainOwnership, registerTerrainRepair } from "./terrain_repair.js";
+import { fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTerrainJob, registerTerrainOwnership, registerTerrainRepair } from "./terrain_repair.js";
 /**
  * Space system: Orbital Station + extra planets (Vegeta, Frieza Planet, Yardrat, Kaioshin).
  *
@@ -679,6 +679,38 @@ function chunkState(dim, cx, cz) {
 // Each fresh chunk first receives a versioned solid buffer up to sea level. Adjacent
 // buffers contain native fluid updates while a chunk is converted to its real profile.
 // A 1.7.9 building marker without this separate proof never authorizes replacement.
+// Native proofs replace per-block reads in the read-only checks below; writes do not change. A generator type is only
+// trusted as solid after a real read saw it solid. Anything a query cannot prove goes through the original per-block
+// loop, which keeps the same verdict and error.
+const provenSolid = new Map();
+function learnSolid(P, block) {
+  if (![P.stone, P.floor, P.sub, P.top].includes(block.typeId) || !block.isSolid || block.isLiquid) return;
+  if (!provenSolid.has(P.key)) provenSolid.set(P.key, new Set());
+  provenSolid.get(P.key).add(block.typeId);
+}
+const solidTypes = (P) => [...(provenSolid.get(P.key) ?? [])];
+const queriesUsable = (dim, cx, cz) => queriesReportAir(dim, { x: cx * 16, y: 319, z: cz * 16 });
+function columnContained(P, dim, x, z, strict, profile) {
+  const solids = solidTypes(P);
+  if (strict) return solids.includes(P.stone) && !findUnexpectedBlock(dim, { x, y: MIN_Y + 1, z }, { x, y: P.liquidLevel, z }, [P.stone]);
+  if (!solids.length) return false;
+  for (const span of profile) {
+    const to = Math.min(span.to, P.liquidLevel);
+    if (span.from > to) continue;
+    if (findUnexpectedBlock(dim, { x, y: span.from, z }, { x, y: to, z }, span.type === P.liquid ? [...solids, P.liquid] : solids)) return false;
+  }
+  return true;
+}
+function columnMatchesProfile(P, dim, x, z, profile) {
+  const solids = solidTypes(P);
+  for (const span of profile) {
+    if (span.type !== P.liquid && !solids.includes(span.type)) return false;
+    if (findUnexpectedBlock(dim, { x, y: span.from, z }, { x, y: span.to, z }, [span.type])) return false;
+  }
+  return true;
+}
+
+let spanPace = 0;
 function* fillPlanetSpan(P, dim, x, z, from, to, type) {
   const buffer = world.getDynamicProperty(planetBuffer(P, chunkOf(x), chunkOf(z)));
   const convertible = buffer === "ready" || buffer === "converting";
@@ -694,7 +726,7 @@ function* fillPlanetSpan(P, dim, x, z, from, to, type) {
     if (start !== undefined) { runs.push({ from: start, to: y - 1 }); start = undefined; }
   }
   for (const run of runs) dim.fillBlocks(new BlockVolume({ x, y: run.from, z }, { x, y: run.to, z }), type);
-  yield;
+  if (++spanPace % 8 === 0) yield;
 }
 
 function* terrainJob(P, dim, cx, cz) {
@@ -714,10 +746,17 @@ function* terrainJob(P, dim, cx, cz) {
 
 function* verifyPlanetProfile(P, dim, cx, cz) {
   const x0 = cx * 16, z0 = cz * 16;
+  const native = queriesUsable(dim, cx, cz);
   for (let i = 0; i < 16; i++) for (let j = 0; j < 16; j++) {
     const x = x0 + i, z = z0 + j;
+    if (native && columnMatchesProfile(P, dim, x, z, planetColumn(P, x, z))) {
+      planetWritable(P, cx, cz, "terrain");
+      if (j === 15) yield;
+      continue;
+    }
     for (const span of planetColumn(P, x, z)) for (let y = span.from; y <= span.to; y++) {
       const block = dim.getBlock({ x, y, z }), liquid = span.type === P.liquid;
+      if (block) learnSolid(P, block);
       if (!block || block.typeId === AIR || (liquid ? !block.isSolid && !block.isLiquid : !block.isSolid || block.isLiquid)) throw new Error(P.key + " terrain verification failed at " + x + "," + y + "," + z + "; expected " + span.type + ", observed " + (block?.typeId ?? "unavailable"));
       if (block.typeId !== span.type) throw new PlanetPreservationError(P.key + " terrain preserves unexpected " + block.typeId + " at " + x + "," + y + "," + z + "; expected original profile " + span.type + "; review the world copy before repair");
       if ((y - span.from + 1) % 64 === 0 || y === span.to) { planetWritable(P, cx, cz, "terrain"); yield; }
@@ -1187,12 +1226,28 @@ function freshBulkEmpty(P, dim, cx, cz, activity) {
 }
 
 function* verifyContainment(P, dim, cx, cz, activity, strictBuffer = false) {
+  const native = queriesUsable(dim, cx, cz);
+  if (native) {
+    // One query proves a dry chunk or a finished scaffold (volume within the native limit, as the bulk fill above).
+    const allowed = strictBuffer ? solidTypes(P).filter(type => type === P.stone) : solidTypes(P);
+    if (allowed.length && !findUnexpectedBlock(dim, { x: cx * 16, y: MIN_Y + 1, z: cz * 16 }, { x: cx * 16 + 15, y: P.liquidLevel, z: cz * 16 + 15 }, allowed)) {
+      activity.serial++;
+      yield;
+      return;
+    }
+  }
   for (let x = cx * 16; x < cx * 16 + 16; x++) for (let z = cz * 16; z < cz * 16 + 16; z++) {
     const profile = planetColumn(P, x, z);
+    if (native && columnContained(P, dim, x, z, strictBuffer, profile)) {
+      activity.serial++;
+      if (z === cz * 16 + 15) yield;
+      continue;
+    }
     for (let y = MIN_Y + 1; y <= P.liquidLevel; y++) {
       const actual = dim.getBlock({ x, y, z }), expected = profile.find(span => y >= span.from && y <= span.to)?.type;
       if (!actual) throw new Error(P.key + " fluid containment unavailable at " + x + "," + y + "," + z);
       activity.serial++;
+      learnSolid(P, actual);
       const contained = strictBuffer ? actual.typeId === P.stone && actual.isSolid && !actual.isLiquid : actual.isSolid && !actual.isLiquid || expected === P.liquid && actual.typeId === P.liquid && actual.isLiquid;
       if (!contained)
         throw new PlanetPreservationError(P.key + " fluid containment is incomplete at " + x + "," + y + "," + z + "; observed " + actual.typeId + "; review and repair this neighboring chunk before travel");
