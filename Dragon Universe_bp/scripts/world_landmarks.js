@@ -52,6 +52,7 @@ const single = (id, size) => [{ id, dx: 0, dz: 0, ...size }];
  */
 const SPECS = [
   { key: "piccolo_house", dim: "overworld", size: { x: 42, y: 27, z: 23 }, pieces: single("dbe:landmarks/piccolo_house", { x: 42, z: 23 }), biomes: LAND, maxRange: 8, foundation: "minecraft:dirt" },
+  { key: "yamcha_house", dim: "overworld", size: { x: 26, y: 45, z: 25 }, pieces: single("dbe:landmarks/yamcha_house", { x: 26, z: 25 }), biomes: ["minecraft:desert"], maxRange: 8, foundation: "minecraft:sandstone" },
 ];
 
 const ENV = {};
