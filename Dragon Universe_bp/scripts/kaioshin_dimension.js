@@ -413,8 +413,10 @@ function firstBlockFound(dim, cx, cz) {
 }
 function* ownedTerrainJob(dim, cx, cz) {
   const state = world.getDynamicProperty(terrainOwnership(cx, cz));
-  if (["legacy", "complete", "protected"].includes(state)) return;
-  if (state !== "building") {
+  if (["complete", "protected"].includes(state)) return;
+  const reclaiming = state === "legacy";
+  if (reclaiming && !reclaimSkyLegacy(dim, cx, cz)) return;
+  if (state !== "building" && !reclaiming) {
     world.setDynamicProperty(terrainOwnership(cx, cz), "inspecting");
     if (!(yield* emptyExceptSky(dim, cx, cz))) {
       if (world.getDynamicProperty(terrainOwnership(cx, cz)) !== "protected") world.setDynamicProperty(terrainOwnership(cx, cz), "legacy");
@@ -428,6 +430,7 @@ function* ownedTerrainJob(dim, cx, cz) {
   // check (no yield since the proof). A resumed "building" chunk may hold anything.
   yield* terrainJob(dim, cx, cz, state !== "building" && airFilterWorks(dim, cx * 16, cz * 16, 319));
   world.setDynamicProperty(terrainOwnership(cx, cz), "complete");
+  if (reclaiming) console.warn("[Kaioshin] Legacy chunk " + cx + "," + cz + " repaired: terrain generated below the sky bubble");
 }
 
 // ---------------------------------------------------------------- decoration
@@ -651,7 +654,8 @@ function scan() {
       const cz = pcz + dz;
       const k = cx + "," + cz;
       if (!canRetry(k)) continue;
-      if (["legacy", "protected"].includes(world.getDynamicProperty(terrainOwnership(cx, cz)))) continue;
+      const owned = world.getDynamicProperty(terrainOwnership(cx, cz));
+      if (owned === "protected" || (owned === "legacy" && !skyRepairPending(cx, cz))) continue;
       if (chunkState(dim, cx, cz) === 0) {
         runExclusive(ownedTerrainJob(dim, cx, cz), k, false, { dim, cx, cz });
         return;
@@ -748,6 +752,28 @@ function* emptyExceptSky(dim, cx, cz) {
     }
     yield;
   }
+  return true;
+}
+
+// Existing worlds: a chunk the old proof marked legacy only because of the bubbles can still get its ground.
+// Conservative: every non-air block must be expected glass, at least one must be seen, and the terrain sentinel must
+// be absent. Checked in one step, then the state moves to "building" (player edits are tracked and a stop resumes).
+const skyRepairRefused = new Set();
+const skyRepairPending = (cx, cz) => chunkTouchesSky(cx, cz) && !skyRepairRefused.has(cx + "," + cz);
+function reclaimSkyLegacy(dim, cx, cz) {
+  if (!skyRepairPending(cx, cz)) return false;
+  const refuse = (why) => {
+    skyRepairRefused.add(cx + "," + cz);
+    console.warn("[Kaioshin] Chunk " + cx + "," + cz + " kept legacy under a sky bubble, nothing written: " + why);
+    return false;
+  };
+  if (chunkState(dim, cx, cz) !== 0) return refuse("terrain marker present");
+  if (!queriesReportAir(dim, { x: cx * 16, y: 319, z: cz * 16 })) return refuse("block queries are not reliable");
+  const proof = skyOnlyProof(dim, cx, cz);
+  if (!proof.ok) return refuse("found " + proof.found);
+  if (!proof.count) return refuse("no bubble block seen");
+  world.setDynamicProperty(terrainOwnership(cx, cz), "building");
+  console.warn("[Kaioshin] Legacy chunk " + cx + "," + cz + " under repair: only " + proof.count + " expected sky bubble blocks found; generating the terrain below them");
   return true;
 }
 
