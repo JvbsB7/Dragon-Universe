@@ -204,6 +204,7 @@
                             "dbe:saiyan_pod",
                             "dbe:tournament_invitation",
                             "dbe:bills_invitation",
+                            "dbe:power_tournament_invitation",
                             "dbe:flying_nimbus",
                             "dbe:black_flying_nimbus",
                             "dbe:katchin_shard",
