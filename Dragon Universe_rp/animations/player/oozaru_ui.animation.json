@@ -1,0 +1,36 @@
+{
+	"format_version": "1.10.0",
+	"animations": {
+		// G2 (1.7.13): prévia do Oozaru na tela de estatísticas (live_player_renderer).
+		// Só toca quando o Oozaru é desenhado na UI: v.is_paperdoll || q.is_in_ui (ver player.entity.json).
+		// O modelo do Oozaru tem 51 px de altura com o oozaru_setup e a forma usa escala de entidade 2;
+		// 0.3 deixa a prévia com ~30 px, perto dos 32 px do jogador comum. No mundo nada disso toca.
+		"animation.player.oozaru_ui_preview": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"scale": 0.3
+				},
+				// Na prévia com v.is_paperdoll o dbe_general (e o oozaru_setup) não roda: repete a montagem aqui.
+				"body": {
+					"position": [0, "v.isLive ? 0 : 18", 0]
+				},
+				"head": {
+					"position": [0, "v.isLive ? 0 : -3", 0]
+				},
+				"leftArm": {
+					"position": ["v.isLive ? 0 : 8", "v.isLive ? 0 : -3", 0]
+				},
+				"rightArm": {
+					"position": ["v.isLive ? 0 : -8", "v.isLive ? 0 : -3", 0]
+				},
+				"leftLeg": {
+					"position": ["v.isLive ? 0 : 4", "v.isLive ? 0 : 4", 0]
+				},
+				"rightLeg": {
+					"position": ["v.isLive ? 0 : -4", "v.isLive ? 0 : 4", 0]
+				}
+			}
+		}
+	}
+}
