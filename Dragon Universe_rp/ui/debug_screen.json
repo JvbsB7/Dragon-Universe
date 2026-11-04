@@ -28,7 +28,7 @@
                     "offset": [ 9, 0 ],
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
-                    "text": "pack.credits",
+                    "text": "pack.watermark",
                     "font_type": "MinecraftTen",
                     "font_size": "small",
                     "shadow": true,

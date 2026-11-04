@@ -16609,6 +16609,8 @@ var kq = class t8 extends jY {
         this.setBody({
           rawtext: [
             { translate: "pack.news" },
+            { text: "\n\n" },
+            { translate: "pack.news.credits" },
           ],
         });
     }
