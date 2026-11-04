@@ -433,6 +433,44 @@
                         /*beast         */ "Texture.du_dmz_fixa_broly_ssj__beast_hair",
                         /*ultra_ego     */ "Texture.du_dmz_fixa_broly_ssj__ultra_ego_hair"
                     ],
+                    "Array.du_flare_a_hairs": [
+                        /*base          */ "Texture.du_flare_a_hair",
+                        /*oozaru        */ "Texture.du_flare_a_hair",
+                        /*ssj           */ "Texture.du_flare_a_ssj_hair",
+                        /*assj          */ "Texture.du_flare_a_ssj_hair",
+                        /*ssj2          */ "Texture.du_flare_a_ssj_hair",
+                        /*ssj3          */ "Texture.du_flare_a_ssj3_hair",
+                        /*lssj          */ "Texture.du_flare_a_ssj_lssj_hair",
+                        /*ultimate      */ "Texture.du_flare_a_ssj_ultimate_hair",
+                        /*golden_oozaru */ "Texture.du_flare_a_hair",
+                        /*ssj4          */ "Texture.du_flare_a_ssj4_hair",
+                        /*ssjg          */ "Texture.du_flare_a_ssj_ssjg_hair",
+                        /*ssjb          */ "Texture.du_flare_a_ssj_ssjb_hair",
+                        /*ssjr          */ "Texture.du_flare_a_ssj_ssjr_hair",
+                        /*ssjbe         */ "Texture.du_flare_a_ssj_ssjbe_hair",
+                        /*ssjre         */ "Texture.du_flare_a_ssj_ssjre_hair",
+                        /*beast         */ "Texture.du_flare_a_ssj_beast_hair",
+                        /*ultra_ego     */ "Texture.du_flare_a_ssj_ultra_ego_hair"
+                    ],
+                    "Array.du_flare_a_hairs_grayscale": [
+                        /*base          */ "Texture.du_flare_a_hair_grayscale",
+                        /*oozaru        */ "Texture.du_flare_a_hair",
+                        /*ssj           */ "Texture.du_flare_a_ssj_hair",
+                        /*assj          */ "Texture.du_flare_a_ssj_hair",
+                        /*ssj2          */ "Texture.du_flare_a_ssj_hair",
+                        /*ssj3          */ "Texture.du_flare_a_ssj3_hair",
+                        /*lssj          */ "Texture.du_flare_a_ssj_lssj_hair",
+                        /*ultimate      */ "Texture.du_flare_a_ssj_grayscale_hair",
+                        /*golden_oozaru */ "Texture.du_flare_a_hair",
+                        /*ssj4          */ "Texture.du_flare_a_ssj4_grayscale_hair",
+                        /*ssjg          */ "Texture.du_flare_a_ssj_ssjg_hair",
+                        /*ssjb          */ "Texture.du_flare_a_ssj_ssjb_hair",
+                        /*ssjr          */ "Texture.du_flare_a_ssj_ssjr_hair",
+                        /*ssjbe         */ "Texture.du_flare_a_ssj_ssjbe_hair",
+                        /*ssjre         */ "Texture.du_flare_a_ssj_ssjre_hair",
+                        /*beast         */ "Texture.du_flare_a_ssj_beast_hair",
+                        /*ultra_ego     */ "Texture.du_flare_a_ssj_ultra_ego_hair"
+                    ],
                     "Array.goku_hairs": [
                         /*base          */ "Texture.goku_hair",
                         /*oozaru        */ "Texture.goku_hair",
@@ -701,6 +739,25 @@
                     ]
                 },
                 "geometries": {
+                    "Array.du_flare_a_geo": [
+                        /*base          */ "Geometry.du_flare_a",
+                        /*oozaru        */ "Geometry.none",
+                        /*ssj           */ "Geometry.du_flare_a_ssj",
+                        /*assj          */ "Geometry.du_flare_a_ssj",
+                        /*ssj2          */ "Geometry.du_flare_a_ssj",
+                        /*ssj3          */ "Geometry.du_flare_a_ssj3",
+                        /*lssj          */ "Geometry.du_flare_a_ssj",
+                        /*ultimate      */ "Geometry.du_flare_a_ssj",
+                        /*golden_oozaru */ "Geometry.none",
+                        /*ssj4          */ "Geometry.du_flare_a_ssj4",
+                        /*ssjg          */ "Geometry.du_flare_a_ssj",
+                        /*ssjb          */ "Geometry.du_flare_a_ssj",
+                        /*ssjr          */ "Geometry.du_flare_a_ssj",
+                        /*ssjbe         */ "Geometry.du_flare_a_ssj",
+                        /*ssjre         */ "Geometry.du_flare_a_ssj",
+                        /*beast         */ "Geometry.du_flare_a_ssj",
+                        /*ultra_ego     */ "Geometry.du_flare_a_ssj"
+                    ],
                     "Array.du_dmz_vegeta_geo": [
                         /*base          */ "Geometry.du_dmz_vegeta",
                         /*oozaru        */ "Geometry.du_dmz_vegeta",
@@ -817,9 +874,9 @@
                     ]
                 }
             },
-            "geometry": "v.du_dmz_hair ? (v.customization1 == 1 ? Array.du_dmz_vegeta_geo[v.transformation] : v.customization1 == 2 ? Array.du_dmz_gohan_jovem_geo[v.transformation] : v.customization1 == 3 ? Array.du_dmz_gohan_adulto_geo[v.transformation] : v.customization1 == 7 ? Array.du_dmz_goku_geo[v.transformation] : v.customization1 == 8 ? Array.du_dmz_trunks_geo[v.transformation] : Array.du_dmz_broly_geo[v.transformation]) : ((v.customization1 == 0 && q.any(v.transformation, 0, 2, 3)) ? (v.transformation == 0 ? Geometry.du_flare_a : Geometry.du_flare_a_ssj) : (v.is_beast ? Geometry.beast_hair : Geometry.hair_base))",
-            "materials": [ { "*": "(v.is_grayscale_hair && !(v.du_dmz_hair && v.is_ssj5)) ? Material.alphatest_change_color : Material.default" } ],
-            "textures": [ "v.du_dmz_hair ? (v.is_ssj5 ? (v.customization1 == 1 ? Texture.du_dmz_fixa_vegeta_ssj4__ssj5_hair : v.customization1 == 2 ? Texture.du_dmz_fixa_gohan_mid_ssj2__ssj5_hair : v.customization1 == 3 ? Texture.du_dmz_fixa_gohan_end_ssj2__ssj5_hair : v.customization1 == 7 ? Texture.du_dmz_fixa_goku_ssj4__ssj5_hair : v.customization1 == 8 ? Texture.du_dmz_fixa_trunks_ssg3__ssj5_hair : Texture.du_dmz_fixa_broly_ssj__ssj5_hair) : (v.customization1 == 1 ? (v.is_grayscale_hair ? Array.du_dmz_vegeta_hairs_grayscale[v.transformation] : Array.du_dmz_vegeta_hairs[v.transformation]) : v.customization1 == 2 ? (v.is_grayscale_hair ? Array.du_dmz_gohan_jovem_hairs_grayscale[v.transformation] : Array.du_dmz_gohan_jovem_hairs[v.transformation]) : v.customization1 == 3 ? (v.is_grayscale_hair ? Array.du_dmz_gohan_adulto_hairs_grayscale[v.transformation] : Array.du_dmz_gohan_adulto_hairs[v.transformation]) : v.customization1 == 7 ? (v.is_grayscale_hair ? Array.du_dmz_goku_hairs_grayscale[v.transformation] : Array.du_dmz_goku_hairs[v.transformation]) : v.customization1 == 8 ? (v.is_grayscale_hair ? Array.du_dmz_trunks_hairs_grayscale[v.transformation] : Array.du_dmz_trunks_hairs[v.transformation]) : (v.is_grayscale_hair ? Array.du_dmz_broly_hairs_grayscale[v.transformation] : Array.du_dmz_broly_hairs[v.transformation]))) : v.is_ssj5 ? Texture.goku_ssj5_hair : (v.customization1 == 0 && q.any(v.transformation, 0, 2, 3)) ? (v.transformation == 0 ? (v.is_grayscale_hair ? Texture.du_flare_a_hair_grayscale : Texture.du_flare_a_hair) : Texture.du_flare_a_ssj_hair) : v.customization1 == 0 ? (v.is_grayscale_hair ? Array.goku_hairs_grayscale[v.transformation] : Array.goku_hairs[v.transformation]) : v.customization1 == 1 ? (v.is_grayscale_hair ? Array.vegeta_hairs_grayscale[v.transformation] : Array.vegeta_hairs[v.transformation]) : v.customization1 == 2 ? (v.is_grayscale_hair ? Array.gohan_hairs_grayscale[v.transformation] : Array.gohan_hairs[v.transformation]) : v.customization1 == 3 ? (v.is_grayscale_hair ? Array.adult_gohan_hairs_grayscale[v.transformation] : Array.adult_gohan_hairs[v.transformation]) : v.customization1 == 4 ? (v.is_grayscale_hair ? Array.caulifla_hairs_grayscale[v.transformation] : Array.caulifla_hairs[v.transformation]) : v.customization1 == 5 ? (v.is_grayscale_hair ? Array.raditz_hairs_grayscale[v.transformation] : Array.raditz_hairs[v.transformation]) : (v.is_grayscale_hair ? Array.gogeta_hairs_grayscale[v.transformation] : Array.gogeta_hairs[v.transformation])" ],
+            "geometry": "q.any(v.transformation, 1, 8) ? Geometry.none : (v.du_dmz_hair ? (v.customization1 == 1 ? Array.du_dmz_vegeta_geo[v.transformation] : v.customization1 == 2 ? Array.du_dmz_gohan_jovem_geo[v.transformation] : v.customization1 == 3 ? Array.du_dmz_gohan_adulto_geo[v.transformation] : v.customization1 == 7 ? Array.du_dmz_goku_geo[v.transformation] : v.customization1 == 8 ? Array.du_dmz_trunks_geo[v.transformation] : Array.du_dmz_broly_geo[v.transformation]) : (v.customization1 == 0 ? (v.is_ssj5 ? Geometry.du_flare_a_ssj : Array.du_flare_a_geo[v.transformation]) : (v.is_beast ? Geometry.beast_hair : Geometry.hair_base)))",
+            "materials": [ { "*": "(v.is_grayscale_hair && !((v.du_dmz_hair || v.customization1 == 0) && v.is_ssj5)) ? Material.alphatest_change_color : Material.default" } ],
+            "textures": [ "v.du_dmz_hair ? (v.is_ssj5 ? (v.customization1 == 1 ? Texture.du_dmz_fixa_vegeta_ssj4__ssj5_hair : v.customization1 == 2 ? Texture.du_dmz_fixa_gohan_mid_ssj2__ssj5_hair : v.customization1 == 3 ? Texture.du_dmz_fixa_gohan_end_ssj2__ssj5_hair : v.customization1 == 7 ? Texture.du_dmz_fixa_goku_ssj4__ssj5_hair : v.customization1 == 8 ? Texture.du_dmz_fixa_trunks_ssg3__ssj5_hair : Texture.du_dmz_fixa_broly_ssj__ssj5_hair) : (v.customization1 == 1 ? (v.is_grayscale_hair ? Array.du_dmz_vegeta_hairs_grayscale[v.transformation] : Array.du_dmz_vegeta_hairs[v.transformation]) : v.customization1 == 2 ? (v.is_grayscale_hair ? Array.du_dmz_gohan_jovem_hairs_grayscale[v.transformation] : Array.du_dmz_gohan_jovem_hairs[v.transformation]) : v.customization1 == 3 ? (v.is_grayscale_hair ? Array.du_dmz_gohan_adulto_hairs_grayscale[v.transformation] : Array.du_dmz_gohan_adulto_hairs[v.transformation]) : v.customization1 == 7 ? (v.is_grayscale_hair ? Array.du_dmz_goku_hairs_grayscale[v.transformation] : Array.du_dmz_goku_hairs[v.transformation]) : v.customization1 == 8 ? (v.is_grayscale_hair ? Array.du_dmz_trunks_hairs_grayscale[v.transformation] : Array.du_dmz_trunks_hairs[v.transformation]) : (v.is_grayscale_hair ? Array.du_dmz_broly_hairs_grayscale[v.transformation] : Array.du_dmz_broly_hairs[v.transformation]))) : v.customization1 == 0 ? (v.is_ssj5 ? Texture.du_flare_a_ssj_ssj5_hair : (v.is_grayscale_hair ? Array.du_flare_a_hairs_grayscale[v.transformation] : Array.du_flare_a_hairs[v.transformation])) : v.is_ssj5 ? Texture.goku_ssj5_hair : v.customization1 == 1 ? (v.is_grayscale_hair ? Array.vegeta_hairs_grayscale[v.transformation] : Array.vegeta_hairs[v.transformation]) : v.customization1 == 2 ? (v.is_grayscale_hair ? Array.gohan_hairs_grayscale[v.transformation] : Array.gohan_hairs[v.transformation]) : v.customization1 == 3 ? (v.is_grayscale_hair ? Array.adult_gohan_hairs_grayscale[v.transformation] : Array.adult_gohan_hairs[v.transformation]) : v.customization1 == 4 ? (v.is_grayscale_hair ? Array.caulifla_hairs_grayscale[v.transformation] : Array.caulifla_hairs[v.transformation]) : v.customization1 == 5 ? (v.is_grayscale_hair ? Array.raditz_hairs_grayscale[v.transformation] : Array.raditz_hairs[v.transformation]) : (v.is_grayscale_hair ? Array.gogeta_hairs_grayscale[v.transformation] : Array.gogeta_hairs[v.transformation])" ],
             "part_visibility": [
                 { "*": "!v.hide_hair" },
                 { "head": true }

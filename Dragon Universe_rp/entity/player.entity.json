@@ -234,6 +234,21 @@
 				"du_flare_a_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_base",
 				"du_flare_a_hair_grayscale": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_grayscale",
 				"du_flare_a_ssj_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj",
+				// G5: du_flare_a em todas as formas (cores fixas das formas atuais)
+				"du_flare_a_ssj_lssj_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_lssj",
+				"du_flare_a_ssj_ultimate_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ultimate",
+				"du_flare_a_ssj_grayscale_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_grayscale",
+				"du_flare_a_ssj_ssjg_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ssjg",
+				"du_flare_a_ssj_ssjb_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ssjb",
+				"du_flare_a_ssj_ssjr_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ssjr",
+				"du_flare_a_ssj_ssjbe_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ssjbe",
+				"du_flare_a_ssj_ssjre_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ssjre",
+				"du_flare_a_ssj_beast_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_beast",
+				"du_flare_a_ssj_ultra_ego_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ultra_ego",
+				"du_flare_a_ssj_ssj5_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ssj5",
+				"du_flare_a_ssj3_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj3",
+				"du_flare_a_ssj4_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj4",
+				"du_flare_a_ssj4_grayscale_hair": "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj4_grayscale",
 				// du_dmz_* (cabelos do DragonMineZ 2.2.1, GPL-3.0; ver relatorios/ORIGEM_cabelos_DMZ.md)
 				"du_dmz_broly_hair": "textures/entity/basic_customizations/hairs/du_dmz/broly",
 				"du_dmz_broly_lssj_hair": "textures/entity/basic_customizations/hairs/du_dmz/broly_lssj",
@@ -529,6 +544,10 @@
 				"du_spiky_a_ascended": "geometry.du_spiky_a_ascended",
 				"du_flare_a": "geometry.du_flare_a",
 				"du_flare_a_ssj": "geometry.du_flare_a_ssj",
+				"du_flare_a_ssj3": "geometry.du_flare_a_ssj3",
+				"du_flare_a_ssj4": "geometry.du_flare_a_ssj4",
+				// G1: forma Oozaru não tem cabelo
+				"none": "geometry.none",
 				"du_dmz_broly": "geometry.du_dmz_broly",
 				"du_dmz_broly_lssj": "geometry.du_dmz_broly_lssj",
 				"du_dmz_broly_ssj": "geometry.du_dmz_broly_ssj",
@@ -769,7 +788,9 @@
 				],
 				"animate": [
 					"root",
-					{ "dbe_general": "v.isLive" }
+					{ "dbe_general": "v.isLive" },
+					// G2: só na prévia da UI (paperdoll / live_player_renderer); a escala no mundo não muda
+					{ "oozaru_ui_preview": "v.is_oozaru && (v.is_paperdoll || q.is_in_ui)" }
 				],
 				"variables": {
 					"variable.fp_melee_spear_use_attachable_rotation_z": "public",
@@ -926,6 +947,7 @@
 				"melee_attack_6": "animation.player.melee.attack_6",
 				"muscular_body": "animation.player.muscular",
 				"oozaru_setup": "animation.player.oozaru_setup",
+				"oozaru_ui_preview": "animation.player.oozaru_ui_preview",
 				"sfx_charge_god_loop": "animation.aura.charge_god_loop",
 				"sfx_charge_loop": "animation.aura.charge_loop",
 				"slim_body": "animation.player.slim_body",
@@ -964,7 +986,7 @@
 				{ "controller.render.player.saiyan.eyes_sclera": "!v.is_first_person && !q.is_spectator && v.race == 'saiyan' && !v.is_oozaru" },
 				{ "controller.render.player.saiyan.eyes_iris": "!v.is_first_person && !q.is_spectator && v.race == 'saiyan' && !v.is_oozaru" },
 				{ "controller.render.player.saiyan.eyebrows": "!v.is_first_person && !q.is_spectator && v.race == 'saiyan' && !v.is_oozaru" },
-				{ "controller.render.player.saiyan.hair": "!v.is_first_person && !q.is_spectator && v.race == 'saiyan' && !v.is_oozaru" },
+				{ "controller.render.player.saiyan.hair": "!v.is_first_person && !q.is_spectator && v.race == 'saiyan' && !v.is_oozaru && !q.any(v.transformation, 1, 8)" },
 				{ "controller.render.player.saiyan.tail": "!v.is_first_person && !q.is_spectator && v.race == 'saiyan' && !v.is_oozaru && v.has_tail" },
 				// namekian
 				{ "controller.render.player.namekian.first_person": "v.is_first_person && !q.is_spectator && v.race == 'namekian'" },
