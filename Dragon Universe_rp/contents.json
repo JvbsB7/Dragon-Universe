@@ -6016,6 +6016,42 @@
          "path" : "models/entity/races/hairs/du_flare_a_ssj4.geo.json"
       },
       {
+         "path" : "models/entity/races/hairs/du_caulifla.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_caulifla_ssj.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_caulifla_ssj3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_caulifla_ssj4.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_raditz.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_raditz_ssj.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_raditz_ssj3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_raditz_ssj4.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_gogeta.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_gogeta_ssj.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_gogeta_ssj3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_gogeta_ssj4.geo.json"
+      },
+      {
          "path" : "textures/entity/basic_customizations/hairs/du_dmz/broly.png"
       },
       {
@@ -6137,6 +6173,159 @@
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj4_ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_ultimate.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_caulifla/du_caulifla_ssj_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj4_ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_ultimate.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_base.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj4_ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_beast.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_lssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_ssjb.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_ssjbe.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_ssjg.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_ssjr.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_ssjre.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_ultimate.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_ultra_ego.png"
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly__ssjg.png"
