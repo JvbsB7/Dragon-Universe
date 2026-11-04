@@ -6106,6 +6106,9 @@
          "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj4_grayscale.png"
       },
       {
+         "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj4_ssj5.png"
+      },
+      {
          "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_beast.png"
       },
       {
@@ -6113,9 +6116,6 @@
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_lssj.png"
-      },
-      {
-         "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ssj5.png"
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_ssjb.png"
