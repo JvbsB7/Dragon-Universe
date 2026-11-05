@@ -1,5 +1,5 @@
 import { acquireLoadedArea, releaseLoadedArea, safeTeleport, safeReturnToEarth, travelOrigin, reportTravelFailure, physicalDestinationId } from "./travel_safety.js";
-import { AIR_ONLY_FILL, airFilterWorks, fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
+import { AIR_ONLY_FILL, airFilterWorks, distrustAirFilter, fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 /**
  * Kaioshin dimension (dbe:kai)  -  the lush Kaioshin planet from Dragon Ball Z
  *
@@ -303,7 +303,7 @@ function chunkState(dim, cx, cz) {
   return b.typeId === "minecraft:bedrock" ? 2 : 1;
 }
 
-function* terrainJob(dim, cx, cz, fresh = false) {
+function* writeTerrain(dim, cx, cz, fresh) {
   const x0 = cx * 16;
   const z0 = cz * 16;
 
@@ -365,18 +365,20 @@ function* terrainJob(dim, cx, cz, fresh = false) {
     }
     if (!fresh || i % 2 === 1) yield;
   }
+  return tops;
+}
 
-  // Safety net: make sure the terrain really is there before the chunk is marked as done. If it is not
-  // (chunk unloaded mid-job, engine refused a fill...) throw, so the chunk is retried instead of being a hole.
-  const nativeCheck = fresh && queriesReportAir(dim, { x: x0, y: 319, z: z0 });
+// Safety net: make sure the terrain really is there before the chunk is marked as done. Returns the first difference,
+// or undefined. A fresh chunk must hold exactly the generated profile (native check); otherwise each block is read.
+function* terrainMismatch(dim, cx, cz, tops, nativeCheck) {
+  const x0 = cx * 16, z0 = cz * 16;
   for (let column = 0; column < 256; column++) {
     const i = Math.floor(column / 16), j = column % 16;
     const x = x0 + i, z = z0 + j, top = tops[column];
     if (nativeCheck) {
-      // A fresh chunk must hold exactly the generated profile; any difference fails, and the retry (state "building") uses the per-block path.
       for (const span of repairColumn(x, z)) {
         const point = findUnexpectedBlock(dim, { x, y: span.from, z }, { x, y: span.to, z }, [span.type]);
-        if (point) throw new Error("Kaioshin terrain verification failed at " + point.x + "," + point.y + "," + point.z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type);
+        if (point) return "Kaioshin terrain verification failed at " + point.x + "," + point.y + "," + point.z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type + ", observed " + (dim.getBlock(point)?.typeId ?? "unavailable");
       }
       if (column % 64 === 63) yield;
       continue;
@@ -384,11 +386,28 @@ function* terrainJob(dim, cx, cz, fresh = false) {
     for (const span of repairColumn(x, z)) for (let y = span.from; y <= span.to; y++) {
       const block = dim.getBlock({ x, y, z }), waterLayer = span.type === WATER;
       if (!block || block.typeId === AIR || (waterLayer ? !block.isSolid && !block.isLiquid : !block.isSolid || block.isLiquid)) {
-        throw new Error("Kaioshin terrain verification failed at " + x + "," + y + "," + z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type + (waterLayer ? " water layer or existing solid block" : " solid non-liquid foundation") + ", observed " + (block?.typeId ?? "unavailable") + " (solid=" + block?.isSolid + ", liquid=" + block?.isLiquid + "); core=" + (MIN_Y + 1) + ".." + top);
+        return "Kaioshin terrain verification failed at " + x + "," + y + "," + z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type + (waterLayer ? " water layer or existing solid block" : " solid non-liquid foundation") + ", observed " + (block?.typeId ?? "unavailable") + " (solid=" + block?.isSolid + ", liquid=" + block?.isLiquid + "); core=" + (MIN_Y + 1) + ".." + top;
       }
     }
     if (column % 16 === 15) yield;
   }
+}
+
+function* terrainJob(dim, cx, cz, fresh = false) {
+  const x0 = cx * 16;
+  const z0 = cz * 16;
+  let tops = yield* writeTerrain(dim, cx, cz, fresh);
+  let failure = yield* terrainMismatch(dim, cx, cz, tops, fresh && queriesReportAir(dim, { x: x0, y: 319, z: z0 }));
+  if (failure && fresh) {
+    // The air-only fill wrote less than asked. Not a travel error: the same job rebuilds the chunk with the per-block
+    // path (it only fills air, like a "building" retry) and verifies every block; later chunks skip the filter.
+    console.warn("[Kaioshin] chunk " + cx + "," + cz + ": " + failure + "; rebuilding it with per-block writes in the same job");
+    distrustAirFilter(dim, failure);
+    tops = yield* writeTerrain(dim, cx, cz, false);
+    failure = yield* terrainMismatch(dim, cx, cz, tops, false);
+  }
+  // Chunk unloaded mid-job, engine refused a fill...: throw, so the chunk is retried instead of being a hole.
+  if (failure) throw new Error(failure);
   // Keep the terrain sentinel (x0,z0) untouched until every other marker write succeeds.
   // Filling the entire floor with bedrock first could incorrectly commit decoration on interruption.
   if (world.getDynamicProperty?.(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin generation stopped after a player edit");
