@@ -427,8 +427,9 @@ function* ownedTerrainJob(dim, cx, cz) {
     world.setDynamicProperty(terrainOwnership(cx, cz), "building");
   }
   // Only a chunk proven empty just above writes without per-block reads, and only once the filter passed its active
-  // check (no yield since the proof). A resumed "building" chunk may hold anything.
-  yield* terrainJob(dim, cx, cz, state !== "building" && airFilterWorks(dim, cx * 16, cz * 16, 319));
+  // check (no yield since the proof), made at the terrain bottom where no sub-chunk exists yet. A resumed "building"
+  // chunk may hold anything.
+  yield* terrainJob(dim, cx, cz, state !== "building" && airFilterWorks(dim, cx * 16, cz * 16, MIN_Y + 1));
   world.setDynamicProperty(terrainOwnership(cx, cz), "complete");
   if (reclaiming) console.warn("[Kaioshin] Legacy chunk " + cx + "," + cz + " repaired: terrain generated below the sky bubble");
 }

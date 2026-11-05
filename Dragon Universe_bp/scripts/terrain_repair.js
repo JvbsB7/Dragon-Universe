@@ -59,32 +59,45 @@ export function queriesReportAir(dimension, point) {
   return trusted;
 }
 
-// Active check that a fill filtered to air really keeps existing blocks and fills air, once per session and dimension.
-// Runs inside one chunk proven empty, in a single step: a marker on top, a filtered fill, then both blocks removed.
+// Active check that a fill filtered to air really fills air and keeps existing blocks, once per session and dimension.
+// Runs inside one chunk proven empty, in a single step. The first fill goes into a block of a sub-chunk nothing has
+// written to yet (the terrain bottom), so an engine that skips missing sections fails here; only then is a block
+// placed there, to check that the filter keeps it while it fills the air above. Both blocks are removed afterwards.
 export const AIR_ONLY_FILL = { blockFilter: { includeTypes: [AIR] } };
-const FILTER_MARKER = "minecraft:glass", FILTER_FILL = "minecraft:stone";
+const FILTER_FILL = "minecraft:stone", FILTER_MARKER = "minecraft:glass";
 const filterProbes = new Map();
 export function airFilterWorks(dimension, x, z, y) {
   if (filterProbes.has(dimension.id)) return filterProbes.get(dimension.id);
-  const marker = { x, y, z }, target = { x, y: y - 1, z };
-  if (dimension.getBlock(marker)?.typeId !== AIR || dimension.getBlock(target)?.typeId !== AIR) return false; // No usable spot; decide on a later chunk.
-  let works = false, failure = "marker overwritten or air not filled";
+  const target = { x, y, z }, above = { x, y: y + 1, z };
+  if (dimension.getBlock(target)?.typeId !== AIR || dimension.getBlock(above)?.typeId !== AIR) return false; // No usable spot; decide on a later chunk.
+  let works = false, failure = "air in an untouched sub-chunk not filled";
   try {
-    dimension.setBlockType(marker, FILTER_MARKER);
-    dimension.fillBlocks(new BlockVolume(target, marker), FILTER_FILL, AIR_ONLY_FILL);
-    works = dimension.getBlock(marker)?.typeId === FILTER_MARKER && dimension.getBlock(target)?.typeId === FILTER_FILL;
+    dimension.fillBlocks(new BlockVolume(target, target), FILTER_FILL, AIR_ONLY_FILL);
+    const empty = dimension.getBlock(target)?.typeId;
+    if (empty === FILTER_FILL) {
+      failure = "existing block overwritten or air above not filled";
+      dimension.fillBlocks(new BlockVolume(target, above), FILTER_MARKER, AIR_ONLY_FILL);
+      works = dimension.getBlock(target)?.typeId === FILTER_FILL && dimension.getBlock(above)?.typeId === FILTER_MARKER;
+    } else failure += " (observed " + (empty ?? "unavailable") + ")";
   } catch (error) { failure = String(error); }
   try {
-    dimension.setBlockType(marker, AIR);
+    dimension.setBlockType(above, AIR);
     dimension.setBlockType(target, AIR);
-    if (dimension.getBlock(marker)?.typeId !== AIR || dimension.getBlock(target)?.typeId !== AIR) throw new Error("blocks remain");
+    if (dimension.getBlock(target)?.typeId !== AIR || dimension.getBlock(above)?.typeId !== AIR) throw new Error("blocks remain");
   } catch (error) {
     works = false;
-    failure += "; cleanup failed at " + x + "," + (y - 1) + ".." + y + "," + z + ": " + error;
+    failure += "; cleanup failed at " + x + "," + y + ".." + (y + 1) + "," + z + ": " + error;
   }
   filterProbes.set(dimension.id, works);
   if (!works) console.warn("[Terrain] " + dimension.id + ": air-only fill is not reliable (" + failure + "); using per-block writes");
   return works;
+}
+
+// A later check found the filtered fill wrong after the probe passed: per-block writes for the rest of this session.
+export function distrustAirFilter(dimension, reason) {
+  if (filterProbes.get(dimension.id) === false) return;
+  filterProbes.set(dimension.id, false);
+  console.warn("[Terrain] " + dimension.id + ": air-only fill is not reliable after its probe passed (" + reason + "); using per-block writes for this session");
 }
 
 export function runTerrainJob(generator, { timeoutTicks = 2400, inactivityTicks, activity, label = "Terrain job" } = {}) {
