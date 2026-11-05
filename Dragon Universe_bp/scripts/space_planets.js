@@ -40,6 +40,7 @@ import { fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTe
 import * as mc from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { initVillages } from "./planet_villages.js";
+import { travelTimer } from "./travel_timing.js"; // TEMPORARY test measurement, see travel_timing.js
 
 const { world, system, BlockVolume } = mc;
 
@@ -741,7 +742,9 @@ function* terrainJob(P, dim, cx, cz) {
       }
     }
   }
+  runningTiming?.mark("chunk " + cx + "," + cz + " write:end");
   yield* verifyPlanetProfile(P, dim, cx, cz);
+  runningTiming?.mark("chunk " + cx + "," + cz + " verify:end");
 }
 
 function* verifyPlanetProfile(P, dim, cx, cz) {
@@ -1345,6 +1348,9 @@ function reportError(W, e, operation = "") {
   console.warn("[Space] " + operation + ": " + String(e) + (e?.stack ? "\n" + e.stack : ""));
 }
 
+// TEMPORARY test measurement: the trip timer handed to the next job started by prepareArea, and the one of the job
+// that holds the writer lock (one at a time).
+let nextJobTiming, runningTiming;
 function runExclusive(build, W, cx, cz, phase = "terrain", strict = false) {
   const key = W.key + ":" + phase + ":" + cx + "," + cz;
   let shared = chunkJobs.get(key);
@@ -1359,13 +1365,16 @@ function runExclusive(build, W, cx, cz, phase = "terrain", strict = false) {
 async function runLoadedJob(build, key, W, cx, cz, phase) {
   let area, ownsBusy = false, scope;
   const activity = { serial: 0 };
+  const timing = nextJobTiming, at = "chunk " + cx + "," + cz + " " + phase;
   try {
     if (repairing) throw new Error("Space terrain repair is active; retry after it finishes");
     while (busy) await waitForWriter();
     if (repairing) throw new Error("Space terrain repair is active; retry after it finishes");
-    busy = ownsBusy = true; busyActivity = activity;
+    busy = ownsBusy = true; busyActivity = activity; runningTiming = timing;
+    timing?.mark(at + " queue:end");
     const dim = world.getDimension(W.id), halo = W.kind === "planet" ? 1 : 0;
     area = await acquireLoadedArea(dim, { x: (cx - halo) * 16, y: MIN_Y, z: (cz - halo) * 16 }, { x: (cx + halo + 1) * 16 - 1, y: MIN_Y, z: (cz + halo + 1) * 16 - 1 }, W.key + " " + phase + " chunk " + cx + "," + cz);
+    timing?.mark(at + " area+loading:end", (2 * halo + 1) ** 2 + " chunks");
     activity.serial++;
     if (W.kind === "planet") scope = scopedPlanetDimension(W, dim, cx, cz, phase, activity);
     const target = scope?.dimension ?? dim;
@@ -1392,6 +1401,7 @@ async function runLoadedJob(build, key, W, cx, cz, phase) {
             }
             planetWritable(W, cx, cz, "terrain");
             world.setDynamicProperty(planetBuffer(W, cx, cz), "converting");
+            timing?.mark(at + " buffers:end");
           }
         } else if (state !== "complete") return;
       }
@@ -1423,6 +1433,7 @@ async function runLoadedJob(build, key, W, cx, cz, phase) {
         yield* verifyRequiredWrites(scope, W, cx, cz, phase);
       }
     })(), W.kind === "planet" ? { inactivityTicks: 2400, activity: () => activity.serial, label: key } : { label: key });
+    timing?.mark(at + " job:end", "markers written");
     retryAt.delete(key);
     return true;
   } catch (e) {
@@ -1432,7 +1443,7 @@ async function runLoadedJob(build, key, W, cx, cz, phase) {
     throw e;
   } finally {
     if (area) releaseLoadedArea(area);
-    if (ownsBusy) { busy = false; busyActivity = undefined; }
+    if (ownsBusy) { busy = false; busyActivity = undefined; runningTiming = undefined; }
     system.run(() => {
       try {
         scan();
@@ -1735,12 +1746,16 @@ function removeArea(id) {
 const PLANET_ARRIVAL_RADIUS = 1;
 const PROGRESS_TICKS = 100;
 
-async function prepareArea(W, dim, cx, cz, player) {
+async function prepareArea(W, dim, cx, cz, player, timing) {
   const rad = W.kind === "space" ? W.prep : PLANET_ARRIVAL_RADIUS;
+  timing?.mark("area+loading:start", (2 * rad + 1) ** 2 + " chunks");
   const id = await acquireLoadedArea(dim,
     { x: (cx - rad) * 16, y: MIN_Y, z: (cz - rad) * 16 },
     { x: (cx + rad + 1) * 16 - 1, y: MIN_Y, z: (cz + rad + 1) * 16 - 1 },
     "space_planets.js: destination preparation");
+  timing?.mark("area+loading:end");
+  // TEMPORARY test measurement: hands the trip timer to the job this call starts (or joins).
+  const timed = (start) => { nextJobTiming = timing; try { return start(); } finally { nextJobTiming = undefined; } };
   try {
     const chunks = offsets(rad);
     let done = 0, noticeAt = system.currentTick + PROGRESS_TICKS;
@@ -1753,13 +1768,19 @@ async function prepareArea(W, dim, cx, cz, player) {
     for (const [dx, dz] of chunks) {
       const nx = cx + dx, nz = cz + dz;
       const state = W.kind === "planet" ? world.getDynamicProperty(planetOwnership(W, nx, nz)) : undefined;
-      if (W.kind === "planet" ? !["complete", "legacy", "protected"].includes(state) : chunkState(dim, nx, nz) === 0) await runExclusive(loaded => terrainFor(W, loaded, nx, nz), W, nx, nz, "terrain", true);
+      if (W.kind === "planet" ? !["complete", "legacy", "protected"].includes(state) : chunkState(dim, nx, nz) === 0) {
+        timing?.mark("chunk " + nx + "," + nz + " terrain:start", "state=" + state);
+        await timed(() => runExclusive(loaded => terrainFor(W, loaded, nx, nz), W, nx, nz, "terrain", true));
+        timing?.mark("chunk " + nx + "," + nz + " terrain:end", done + 1 + "/" + chunks.length);
+      }
       progress();
     }
     // Only the landing chunk is decorated before arrival (it holds the landing pad); its neighbours are generated above.
     if (W.kind === "planet" && world.getDynamicProperty(planetOwnership(W, cx, cz)) === "complete" && chunkState(dim, cx, cz) === 1 &&
         NEIGHBOURS.every(([nx, nz]) => chunkState(dim, cx + nx, cz + nz) >= 1)) {
-      await runExclusive(loaded => decorateJob(W, loaded, cx, cz), W, cx, cz, "decoration", true);
+      timing?.mark("chunk " + cx + "," + cz + " decoration:start");
+      await timed(() => runExclusive(loaded => decorateJob(W, loaded, cx, cz), W, cx, cz, "decoration", true));
+      timing?.mark("chunk " + cx + "," + cz + " decoration:end");
     }
   } catch (e) {
     releaseLoadedArea(id);
@@ -1880,6 +1901,8 @@ async function travelTo(player, key, opts = {}) {
   travelling.add(player.id);
   let areaId = null;
   let phase = "lookup";
+  const timing = travelTimer("Space " + key);
+  timing?.mark("travel:start");
   try {
     const dim = world.getDimension(W.id);
     phase = "generation";
@@ -1892,15 +1915,17 @@ async function travelTo(player, key, opts = {}) {
       const s = findSpawn(W);
       target = { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 };
     }
-    areaId = await prepareArea(W, dim, chunkOf(target.x), chunkOf(target.z), player);
+    areaId = await prepareArea(W, dim, chunkOf(target.x), chunkOf(target.z), player, timing);
     if (W.kind === "planet") {
       const { state, buffer, progress } = planetProvenance(W, chunkOf(target.x), chunkOf(target.z));
       if (["inspecting", "building"].includes(state) || progress !== undefined || ["building", "ready", "converting"].includes(buffer)) throw new Error(W.key + " arrival terrain remains incomplete; the player was kept at the origin. Review generation diagnostics before retrying");
     }
     phase = "teleport";
+    timing?.mark("teleport:start", "arrival area + checks");
     // Fixed arrival point, prepared independently of the player: moving or flying meanwhile does not cancel the trip;
     // only leaving the origin dimension does. The return point was saved before the preparation.
     await safeTeleport(player, target, { origin, requireGround: true, dimension: dim, maxDrift: Infinity });
+    timing?.mark("teleport:end", "arrived");
     if (pod) {
       try {
         pod.remove();
@@ -1926,6 +1951,7 @@ async function travelTo(player, key, opts = {}) {
     }
     if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
+    timing?.mark("travel:failed", phase);
     try {
       reportTravelFailure(player, "Space " + key, e, W.id, phase);
     } catch (e2) {

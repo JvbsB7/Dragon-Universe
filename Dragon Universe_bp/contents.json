@@ -1927,6 +1927,9 @@
          "path" : "scripts/travel_safety.js"
       },
       {
+         "path" : "scripts/travel_timing.js"
+      },
+      {
          "path" : "scripts/universe_6_dimension.js"
       },
       {

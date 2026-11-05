@@ -1,5 +1,5 @@
 import { acquireLoadedArea, releaseLoadedArea, safeTeleport, safeReturnToEarth, travelOrigin, reportTravelFailure, physicalDestinationId } from "./travel_safety.js";
-import { AIR_ONLY_FILL, airFilterWorks, fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
+import { AIR_ONLY_FILL, airFilterWorks, distrustAirFilter, fillAirColumn, emptyChunk, findUnexpectedBlock, queriesReportAir, runTerrainJob, registerTerrainRepair, registerTerrainOwnership } from "./terrain_repair.js";
 /**
  * Kaioshin dimension (dbe:kai)  -  the lush Kaioshin planet from Dragon Ball Z
  *
@@ -25,6 +25,7 @@ import { AIR_ONLY_FILL, airFilterWorks, fillAirColumn, emptyChunk, findUnexpecte
  *   /scriptevent dbe:kaioshin_sky      -> rebuild the sky bubbles
  */
 import * as mc from "@minecraft/server";
+import { travelTimer } from "./travel_timing.js"; // TEMPORARY test measurement, see travel_timing.js
 import { isSpaceDimension } from "./space_planets.js"; // loads the space system too (Kaioshin is a planet in orbit around the Orbital Station)
 
 const { world, system, BlockVolume } = mc;
@@ -303,7 +304,7 @@ function chunkState(dim, cx, cz) {
   return b.typeId === "minecraft:bedrock" ? 2 : 1;
 }
 
-function* terrainJob(dim, cx, cz, fresh = false) {
+function* writeTerrain(dim, cx, cz, fresh) {
   const x0 = cx * 16;
   const z0 = cz * 16;
 
@@ -365,18 +366,20 @@ function* terrainJob(dim, cx, cz, fresh = false) {
     }
     if (!fresh || i % 2 === 1) yield;
   }
+  return tops;
+}
 
-  // Safety net: make sure the terrain really is there before the chunk is marked as done. If it is not
-  // (chunk unloaded mid-job, engine refused a fill...) throw, so the chunk is retried instead of being a hole.
-  const nativeCheck = fresh && queriesReportAir(dim, { x: x0, y: 319, z: z0 });
+// Safety net: make sure the terrain really is there before the chunk is marked as done. Returns the first difference,
+// or undefined. A fresh chunk must hold exactly the generated profile (native check); otherwise each block is read.
+function* terrainMismatch(dim, cx, cz, tops, nativeCheck) {
+  const x0 = cx * 16, z0 = cz * 16;
   for (let column = 0; column < 256; column++) {
     const i = Math.floor(column / 16), j = column % 16;
     const x = x0 + i, z = z0 + j, top = tops[column];
     if (nativeCheck) {
-      // A fresh chunk must hold exactly the generated profile; any difference fails, and the retry (state "building") uses the per-block path.
       for (const span of repairColumn(x, z)) {
         const point = findUnexpectedBlock(dim, { x, y: span.from, z }, { x, y: span.to, z }, [span.type]);
-        if (point) throw new Error("Kaioshin terrain verification failed at " + point.x + "," + point.y + "," + point.z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type);
+        if (point) return "Kaioshin terrain verification failed at " + point.x + "," + point.y + "," + point.z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type + ", observed " + (dim.getBlock(point)?.typeId ?? "unavailable");
       }
       if (column % 64 === 63) yield;
       continue;
@@ -384,11 +387,34 @@ function* terrainJob(dim, cx, cz, fresh = false) {
     for (const span of repairColumn(x, z)) for (let y = span.from; y <= span.to; y++) {
       const block = dim.getBlock({ x, y, z }), waterLayer = span.type === WATER;
       if (!block || block.typeId === AIR || (waterLayer ? !block.isSolid && !block.isLiquid : !block.isSolid || block.isLiquid)) {
-        throw new Error("Kaioshin terrain verification failed at " + x + "," + y + "," + z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type + (waterLayer ? " water layer or existing solid block" : " solid non-liquid foundation") + ", observed " + (block?.typeId ?? "unavailable") + " (solid=" + block?.isSolid + ", liquid=" + block?.isLiquid + "); core=" + (MIN_Y + 1) + ".." + top);
+        return "Kaioshin terrain verification failed at " + x + "," + y + "," + z + " in " + dim.id + " chunk " + cx + "," + cz + "; expected " + span.type + (waterLayer ? " water layer or existing solid block" : " solid non-liquid foundation") + ", observed " + (block?.typeId ?? "unavailable") + " (solid=" + block?.isSolid + ", liquid=" + block?.isLiquid + "); core=" + (MIN_Y + 1) + ".." + top;
       }
     }
     if (column % 16 === 15) yield;
   }
+}
+
+function* terrainJob(dim, cx, cz, fresh = false, timing) {
+  const x0 = cx * 16;
+  const z0 = cz * 16;
+  const at = "chunk " + cx + "," + cz;
+  timing?.mark(at + " write:start", fresh ? "air-only fill" : "per-block");
+  let tops = yield* writeTerrain(dim, cx, cz, fresh);
+  timing?.mark(at + " write:end");
+  let failure = yield* terrainMismatch(dim, cx, cz, tops, fresh && queriesReportAir(dim, { x: x0, y: 319, z: z0 }));
+  timing?.mark(at + " verify:end", failure ? "failed" : "ok");
+  if (failure && fresh) {
+    // The air-only fill wrote less than asked. Not a travel error: the same job rebuilds the chunk with the per-block
+    // path (it only fills air, like a "building" retry) and verifies every block; later chunks skip the filter.
+    console.warn("[Kaioshin] chunk " + cx + "," + cz + ": " + failure + "; rebuilding it with per-block writes in the same job");
+    distrustAirFilter(dim, failure);
+    tops = yield* writeTerrain(dim, cx, cz, false);
+    timing?.mark(at + " rewrite:end", "per-block");
+    failure = yield* terrainMismatch(dim, cx, cz, tops, false);
+    timing?.mark(at + " reverify:end", failure ? "failed" : "ok");
+  }
+  // Chunk unloaded mid-job, engine refused a fill...: throw, so the chunk is retried instead of being a hole.
+  if (failure) throw new Error(failure);
   // Keep the terrain sentinel (x0,z0) untouched until every other marker write succeeds.
   // Filling the entire floor with bedrock first could incorrectly commit decoration on interruption.
   if (world.getDynamicProperty?.(terrainOwnership(cx, cz)) === "protected") throw new Error("Kaioshin generation stopped after a player edit");
@@ -411,7 +437,7 @@ function firstBlockFound(dim, cx, cz) {
   }
   return "no block on recheck";
 }
-function* ownedTerrainJob(dim, cx, cz) {
+function* ownedTerrainJob(dim, cx, cz, timing) {
   const state = world.getDynamicProperty(terrainOwnership(cx, cz));
   if (["complete", "protected"].includes(state)) return;
   const reclaiming = state === "legacy";
@@ -427,8 +453,10 @@ function* ownedTerrainJob(dim, cx, cz) {
     world.setDynamicProperty(terrainOwnership(cx, cz), "building");
   }
   // Only a chunk proven empty just above writes without per-block reads, and only once the filter passed its active
-  // check (no yield since the proof). A resumed "building" chunk may hold anything.
-  yield* terrainJob(dim, cx, cz, state !== "building" && airFilterWorks(dim, cx * 16, cz * 16, 319));
+  // check (no yield since the proof), made at the terrain bottom where no sub-chunk exists yet. A resumed "building"
+  // chunk may hold anything.
+  if (state !== "building") timing?.mark("chunk " + cx + "," + cz + " inspect:end");
+  yield* terrainJob(dim, cx, cz, state !== "building" && airFilterWorks(dim, cx * 16, cz * 16, MIN_Y + 1), timing);
   world.setDynamicProperty(terrainOwnership(cx, cz), "complete");
   if (reclaiming) console.warn("[Kaioshin] Legacy chunk " + cx + "," + cz + " repaired: terrain generated below the sky bubble");
 }
@@ -820,22 +848,32 @@ function removeArea(id) {
   releaseLoadedArea(id);
 }
 
-async function prepareArea(dim, cx, cz) {
+async function prepareArea(dim, cx, cz, timing) {
   if (repairing) throw new Error("Kaioshin terrain repair is active; retry after it finishes");
   const radius = Math.min(TERRAIN_RADIUS, 1);
+  timing?.mark("area+loading:start");
   const id = await acquireLoadedArea(dim,
     { x: (cx - radius) * 16, y: MIN_Y, z: (cz - radius) * 16 },
     { x: (cx + radius + 1) * 16 - 1, y: MIN_Y, z: (cz + radius + 1) * 16 - 1 },
     "Kaioshin destination preparation");
+  timing?.mark("area+loading:end");
   try {
     for (const [dx, dz] of OFFSETS_TERRAIN) {
       if (Math.abs(dx) > radius || Math.abs(dz) > radius) continue;
-      if (chunkState(dim, cx + dx, cz + dz) === 0) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 0) yield* ownedTerrainJob(dim, cx + dx, cz + dz); })(), "t" + dx + "," + dz, true);
+      if (chunkState(dim, cx + dx, cz + dz) === 0) {
+        timing?.mark("chunk " + (cx + dx) + "," + (cz + dz) + " terrain:start", "queue + job");
+        await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 0) yield* ownedTerrainJob(dim, cx + dx, cz + dz, timing); })(), "t" + dx + "," + dz, true);
+        timing?.mark("chunk " + (cx + dx) + "," + (cz + dz) + " terrain:end");
+      }
     }
     for (const [dx, dz] of OFFSETS_DECOR) {
       if (Math.abs(dx) > radius || Math.abs(dz) > radius) continue;
       if (world.getDynamicProperty(terrainOwnership(cx + dx, cz + dz)) !== "complete") continue;
-      if (chunkState(dim, cx + dx, cz + dz) === 1) await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 1) yield* decorateJob(dim, cx + dx, cz + dz); })(), "d" + dx + "," + dz, true);
+      if (chunkState(dim, cx + dx, cz + dz) === 1) {
+        timing?.mark("chunk " + (cx + dx) + "," + (cz + dz) + " decoration:start");
+        await runExclusive((function* () { if (chunkState(dim, cx + dx, cz + dz) === 1) yield* decorateJob(dim, cx + dx, cz + dz); })(), "d" + dx + "," + dz, true);
+        timing?.mark("chunk " + (cx + dx) + "," + (cz + dz) + " decoration:end");
+      }
     }
   } catch (e) {
     releaseLoadedArea(id);
@@ -877,6 +915,8 @@ async function sendToKaioshin(player) {
   travelling.add(player.id);
   let areaId = null;
   let phase = "lookup";
+  const timing = travelTimer("Kaioshin");
+  timing?.mark("travel:start");
   try {
     const dim = world.getDimension(DIM_ID);
     phase = "generation";
@@ -884,14 +924,17 @@ async function sendToKaioshin(player) {
     const s = findSpawn();
     rememberOrigin(player);
     player.sendMessage("§dTravelling to Kaioshin Planet...");
-    areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z));
+    areaId = await prepareArea(dim, chunkOf(s.x), chunkOf(s.z), timing);
     phase = "teleport";
+    timing?.mark("teleport:start", "arrival area + checks");
     // Fixed arrival point, prepared independently of the player: moving or flying meanwhile does not cancel the trip;
     // only leaving the origin dimension does. The return point was saved before the preparation.
     await safeTeleport(player, { x: s.x + 0.5, y: s.y + 1, z: s.z + 0.5 }, { origin, requireGround: true, dimension: dim, rotation: { x: 5, y: 180 }, maxDrift: Infinity });
+    timing?.mark("teleport:end", "arrived");
     ensureSky();
     if (areaId) await waitTicks(100); // keep the chunks loaded while the player arrives
   } catch (e) {
+    timing?.mark("travel:failed", phase);
     lastUse.delete(player.id);
     reportTravelFailure(player, "Kaioshin", e, DIM_ID, phase);
   } finally {
