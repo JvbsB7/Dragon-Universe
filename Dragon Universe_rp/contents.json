@@ -6052,6 +6052,30 @@
          "path" : "models/entity/races/hairs/du_gogeta_ssj4.geo.json"
       },
       {
+         "path" : "models/entity/races/hairs/du_dmz/gohan_mid_ssj3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/gohan_mid_ssj4.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/gohan_end_ssj3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/gohan_end_ssj4.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/trunks_ssj3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_dmz/trunks_ssj4.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_broly_ssj3.geo.json"
+      },
+      {
+         "path" : "models/entity/races/hairs/du_broly_ssj4.geo.json"
+      },
+      {
          "path" : "textures/entity/basic_customizations/hairs/du_dmz/broly.png"
       },
       {
@@ -6326,6 +6350,69 @@
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_gogeta/du_gogeta_ssj_ultra_ego.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_preto.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj_preto.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_flare_a/du_flare_a_ssj4_preto.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/preto/trunks.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/preto/vegeta_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/gohan_mid_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/gohan_mid_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/gohan_mid_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/gohan_mid_ssj4__ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/gohan_end_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/gohan_end_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/gohan_end_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/gohan_end_ssj4__ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/trunks_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/trunks_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/trunks_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/trunks_ssj4__ssj5.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_broly/du_broly_ssj3.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_broly/du_broly_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_broly/du_broly_ssj4_grayscale.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_broly/du_broly_ssj4_ssj5.png"
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_dmz/fixa/broly__ssjg.png"
