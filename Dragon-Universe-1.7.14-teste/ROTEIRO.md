@@ -46,13 +46,22 @@ Marque ✅ funcionou, ❌ falhou ou ⏭️ não testado. Quando falhar: print ou
 - [ ] Inferno pelo comando voando · Kaioshin e U6 voando · trocar de dimensão e morrer durante a preparação: cancela
 - [ ] Névoa de Kaioshin (vídeo) · voo rápido 30 s sem buracos · rios na borda de chunk
 
-## 6. Construções
-- [ ] **Torneio do Poder pelo convite: entra (J-1, primeiro a testar)** · luz vira ar e nasce no chão (J-13) · TPS na chegada e andando (J-3)
-- [ ] Bills pelo convite · agachar 5 s sem convite sai, com convite fica · morrer agachado sem convite (J-11)
-- [ ] Marcos (Piccolo, Yamcha, Red Ribbon, Freeza, Guru, Cápsula, Torneio de Artes Marciais): aparecem, sem `could not place` (J-2), com cortes aceitáveis (J-6)
+## 6. Construções e dimensões novas
+**Como chegar (o jogador não precisa de comando):**
+- **Planeta do Bills:** fabricar o **Convite do Bills** na mesa de trabalho: ametista nos 4 cantos, papel nos 4 lados e Cristal de Evolitium no centro. Usar o convite para ir e usar de novo para voltar.
+- **Torneio do Poder:** **Convite do Torneio do Poder** com a mesma receita, mas com diamante nos cantos.
+- **Construções do mundo:** com permissão de operador, digitar `/scriptevent dbe:landmarks` para listar as coordenadas, e ir até lá com `/tp @s X Y Z`, voando ou andando. A construção surge quando o jogador chega a **64 blocos** do ponto. Ficam a 900–3.500 blocos do spawn (300–1.500 em Namek e no planeta Freeza). Para a Casa do Guru e a Base do Freeza, fazer isso dentro de Namek e do planeta Freeza.
+- Anotar se foi fácil ou difícil achar alguma construção **sem** o comando.
+
+**Testes:**
+- [ ] **Torneio do Poder pelo convite: entra (J-1, primeiro a testar)** · nasce no chão (J-13) · TPS na chegada e andando (J-3)
+- [ ] Usar o convite de novo dentro: volta para onde estava
+- [ ] Bills pelo convite · agachar 5 s sem convite: sai · com convite: fica · morrer agachado sem convite (J-11)
+- [ ] Mundo normal: Casa do Piccolo · Casa do Yamcha (deserto) · Torre da Red Ribbon · Corporação Cápsula (junto de uma cidade) · Torneio de Artes Marciais (planície)
+- [ ] Namek: Casa do Guru · Planeta Freeza: Base do exército do Freeza
+- [ ] Cada uma: aparece inteira, sem `could not place` no log (J-2), com cortes de morro/árvore aceitáveis (J-6) · sair e voltar não duplica
 - [ ] Travadas nos primeiros 30 s de mundo novo e em mundo plano (J-5)
-- [ ] Assentos da Cápsula e de Bills (J-7) · Anunciador depois de reabrir o mundo, fila com 4 jogadores (J-8)
-- [ ] Convite: inventário cheio (J-14) · convite no cursor com inventário aberto (J-12)
+- [ ] Assentos da Cápsula e de Bills (J-7) · Anunciador do Torneio de Artes depois de reabrir o mundo; fila com 4 jogadores (J-8)
 - [ ] `/scriptevent dbe:structures` em mundo novo: cidades planejadas (R-5)
 
 ## 7. Futuro e desejos
