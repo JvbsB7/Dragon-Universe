@@ -63,8 +63,10 @@ export function queriesReportAir(dimension, point) {
 // Runs inside one chunk proven empty, in a single step. The first fill goes into a block of a sub-chunk nothing has
 // written to yet (the terrain bottom), so an engine that skips missing sections fails here; only then is a block
 // placed there, to check that the filter keeps it while it fills the air above. Both blocks are removed afterwards.
+// Both types are solid, non-liquid stone blocks: if the cleanup fails, what remains at the bottom of the stone core
+// still passes the per-block terrain verification (the marker only has to differ from the fill).
 export const AIR_ONLY_FILL = { blockFilter: { includeTypes: [AIR] } };
-const FILTER_FILL = "minecraft:stone", FILTER_MARKER = "minecraft:glass";
+const FILTER_FILL = "minecraft:stone", FILTER_MARKER = "minecraft:cobblestone";
 const filterProbes = new Map();
 export function airFilterWorks(dimension, x, z, y) {
   if (filterProbes.has(dimension.id)) return filterProbes.get(dimension.id);
@@ -78,6 +80,7 @@ export function airFilterWorks(dimension, x, z, y) {
       failure = "existing block overwritten or air above not filled";
       dimension.fillBlocks(new BlockVolume(target, above), FILTER_MARKER, AIR_ONLY_FILL);
       works = dimension.getBlock(target)?.typeId === FILTER_FILL && dimension.getBlock(above)?.typeId === FILTER_MARKER;
+      if (works) failure = "probe passed";
     } else failure += " (observed " + (empty ?? "unavailable") + ")";
   } catch (error) { failure = String(error); }
   try {
