@@ -208,9 +208,6 @@
          "path" : "animations/player/player.dbe.animation.json"
       },
       {
-         "path" : "animations/player/oozaru_ui.animation.json"
-      },
-      {
          "path" : "animations/projectiles/ki_attack.animation.json"
       },
       {
@@ -6365,6 +6362,15 @@
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_dmz/preto/vegeta_ssj4.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/vegeta_grayscale_h1.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/grayscale/vegeta_ssj4_grayscale_h1.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_dmz/preto/vegeta_ssj4_h1.png"
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_dmz/ssj34/gohan_mid_ssj3.png"
