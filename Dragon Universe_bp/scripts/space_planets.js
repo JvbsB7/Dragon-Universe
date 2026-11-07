@@ -410,6 +410,7 @@ function* friezaDecor(c) {
   if (rng() < 0.13) {
     const p = { x: c.x0 + 8, z: c.z0 + 8 };
     if (c.flat(p.x, p.z, 5, 3)) {
+      if (c.dryRun) { c.outpost = true; return; } // friezaOutpostInChunk: only the decision is wanted
       yield* outpost(c, p.x, p.z, { floor: "minecraft:purple_concrete", pillar: "minecraft:polished_blackstone_bricks", roof: "minecraft:purple_concrete", light: "minecraft:sea_lantern", loot: "frieza_outpost" });
     }
   }
@@ -806,13 +807,13 @@ function* outpost(c, x, z, S) {
   yield;
 }
 
-function* decorateJob(P, dim, cx, cz) {
+/** Decoration context of one chunk: its rng (seeded by the chunk) and the surface helpers the decorators use. */
+function decorContext(P, dim, cx, cz) {
   const x0 = cx * 16;
   const z0 = cz * 16;
   const rng = mulberry32(Math.imul(cx, 73856093) ^ Math.imul(cz, 19349663) ^ P.seed);
-  const spawn = findSpawn(P);
   const dryMin = P.liquid ? P.liquidLevel + 1 : -999;
-  const c = {
+  return {
     P,
     dim,
     cx,
@@ -843,6 +844,12 @@ function* decorateJob(P, dim, cx, cz) {
       return lo >= dryMin + 2 && hi - lo <= maxDiff;
     },
   };
+}
+
+function* decorateJob(P, dim, cx, cz) {
+  const c = decorContext(P, dim, cx, cz);
+  const { x0, z0, rng } = c;
+  const spawn = findSpawn(P);
 
   // landing pad at the arrival point
   if (chunkOf(spawn.x) === cx && chunkOf(spawn.z) === cz) {
@@ -1489,12 +1496,34 @@ async function prepareLandmarkChunks(P, minCx, minCz, maxCx, maxCz) {
   return true;
 }
 
+// Replays friezaDecor for one chunk with the same rng as decorateJob, writing nothing, to know whether the generator
+// puts an outpost there. Villages do not draw from this rng, and nothing before P.decorate does, so the replay is exact.
+const NO_WRITES = { setBlockType() {}, fillBlocks() {} };
+const outpostChunks = new Map();
+function friezaOutpostInChunk(cx, cz) {
+  const key = cx + "," + cz;
+  if (outpostChunks.has(key)) return outpostChunks.get(key);
+  let outpost = true; // unknown counts as an outpost: the chunk is just not drawn
+  try {
+    const c = decorContext(PLANETS.frieza, NO_WRITES, cx, cz);
+    c.dryRun = true;
+    for (const gen = friezaDecor(c); !gen.next().done;);
+    outpost = !!c.outpost;
+  } catch (e) {
+    console.warn("[Space] outpost prediction failed for chunk " + key + ": " + e);
+  }
+  if (outpostChunks.size > 4096) outpostChunks.clear();
+  outpostChunks.set(key, outpost);
+  return outpost;
+}
+
 /** Surface queries and ground preparation used by world_landmarks.js on the Frieza planet. */
 export const friezaLandmarkEnv = {
   id: PLANETS.frieza.id,
   sea: PLANETS.frieza.liquidLevel,
   surface: (x, z) => heightAt(PLANETS.frieza, x, z),
-  clear: (x, z) => !nearSpawn(PLANETS.frieza, x, z, 40) && !villages.near(PLANETS.frieza, x, z, 24),
+  // Chunks where the generator builds an outpost are left out, so a drawn spot has no outpost chest (which still rejects).
+  clear: (x, z) => !nearSpawn(PLANETS.frieza, x, z, 40) && !villages.near(PLANETS.frieza, x, z, 24) && !friezaOutpostInChunk(chunkOf(x), chunkOf(z)),
   prepare: (minCx, minCz, maxCx, maxCz) => prepareLandmarkChunks(PLANETS.frieza, minCx, minCz, maxCx, maxCz),
   // Blocks of the Frieza Force outposts this generator places (friezaDecor). prepare refuses chunks a player edited
   // (ownership "protected"), so in the prepared ground these come from the generator, not from a build to keep.
