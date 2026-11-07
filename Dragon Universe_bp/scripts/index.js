@@ -3989,10 +3989,8 @@ var bz = class {
     }
     onRandomTick({ block: sG, dimension: sH }, { params: sI }) {
       let { particle: sK, spawn_rate: sL } = sI;
-      if (Math.random() * av.gameRules.randomTickSpeed <= sL)
-        try {
-          sG.above().isAir && sH.spawnParticle(sK, sG.center());
-        } catch {}
+      // Chunk descarregado é tratado por bJ.guardTicks; outros erros não são mais engolidos.
+      if (Math.random() * av.gameRules.randomTickSpeed <= sL) sG.above()?.isAir && sH.spawnParticle(sK, sG.center());
     }
   };
 function bC(sG, sH) {
@@ -4201,11 +4199,28 @@ var bH = {
   },
   bI = { "solariscore:durability_sensor": bE },
   bJ = class {
+    // onRandomTick/onTick leem vizinhos (below/above/offset). Durante viagem de dimensão ou
+    // teleporte o chunk do bloco ou do vizinho pode deixar de estar carregado; só esse caso
+    // (aF.isUnavailable) é ignorado. Qualquer outro erro continua sendo lançado.
+    static guardTicks(component) {
+      for (let name of ["onRandomTick", "onTick"]) {
+        let fn = component[name];
+        if (typeof fn != "function") continue;
+        component[name] = (...args) => {
+          try {
+            return fn(...args);
+          } catch (error) {
+            if (!aF.isUnavailable(error)) throw error;
+          }
+        };
+      }
+      return component;
+    }
     setEnabledBlockComponents(sG) {
       r.beforeEvents.startup.subscribe(({ blockComponentRegistry: sH }) => {
         for (let sI of sG) {
           let sK = bH[sI];
-          sK && sH.registerCustomComponent(sI, new sK());
+          sK && sH.registerCustomComponent(sI, bJ.guardTicks(new sK()));
         }
       });
     }
