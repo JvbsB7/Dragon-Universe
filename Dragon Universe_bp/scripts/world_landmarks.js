@@ -23,7 +23,7 @@ const { world, system, BlockVolume } = mc;
 
 const OVERWORLD = "minecraft:overworld";
 const PLAN_PROP = "dbe:world_landmarks"; // JSON { v, spots: { key: { x, z, y?, done?, placed?, tries?, rejects?, none? } } }
-const PLAN_VERSION = 1;
+const PLAN_VERSION = 2; // 2: 1.7.15 resets the reject and try counters of landmarks not placed yet (migratePlan)
 const STRUCTURES_PROP = "dbe:world_structures"; // plan of world_structures.js, read only
 const SCAN_TICKS = 40;
 const PLACE_MARGIN = 64; // a player this close to the footprint (horizontally) triggers the placement
@@ -160,10 +160,31 @@ function runJobAsync(gen) {
   });
 }
 
+/**
+ * Version 1 (1.7.14) rejected spots without trying nearby ground, so test worlds may hold landmarks that gave up.
+ * Once, every landmark not placed yet loses none, rejects, tries and its last reject; placed ones are not touched.
+ */
+function migratePlan(plan) {
+  const reset = [];
+  for (const [key, spot] of Object.entries(plan.spots)) {
+    if (spot.placed) continue;
+    if (spot.none) delete plan.spots[key];
+    else for (const k of ["rejects", "tries", "lastError", "lastReject", "waits"]) delete spot[k];
+    reset.push(key);
+  }
+  delete plan.rejects;
+  delete plan.lastRejects;
+  plan.v = PLAN_VERSION;
+  savePlan(plan);
+  console.warn("[Landmarks] plan updated to v" + PLAN_VERSION + "; counters reset for: " + (reset.join(", ") || "none"));
+  return plan;
+}
+
 function loadPlan() {
   try {
     const raw = world.getDynamicProperty(PLAN_PROP);
     const plan = typeof raw === "string" ? JSON.parse(raw) : null;
+    if (plan && plan.v === 1 && plan.spots) return migratePlan(plan);
     if (plan && plan.v === PLAN_VERSION && plan.spots) return plan;
   } catch (e) {
     console.warn("[Landmarks] saved plan unreadable, planning again: " + e);
