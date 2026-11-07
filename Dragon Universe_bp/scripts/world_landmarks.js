@@ -408,7 +408,9 @@ async function chooseOverworldLevel(dim, spec, spot) {
   shifts.sort((a, b) => Math.hypot(a[0], a[1]) - Math.hypot(b[0], b[1]));
   const usable = [];
   let first;
-  for (const [ox, oz] of shifts) {
+  for (let k = 0; k < shifts.length; k++) {
+    const [ox, oz] = shifts[k];
+    if (k && k % 10 === 0) await waitTicks(1); // up to ~29k cached reads for the Capsule: spread over ticks
     const verdict = groundVerdict(spec, spot, offsets, ground, ox, oz);
     if (!ox && !oz) first = verdict;
     if (verdict.y !== undefined) usable.push({ x: spot.x + ox, z: spot.z + oz, y: verdict.y });
