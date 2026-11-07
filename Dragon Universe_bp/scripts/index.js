@@ -4208,7 +4208,7 @@ var bH = {
         if (typeof fn != "function") continue;
         component[name] = (...args) => {
           try {
-            return fn(...args);
+            return fn.apply(component, args);
           } catch (error) {
             if (!aF.isUnavailable(error)) throw error;
           }
