@@ -332,6 +332,9 @@ async function withPieceArea(dim, spec, spot, piece, y, work) {
   }
 }
 
+// Same test as the core (aF.isUnavailable in index.js): the block is outside loaded chunks or the world, not a real error.
+const isUnavailable = (error) => /LocationInUnloadedChunk|LocationOutOfWorldBoundaries|unloaded chunk|outside.*(?:world|bound)/i.test(error?.name + ": " + error);
+
 function surfaceAt(dim, x, z) {
   let block = dim.getTopmostBlock({ x, z });
   while (block && !block.isLiquid && SOFT.test(block.typeId)) block = block.below();
@@ -360,8 +363,14 @@ async function sampleGround(dim, spec, spot, offsets) {
         for (let x = tx; x <= ex; x += SAMPLE_STEP) {
           for (let z = tz; z <= ez; z += SAMPLE_STEP) {
             let block;
-            try { block = surfaceAt(dim, x, z); } catch (e) { block = undefined; }
-            ground.set(x + "," + z, block ? { y: block.location.y, wet: block.isLiquid } : null);
+            try {
+              block = surfaceAt(dim, x, z);
+            } catch (e) {
+              if (!isUnavailable(e)) throw e; // any other error is a real failure of this attempt
+              ground.set(x + "," + z, null); // chunk not readable yet
+              continue;
+            }
+            ground.set(x + "," + z, block ? { y: block.location.y, wet: block.isLiquid } : { none: true });
           }
         }
       } finally {
@@ -379,6 +388,7 @@ function groundVerdict(spec, spot, offsets, ground, ox, oz) {
   for (const [i, j] of offsets) {
     const sample = ground.get(spot.x + ox + i + "," + (spot.z + oz + j));
     if (!sample) return { why: "surface not readable", unreadable: true };
+    if (sample.none) return { why: "no ground in a column" };
     heights.push(sample.y);
     if (sample.wet) wet++;
   }
@@ -485,9 +495,9 @@ async function placeLandmark(dim, spec, spot, plan) {
     if (spot.y === undefined) {
       const level = await chooseLevel(dim, spec, spot);
       if (level.transient) {
-        spot.tries = (spot.tries ?? 0) + 1;
-        spot.lastError = level.reason;
-        console.warn("[Landmarks] " + spec.key + ": spot kept, " + level.reason + " (attempt " + spot.tries + ")");
+        // Not an error: kept and tried again on a later scan, without counting towards MAX_TRIES.
+        spot.waits = (spot.waits ?? 0) + 1;
+        console.warn("[Landmarks] " + spec.key + ": spot kept, " + level.reason + " (wait " + spot.waits + ")");
         return;
       }
       if (level.y === undefined) {
@@ -625,7 +635,7 @@ function report(player) {
     else if (s.none) state = "§cno usable spot found";
     else if (s.placed) state = "§aplaced";
     else if ((s.tries ?? 0) >= MAX_TRIES) state = "§cgave up: " + s.lastError;
-    else state = "§6waiting for a player nearby";
+    else state = "§6waiting for a player nearby" + (s.waits ? " §7(ground not readable " + s.waits + "x)" : "");
     const where = s && !s.none ? " §fX: " + s.x + " Z: " + s.z : "";
     const rejected = s?.rejects ? " §7(rejected " + s.rejects + "x; last: " + (s.lastReject ?? "?") + ")" : "";
     player.sendMessage(" §b" + spec.key + " §7(" + spec.dim + ")" + where + " " + state + rejected);
