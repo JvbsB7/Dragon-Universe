@@ -14,7 +14,7 @@
  *            /scriptevent dbe:landmarks_retry key  -> unlocks a spot that gave up
  */
 import * as mc from "@minecraft/server";
-import { acquireLoadedArea, releaseLoadedArea } from "./travel_safety.js";
+import { acquireLoadedArea, releaseLoadedArea, isSafeStanding } from "./travel_safety.js";
 import { friezaLandmarkEnv } from "./space_planets.js";
 import { namekLandmarkEnv } from "./namek_dimension.js";
 import { tournaments_data } from "./data/tournaments_data.js";
@@ -36,6 +36,9 @@ const SAMPLE_STEP = 8; // blocks between surface samples
 const MAX_WET = 0.1; // share of samples that may be liquid
 const FOUNDATION_DEPTH = 48;
 const CITY_GAP = 80;
+const SHIFT = 32; // overworld: a spot whose ground fails first tries every position this close (SAMPLE_STEP apart)
+const SAMPLE_TILE = 64; // side of each temporary loaded area while the ground is sampled
+const SETTLE_TICKS = 10; // wait after loading a sample area, so chunks a teleport just loaded are complete
 
 const LAND = ["minecraft:plains", "minecraft:sunflower_plains", "minecraft:forest", "minecraft:birch_forest", "minecraft:savanna", "minecraft:taiga", "dbe:dirtstone_plains", "dbe:west_forest"];
 
@@ -314,22 +317,86 @@ function surfaceAt(dim, x, z) {
   return block;
 }
 
-/** Samples the ground under one piece. Returns false when a sample is missing. */
-function sampleSurface(dim, spot, piece, heights, wet) {
-  for (let i = 0; i < piece.x; i += SAMPLE_STEP) {
-    for (let j = 0; j < piece.z; j += SAMPLE_STEP) {
-      const block = surfaceAt(dim, spot.x + piece.dx + i, spot.z + piece.dz + j);
-      if (!block) return false;
-      heights.push(block.location.y);
-      if (block.isLiquid) wet.count++;
-    }
-  }
-  return true;
+/** Sample offsets of a spec relative to its spot: every SAMPLE_STEP inside each piece. */
+function sampleOffsets(spec) {
+  const offsets = new Map();
+  for (const piece of spec.pieces)
+    for (let i = 0; i < piece.x; i += SAMPLE_STEP) for (let j = 0; j < piece.z; j += SAMPLE_STEP) offsets.set(piece.dx + i + "," + (piece.dz + j), [piece.dx + i, piece.dz + j]);
+  return [...offsets.values()];
 }
 
-/** True when a block from PLACED_BLOCKS stands where the piece would be written. */
+/** Surface of every SAMPLE_STEP grid column around the spot (SHIFT on each side): "x,z" -> { y, wet } or null when unreadable. */
+async function sampleGround(dim, spec, spot, offsets) {
+  const maxI = Math.max(...offsets.map((o) => o[0])), maxJ = Math.max(...offsets.map((o) => o[1]));
+  const x1 = spot.x - SHIFT, x2 = spot.x + maxI + SHIFT, z1 = spot.z - SHIFT, z2 = spot.z + maxJ + SHIFT;
+  const ground = new Map();
+  for (let tx = x1; tx <= x2; tx += SAMPLE_TILE) {
+    for (let tz = z1; tz <= z2; tz += SAMPLE_TILE) {
+      const ex = Math.min(tx + SAMPLE_TILE - 1, x2), ez = Math.min(tz + SAMPLE_TILE - 1, z2);
+      const area = await acquireLoadedArea(dim, { x: tx, y: -64, z: tz }, { x: ex, y: -64, z: ez }, "landmark " + spec.key + " ground");
+      try {
+        await waitTicks(SETTLE_TICKS);
+        for (let x = tx; x <= ex; x += SAMPLE_STEP) {
+          for (let z = tz; z <= ez; z += SAMPLE_STEP) {
+            let block;
+            try { block = surfaceAt(dim, x, z); } catch (e) { block = undefined; }
+            ground.set(x + "," + z, block ? { y: block.location.y, wet: block.isLiquid } : null);
+          }
+        }
+      } finally {
+        releaseLoadedArea(area);
+      }
+    }
+  }
+  return ground;
+}
+
+/** Verdict of the ground for the spot moved by (ox, oz): { y } or { why, unreadable? }. */
+function groundVerdict(spec, spot, offsets, ground, ox, oz) {
+  const heights = [];
+  let wet = 0;
+  for (const [i, j] of offsets) {
+    const sample = ground.get(spot.x + ox + i + "," + (spot.z + oz + j));
+    if (!sample) return { why: "surface not readable", unreadable: true };
+    heights.push(sample.y);
+    if (sample.wet) wet++;
+  }
+  if (wet / heights.length > MAX_WET) return { why: "water on " + Math.round((100 * wet) / heights.length) + "% of the ground (max " + MAX_WET * 100 + "%)" };
+  const low = Math.min(...heights), high = Math.max(...heights);
+  const y = surfaceLevel(spec, heights);
+  if (y === undefined) return { why: high - low > spec.maxRange ? "ground uneven by " + (high - low) + " blocks (max " + spec.maxRange + ")" : "top would leave the world" };
+  return { y };
+}
+
+/** Overworld: the drawn spot, or the closest position up to SHIFT blocks away, whose ground and footprint are usable. */
+async function chooseOverworldLevel(dim, spec, spot) {
+  const offsets = sampleOffsets(spec);
+  const ground = await sampleGround(dim, spec, spot, offsets);
+  const shifts = [];
+  for (let ox = -SHIFT; ox <= SHIFT; ox += SAMPLE_STEP) for (let oz = -SHIFT; oz <= SHIFT; oz += SAMPLE_STEP) shifts.push([ox, oz]);
+  shifts.sort((a, b) => Math.hypot(a[0], a[1]) - Math.hypot(b[0], b[1]));
+  const usable = [];
+  let first;
+  for (const [ox, oz] of shifts) {
+    const verdict = groundVerdict(spec, spot, offsets, ground, ox, oz);
+    if (!ox && !oz) first = verdict;
+    if (verdict.y !== undefined) usable.push({ x: spot.x + ox, z: spot.z + oz, y: verdict.y });
+  }
+  // The drawn spot itself unreadable: nothing is known about it yet, so it is kept and tried again later.
+  if (!usable.length && first.unreadable) return { reason: "surface not readable yet", transient: true };
+  let builds;
+  for (const candidate of usable.slice(0, 3)) {
+    builds = await findBuilds(dim, spec, candidate, candidate.y);
+    if (!builds) return candidate;
+  }
+  return { reason: builds ? "found " + builds : first.why + "; no position within " + SHIFT + " blocks is better" };
+}
+
+/** The first block from PLACED_BLOCKS where the piece would be written ("type at x,y,z"), or undefined. */
 async function pieceHasBuilds(dim, spec, spot, piece, y) {
   const top = y + spec.size.y - 1;
+  const ignored = ENV[spec.dim]?.generated ?? [];
+  const types = ignored.length ? PLACED_BLOCKS.filter((t) => !ignored.includes(t)) : PLACED_BLOCKS;
   for (let cx = spot.x + piece.dx; cx < spot.x + piece.dx + piece.x; cx += 16) {
     for (let cz = spot.z + piece.dz; cz < spot.z + piece.dz + piece.z; cz += 16) {
       const volume = new BlockVolume({ x: cx, y, z: cz }, {
@@ -337,38 +404,38 @@ async function pieceHasBuilds(dim, spec, spot, piece, y) {
         y: top,
         z: Math.min(cz + 15, spot.z + piece.dz + piece.z - 1),
       });
-      if (dim.getBlocks(volume, { includeTypes: PLACED_BLOCKS }, true).getCapacity() > 0) return true;
+      const found = dim.getBlocks(volume, { includeTypes: types }, true);
+      if (found.getCapacity() > 0) {
+        for (const p of found.getBlockLocationIterator()) return (dim.getBlock(p)?.typeId ?? "a placed block") + " at " + p.x + "," + p.y + "," + p.z;
+        return "a placed block";
+      }
       await waitTicks(1);
     }
   }
-  return false;
 }
 
-/** Decides the height of a drawn spot. Returns undefined when the spot has to be drawn again. */
+/** First PLACED_BLOCKS block found under any piece at this level, or undefined. */
+async function findBuilds(dim, spec, spot, y) {
+  for (const piece of spec.pieces) {
+    const found = await withPieceArea(dim, spec, spot, piece, y, () => pieceHasBuilds(dim, spec, spot, piece, y));
+    if (found) return found;
+  }
+}
+
+/**
+ * Decides where and how high a drawn spot is built. Returns { x, z, y }, or { reason } when the spot has to be drawn
+ * again, or { reason, transient: true } when the ground could not be read yet (the spot is kept and tried later).
+ */
 async function chooseLevel(dim, spec, spot) {
   const env = ENV[spec.dim];
-  let y;
-  if (env) {
-    y = planetSurface(spec, env, spot);
-    if (y === undefined) return undefined;
-    const first = (v) => Math.floor(v / 16);
-    const ready = await env.prepare(first(spot.x), first(spot.z), first(spot.x + spec.size.x - 1), first(spot.z + spec.size.z - 1));
-    if (!ready) return undefined;
-  } else {
-    const heights = [];
-    const wet = { count: 0 };
-    for (const piece of spec.pieces) {
-      if (!(await withPieceArea(dim, spec, spot, piece, -64, async () => sampleSurface(dim, spot, piece, heights, wet)))) return undefined;
-      await waitTicks(1);
-    }
-    if (!heights.length || wet.count / heights.length > MAX_WET) return undefined;
-    y = surfaceLevel(spec, heights);
-    if (y === undefined) return undefined;
-  }
-  for (const piece of spec.pieces) {
-    if (await withPieceArea(dim, spec, spot, piece, y, () => pieceHasBuilds(dim, spec, spot, piece, y))) return undefined;
-  }
-  return y;
+  if (!env) return chooseOverworldLevel(dim, spec, spot);
+  const y = planetSurface(spec, env, spot);
+  if (y === undefined) return { reason: "planet ground too uneven, wet or reserved" };
+  const first = (v) => Math.floor(v / 16);
+  const ready = await env.prepare(first(spot.x), first(spot.z), first(spot.x + spec.size.x - 1), first(spot.z + spec.size.z - 1));
+  if (!ready) return { reason: "planet chunk edited by a player (protected) or legacy" };
+  const builds = await findBuilds(dim, spec, spot, y);
+  return builds ? { reason: "found " + builds } : { x: spot.x, z: spot.z, y };
 }
 
 /** Fills the columns under the lowest layer of a piece. Only air, liquid and plants are replaced. */
@@ -395,21 +462,31 @@ async function placeLandmark(dim, spec, spot, plan) {
   busy = true;
   try {
     if (spot.y === undefined) {
-      const y = await chooseLevel(dim, spec, spot);
-      if (y === undefined) {
+      const level = await chooseLevel(dim, spec, spot);
+      if (level.transient) {
+        spot.tries = (spot.tries ?? 0) + 1;
+        spot.lastError = level.reason;
+        console.warn("[Landmarks] " + spec.key + ": spot kept, " + level.reason + " (attempt " + spot.tries + ")");
+        return;
+      }
+      if (level.y === undefined) {
         // No new spot right now is not the end: scan keeps drawing, with the count kept in plan.rejects.
         const rejects = (spot.rejects ?? 0) + 1;
         const next = rejects < MAX_REJECTS ? draw(spec, plan, dim, rejects) : undefined;
         for (const k of Object.keys(spot)) delete spot[k];
-        if (next || rejects >= MAX_REJECTS) Object.assign(spot, next ?? { none: true }, { rejects });
+        if (next || rejects >= MAX_REJECTS) Object.assign(spot, next ?? { none: true }, { rejects, lastReject: level.reason });
         else {
           delete plan.spots[spec.key];
           (plan.rejects ??= {})[spec.key] = rejects;
+          (plan.lastRejects ??= {})[spec.key] = level.reason;
         }
-        console.warn("[Landmarks] " + spec.key + ": spot rejected (" + rejects + ")" + (next ? "; drew " + next.x + ", " + next.z : rejects >= MAX_REJECTS ? "; giving up" : "; drawing again"));
+        console.warn("[Landmarks] " + spec.key + ": spot rejected (" + rejects + "): " + level.reason + (next ? "; drew " + next.x + ", " + next.z : rejects >= MAX_REJECTS ? "; giving up" : "; drawing again"));
         return;
       }
-      spot.y = y;
+      if (level.x !== spot.x || level.z !== spot.z) console.warn("[Landmarks] " + spec.key + ": moved " + (level.x - spot.x) + ", " + (level.z - spot.z) + " blocks to usable ground");
+      spot.x = level.x;
+      spot.z = level.z;
+      spot.y = level.y;
       spot.done = 0;
       savePlan(plan);
     }
@@ -425,6 +502,7 @@ async function placeLandmark(dim, spec, spot, plan) {
     for (const piece of spec.pieces) {
       await withPieceArea(dim, spec, spot, piece, spot.y, () => runJobAsync(foundationJob(dim, spec, spot, piece, spot.y)));
     }
+    liftPlayersInside(dim, spec, spot);
     spot.placed = true;
     delete spot.lastError;
     console.log("[Landmarks] placed " + spec.key + " at " + spot.x + ", " + spot.y + ", " + spot.z);
@@ -440,6 +518,28 @@ async function placeLandmark(dim, spec, spot, plan) {
       console.warn("[Landmarks] could not save the plan: " + e);
     }
     busy = false;
+  }
+}
+
+/** A player who stood on the spot (a teleport right onto it) may now be inside the build: move them up to clear ground. */
+function liftPlayersInside(dim, spec, spot) {
+  for (const player of dim.getPlayers()) {
+    try {
+      const { x, y, z } = player.location;
+      if (x < spot.x || x >= spot.x + spec.size.x || z < spot.z || z >= spot.z + spec.size.z || y < spot.y - 1 || y > spot.y + spec.size.y + 1) continue;
+      if (isSafeStanding(dim, player.location)) continue;
+      let target;
+      for (let ty = Math.max(Math.floor(y), spot.y); ty <= spot.y + spec.size.y + 1 && !target; ty++) if (isSafeStanding(dim, { x, y: ty, z })) target = { x, y: ty, z };
+      if (!target) {
+        const top = dim.getTopmostBlock({ x: Math.floor(x), z: Math.floor(z) });
+        if (top) target = { x, y: top.location.y + 1, z };
+      }
+      if (!target) continue;
+      player.teleport(target);
+      console.warn("[Landmarks] " + player.name + " was inside " + spec.key + "; moved up to y=" + target.y);
+    } catch (e) {
+      console.warn("[Landmarks] could not move a player out of " + spec.key + ": " + e);
+    }
   }
 }
 
@@ -467,7 +567,7 @@ function scan() {
     const rejects = plan.rejects?.[next.key] ?? 0;
     const drawn = draw(next, plan, dimensionOf(next), rejects);
     if (drawn) {
-      plan.spots[next.key] = rejects ? { ...drawn, rejects } : drawn;
+      plan.spots[next.key] = rejects ? { ...drawn, rejects, lastReject: plan.lastRejects?.[next.key] } : drawn;
       savePlan(plan);
       return;
     }
@@ -506,7 +606,8 @@ function report(player) {
     else if ((s.tries ?? 0) >= MAX_TRIES) state = "§cgave up: " + s.lastError;
     else state = "§6waiting for a player nearby";
     const where = s && !s.none ? " §fX: " + s.x + " Z: " + s.z : "";
-    player.sendMessage(" §b" + spec.key + " §7(" + spec.dim + ")" + where + " " + state);
+    const rejected = s?.rejects ? " §7(rejected " + s.rejects + "x; last: " + (s.lastReject ?? "?") + ")" : "";
+    player.sendMessage(" §b" + spec.key + " §7(" + spec.dim + ")" + where + " " + state + rejected);
   }
 }
 
@@ -516,8 +617,10 @@ function retry(player, key) {
   const plan = loadPlan();
   const spot = plan.spots[key];
   if (!SPECS.some((s) => s.key === key) || !spot || spot.placed) return player?.sendMessage("§c[Landmarks] nothing to retry: " + key);
-  if (spot.none) delete plan.spots[key];
-  else spot.tries = 0;
+  if (spot.none) {
+    delete plan.spots[key];
+    delete plan.rejects?.[key]; // otherwise the next reject is already past MAX_REJECTS
+  } else spot.tries = 0;
   savePlan(plan);
   player?.sendMessage("§a[Landmarks] " + key + " unlocked.");
 }

@@ -1496,6 +1496,9 @@ export const friezaLandmarkEnv = {
   surface: (x, z) => heightAt(PLANETS.frieza, x, z),
   clear: (x, z) => !nearSpawn(PLANETS.frieza, x, z, 40) && !villages.near(PLANETS.frieza, x, z, 24),
   prepare: (minCx, minCz, maxCx, maxCz) => prepareLandmarkChunks(PLANETS.frieza, minCx, minCz, maxCx, maxCz),
+  // Blocks of the Frieza Force outposts this generator places (friezaDecor). prepare refuses chunks a player edited
+  // (ownership "protected"), so in the prepared ground these come from the generator, not from a build to keep.
+  generated: ["minecraft:purple_concrete", "minecraft:polished_blackstone_bricks", "minecraft:chest"],
 };
 
 
