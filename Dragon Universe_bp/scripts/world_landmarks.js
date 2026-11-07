@@ -14,7 +14,7 @@
  *            /scriptevent dbe:landmarks_retry key  -> unlocks a spot that gave up
  */
 import * as mc from "@minecraft/server";
-import { acquireLoadedArea, releaseLoadedArea } from "./travel_safety.js";
+import { acquireLoadedArea, releaseLoadedArea, isSafeStanding } from "./travel_safety.js";
 import { friezaLandmarkEnv } from "./space_planets.js";
 import { namekLandmarkEnv } from "./namek_dimension.js";
 import { tournaments_data } from "./data/tournaments_data.js";
@@ -502,6 +502,7 @@ async function placeLandmark(dim, spec, spot, plan) {
     for (const piece of spec.pieces) {
       await withPieceArea(dim, spec, spot, piece, spot.y, () => runJobAsync(foundationJob(dim, spec, spot, piece, spot.y)));
     }
+    liftPlayersInside(dim, spec, spot);
     spot.placed = true;
     delete spot.lastError;
     console.log("[Landmarks] placed " + spec.key + " at " + spot.x + ", " + spot.y + ", " + spot.z);
@@ -517,6 +518,28 @@ async function placeLandmark(dim, spec, spot, plan) {
       console.warn("[Landmarks] could not save the plan: " + e);
     }
     busy = false;
+  }
+}
+
+/** A player who stood on the spot (a teleport right onto it) may now be inside the build: move them up to clear ground. */
+function liftPlayersInside(dim, spec, spot) {
+  for (const player of dim.getPlayers()) {
+    try {
+      const { x, y, z } = player.location;
+      if (x < spot.x || x >= spot.x + spec.size.x || z < spot.z || z >= spot.z + spec.size.z || y < spot.y - 1 || y > spot.y + spec.size.y + 1) continue;
+      if (isSafeStanding(dim, player.location)) continue;
+      let target;
+      for (let ty = Math.max(Math.floor(y), spot.y); ty <= spot.y + spec.size.y + 1 && !target; ty++) if (isSafeStanding(dim, { x, y: ty, z })) target = { x, y: ty, z };
+      if (!target) {
+        const top = dim.getTopmostBlock({ x: Math.floor(x), z: Math.floor(z) });
+        if (top) target = { x, y: top.location.y + 1, z };
+      }
+      if (!target) continue;
+      player.teleport(target);
+      console.warn("[Landmarks] " + player.name + " was inside " + spec.key + "; moved up to y=" + target.y);
+    } catch (e) {
+      console.warn("[Landmarks] could not move a player out of " + spec.key + ": " + e);
+    }
   }
 }
 
