@@ -23,7 +23,7 @@ const { world, system, BlockVolume } = mc;
 
 const OVERWORLD = "minecraft:overworld";
 const PLAN_PROP = "dbe:world_landmarks"; // JSON { v, spots: { key: { x, z, y?, done?, placed?, tries?, rejects?, none? } } }
-const PLAN_VERSION = 1;
+const PLAN_VERSION = 2; // 2: 1.7.15 resets the reject and try counters of landmarks not placed yet (migratePlan)
 const STRUCTURES_PROP = "dbe:world_structures"; // plan of world_structures.js, read only
 const SCAN_TICKS = 40;
 const PLACE_MARGIN = 64; // a player this close to the footprint (horizontally) triggers the placement
@@ -160,10 +160,31 @@ function runJobAsync(gen) {
   });
 }
 
+/**
+ * Version 1 (1.7.14) rejected spots without trying nearby ground, so test worlds may hold landmarks that gave up.
+ * Once, every landmark not placed yet loses none, rejects, tries and its last reject; placed ones are not touched.
+ */
+function migratePlan(plan) {
+  const reset = [];
+  for (const [key, spot] of Object.entries(plan.spots)) {
+    if (spot.placed) continue;
+    if (spot.none) delete plan.spots[key];
+    else for (const k of ["rejects", "tries", "lastError", "lastReject", "waits"]) delete spot[k];
+    reset.push(key);
+  }
+  delete plan.rejects;
+  delete plan.lastRejects;
+  plan.v = PLAN_VERSION;
+  savePlan(plan);
+  console.warn("[Landmarks] plan updated to v" + PLAN_VERSION + "; counters reset for: " + (reset.join(", ") || "none"));
+  return plan;
+}
+
 function loadPlan() {
   try {
     const raw = world.getDynamicProperty(PLAN_PROP);
     const plan = typeof raw === "string" ? JSON.parse(raw) : null;
+    if (plan && plan.v === 1 && plan.spots) return migratePlan(plan);
     if (plan && plan.v === PLAN_VERSION && plan.spots) return plan;
   } catch (e) {
     console.warn("[Landmarks] saved plan unreadable, planning again: " + e);
@@ -311,6 +332,9 @@ async function withPieceArea(dim, spec, spot, piece, y, work) {
   }
 }
 
+// Same test as the core (aF.isUnavailable in index.js): the block is outside loaded chunks or the world, not a real error.
+const isUnavailable = (error) => /LocationInUnloadedChunk|LocationOutOfWorldBoundaries|unloaded chunk|outside.*(?:world|bound)/i.test(error?.name + ": " + error);
+
 function surfaceAt(dim, x, z) {
   let block = dim.getTopmostBlock({ x, z });
   while (block && !block.isLiquid && SOFT.test(block.typeId)) block = block.below();
@@ -339,8 +363,14 @@ async function sampleGround(dim, spec, spot, offsets) {
         for (let x = tx; x <= ex; x += SAMPLE_STEP) {
           for (let z = tz; z <= ez; z += SAMPLE_STEP) {
             let block;
-            try { block = surfaceAt(dim, x, z); } catch (e) { block = undefined; }
-            ground.set(x + "," + z, block ? { y: block.location.y, wet: block.isLiquid } : null);
+            try {
+              block = surfaceAt(dim, x, z);
+            } catch (e) {
+              if (!isUnavailable(e)) throw e; // any other error is a real failure of this attempt
+              ground.set(x + "," + z, null); // chunk not readable yet
+              continue;
+            }
+            ground.set(x + "," + z, block ? { y: block.location.y, wet: block.isLiquid } : { none: true });
           }
         }
       } finally {
@@ -358,6 +388,7 @@ function groundVerdict(spec, spot, offsets, ground, ox, oz) {
   for (const [i, j] of offsets) {
     const sample = ground.get(spot.x + ox + i + "," + (spot.z + oz + j));
     if (!sample) return { why: "surface not readable", unreadable: true };
+    if (sample.none) return { why: "no ground in a column" };
     heights.push(sample.y);
     if (sample.wet) wet++;
   }
@@ -377,7 +408,9 @@ async function chooseOverworldLevel(dim, spec, spot) {
   shifts.sort((a, b) => Math.hypot(a[0], a[1]) - Math.hypot(b[0], b[1]));
   const usable = [];
   let first;
-  for (const [ox, oz] of shifts) {
+  for (let k = 0; k < shifts.length; k++) {
+    const [ox, oz] = shifts[k];
+    if (k && k % 10 === 0) await waitTicks(1); // up to ~29k cached reads for the Capsule: spread over ticks
     const verdict = groundVerdict(spec, spot, offsets, ground, ox, oz);
     if (!ox && !oz) first = verdict;
     if (verdict.y !== undefined) usable.push({ x: spot.x + ox, z: spot.z + oz, y: verdict.y });
@@ -464,9 +497,9 @@ async function placeLandmark(dim, spec, spot, plan) {
     if (spot.y === undefined) {
       const level = await chooseLevel(dim, spec, spot);
       if (level.transient) {
-        spot.tries = (spot.tries ?? 0) + 1;
-        spot.lastError = level.reason;
-        console.warn("[Landmarks] " + spec.key + ": spot kept, " + level.reason + " (attempt " + spot.tries + ")");
+        // Not an error: kept and tried again on a later scan, without counting towards MAX_TRIES.
+        spot.waits = (spot.waits ?? 0) + 1;
+        console.warn("[Landmarks] " + spec.key + ": spot kept, " + level.reason + " (wait " + spot.waits + ")");
         return;
       }
       if (level.y === undefined) {
@@ -604,7 +637,7 @@ function report(player) {
     else if (s.none) state = "§cno usable spot found";
     else if (s.placed) state = "§aplaced";
     else if ((s.tries ?? 0) >= MAX_TRIES) state = "§cgave up: " + s.lastError;
-    else state = "§6waiting for a player nearby";
+    else state = "§6waiting for a player nearby" + (s.waits ? " §7(ground not readable " + s.waits + "x)" : "");
     const where = s && !s.none ? " §fX: " + s.x + " Z: " + s.z : "";
     const rejected = s?.rejects ? " §7(rejected " + s.rejects + "x; last: " + (s.lastReject ?? "?") + ")" : "";
     player.sendMessage(" §b" + spec.key + " §7(" + spec.dim + ")" + where + " " + state + rejected);

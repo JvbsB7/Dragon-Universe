@@ -1498,7 +1498,8 @@ export const friezaLandmarkEnv = {
   prepare: (minCx, minCz, maxCx, maxCz) => prepareLandmarkChunks(PLANETS.frieza, minCx, minCz, maxCx, maxCz),
   // Blocks of the Frieza Force outposts this generator places (friezaDecor). prepare refuses chunks a player edited
   // (ownership "protected"), so in the prepared ground these come from the generator, not from a build to keep.
-  generated: ["minecraft:purple_concrete", "minecraft:polished_blackstone_bricks", "minecraft:chest"],
+  // Outpost chests are not here: a player may have stored items in one, so a chest still rejects the spot.
+  generated: ["minecraft:purple_concrete", "minecraft:polished_blackstone_bricks"],
 };
 
 
