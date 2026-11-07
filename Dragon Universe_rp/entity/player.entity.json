@@ -885,9 +885,7 @@
 				],
 				"animate": [
 					"root",
-					{ "dbe_general": "v.isLive" },
-					// G2: só na prévia da UI (paperdoll / live_player_renderer); a escala no mundo não muda
-					{ "oozaru_ui_preview": "v.is_oozaru && (v.is_paperdoll || q.is_in_ui)" }
+					{ "dbe_general": "v.isLive" }
 				],
 				"variables": {
 					"variable.fp_melee_spear_use_attachable_rotation_z": "public",
@@ -1044,7 +1042,6 @@
 				"melee_attack_6": "animation.player.melee.attack_6",
 				"muscular_body": "animation.player.muscular",
 				"oozaru_setup": "animation.player.oozaru_setup",
-				"oozaru_ui_preview": "animation.player.oozaru_ui_preview",
 				"sfx_charge_god_loop": "animation.aura.charge_god_loop",
 				"sfx_charge_loop": "animation.aura.charge_loop",
 				"slim_body": "animation.player.slim_body",
