@@ -3989,10 +3989,8 @@ var bz = class {
     }
     onRandomTick({ block: sG, dimension: sH }, { params: sI }) {
       let { particle: sK, spawn_rate: sL } = sI;
-      if (Math.random() * av.gameRules.randomTickSpeed <= sL)
-        try {
-          sG.above().isAir && sH.spawnParticle(sK, sG.center());
-        } catch {}
+      // Chunk descarregado é tratado por bJ.guardTicks; outros erros não são mais engolidos.
+      if (Math.random() * av.gameRules.randomTickSpeed <= sL) sG.above()?.isAir && sH.spawnParticle(sK, sG.center());
     }
   };
 function bC(sG, sH) {
