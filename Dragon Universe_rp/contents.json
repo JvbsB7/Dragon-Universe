@@ -5728,6 +5728,9 @@
          "path" : "textures/ui/images/christmas.png"
       },
       {
+         "path" : "textures/ui/images/du_icon.png"
+      },
+      {
          "path" : "textures/ui/images/patron_chat.png"
       },
       {
