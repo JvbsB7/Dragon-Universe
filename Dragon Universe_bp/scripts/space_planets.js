@@ -395,7 +395,8 @@ function* friezaDecor(c) {
     const p = c.pick(4);
     const h = c.land(p.x, p.z);
     if (h < 0) continue;
-    spire(dim, p.x, h + 1, p.z, 10 + Math.floor(rng() * 14), 1.6 + rng() * 1.2, rng() < 0.7 ? "minecraft:amethyst_block" : P.stone);
+    const height = 10 + Math.floor(rng() * 14), radius = 1.6 + rng() * 1.2, id = rng() < 0.7 ? "minecraft:amethyst_block" : P.stone;
+    if (!c.dryRun) spire(dim, p.x, h + 1, p.z, height, radius, id); // the replay only needs the rng draws, spire draws none
   }
   yield;
   for (let n = 0; n < 3; n++) {
@@ -1499,7 +1500,8 @@ async function prepareLandmarkChunks(P, minCx, minCz, maxCx, maxCz) {
 // Replays friezaDecor for one chunk with the same rng as decorateJob, writing nothing, to know whether the generator
 // puts an outpost there. Villages do not draw from this rng, and nothing before P.decorate does, so the replay is exact.
 const NO_WRITES = { setBlockType() {}, fillBlocks() {} };
-const outpostChunks = new Map();
+const outpostChunks = new Map(); // "cx,cz" -> boolean, at most OUTPOST_CACHE entries (oldest dropped first)
+const OUTPOST_CACHE = 4096;
 function friezaOutpostInChunk(cx, cz) {
   const key = cx + "," + cz;
   if (outpostChunks.has(key)) return outpostChunks.get(key);
@@ -1512,7 +1514,7 @@ function friezaOutpostInChunk(cx, cz) {
   } catch (e) {
     console.warn("[Space] outpost prediction failed for chunk " + key + ": " + e);
   }
-  if (outpostChunks.size > 4096) outpostChunks.clear();
+  if (outpostChunks.size >= OUTPOST_CACHE) outpostChunks.delete(outpostChunks.keys().next().value);
   outpostChunks.set(key, outpost);
   return outpost;
 }
@@ -1522,8 +1524,10 @@ export const friezaLandmarkEnv = {
   id: PLANETS.frieza.id,
   sea: PLANETS.frieza.liquidLevel,
   surface: (x, z) => heightAt(PLANETS.frieza, x, z),
+  clear: (x, z) => !nearSpawn(PLANETS.frieza, x, z, 40) && !villages.near(PLANETS.frieza, x, z, 24),
   // Chunks where the generator builds an outpost are left out, so a drawn spot has no outpost chest (which still rejects).
-  clear: (x, z) => !nearSpawn(PLANETS.frieza, x, z, 40) && !villages.near(PLANETS.frieza, x, z, 24) && !friezaOutpostInChunk(chunkOf(x), chunkOf(z)),
+  // Separate from clear because it replays the chunk decoration: world_landmarks.js asks only once the terrain passed.
+  free: (x, z) => !friezaOutpostInChunk(chunkOf(x), chunkOf(z)),
   prepare: (minCx, minCz, maxCx, maxCz) => prepareLandmarkChunks(PLANETS.frieza, minCx, minCz, maxCx, maxCz),
   // Blocks of the Frieza Force outposts this generator places (friezaDecor). prepare refuses chunks a player edited
   // (ownership "protected"), so in the prepared ground these come from the generator, not from a build to keep.
