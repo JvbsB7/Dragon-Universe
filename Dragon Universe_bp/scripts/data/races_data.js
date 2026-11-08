@@ -38,7 +38,7 @@ const races_data = [
           type: "color",
           barberEditable: true,
           colorId: "hair",
-          palette: ["#000000", "#392821", "#F0DD9E", "#9D2C2C"],
+          palette: ["#000000", "#5A4032", "#F0DD9E", "#9D2C2C"],
         },
         skin: {
           type: "variant",
@@ -179,7 +179,7 @@ const races_data = [
           colorId: "hair",
           palette: [
             "#000000",
-            "#392821",
+            "#5A4032",
             "#F0DD9E",
             "#A865C3",
             "#2381C6",
