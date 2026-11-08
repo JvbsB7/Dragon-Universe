@@ -68,21 +68,30 @@ function migratePlan(plan) {
     }
   }
   plan.v = PLAN_VERSION;
-  savePlan(plan);
   console.warn("[Structures] plan updated to v" + PLAN_VERSION + "; West City no longer planned. Built (kept as is): " +
     (kept.join(", ") || "none") + "; dropped: " + (dropped.join(", ") || "none"));
   return plan;
 }
 
 function loadPlan() {
+  let plan;
   try {
     const raw = world.getDynamicProperty(PLAN_PROP);
-    const plan = typeof raw === "string" ? JSON.parse(raw) : null;
-    if (plan && plan.v === 1 && plan.spots) return migratePlan(plan);
-    if (plan && plan.v === PLAN_VERSION && plan.spots) return plan;
+    plan = typeof raw === "string" ? JSON.parse(raw) : null;
   } catch (e) {
     console.warn("[Structures] saved plan unreadable, planning again: " + e);
+    return { v: PLAN_VERSION, spots: {} };
   }
+  if (plan && plan.v === 1 && plan.spots) {
+    migratePlan(plan); // in memory: a failed save below must not look like an unreadable plan
+    try {
+      savePlan(plan);
+    } catch (e) {
+      console.warn("[Structures] migrated plan not saved yet, kept in memory (migrated again on the next load): " + e);
+    }
+    return plan;
+  }
+  if (plan && plan.v === PLAN_VERSION && plan.spots) return plan;
   return { v: PLAN_VERSION, spots: {} };
 }
 

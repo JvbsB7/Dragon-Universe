@@ -174,20 +174,29 @@ function migratePlan(plan) {
   delete plan.rejects;
   delete plan.lastRejects;
   plan.v = PLAN_VERSION;
-  savePlan(plan);
   console.warn("[Landmarks] plan updated to v" + PLAN_VERSION + "; counters reset for: " + (reset.join(", ") || "none"));
   return plan;
 }
 
 function loadPlan() {
+  let plan;
   try {
     const raw = world.getDynamicProperty(PLAN_PROP);
-    const plan = typeof raw === "string" ? JSON.parse(raw) : null;
-    if (plan && plan.v === 1 && plan.spots) return migratePlan(plan);
-    if (plan && plan.v === PLAN_VERSION && plan.spots) return plan;
+    plan = typeof raw === "string" ? JSON.parse(raw) : null;
   } catch (e) {
     console.warn("[Landmarks] saved plan unreadable, planning again: " + e);
+    return { v: PLAN_VERSION, spots: {} };
   }
+  if (plan && plan.v === 1 && plan.spots) {
+    migratePlan(plan); // in memory: a failed save below must not look like an unreadable plan
+    try {
+      savePlan(plan);
+    } catch (e) {
+      console.warn("[Landmarks] migrated plan not saved yet, kept in memory (migrated again on the next load): " + e);
+    }
+    return plan;
+  }
+  if (plan && plan.v === PLAN_VERSION && plan.spots) return plan;
   return { v: PLAN_VERSION, spots: {} };
 }
 
@@ -275,16 +284,20 @@ function drawOnPlanet(spec, plan) {
 }
 
 function planetSurface(spec, env, spot) {
-  const heights = [];
+  const heights = [], points = [];
   for (let x = spot.x; x <= spot.x + spec.size.x + SAMPLE_STEP - 1; x += SAMPLE_STEP) {
     for (let z = spot.z; z <= spot.z + spec.size.z + SAMPLE_STEP - 1; z += SAMPLE_STEP) {
       if (!env.clear(x, z)) return undefined;
       const h = env.surface(x, z);
       if (h <= env.sea + 1) return undefined;
       heights.push(h);
+      points.push([x, z]);
     }
   }
-  return surfaceLevel(spec, heights);
+  const y = surfaceLevel(spec, heights);
+  // env.free is the expensive test (Frieza replays the chunk decoration), so it only runs on terrain that already passed
+  if (y === undefined || (env.free && points.some(([x, z]) => !env.free(x, z)))) return undefined;
+  return y;
 }
 
 /** The level the lowest layer sits on, or undefined when the ground is too uneven or the top leaves the world. */
