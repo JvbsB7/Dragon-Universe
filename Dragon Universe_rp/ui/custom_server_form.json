@@ -58,7 +58,7 @@
         "text": "#form_button_text",
         "color": "$button_label_color",
         "text_alignment": "$button_label_text_alignment",
-        "$button_label_color|default": "black",
+        "$button_label_color|default": [ 0.973, 0.98, 0.988 ],
         "$button_label_text_alignment|default": "center",
         "bindings": [
             {
