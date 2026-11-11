@@ -330,7 +330,6 @@
 				"du_broly_ssj4_hair": "textures/entity/basic_customizations/hairs/du_broly/du_broly_ssj4",
 				"du_broly_ssj4_grayscale_hair": "textures/entity/basic_customizations/hairs/du_broly/du_broly_ssj4_grayscale",
 				"du_broly_ssj4_ssj5_hair": "textures/entity/basic_customizations/hairs/du_broly/du_broly_ssj4_ssj5",
-				// du_dmz_* (cabelos do DragonMineZ 2.2.1, GPL-3.0; ver relatorios/ORIGEM_cabelos_DMZ.md)
 				"du_dmz_broly_hair": "textures/entity/basic_customizations/hairs/du_dmz/broly",
 				"du_dmz_broly_lssj_hair": "textures/entity/basic_customizations/hairs/du_dmz/broly_lssj",
 				"du_dmz_broly_ssj_hair": "textures/entity/basic_customizations/hairs/du_dmz/broly_ssj",
