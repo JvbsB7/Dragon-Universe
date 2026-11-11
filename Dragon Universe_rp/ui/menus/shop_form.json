@@ -104,7 +104,8 @@
                         },
                         {
                             "button@custom_server_form.text_button": {
-                                "size": [ "fill", "100%" ]
+                                "size": [ "fill", "100%" ],
+                                "$button_label_color": "black"
                             }
                         }
                     ]
