@@ -6034,6 +6034,9 @@
          "path" : "models/entity/races/hairs/du_raditz_ssj.geo.json"
       },
       {
+         "path" : "models/entity/races/hairs/du_raditz_ssj2.geo.json"
+      },
+      {
          "path" : "models/entity/races/hairs/du_raditz_ssj3.geo.json"
       },
       {
@@ -6257,6 +6260,9 @@
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj.png"
+      },
+      {
+         "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj2.png"
       },
       {
          "path" : "textures/entity/basic_customizations/hairs/du_raditz/du_raditz_ssj3.png"
